@@ -30,7 +30,7 @@ class Grammar
 	Rules rules;
 
 	const std::string RULE_MAP_SEPARATOR = "afqawe23t2tqevq34";
-	std::unordered_map<Symbol, Symbol> rule_map;
+	std::unordered_map<Symbol, std::vector<Symbol>> rule_map;
 
 	public:
 
@@ -43,7 +43,7 @@ class Grammar
 			return true;
 	}
 
-	Symbol get_rule_head(const Symbol & r1, const Symbol & r2) const
+	std::vector<Symbol> get_rule_head(const Symbol & r1, const Symbol & r2) const
 	{
 		std::string key = r1 + RULE_MAP_SEPARATOR + r2;
 		return rule_map.at(key);
@@ -101,11 +101,11 @@ class Grammar
     void set_rules(const Rules & _rules)
 	{
 		rules = _rules;
-		
+
 		for (int i=0; i<rules.size(); i++)
 		{
 			std::string key = rules[i].right1 + RULE_MAP_SEPARATOR + rules[i].right2;
-			rule_map[key] = rules[i].left;
+			rule_map[key].push_back(rules[i].left);
 		}
 	}
 

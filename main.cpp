@@ -14,7 +14,7 @@ struct PNode
     //we assume it can have either 0 or 2 children
     std::vector<PNode> children;
 
-    std::string toString()
+    std::string toString() const
     {
         if (children.size() == 0 )
             return tag;
@@ -22,6 +22,19 @@ struct PNode
             return tag + "[" + children[0].toString() + " " + children[1].toString() + "]";
     }
 };
+
+struct PTree
+{
+    PNode root;
+
+    std::string toString() const
+    {
+        return root.toString();
+    }
+};
+
+typedef std::vector<PTree> PTrees;
+
 
 std::string word2str(const Word &w)
 {
@@ -54,7 +67,7 @@ class Parser
 {
     public:
 
-    void parse(const Word & input, const Grammar & g)
+    PTrees parse(const Word & input, const Grammar & g)
     {
         const int N = input.size();
 
@@ -130,12 +143,16 @@ class Parser
 
                             if (g.has_rule(p1.tag, p2.tag))
                             {
-                                PNode pnode;
-                                pnode.tag = g.get_rule_head(p1.tag, p2.tag);
-                                pnode.children.push_back(p1);
-                                pnode.children.push_back(p2);
+                                std::vector<Symbol> heads = g.get_rule_head(p1.tag, p2.tag);
+                                for (int k=0; k<heads.size(); k++)
+                                {
+                                    PNode pnode;
+                                    pnode.tag = heads[k];
+                                    pnode.children.push_back(p1);
+                                    pnode.children.push_back(p2);
 
-                                matrix[y][x].push_back(pnode);
+                                    matrix[y][x].push_back(pnode);
+                                }
                             }
                         }
                     }
@@ -143,9 +160,13 @@ class Parser
             }
         }
 
+        PTrees result;
+
         for (int i=0; i<matrix[N-1][0].size(); i++)
         {
-            std::cout << matrix[N-1][0][i].toString() << std::endl;
+            PTree t;
+            t.root = matrix[N-1][0][i];
+            result.push_back(t);
         }
 
         //clearing the table
@@ -155,6 +176,8 @@ class Parser
         }
 
         delete [] matrix;
+
+        return result;
 
     }
 
@@ -192,7 +215,7 @@ int main()
 		{"exp", "+", "exp", "*", "(", "exp", "-", "exp", ")"},
 	};
 
-   Parser p;
+    Parser p;
 	for (int i=0; i<words.size(); i++)
 	{
 		std::cout
@@ -201,7 +224,11 @@ int main()
 			<< "-------------------------------------------------------" << std::endl;
 
 
-		p.parse(words[i], infix_chomsky_grammar);
+		PTrees trees = p.parse(words[i], infix_chomsky_grammar);
+		for (int i=0; i<trees.size(); i++)
+		{
+            std::cout << trees[i].toString() << std::endl;
+		}
 
 	}
 
