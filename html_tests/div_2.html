@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<STYLE>
+	div { 
+	  padding:10px;
+	  border-style: solid;
+	  width: 100px;
+	}
+	.a {background-color: blue;}
+	.b {background-color: green;}
+	.c {background-color: red;}
+</STYLE>
+
+<SCRIPT>
+	<!-- function for toggling children -->
+	<!-- obj is the object which was clicked on  -->
+	function toggle_children(obj){
+	
+	  <!-- just to show something's happening -->
+	  <!-- console.log("somethings happening!"); -->
+	
+	    <!-- for each child of the element -- it contains only one -->
+    	for (const child of obj.children) {
+		  <!-- toggle between "none" for invisivle and "block" for visible -->
+		  if (child.style.display != "none"){
+			child.style.display = "none";
+		  }
+		  else {
+		    child.style.display = "block";
+		  }
+		}
+	}
+	
+	<!-- show that code embeded directly in the  -->
+	<!-- script is executed upon loading the page -->
+	console.log("somehting");
+	
+	<!-- yet it is done before the page elements are created  -->
+	<!-- -- therefore this will not do anything -->
+	console.log(document.getElementsByClassName("expandable").length);
+	
+	<!-- packing the script for adding the onclick events -->
+	<!-- so that is can be called upon loading the page -->
+	function add_events(){
+	
+		<!-- get all the elements of this class -->
+		for (expandable of document.getElementsByClassName("expandable")){
+		
+		<!-- add the event to be called on click -->
+		  expandable.addEventListener("click", 
+		    <!-- a lambda function -->
+			function(event){
+			  
+			  <!-- get the object which was clicked on -->
+			  let caller = event.caller || event.srcElement
+			  
+			  <!-- call the toggling function -->
+			  toggle_children(caller);
+			  
+			  <!-- withouth this all the parent elements of the element  -->
+			  <!-- which was clicked on will also reveive the evevnt -->
+			  event.stopPropagation();
+			});
+		  
+		  <!-- just show that it works -->
+		  <!-- console.log("added!"); -->
+		}
+	}
+</SCRIPT>
+
+</HEAD>
+<BODY onload="add_events()">
+<div class="expandable a">
+Three head [<div class="b expandable">
+  node node <div class="c expandable">
+	C </div> 
+  </div>]
+</div>
+</BODY>
+</HTML>
