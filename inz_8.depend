@@ -1,16 +1,33 @@
 # depslib dependency file v1.0
-1713035540 source:/mnt/c/Users/forgetmenotflanks/Desktop/inz_8/main.cpp
-	<iostream>
+1714567753 source:/mnt/c/Users/forgetmenotflanks/Desktop/inz_8/main.cpp
+	"grammar.h"
+	"parser.h"
+	"tester.h"
+
+1714566672 source:/mnt/c/Users/forgetmenotflanks/Desktop/inz_8/grammar.cpp
+	"grammar.h"
+
+1714566566 /mnt/c/Users/forgetmenotflanks/Desktop/inz_8/grammar.h
+	<string>
+	<vector>
+	<unordered_map>
+
+1714567177 /mnt/c/Users/forgetmenotflanks/Desktop/inz_8/parser.h
 	<vector>
 	<string>
 	<map>
 	"grammar.h"
+	"parser.h"
+	"word.h"
 
-1697923799 source:/mnt/c/Users/forgetmenotflanks/Desktop/inz_8/grammar.cpp
+1714567446 /mnt/c/Users/forgetmenotflanks/Desktop/inz_8/word.h
+
+1714566905 source:/mnt/c/Users/forgetmenotflanks/Desktop/inz_8/parser.cpp
+	"parser.h"
+
+1714567819 /mnt/c/Users/forgetmenotflanks/Desktop/inz_8/tester.h
+	<iostream>
+	"parser.h"
 	"grammar.h"
-
-1713037372 /mnt/c/Users/forgetmenotflanks/Desktop/inz_8/grammar.h
-	<string>
-	<vector>
-	<unordered_map>
+	"word.h"
 

@@ -34,80 +34,61 @@ class Grammar
 
 	public:
 
-	bool has_rule(const Symbol & r1, const Symbol & r2) const
-	{
-		std::string key = r1 + RULE_MAP_SEPARATOR + r2;
-		if ( rule_map.find(key) == rule_map.end())
-			return false;
-		else
-			return true;
-	}
+	bool has_rule(const Symbol & r1, const Symbol & r2) const;
 
-	std::vector<Symbol> get_rule_head(const Symbol & r1, const Symbol & r2) const
-	{
-		std::string key = r1 + RULE_MAP_SEPARATOR + r2;
-		return rule_map.at(key);
-	}
+	std::vector<Symbol> get_rule_head(const Symbol & r1, const Symbol & r2) const;
 
 	/** \brief unified interface for getting nonterminals
      *
      */
 
-    Nonterminals get_nonterminals() {return nonterminals;}
+    Nonterminals get_nonterminals();
 
     /** \brief unified interface for getting terminals
      *
      */
 
-    Terminals get_terminals() {return terminals;}
-
-    /** \brief unified interface for getting head
+    Terminals get_terminals();
+	
+	/** \brief unified interface for getting head
      *
      */
-    Head get_head() {return head;}
+    Head get_head();
 
     /** \brief unified interface for getting rules
      *
      */
-    Rules get_rules() {return rules;}
+    Rules get_rules();
 
     /** \brief unified interface for setting nonterminals
      *
      */
-    void set_nonterminals(const Nonterminals & _nonterminals)
-	{
-		nonterminals = _nonterminals;
-	}
+    void set_nonterminals(const Nonterminals & _nonterminals);
 
     /** \brief unified interface for setting terminals
      *
      */
-    void set_terminals(const Terminals & _terminals)
-	{
-		terminals = _terminals;
-	}
+    void set_terminals(const Terminals & _terminals);
 
     /** \brief unified interface for setting head
      *
      */
-    void set_head(const Head & _head)
-	{
-		head = _head;
-	}
+    void set_head(const Head & _head);
 
     /** \brief unified interface for setting rules
      *
      */
-    void set_rules(const Rules & _rules)
-	{
-		rules = _rules;
-
-		for (int i=0; i<rules.size(); i++)
-		{
-			std::string key = rules[i].right1 + RULE_MAP_SEPARATOR + rules[i].right2;
-			rule_map[key].push_back(rules[i].left);
-		}
-	}
+    void set_rules(const Rules & _rules);
+	
+	void nonterminals_from_http(const std::string & param);
+	void terminals_from_http(const std::string & param);
+	void head_from_http(const std::string & param);
+	void rules_from_http(const std::string & param);
+	
+	std::string nonterminals_to_http();
+	std::string terminals_to_http();
+	std::string head_to_http();
+	std::string rules_to_http();
 
 };
 
