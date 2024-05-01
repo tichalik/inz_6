@@ -194,13 +194,15 @@ int main()
 	Rules rules = {
 		{"exp","exp1", "exp" },
 		{"exp","exp2", ")" },
+		{"exp","exp2", ")" }, // adding ambiguity
 
 		{"exp1","exp", "+" },
 		{"exp1","exp", "-" },
 		{"exp1","exp", "*" },
 		{"exp1","exp", "/" },
 
-		{"exp2","(", "exp" }
+		{"exp2","(", "exp" },
+		{"exp3","(", "exp" }  // adding ambiguity
 	};
 
 	infix_chomsky_grammar.set_terminals(terminals);
