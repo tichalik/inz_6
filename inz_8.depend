@@ -20,7 +20,10 @@
 	"parser.h"
 	"word.h"
 
-1714567446 /mnt/c/Users/forgetmenotflanks/Desktop/inz_8/word.h
+1714570828 /mnt/c/Users/forgetmenotflanks/Desktop/inz_8/word.h
+	<string>
+	<vector>
+	<sstring>
 
 1714566905 source:/mnt/c/Users/forgetmenotflanks/Desktop/inz_8/parser.cpp
 	"parser.h"
@@ -30,4 +33,7 @@
 	"parser.h"
 	"grammar.h"
 	"word.h"
+
+1714567718 source:/mnt/c/Users/forgetmenotflanks/Desktop/inz_8/tester.cpp
+	"tester.h"
 
