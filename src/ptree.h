@@ -15,6 +15,7 @@ struct PNode
     std::vector<PNode> children;
 
     std::string toString() const;
+    std::string to_http() const;
 };
 
 struct PTree
@@ -22,6 +23,7 @@ struct PTree
     PNode root;
 
     std::string toString() const;
+    std::string to_http() const;
 };
 
 // typedef std::vector<PTree> PTrees;

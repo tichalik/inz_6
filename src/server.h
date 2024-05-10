@@ -7,27 +7,51 @@
 #include "word.h"
 #include "error.h"
 
+//handlers cannot be non-static
+//in consequence most method of this class would be static
+//therefore we just do it as a namespace
 
-namespace Server
+// but there are problems with the fields, so class with many static methods is easier
+class Server
 {
-    httplib::Server server;
-    std::string response_template;
-    std::string response;
-	
-	std::vector<Error> errors;
+	enum EN_RESPONSE_FIELDS
+	{
+		TERMINALS = 0,
+		NONTERMINALS, 
+		HEAD, 
+		RULES, 
+		ERRORS, 
+		INPUT, 
+		RESULTS
+	} ;
+	const static int NO_RESPONSE_FIELDS = 7;
 
-	void get_handler(const httplib::Request & req,
+	const static std::string RESPONSE_FIELDS_DICT[NO_RESPONSE_FIELDS];
+	
+    static httplib::Server server;
+    static std::string response_template;
+    static std::string response;
+	
+	// std::vector<Error> errors;
+
+public:
+
+	static void get_handler(const httplib::Request & req,
 		httplib::Response & resp);
 		
-	void post_handler(const httplib::Request & req,
+	static void post_handler(const httplib::Request & req,
 		httplib::Response & resp);
 
-	void fill_response(const std::string & field, const std::string & content);
+	static void fill_response(const Server::EN_RESPONSE_FIELDS field, const std::string & content);
 	
-	std::string get_response();
+	static std::string get_response();
 	
-    void init();
-	void run();
+	static void clear_response();
+	
+    static void init();
+	static void run();
+	
+	static void set_dummy_get(const std::string filename);
 };
 
 #endif // SERVER_H_

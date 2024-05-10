@@ -1,5 +1,7 @@
 #include "parser.h"
 
+#include <iostream>
+
 PTrees Parser::parse(const Word & input, const Grammar & g)
 {
     const int N = input.size();
@@ -61,8 +63,8 @@ PTrees Parser::parse(const Word & input, const Grammar & g)
                 int y2 = y-_x-1;
                 int x2 = x+_x+1;
 
-//                    std::cout << y << "," << x <<"\t->\t" << y1 << "," << x1 << "\t"
-//                        << y2 << "," << x2 <<std::endl;
+                   // std::cout << y << "," << x <<"\t->\t" << y1 << "," << x1 << "\t"
+                       // << y2 << "," << x2 <<std::endl;
 
 
 
@@ -73,6 +75,8 @@ PTrees Parser::parse(const Word & input, const Grammar & g)
                     for (size_t j=0; j<matrix[y2][x2].size(); j++)
                     {
                         PNode p2 = matrix[y2][x2][j];
+						
+						// std::cout << p1.tag << "," << p2.tag << std::endl;
 
                         if (g.has_rule(p1.tag, p2.tag))
                         {

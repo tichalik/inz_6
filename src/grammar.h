@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <sstream>
 
 /** \brief representation of grammatical rule X -> Y0 Y1 Y2...
  */
@@ -15,6 +16,8 @@ struct Rule
     Symbol left;
     Symbol right1, right2;
 
+	std::string to_string();
+	std::string to_http();
 };
 typedef std::vector<std::string> Terminals;
 typedef std::vector<std::string> Nonterminals;
@@ -89,6 +92,8 @@ class Grammar
 	std::string terminals_to_http();
 	std::string head_to_http();
 	std::string rules_to_http();
+	
+	std::string to_string();
 
 };
 
