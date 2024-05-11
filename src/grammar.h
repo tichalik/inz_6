@@ -8,7 +8,8 @@
 
 #include "utils.h"
 
-/** \brief representation of grammatical rule X -> Y0 Y1 Y2...
+/** 
+ * \brief representation of grammatical rule X -> Y0 Y1 Y2...
  */
 
 typedef std::string Symbol;
@@ -18,8 +19,7 @@ struct Rule
     Symbol left;
     Symbol right1, right2;
 
-	std::string to_string();
-	std::string to_http();
+	std::string to_string() const;
 };
 typedef std::vector<std::string> Terminals;
 typedef std::vector<std::string> Nonterminals;

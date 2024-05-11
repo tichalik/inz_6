@@ -17,6 +17,9 @@ class Http_grammar_adapter
 	void head_from_http(const std::string & param);
 	void rules_from_http(const std::string & param);
 	
+	
+	std::string rule_to_http(const Rule & rule) const;
+	
 	public:
 	Http_grammar_adapter(
 		const std::string & http_terminals,
@@ -26,12 +29,12 @@ class Http_grammar_adapter
 	
 	Http_grammar_adapter( const Grammar & grammar);
 	
-	std::string nonterminals_to_http();
-	std::string terminals_to_http();
-	std::string head_to_http();
-	std::string rules_to_http();
+	std::string nonterminals_to_http() const;
+	std::string terminals_to_http() const;
+	std::string head_to_http() const;
+	std::string rules_to_http() const;
 	
-	Grammar get_grammar();
+	Grammar get_grammar() const;
 	
 };
 

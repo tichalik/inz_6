@@ -18,7 +18,7 @@ Http_grammar_adapter::Http_grammar_adapter( const Grammar & _grammar):
 	
 }
 
-Grammar Http_grammar_adapter::get_grammar()
+Grammar Http_grammar_adapter::get_grammar() const
 {
 	return this->grammar;
 }
@@ -64,22 +64,30 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 }
 
 
-std::string Http_grammar_adapter::nonterminals_to_http()
+
+std::string Http_grammar_adapter::rule_to_http(const Rule & rule) const 
+{
+	return rule.left + " -> " + rule.right1 + " " + rule.right2;
+}
+
+
+
+std::string Http_grammar_adapter::nonterminals_to_http() const
 {
 	return Utils::vector2str(this->grammar.get_nonterminals(), " ");
 }
 
-std::string Http_grammar_adapter::terminals_to_http()
+std::string Http_grammar_adapter::terminals_to_http() const
 {
 	return Utils::vector2str(this->grammar.get_terminals(), " ");
 }
 
-std::string Http_grammar_adapter::head_to_http()
+std::string Http_grammar_adapter::head_to_http() const
 {
 	return this->grammar.get_head();
 }
 
-std::string Http_grammar_adapter::rules_to_http()
+std::string Http_grammar_adapter::rules_to_http() const
 {
 	std::string res; 
 	
@@ -87,7 +95,7 @@ std::string Http_grammar_adapter::rules_to_http()
 	
 	for (size_t i=0; i< rules.size(); i++)
 	{
-		res += rules[i].to_http() +"\n";
+		res += rule_to_http(rules[i]) + "\n";
 	}
 	res = res.substr(0, res.size()-1);
 	

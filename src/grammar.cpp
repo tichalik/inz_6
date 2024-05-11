@@ -1,13 +1,6 @@
 #include "grammar.h"
 
-
-std::string Rule::to_http()
-{
-	return left + " -> " + right1 + " " + right2;
-}
-
-
-std::string Rule::to_string()
+std::string Rule::to_string() const 
 {
 	return "<" + left + "> -> <" + right1 + "> <" + right2 +">";
 }
