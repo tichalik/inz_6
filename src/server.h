@@ -3,6 +3,9 @@
 
 #include "httplib.h"
 #include "grammar.h"
+#include "http_grammar_adapter.h"
+#include "parsing_grammar_adapter.h"
+#include "utils.h"
 #include "parser.h"
 #include "word.h"
 #include "error.h"

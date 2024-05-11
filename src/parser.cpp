@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-PTrees Parser::parse(const Word & input, const Grammar & g)
+PTrees Parser::parse(const Word & input, const Parsing_grammar_adapter & g)
 {
     const int N = input.size();
 

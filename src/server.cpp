@@ -15,32 +15,6 @@ const std::string Server::RESPONSE_FIELDS_DICT[Server::NO_RESPONSE_FIELDS] = {
 	"{{RESULTS}}"
 };
 
-bool read_file(const std::string & filename,
-	std::string & res)
-{
-	bool status;
-	std::ifstream file(filename);
-	if (file)
-	{
-		std::string line;
-		while (std::getline(file, line))
-		{
-			res += line + "\n";
-		}
-
-		file.close();
-		status = true;
-	}
-	else
-	{
-		std::cout << "cannot open file " << filename << std::endl;
-		status = false;
-	}
-
-	return status;
-
-}
-
 
 void Server::get_handler(const httplib::Request & req,
 	httplib::Response & resp)
@@ -59,13 +33,21 @@ void Server::get_handler(const httplib::Request & req,
 void Server::post_handler(const httplib::Request & req,
 	httplib::Response & resp)
 {
-	Grammar grammar;
-
-	grammar.head_from_http(req.get_param_value("head"));
-	grammar.terminals_from_http(req.get_param_value("terminals"));
-	grammar.nonterminals_from_http(req.get_param_value("nonterminals"));
-	grammar.rules_from_http(req.get_param_value("rules"));
+	const std::string http_terminals = req.get_param_value("terminals");
+	const std::string http_nonterminals = req.get_param_value("nonterminals");
+	const std::string http_head = req.get_param_value("head");
+	const std::string http_rules = req.get_param_value("rules");
 	
+	Http_grammar_adapter http_grammar_adapter(
+		http_terminals,
+		http_nonterminals,
+		http_head,
+		http_rules);
+		
+	Grammar grammar = http_grammar_adapter.get_grammar();
+	
+	Parsing_grammar_adapter parsing_grammar_adapter(grammar);
+
 	std::cout << grammar.to_string() <<std::endl;
 	
 	// std::vector<Error> grammar_errors = grammar.get_errors();
@@ -80,7 +62,7 @@ void Server::post_handler(const httplib::Request & req,
 	// {
 		Parser parser;
 
-		PTrees result = parser.parse(input, grammar);
+		PTrees result = parser.parse(input, parsing_grammar_adapter );
 		
 		std::cout << "RESULTS\n" << result.to_string() <<std::endl;
 
@@ -88,10 +70,10 @@ void Server::post_handler(const httplib::Request & req,
 		fill_response(RESULTS, result.to_http());
 		
 	// }
-	fill_response(HEAD, grammar.head_to_http());
-	fill_response(TERMINALS, grammar.terminals_to_http());
-	fill_response(NONTERMINALS, grammar.nonterminals_to_http());
-	fill_response(RULES, grammar.rules_to_http());
+	fill_response(HEAD, http_grammar_adapter.head_to_http());
+	fill_response(TERMINALS, http_grammar_adapter.terminals_to_http());
+	fill_response(NONTERMINALS, http_grammar_adapter.nonterminals_to_http());
+	fill_response(RULES, http_grammar_adapter.rules_to_http());
 	fill_response(INPUT, input.to_http());
 
 
@@ -125,7 +107,7 @@ void Server::clear_response()
 void Server::init()
 {
 	//load response template
-	read_file("./src/html_templates/post_form.html", Server::response_template);
+	Utils::read_file("./src/html_templates/post_form.html", Server::response_template);
 	clear_response();
 	
 	
@@ -144,7 +126,7 @@ void Server::run()
 void Server::set_dummy_get(const std::string filename)
 {
 	std::string file;
-	read_file(filename, file);
+	Utils::read_file(filename, file);
 	
 	server.Get("/tst", [=] (const httplib::Request & req,
 	httplib::Response & resp)

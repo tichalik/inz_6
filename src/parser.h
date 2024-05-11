@@ -5,7 +5,7 @@
 #include <string>
 #include <map>
 
-#include "grammar.h"
+#include "parsing_grammar_adapter.h"
 #include "word.h"
 #include "ptree.h"
 
@@ -15,7 +15,7 @@ class Parser
 {
     public:
 
-    PTrees parse(const Word & input, const Grammar & g);
+    PTrees parse(const Word & input, const Parsing_grammar_adapter & g);
 
 };
 
