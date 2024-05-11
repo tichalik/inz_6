@@ -26,7 +26,7 @@ class Parsing_grammar_adapter
 	 *	rule_map[RHS1 RULE_MAP_SEPARATOR RHS2] = { LHS1, LHS2}
 	 *	rule_map[RHS3 RULE_MAP_SEPARATOR RHS4] = { LHS1}
 	*/
-	std::unordered_map<Symbol, std::vector<Symbol>> rule_map;
+	std::unordered_map<std::string, std::vector<std::string>> rule_map;
 
 	/** \brief unique string used to form keys for the rule_map
 	 * 
@@ -49,7 +49,7 @@ class Parsing_grammar_adapter
 	 * \param r1 1st symbol of rule's RHS
 	 * \param r2 2nd symbol of rule's RHS 
 	*/
-	bool has_rule(const Symbol & r1, const Symbol & r2) const;
+	bool has_rule(const std::string & r1, const std::string & r2) const;
 	
 	/** \brief get all LHS that turn into given LHS
 	 *
@@ -57,7 +57,7 @@ class Parsing_grammar_adapter
 	 * \param r1 1st symbol of rule's RHS
 	 * \param r2 2nd symbol of rule's RHS 
 	*/
-	std::vector<Symbol> get_rule_head(const Symbol & r1, const Symbol & r2) const;
+	std::vector<std::string> get_rule_head(const std::string & r1, const std::string & r2) const;
 
 };
 

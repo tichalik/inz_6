@@ -2,7 +2,8 @@
 
 std::string Rule::to_string() const 
 {
-	return "<" + left + "> -> <" + right1 + "> <" + right2 +">";
+	return "<" + left.to_string() 
+		+ "> -> <" + right1.to_string()  + "> <" + right2.to_string()  +">";
 }
 
 

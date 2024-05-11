@@ -15,7 +15,7 @@ struct PNode
 	/** 
 	 * \brief the terminal/nonterminal at the parsing tree
 	 */
-	Symbol tag;
+	std::string tag;
  
     /** 
 	 * \brief child nodes

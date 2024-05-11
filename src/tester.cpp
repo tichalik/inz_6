@@ -5,7 +5,7 @@ std::string word2str(const Word &w)
 {
     std::string res;
     for (size_t i=0; i<w.size(); i++)
-        res += w[i] + " ";
+        res += w[i].symbol + " ";
     return res;
 }
 

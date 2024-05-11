@@ -17,7 +17,7 @@ PTrees Parser::parse(const Word & input, const Parsing_grammar_adapter & g)
     for (int i=0; i<N; i++)
     {
         PNode pnode;
-        pnode.tag = input[i];
+        pnode.tag = input[i].symbol;
 
         matrix[0][i].push_back(pnode);
     }
@@ -80,7 +80,7 @@ PTrees Parser::parse(const Word & input, const Parsing_grammar_adapter & g)
 
                         if (g.has_rule(p1.tag, p2.tag))
                         {
-                            std::vector<Symbol> heads = g.get_rule_head(p1.tag, p2.tag);
+                            std::vector<std::string> heads = g.get_rule_head(p1.tag, p2.tag);
                             for (size_t k=0; k<heads.size(); k++)
                             {
                                 PNode pnode;

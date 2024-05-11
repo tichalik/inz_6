@@ -7,9 +7,24 @@
 #include <sstream>
 
 #include "utils.h"
+#include "error.h"
 
+// typedef std::string Symbol;
 
-typedef std::string Symbol;
+struct Symbol
+{
+	std::string symbol;
+	Error error;
+	
+	inline std::string to_string() const
+	{
+		return symbol;
+	}
+	inline std::string to_http() const
+	{
+		return symbol;
+	}
+};
 
 /** 
  * \brief representation of grammatical rule in form 

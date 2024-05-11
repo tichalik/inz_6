@@ -5,8 +5,9 @@
 #include <vector>
 #include <sstream>
 
+#include "grammar.h"
 
-class Word: public std::vector<std::string>
+class Word: public std::vector<Symbol>
 {
 	const std::string SEPARATOR = " ";
 public:

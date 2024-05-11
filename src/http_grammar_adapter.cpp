@@ -56,7 +56,7 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 		Rule r; 
 		std::stringstream sss; 
 		sss << line;
-		sss >> r.left >> tmp >> r.right1 >> r.right2;
+		sss >> r.left.symbol >> tmp >> r.right1.symbol >> r.right2.symbol;
 		_tules.push_back(r);
 	}
 	
@@ -67,7 +67,8 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 
 std::string Http_grammar_adapter::rule_to_http(const Rule & rule) const 
 {
-	return rule.left + " -> " + rule.right1 + " " + rule.right2;
+	return rule.left.to_http() + " -> " 
+		+ rule.right1.to_http() + " " + rule.right2.to_http();
 }
 
 
