@@ -56,7 +56,7 @@ void Tester::test_infix_chomsky_grammar()
 		PTrees trees = p.parse(words[i], infix_chomsky_grammar);
 		for (size_t i=0; i<trees.size(); i++)
 		{
-            std::cout << trees[i].toString() << std::endl;
+            std::cout << trees[i].to_string() << std::endl;
 		}
 
 	}

@@ -7,6 +7,10 @@
 #include <fstream>
 #include <iostream>
 
+
+/** 
+ * \brief groups utility methods used in many places
+ */
 class Utils
 {
 	public:

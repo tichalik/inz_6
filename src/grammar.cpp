@@ -35,7 +35,7 @@ void Grammar::set_rules(const Rules & _rules)
 	rules = _rules;
 }
 
-std::string Grammar::to_string()
+std::string Grammar::to_string() const
 {
 	std::string res;
 	
