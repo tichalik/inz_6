@@ -4,7 +4,13 @@
 #include <string>
 #include <vector>
 
-typedef std::string Error;
+enum EN_ERROR_TYPE
+{
+	REPEATING_SYMBOL,
+	IN_BOTH_TERMINALS_AND_NONTERMINALS
+};
+
+typedef EN_ERROR_TYPE Error;
 typedef std::vector<Error> Errors;
 
 #endif // ERROR_H_

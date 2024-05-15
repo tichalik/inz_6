@@ -8,23 +8,8 @@
 
 #include "utils.h"
 #include "error.h"
-
-// typedef std::string Symbol;
-
-struct Symbol
-{
-	std::string symbol;
-	Error error;
-	
-	inline std::string to_string() const
-	{
-		return symbol;
-	}
-	inline std::string to_http() const
-	{
-		return symbol;
-	}
-};
+#include "symbol.h"
+#include "non_terminals.h"
 
 /** 
  * \brief representation of grammatical rule in form 
@@ -38,8 +23,6 @@ struct Rule
 	std::string to_string() const;
 };
 
-typedef std::vector<std::string> Terminals;
-typedef std::vector<std::string> Nonterminals;
 typedef std::vector<Rule> Rules;
 typedef std::string Head;
 
@@ -50,8 +33,8 @@ typedef std::string Head;
 class Grammar
 {
 	
-	Nonterminals nonterminals;
-	Terminals terminals;
+	Non_terminals nonterminals;
+	Non_terminals terminals;
 	Head head;
 	Rules rules;
 
@@ -61,12 +44,12 @@ class Grammar
     /** 
 	 * \brief getter
 	 */
-	Nonterminals get_nonterminals() const;
+	Non_terminals get_nonterminals() const;
     
 	/** 
 	 * \brief getter
 	 */
-	Terminals get_terminals() const;
+	Non_terminals get_terminals() const;
     
 	/** 
 	 * \brief getter
@@ -81,12 +64,12 @@ class Grammar
     /** 
 	 * \brief setter
 	 */
-	void set_nonterminals(const Nonterminals & _nonterminals);
+	void set_nonterminals(const Non_terminals & _nonterminals);
     
     /** 
 	 * \brief setter
 	 */
-	void set_terminals(const Terminals & _terminals);
+	void set_terminals(const Non_terminals & _terminals);
     
     /** 
 	 * \brief setter

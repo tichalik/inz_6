@@ -7,19 +7,19 @@ std::string Rule::to_string() const
 }
 
 
-Nonterminals Grammar::get_nonterminals() const {return nonterminals;}
-Terminals Grammar::get_terminals() const {return terminals;}
+Non_terminals Grammar::get_nonterminals() const {return nonterminals;}
+Non_terminals Grammar::get_terminals() const {return terminals;}
 Head Grammar::get_head() const {return head;}
 Rules Grammar::get_rules() const {return rules;}
 
 
-void Grammar::set_nonterminals(const Nonterminals & _nonterminals)
+void Grammar::set_nonterminals(const Non_terminals & _nonterminals)
 {
 	nonterminals = _nonterminals;
 }
 
 
-void Grammar::set_terminals(const Terminals & _terminals)
+void Grammar::set_terminals(const Non_terminals & _terminals)
 {
 	terminals = _terminals;
 }
@@ -41,9 +41,9 @@ std::string Grammar::to_string() const
 	std::string res;
 	
 	res += "TERMINALS\n";
-	res += "<" + Utils::vector2str(terminals, "> <") + ">\n";
+	// res += "<" + Utils::vector2str(terminals, "> <") + ">\n";
 	res += "NONTERMINALS\n";
-	res += "<" + Utils::vector2str(nonterminals, "> <") + ">\n";
+	// res += "<" + Utils::vector2str(nonterminals, "> <") + ">\n";
 	res += "HEAD\n";
 	res += "<" + head + ">\n";
 	
