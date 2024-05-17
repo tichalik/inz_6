@@ -16,16 +16,6 @@ class Http_grammar_adapter
 	
 	Non_terminals nonterminals;
 	
-	
-	
-    /** 
-	 * \brief extract grammar information from a string obtained from http request
-	 *
-	 * assume the string is already processed (htpp entities are translated to 
-	 * normal string)
-	 */
-	void nonterminals_from_http(const std::string & param);
-	
 	public:
 	
 	/** 

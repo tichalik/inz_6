@@ -3,13 +3,8 @@
 Http_grammar_adapter::Http_grammar_adapter(
 	const std::string & http_nonterminals)
 {
-	nonterminals_from_http(http_nonterminals);
-}
-
-
-void Http_grammar_adapter::nonterminals_from_http(const std::string & param)
-{	
-	std::vector<std::string> str_nonterminals = Utils::vector_from_str(param);
+	// nonterminals_from_http(http_nonterminals);
+	std::vector<std::string> str_nonterminals = Utils::vector_from_str(http_nonterminals);
 	Non_terminals _nonterminals(str_nonterminals);
 	this->nonterminals = _nonterminals;
 }
