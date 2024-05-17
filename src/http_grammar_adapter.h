@@ -4,8 +4,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
-
-#include "grammar.h"
+#include "non_terminals.h"
 #include "utils.h"
 
 
@@ -14,10 +13,8 @@
  */
 class Http_grammar_adapter
 {
-	/** 
-	 * \brief the Grammar of which the object is a view
-	 */
-	Grammar grammar;
+	
+	Non_terminals nonterminals;
 	
 	
 	
