@@ -57,10 +57,6 @@ class Http_grammar_adapter
 		const std::string & http_head,
 		const std::string & http_rules);
 	
-	/** 
-	 * \brief constructor
-	 */
-	Http_grammar_adapter( const Grammar & grammar);
 	
 	/** 
 	 * \brief generate http representation of nonterminals
@@ -72,11 +68,6 @@ class Http_grammar_adapter
 	 */
 	std::string terminals_to_http() const;
 	
-	
-	/** 
-	 * \brief grammar's getter
-	 */
-	Grammar get_grammar() const;
 	
 };
 

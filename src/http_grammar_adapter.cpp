@@ -10,17 +10,6 @@ Http_grammar_adapter::Http_grammar_adapter(
 	nonterminals_from_http(http_nonterminals);
 }
 
-Http_grammar_adapter::Http_grammar_adapter( const Grammar & _grammar):
-	grammar(_grammar)
-{
-	
-}
-
-Grammar Http_grammar_adapter::get_grammar() const
-{
-	return this->grammar;
-}
-
 
 void Http_grammar_adapter::nonterminals_from_http(const std::string & param)
 {	
