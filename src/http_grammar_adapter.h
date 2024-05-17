@@ -38,7 +38,6 @@ class Http_grammar_adapter
 	 * normal string)
 	 */
 	Http_grammar_adapter(
-		const std::string & http_terminals,
 		const std::string & http_nonterminals);
 	
 	

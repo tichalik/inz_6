@@ -1,7 +1,6 @@
 #include "http_grammar_adapter.h"
 
 Http_grammar_adapter::Http_grammar_adapter(
-	const std::string & http_terminals,
 	const std::string & http_nonterminals)
 {
 	nonterminals_from_http(http_nonterminals);
