@@ -15,15 +15,6 @@ void Http_grammar_adapter::nonterminals_from_http(const std::string & param)
 	this->grammar.set_nonterminals(nonterminals);
 }
 
-
-std::string Http_grammar_adapter::rule_to_http(const Rule & rule) const 
-{
-	return rule.left.to_http() + " -> " 
-		+ rule.right1.to_http() + " " + rule.right2.to_http();
-}
-
-
-
 std::string Http_grammar_adapter::nonterminals_to_http() const
 {
 	Non_terminals nonterminals = grammar.get_nonterminals();

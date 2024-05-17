@@ -29,11 +29,6 @@ class Http_grammar_adapter
 	 */
 	void nonterminals_from_http(const std::string & param);
 	
-    /** 
-	 * \brief generate http representation of a rule
-	 */
-	std::string rule_to_http(const Rule & rule) const;
-	
 	public:
 	
 	/** 
