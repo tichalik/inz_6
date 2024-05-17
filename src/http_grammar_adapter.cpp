@@ -8,8 +8,8 @@ Http_grammar_adapter::Http_grammar_adapter(
 {
 	terminals_from_http(http_terminals);
 	nonterminals_from_http(http_nonterminals);
-	head_from_http(http_head);
-	rules_from_http(http_rules);
+	// head_from_http(http_head);
+	// rules_from_http(http_rules);
 }
 
 Http_grammar_adapter::Http_grammar_adapter( const Grammar & _grammar):
