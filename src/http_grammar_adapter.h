@@ -72,17 +72,6 @@ class Http_grammar_adapter
 	 */
 	std::string terminals_to_http() const;
 	
-	/** 
-	 * \brief generate http representation of the head
-	 */
-	std::string head_to_http() const;
-	
-	/** 
-	 * \brief generate http representation of the rules
-	 */
-	std::string rules_to_http() const;
-	
-	
 	
 	/** 
 	 * \brief grammar's getter

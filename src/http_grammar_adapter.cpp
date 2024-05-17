@@ -76,23 +76,3 @@ std::string Http_grammar_adapter::terminals_to_http() const
 	
 	return res ;
 }
-
-std::string Http_grammar_adapter::head_to_http() const
-{
-	return this->grammar.get_head();
-}
-
-std::string Http_grammar_adapter::rules_to_http() const
-{
-	std::string res; 
-	
-	Rules rules = this->grammar.get_rules();
-	
-	for (size_t i=0; i< rules.size(); i++)
-	{
-		res += rule_to_http(rules[i]) + "\n";
-	}
-	res = res.substr(0, res.size()-1);
-	
-	return res;
-}
