@@ -12,8 +12,6 @@
 class Non_terminals 
 {
 	
-	Errors errors;
-	
 	
 	/** 
 	 * \brief collection of symbols
@@ -23,13 +21,6 @@ class Non_terminals
 	std::vector<Symbol> symbols;
 	
 	
-	/** 
-	 * \brief get position of first symbol with matching `symbol` field
-	 *
-	 * Only the symbol fields are matched. If no symbol is found, returns size 
-	 * of the symbol collection. 
-	 */
-	size_t get_index(const Symbol & symbol) const;
 	
 public:
 
@@ -45,26 +36,6 @@ public:
 	 * fields beforehand.
 	 */
 	Non_terminals();
-	
-	/** 
-	 * \brief check if symbols repeat
-	 *
-	 * Repeating symbols are marked with proper error message
-	 */
-	void check_for_internal_errors();
-	
-	/** 
-	 * \brief check if there are symbols common to this object and the parameter
-	 *
-	 * common symbols are marked with proper error message. Applies only to this 
-	 * object.
-	 */
-	void check_for_intersection_errors( const Non_terminals & other);
-	
-	/** 
-	 * \brief whether a symbol of given `symbol` field is present in the container
-	 */
-	bool contains(const Symbol & symbol) const;
 	
 	
 	/** 
