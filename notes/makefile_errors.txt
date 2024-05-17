@@ -1,0 +1,2 @@
+jak wywala błędy że brakuje definicji funckji przy linkowaniu, to prawdopodobnie 
+trzeba makefile'a aktualizować 

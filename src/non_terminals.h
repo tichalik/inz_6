@@ -72,7 +72,7 @@ public:
 	 *
 	 * stupid but necessary for creating html representation in `Http_grammar_adapter`
 	 */
-	std::vector<Symbol> get_symbols();
+	std::vector<Symbol> get_symbols() const;
 	
 };
 

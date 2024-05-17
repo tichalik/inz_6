@@ -14,7 +14,7 @@ Non_terminals::Non_terminals()
 
 }
 
-std::vector<Symbol> Non_terminals::get_symbols()
+std::vector<Symbol> Non_terminals::get_symbols() const
 {
 	return this->symbols;
 }
