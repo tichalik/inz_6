@@ -4,6 +4,7 @@
 #include "symbol.h"
 #include "error.h"
 #include <vector>
+#include <sstream>
 
 
 /** 

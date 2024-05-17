@@ -5,7 +5,6 @@
 #include <sstream>
 #include <vector>
 #include "non_terminals.h"
-#include "utils.h"
 
 
 /** 
@@ -16,6 +15,7 @@ class Http_grammar_adapter
 	
 	Non_terminals nonterminals;
 	
+	std::vector<std::string> vector_from_str(const std::string & input);
 	public:
 	
 	/** 
