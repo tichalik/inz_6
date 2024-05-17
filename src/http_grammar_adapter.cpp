@@ -8,8 +8,6 @@ Http_grammar_adapter::Http_grammar_adapter(
 {
 	terminals_from_http(http_terminals);
 	nonterminals_from_http(http_nonterminals);
-	// head_from_http(http_head);
-	// rules_from_http(http_rules);
 }
 
 Http_grammar_adapter::Http_grammar_adapter( const Grammar & _grammar):
@@ -37,34 +35,6 @@ void Http_grammar_adapter::terminals_from_http(const std::string & param)
 	Non_terminals terminals(str_terminals);
 	this->grammar.set_terminals(terminals);
 }
-
-void Http_grammar_adapter::head_from_http(const std::string & param)
-{
-	std::vector<Head> head = Utils::vector_from_str(param);
-	this->grammar.set_head(head[0]);
-}
-
-void Http_grammar_adapter::rules_from_http(const std::string & param)
-{
-	std::vector<Rule> _tules;
-	
-	std::stringstream ss;
-	ss << param;
-
-	std::string line;
-	while(std::getline(ss, line))
-	{
-		std::string tmp;
-		Rule r; 
-		std::stringstream sss; 
-		sss << line;
-		sss >> r.left.symbol >> tmp >> r.right1.symbol >> r.right2.symbol;
-		_tules.push_back(r);
-	}
-	
-	this->grammar.set_rules(_tules);
-}
-
 
 
 std::string Http_grammar_adapter::rule_to_http(const Rule & rule) const 

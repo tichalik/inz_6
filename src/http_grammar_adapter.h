@@ -37,24 +37,7 @@ class Http_grammar_adapter
 	 */
 	void terminals_from_http(const std::string & param);
 	
-    /** 
-	 * \brief extract grammar information from a string obtained from http request
-	 *
-	 * assume the string is already processed (htpp entities are translated to 
-	 * normal string)
-	 */
-	void head_from_http(const std::string & param);
-	
-    /** 
-	 * \brief extract grammar information from a string obtained from http request
-	 *
-	 * assume the string is already processed (htpp entities are translated to 
-	 * normal string)
-	 */
-	void rules_from_http(const std::string & param);
-	
-	
-	
+    
     /** 
 	 * \brief generate http representation of a rule
 	 */
