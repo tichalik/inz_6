@@ -19,8 +19,6 @@ class Grammar
 {
 	
 	Non_terminals nonterminals;
-	Non_terminals terminals;
-	
 
 	public:
 	
@@ -29,24 +27,12 @@ class Grammar
 	 * \brief getter
 	 */
 	Non_terminals get_nonterminals() const;
-    
-	/** 
-	 * \brief getter
-	 */
-	Non_terminals get_terminals() const;
-    
 	
     /** 
 	 * \brief setter
 	 */
 	void set_nonterminals(const Non_terminals & _nonterminals);
     
-    /** 
-	 * \brief setter
-	 */
-	void set_terminals(const Non_terminals & _terminals);
-    
-   
 
 };
 
