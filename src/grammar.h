@@ -11,21 +11,6 @@
 #include "symbol.h"
 #include "non_terminals.h"
 
-/** 
- * \brief representation of grammatical rule in form 
- *	left -> right1 right 2
- */
-struct Rule
-{
-    Symbol left;
-    Symbol right1, right2;
-
-	std::string to_string() const;
-};
-
-typedef std::vector<Rule> Rules;
-typedef std::string Head;
-
 
 /** 
  * \brief grammar in Chomsky's normal form
@@ -35,8 +20,7 @@ class Grammar
 	
 	Non_terminals nonterminals;
 	Non_terminals terminals;
-	Head head;
-	Rules rules;
+	
 
 	public:
 	
@@ -51,16 +35,7 @@ class Grammar
 	 */
 	Non_terminals get_terminals() const;
     
-	/** 
-	 * \brief getter
-	 */
-	Head get_head() const;
-    
-	/** 
-	 * \brief getter
-	 */
-	Rules get_rules() const;
-
+	
     /** 
 	 * \brief setter
 	 */
@@ -71,21 +46,7 @@ class Grammar
 	 */
 	void set_terminals(const Non_terminals & _terminals);
     
-    /** 
-	 * \brief setter
-	 */
-	void set_head(const Head & _head);
-    
-    /** 
-	 * \brief setter
-	 */
-	void set_rules(const Rules & _rules);
-	
-		
-	/** 
-	 * \brief get grammar's printf friendly description
-	 */
-	std::string to_string() const;
+   
 
 };
 
