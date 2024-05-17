@@ -30,15 +30,6 @@ class Http_grammar_adapter
 	void nonterminals_from_http(const std::string & param);
 	
     /** 
-	 * \brief extract grammar information from a string obtained from http request
-	 *
-	 * assume the string is already processed (htpp entities are translated to 
-	 * normal string)
-	 */
-	void terminals_from_http(const std::string & param);
-	
-    
-    /** 
 	 * \brief generate http representation of a rule
 	 */
 	std::string rule_to_http(const Rule & rule) const;
@@ -60,12 +51,6 @@ class Http_grammar_adapter
 	 * \brief generate http representation of nonterminals
 	 */
 	std::string nonterminals_to_http() const;
-	
-	/** 
-	 * \brief generate http representation of terminals
-	 */
-	std::string terminals_to_http() const;
-	
 	
 };
 
