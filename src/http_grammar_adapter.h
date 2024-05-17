@@ -53,9 +53,7 @@ class Http_grammar_adapter
 	 */
 	Http_grammar_adapter(
 		const std::string & http_terminals,
-		const std::string & http_nonterminals,
-		const std::string & http_head,
-		const std::string & http_rules);
+		const std::string & http_nonterminals);
 	
 	
 	/** 
