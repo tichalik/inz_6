@@ -28,10 +28,6 @@ class Http_grammar_adapter
 	
 	std::vector<Symbol> symbols;
 	
-	Http_grammar_adapter(const std::vector<std::string> & vect);
-	
-	std::vector<Symbol> get_symbols() const;
-	
 };
 
 
@@ -50,14 +46,6 @@ int main()
 		for (size_t i=0; i<http_grammar_adapter.symbols.size(); i++)
 		{
 			std::cout << "<" << http_grammar_adapter.symbols[i].symbol << "> " ;
-		}
-		std::cout << std::endl;
-		
-		std::cout << "http_grammar_adapter.get_symbols:" << std::endl;
-		std::vector<Symbol> symbols =http_grammar_adapter.get_symbols();
-		for (size_t i=0; i<symbols.size(); i++)
-		{
-			std::cout << "<" << symbols[i].symbol << "> " ;
 		}
 		std::cout << std::endl;
 			
@@ -84,14 +72,6 @@ int main()
 			std::cout << "<" << http_grammar_adapter.symbols[i].symbol << "> " ;
 		}
 		std::cout << std::endl;
-		
-		std::cout << "http_grammar_adapter.get_symbols:" << std::endl;
-		std::vector<Symbol> symbols =http_grammar_adapter.get_symbols();
-		for (size_t i=0; i<symbols.size(); i++)
-		{
-			std::cout << "<" << symbols[i].symbol << "> " ;
-		}
-		std::cout << std::endl;
 			
 			
 		std::cout << http_grammar_adapter.nonterminals_to_http() 
@@ -115,15 +95,6 @@ int main()
 			std::cout << "<" << http_grammar_adapter.symbols[i].symbol << "> " ;
 		}
 		std::cout << std::endl;
-		
-		std::cout << "http_grammar_adapter.get_symbols:" << std::endl;
-		std::vector<Symbol> symbols =http_grammar_adapter.get_symbols();
-		for (size_t i=0; i<symbols.size(); i++)
-		{
-			std::cout << "<" << symbols[i].symbol << "> " ;
-		}
-		std::cout << std::endl;
-			
 			
 		std::string res = http_grammar_adapter.nonterminals_to_http() ;
 		
@@ -150,15 +121,6 @@ int main()
 		}
 		std::cout << std::endl;
 		
-		std::cout << "http_grammar_adapter.get_symbols:" << std::endl;
-		std::vector<Symbol> symbols =http_grammar_adapter.get_symbols();
-		for (size_t i=0; i<symbols.size(); i++)
-		{
-			std::cout << "<" << symbols[i].symbol << "> " ;
-		}
-		std::cout << std::endl;
-			
-			
 		std::string res = http_grammar_adapter.nonterminals_to_http() ;
 			
 		std::cout << res
@@ -213,12 +175,4 @@ std::vector<std::string> Http_grammar_adapter::vector_from_str(const std::string
 	}
 
 	return output;
-}
-
-
-
-
-std::vector<Symbol> Http_grammar_adapter::get_symbols() const
-{
-	return this->symbols;
 }
