@@ -9,8 +9,6 @@ class Http_grammar_adapter
 {
 	public:
 	
-	std::vector<std::string> get_example_vector();
-	
 	Http_grammar_adapter();
 	
 	std::string nonterminals_to_http() const;
@@ -28,14 +26,6 @@ int main()
 		//http adapter -- filling head and rules with dummies
 		Http_grammar_adapter http_grammar_adapter;
 			
-			
-		std::cout << "http_grammar_adapter.symbols:" << std::endl;
-		for (size_t i=0; i<http_grammar_adapter.symbols.size(); i++)
-		{
-			std::cout << "<" << http_grammar_adapter.symbols[i] << "> " ;
-		}
-		std::cout << std::endl;
-			
 		std::string res = http_grammar_adapter.nonterminals_to_http() ;
 		
 		std::cout << "result: <<" << res << ">>" << std::endl;
@@ -48,11 +38,24 @@ int main()
 
 Http_grammar_adapter::Http_grammar_adapter()
 { 
-	this->symbols = get_example_vector();
+	symbols.push_back("a");
+	symbols.push_back("b");
+	symbols.push_back("c");
+	symbols.push_back("d");
+	symbols.push_back("e");
+	symbols.push_back("f");
 }
 
 std::string Http_grammar_adapter::nonterminals_to_http() const
 {	
+	std::cout << "symbols:" << std::endl;
+	for (size_t i=0; i<symbols.size(); i++)
+	{
+		std::cout << "<" << symbols[i] << "> " ;
+	}
+	std::cout << std::endl;
+		
+
 	std::string res;
 	for (size_t i; i< symbols.size(); i++)
 	{
@@ -62,20 +65,4 @@ std::string Http_grammar_adapter::nonterminals_to_http() const
 	res = res.substr(0, res.size()-1);
 	
 	return res ;
-}
-
-
-
-std::vector<std::string> Http_grammar_adapter::get_example_vector()
-{
-	std::vector<std::string> output;
-	
-	output.push_back("a");
-	output.push_back("b");
-	output.push_back("c");
-	output.push_back("d");
-	output.push_back("e");
-	output.push_back("f");
-	
-	return output;
 }
