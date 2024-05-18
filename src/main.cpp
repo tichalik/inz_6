@@ -4,8 +4,10 @@
 #include <sstream>
 
 
-std::string nonterminals_to_http() 
-{	
+
+int main()
+{
+	
 	std::vector<std::string> symbols;
 
 	symbols.push_back("a");
@@ -31,20 +33,9 @@ std::string nonterminals_to_http()
 	
 	res = res.substr(0, res.size()-1);
 	
-	return res ;
-}
-
-
-int main()
-{
-	
-	std::cout << "-----------------------------------------------------" << std::endl;
-
-	std::string res = nonterminals_to_http();
 	
 	std::cout << "result: <<" << res << ">>" << std::endl;
 
-	std::cout << "-----------------------------------------------------" << std::endl;
 
 }
 
