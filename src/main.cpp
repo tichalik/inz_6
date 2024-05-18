@@ -54,14 +54,7 @@ int main()
 Http_grammar_adapter::Http_grammar_adapter(
 	const std::string & http_nonterminals)
 {
-	const std::vector<std::string> vect = get_example_vector();
-	
-	for (size_t i = 0; i<vect.size(); i++)
-	{
-		std::string s;
-		s = vect[i];
-		this->symbols.push_back(s);
-	}
+	this->symbols = get_example_vector();
 }
 
 std::string Http_grammar_adapter::nonterminals_to_http() const
