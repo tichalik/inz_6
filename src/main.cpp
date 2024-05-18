@@ -15,29 +15,9 @@ struct Symbol
 	}
 };
 
-
-class Non_terminals 
-{
-	
-public:
-	
-	
-	std::vector<Symbol> symbols;
-	
-	Non_terminals(const std::vector<std::string> & vect);
-	
-	Non_terminals();
-	
-	std::vector<Symbol> get_symbols() const;
-	
-};
-
-
 class Http_grammar_adapter
 {
 	public:
-	
-	Non_terminals nonterminals;
 	
 	std::vector<std::string> vector_from_str(const std::string & input);
 	
@@ -45,6 +25,12 @@ class Http_grammar_adapter
 		const std::string & http_nonterminals);
 	
 	std::string nonterminals_to_http() const;
+	
+	std::vector<Symbol> symbols;
+	
+	Http_grammar_adapter(const std::vector<std::string> & vect);
+	
+	std::vector<Symbol> get_symbols() const;
 	
 };
 
@@ -60,15 +46,15 @@ int main()
 		Http_grammar_adapter http_grammar_adapter(
 			http_input);
 			
-		std::cout << "http_grammar_adapter.nonterminals.symbols:" << std::endl;
-		for (size_t i=0; i<http_grammar_adapter.nonterminals.symbols.size(); i++)
+		std::cout << "http_grammar_adapter.symbols:" << std::endl;
+		for (size_t i=0; i<http_grammar_adapter.symbols.size(); i++)
 		{
-			std::cout << "<" << http_grammar_adapter.nonterminals.symbols[i].symbol << "> " ;
+			std::cout << "<" << http_grammar_adapter.symbols[i].symbol << "> " ;
 		}
 		std::cout << std::endl;
 		
-		std::cout << "http_grammar_adapter.nonterminals.get_symbols:" << std::endl;
-		std::vector<Symbol> symbols =http_grammar_adapter.nonterminals.get_symbols();
+		std::cout << "http_grammar_adapter.get_symbols:" << std::endl;
+		std::vector<Symbol> symbols =http_grammar_adapter.get_symbols();
 		for (size_t i=0; i<symbols.size(); i++)
 		{
 			std::cout << "<" << symbols[i].symbol << "> " ;
@@ -92,15 +78,15 @@ int main()
 			http_input);
 			
 			
-		std::cout << "http_grammar_adapter.nonterminals.symbols:" << std::endl;
-		for (size_t i=0; i<http_grammar_adapter.nonterminals.symbols.size(); i++)
+		std::cout << "http_grammar_adapter.symbols:" << std::endl;
+		for (size_t i=0; i<http_grammar_adapter.symbols.size(); i++)
 		{
-			std::cout << "<" << http_grammar_adapter.nonterminals.symbols[i].symbol << "> " ;
+			std::cout << "<" << http_grammar_adapter.symbols[i].symbol << "> " ;
 		}
 		std::cout << std::endl;
 		
-		std::cout << "http_grammar_adapter.nonterminals.get_symbols:" << std::endl;
-		std::vector<Symbol> symbols =http_grammar_adapter.nonterminals.get_symbols();
+		std::cout << "http_grammar_adapter.get_symbols:" << std::endl;
+		std::vector<Symbol> symbols =http_grammar_adapter.get_symbols();
 		for (size_t i=0; i<symbols.size(); i++)
 		{
 			std::cout << "<" << symbols[i].symbol << "> " ;
@@ -123,15 +109,15 @@ int main()
 			http_input);
 			
 			
-		std::cout << "http_grammar_adapter.nonterminals.symbols:" << std::endl;
-		for (size_t i=0; i<http_grammar_adapter.nonterminals.symbols.size(); i++)
+		std::cout << "http_grammar_adapter.symbols:" << std::endl;
+		for (size_t i=0; i<http_grammar_adapter.symbols.size(); i++)
 		{
-			std::cout << "<" << http_grammar_adapter.nonterminals.symbols[i].symbol << "> " ;
+			std::cout << "<" << http_grammar_adapter.symbols[i].symbol << "> " ;
 		}
 		std::cout << std::endl;
 		
-		std::cout << "http_grammar_adapter.nonterminals.get_symbols:" << std::endl;
-		std::vector<Symbol> symbols =http_grammar_adapter.nonterminals.get_symbols();
+		std::cout << "http_grammar_adapter.get_symbols:" << std::endl;
+		std::vector<Symbol> symbols =http_grammar_adapter.get_symbols();
 		for (size_t i=0; i<symbols.size(); i++)
 		{
 			std::cout << "<" << symbols[i].symbol << "> " ;
@@ -157,15 +143,15 @@ int main()
 			http_input);
 			
 			
-		std::cout << "http_grammar_adapter.nonterminals.symbols:" << std::endl;
-		for (size_t i=0; i<http_grammar_adapter.nonterminals.symbols.size(); i++)
+		std::cout << "http_grammar_adapter.symbols:" << std::endl;
+		for (size_t i=0; i<http_grammar_adapter.symbols.size(); i++)
 		{
-			std::cout << "<" << http_grammar_adapter.nonterminals.symbols[i].symbol << "> " ;
+			std::cout << "<" << http_grammar_adapter.symbols[i].symbol << "> " ;
 		}
 		std::cout << std::endl;
 		
-		std::cout << "http_grammar_adapter.nonterminals.get_symbols:" << std::endl;
-		std::vector<Symbol> symbols =http_grammar_adapter.nonterminals.get_symbols();
+		std::cout << "http_grammar_adapter.get_symbols:" << std::endl;
+		std::vector<Symbol> symbols =http_grammar_adapter.get_symbols();
 		for (size_t i=0; i<symbols.size(); i++)
 		{
 			std::cout << "<" << symbols[i].symbol << "> " ;
@@ -187,18 +173,14 @@ int main()
 
 
 Http_grammar_adapter::Http_grammar_adapter(
-	const std::string & http_nonterminals)
+	const std::string & http_nonterminals):
+	Http_grammar_adapter(vector_from_str(http_nonterminals))
 {
-	// nonterminals_from_http(http_nonterminals);
-	std::vector<std::string> str_nonterminals = vector_from_str(http_nonterminals);
-	Non_terminals _nonterminals(str_nonterminals);
-	this->nonterminals = _nonterminals;
+	
 }
 
 std::string Http_grammar_adapter::nonterminals_to_http() const
-{
-	std::vector<Symbol> symbols = nonterminals.get_symbols();
-	
+{	
 	std::string res;
 	for (size_t i; i< symbols.size(); i++)
 	{
@@ -229,7 +211,7 @@ std::vector<std::string> Http_grammar_adapter::vector_from_str(const std::string
 
 
 
-Non_terminals::Non_terminals(const std::vector<std::string> & vect)
+Http_grammar_adapter::Http_grammar_adapter(const std::vector<std::string> & vect)
 {
 	for (size_t i = 0; i<vect.size(); i++)
 	{
@@ -238,12 +220,9 @@ Non_terminals::Non_terminals(const std::vector<std::string> & vect)
 		this->symbols.push_back(s);
 	}
 }
-Non_terminals::Non_terminals()
-{
 
-}
 
-std::vector<Symbol> Non_terminals::get_symbols() const
+std::vector<Symbol> Http_grammar_adapter::get_symbols() const
 {
 	return this->symbols;
 }
