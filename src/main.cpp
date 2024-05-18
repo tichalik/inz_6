@@ -21,14 +21,14 @@ int main()
 {
 	
 	std::cout << "-----------------------------------------------------" << std::endl;
-	{
-		//http adapter -- filling head and rules with dummies
-		Http_grammar_adapter http_grammar_adapter;
-			
-		std::string res = http_grammar_adapter.nonterminals_to_http() ;
+
+	//http adapter -- filling head and rules with dummies
+	Http_grammar_adapter http_grammar_adapter;
 		
-		std::cout << "result: <<" << res << ">>" << std::endl;
-	}
+	std::string res = http_grammar_adapter.nonterminals_to_http() ;
+	
+	std::cout << "result: <<" << res << ">>" << std::endl;
+
 	std::cout << "-----------------------------------------------------" << std::endl;
 
 }
