@@ -13,6 +13,7 @@
 class Non_terminals 
 {
 	
+public:
 	
 	/** 
 	 * \brief collection of symbols
@@ -23,7 +24,6 @@ class Non_terminals
 	
 	
 	
-public:
 
 	/** 
 	 * \brief construct the symbols from given strings

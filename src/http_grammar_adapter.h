@@ -12,11 +12,11 @@
  */
 class Http_grammar_adapter
 {
+	public:
 	
 	Non_terminals nonterminals;
 	
 	std::vector<std::string> vector_from_str(const std::string & input);
-	public:
 	
 	/** 
 	 * \brief constructor, creates a grammar from http request
