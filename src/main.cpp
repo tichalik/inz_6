@@ -5,16 +5,6 @@
 
 
 
-struct Symbol
-{
-	std::string symbol;
-	
-	inline std::string to_http() const
-	{
-		return symbol;
-	}
-};
-
 class Http_grammar_adapter
 {
 	public:
@@ -26,7 +16,7 @@ class Http_grammar_adapter
 	
 	std::string nonterminals_to_http() const;
 	
-	std::vector<Symbol> symbols;
+	std::vector<std::string> symbols;
 	
 };
 
@@ -45,7 +35,7 @@ int main()
 		std::cout << "http_grammar_adapter.symbols:" << std::endl;
 		for (size_t i=0; i<http_grammar_adapter.symbols.size(); i++)
 		{
-			std::cout << "<" << http_grammar_adapter.symbols[i].symbol << "> " ;
+			std::cout << "<" << http_grammar_adapter.symbols[i] << "> " ;
 		}
 		std::cout << std::endl;
 			
@@ -69,7 +59,7 @@ int main()
 		std::cout << "http_grammar_adapter.symbols:" << std::endl;
 		for (size_t i=0; i<http_grammar_adapter.symbols.size(); i++)
 		{
-			std::cout << "<" << http_grammar_adapter.symbols[i].symbol << "> " ;
+			std::cout << "<" << http_grammar_adapter.symbols[i] << "> " ;
 		}
 		std::cout << std::endl;
 			
@@ -92,7 +82,7 @@ int main()
 		std::cout << "http_grammar_adapter.symbols:" << std::endl;
 		for (size_t i=0; i<http_grammar_adapter.symbols.size(); i++)
 		{
-			std::cout << "<" << http_grammar_adapter.symbols[i].symbol << "> " ;
+			std::cout << "<" << http_grammar_adapter.symbols[i] << "> " ;
 		}
 		std::cout << std::endl;
 			
@@ -117,7 +107,7 @@ int main()
 		std::cout << "http_grammar_adapter.symbols:" << std::endl;
 		for (size_t i=0; i<http_grammar_adapter.symbols.size(); i++)
 		{
-			std::cout << "<" << http_grammar_adapter.symbols[i].symbol << "> " ;
+			std::cout << "<" << http_grammar_adapter.symbols[i] << "> " ;
 		}
 		std::cout << std::endl;
 		
@@ -141,8 +131,8 @@ Http_grammar_adapter::Http_grammar_adapter(
 	
 	for (size_t i = 0; i<vect.size(); i++)
 	{
-		Symbol s;
-		s.symbol = vect[i];
+		std::string s;
+		s = vect[i];
 		this->symbols.push_back(s);
 	}
 }
@@ -152,7 +142,7 @@ std::string Http_grammar_adapter::nonterminals_to_http() const
 	std::string res;
 	for (size_t i; i< symbols.size(); i++)
 	{
-		res += symbols[i].symbol + " ";
+		res += symbols[i] + " ";
 	}
 	
 	res = res.substr(0, res.size()-1);
