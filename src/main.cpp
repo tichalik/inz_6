@@ -173,10 +173,16 @@ int main()
 
 
 Http_grammar_adapter::Http_grammar_adapter(
-	const std::string & http_nonterminals):
-	Http_grammar_adapter(vector_from_str(http_nonterminals))
+	const std::string & http_nonterminals)
 {
+	const std::vector<std::string> vect = vector_from_str(http_nonterminals);
 	
+	for (size_t i = 0; i<vect.size(); i++)
+	{
+		Symbol s;
+		s.symbol = vect[i];
+		this->symbols.push_back(s);
+	}
 }
 
 std::string Http_grammar_adapter::nonterminals_to_http() const
@@ -210,16 +216,6 @@ std::vector<std::string> Http_grammar_adapter::vector_from_str(const std::string
 }
 
 
-
-Http_grammar_adapter::Http_grammar_adapter(const std::vector<std::string> & vect)
-{
-	for (size_t i = 0; i<vect.size(); i++)
-	{
-		Symbol s;
-		s.symbol = vect[i];
-		this->symbols.push_back(s);
-	}
-}
 
 
 std::vector<Symbol> Http_grammar_adapter::get_symbols() const
