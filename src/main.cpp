@@ -9,7 +9,7 @@ class Http_grammar_adapter
 {
 	public:
 	
-	std::vector<std::string> vector_from_str(const std::string & input);
+	std::vector<std::string> get_example_vector();
 	
 	Http_grammar_adapter(
 		const std::string & http_nonterminals);
@@ -23,51 +23,6 @@ class Http_grammar_adapter
 
 int main()
 {
-	std::cout << "--------------chaining << no storing to string------" << std::endl;
-    {
-		//simulated http input
-		std::string http_input = "a b w c w d";
-		
-		//http adapter -- filling head and rules with dummies
-		Http_grammar_adapter http_grammar_adapter(
-			http_input);
-			
-		std::cout << "http_grammar_adapter.symbols:" << std::endl;
-		for (size_t i=0; i<http_grammar_adapter.symbols.size(); i++)
-		{
-			std::cout << "<" << http_grammar_adapter.symbols[i] << "> " ;
-		}
-		std::cout << std::endl;
-			
-			
-		std::cout << "input:  <<" << http_input 
-			<< ">>\nresult: <<" << http_grammar_adapter.nonterminals_to_http() 
-			<< ">>" << std::endl;
-	}
-	std::cout << "-----------------------------------------------------" << std::endl;
-	
-	std::cout << "--------------single << no storing to string------" << std::endl;
-	{
-		//simulated http input
-		std::string http_input = "a b w c w d";
-		
-		//http adapter -- filling head and rules with dummies
-		Http_grammar_adapter http_grammar_adapter(
-			http_input);
-			
-			
-		std::cout << "http_grammar_adapter.symbols:" << std::endl;
-		for (size_t i=0; i<http_grammar_adapter.symbols.size(); i++)
-		{
-			std::cout << "<" << http_grammar_adapter.symbols[i] << "> " ;
-		}
-		std::cout << std::endl;
-			
-			
-		std::cout << http_grammar_adapter.nonterminals_to_http() 
-			<< std::endl;
-	}
-	std::cout << "-----------------------------------------------------" << std::endl;
 	
 	std::cout << "--------------chaining << storing to string------" << std::endl;
 	{
@@ -88,37 +43,9 @@ int main()
 			
 		std::string res = http_grammar_adapter.nonterminals_to_http() ;
 		
-		std::cout << "input:  <<" << http_input 
-			<< ">>\nresult: <<" <<  res
-			<< ">>" << std::endl;
+		std::cout << "result: <<" << res << ">>" << std::endl;
 	}
 	std::cout << "-----------------------------------------------------" << std::endl;
-	
-	std::cout << "--------------single << storing to string------" << std::endl;
-	{
-		//simulated http input
-		std::string http_input = "a b w c w d";
-		
-		//http adapter -- filling head and rules with dummies
-		Http_grammar_adapter http_grammar_adapter(
-			http_input);
-			
-			
-		std::cout << "http_grammar_adapter.symbols:" << std::endl;
-		for (size_t i=0; i<http_grammar_adapter.symbols.size(); i++)
-		{
-			std::cout << "<" << http_grammar_adapter.symbols[i] << "> " ;
-		}
-		std::cout << std::endl;
-		
-		std::string res = http_grammar_adapter.nonterminals_to_http() ;
-			
-		std::cout << res
-			<< std::endl;
-	}
-	std::cout << "-----------------------------------------------------" << std::endl;
-	
-	
 
 }
 
@@ -127,7 +54,7 @@ int main()
 Http_grammar_adapter::Http_grammar_adapter(
 	const std::string & http_nonterminals)
 {
-	const std::vector<std::string> vect = vector_from_str(http_nonterminals);
+	const std::vector<std::string> vect = get_example_vector();
 	
 	for (size_t i = 0; i<vect.size(); i++)
 	{
@@ -152,17 +79,16 @@ std::string Http_grammar_adapter::nonterminals_to_http() const
 
 
 
-std::vector<std::string> Http_grammar_adapter::vector_from_str(const std::string & input)
+std::vector<std::string> Http_grammar_adapter::get_example_vector()
 {
 	std::vector<std::string> output;
-	std::stringstream ss;
-	ss << input;
 	
-	std::string s; 
-	while (ss >> s)
-	{
-		output.push_back(s);
-	}
-
+	output.push_back("a");
+	output.push_back("b");
+	output.push_back("c");
+	output.push_back("d");
+	output.push_back("e");
+	output.push_back("f");
+	
 	return output;
 }
