@@ -13,7 +13,6 @@ class Http_grammar_adapter
 	
 	std::string nonterminals_to_http() const;
 	
-	std::vector<std::string> symbols;
 	
 };
 
@@ -21,7 +20,7 @@ class Http_grammar_adapter
 int main()
 {
 	
-	std::cout << "--------------chaining << storing to string------" << std::endl;
+	std::cout << "-----------------------------------------------------" << std::endl;
 	{
 		//http adapter -- filling head and rules with dummies
 		Http_grammar_adapter http_grammar_adapter;
@@ -38,16 +37,20 @@ int main()
 
 Http_grammar_adapter::Http_grammar_adapter()
 { 
+	
+}
+
+std::string Http_grammar_adapter::nonterminals_to_http() const
+{	
+	std::vector<std::string> symbols;
+
 	symbols.push_back("a");
 	symbols.push_back("b");
 	symbols.push_back("c");
 	symbols.push_back("d");
 	symbols.push_back("e");
 	symbols.push_back("f");
-}
 
-std::string Http_grammar_adapter::nonterminals_to_http() const
-{	
 	std::cout << "symbols:" << std::endl;
 	for (size_t i=0; i<symbols.size(); i++)
 	{
