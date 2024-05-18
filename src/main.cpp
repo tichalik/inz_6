@@ -4,43 +4,7 @@
 #include <sstream>
 
 
-
-class Http_grammar_adapter
-{
-	public:
-	
-	Http_grammar_adapter();
-	
-	std::string nonterminals_to_http() const;
-	
-	
-};
-
-
-int main()
-{
-	
-	std::cout << "-----------------------------------------------------" << std::endl;
-
-	//http adapter -- filling head and rules with dummies
-	Http_grammar_adapter http_grammar_adapter;
-		
-	std::string res = http_grammar_adapter.nonterminals_to_http() ;
-	
-	std::cout << "result: <<" << res << ">>" << std::endl;
-
-	std::cout << "-----------------------------------------------------" << std::endl;
-
-}
-
-
-
-Http_grammar_adapter::Http_grammar_adapter()
-{ 
-	
-}
-
-std::string Http_grammar_adapter::nonterminals_to_http() const
+std::string nonterminals_to_http() 
 {	
 	std::vector<std::string> symbols;
 
@@ -69,3 +33,20 @@ std::string Http_grammar_adapter::nonterminals_to_http() const
 	
 	return res ;
 }
+
+
+int main()
+{
+	
+	std::cout << "-----------------------------------------------------" << std::endl;
+
+	std::string res = nonterminals_to_http();
+	
+	std::cout << "result: <<" << res << ">>" << std::endl;
+
+	std::cout << "-----------------------------------------------------" << std::endl;
+
+}
+
+
+
