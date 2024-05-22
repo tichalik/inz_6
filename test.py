@@ -17,6 +17,9 @@ def execute(command):
     os.system( command + " > " + tmp_filename)
     res = read_file(tmp_filename)
     os.system( "rm " + tmp_filename)
+    
+    # print(res)
+    
     return res
     
     
@@ -24,13 +27,29 @@ reset = "git reset --hard"
 make = "make"
 make_clean = "make clean"
 run = "./debug/main"
+
+_compile = "g++ ./src/main.cpp -o ./debug/main.o -c"
+link = "g++ ./debug/main.o -o ./debug/main"
+
+one_step_compile = "g++ ./src/main.cpp -o ./debug/main"
+
+g12_compile = "g++-12 ./src/main.cpp -o ./debug/main.o -c"
+g12_link = "g++-12 ./debug/main.o -o ./debug/main"
+
+g12_one_step_compile = "g++-12 ./src/main.cpp -o ./debug/main"
     
 
 commands = [
-    reset,
     make_clean,
-    make,
+    g12_one_step_compile,
     run,
+    run,
+    run,
+    run,
+    run,
+    run,
+    run,
+    g12_one_step_compile,
     run,
     run,
     run,
@@ -60,3 +79,7 @@ for i in range(20):
 
 now = str(datetime.datetime.now()).replace(" ","_").replace(":",".")
 save_file("notes/results" +now + ".txt", txt)
+
+# print(execute(make_clean))
+# print(execute(g12_one_step_compile))
+# print(execute(run))
