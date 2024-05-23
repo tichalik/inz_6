@@ -10,10 +10,10 @@ int main()
     // t.test_infix_chomsky_grammar();
 	// t.test_non_terminal_from_http();
 	// t.test_non_terminal_to_http();
-	t.test_html_response();
+	// t.test_html_response();
 
-	// Server::init();
-	// Server::set_dummy_get("./src/html_templates/infix_arithmetic_filled_form.html");
-	// Server::run();
+	Server::init();
+	Server::set_dummy_get("./src/html_templates/infix_arithmetic_filled_form.html");
+	Server::run();
 
 }

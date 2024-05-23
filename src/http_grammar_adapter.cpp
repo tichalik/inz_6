@@ -81,7 +81,7 @@ std::string Http_grammar_adapter::nonterminals_to_http() const
 	std::vector<Symbol> symbols = nonterminals.get_symbols();
 	
 	std::string res;
-	for (size_t i; i< symbols.size(); i++)
+	for (size_t i=0; i< symbols.size(); i++)
 	{
 		res += symbols[i].symbol + " ";
 	}
@@ -97,7 +97,7 @@ std::string Http_grammar_adapter::terminals_to_http() const
 	std::vector<Symbol> symbols = terminals.get_symbols();
 	
 	std::string res;
-	for (size_t i; i< symbols.size(); i++)
+	for (size_t i=0; i< symbols.size(); i++)
 	{
 		res += symbols[i].symbol + " ";
 	}
