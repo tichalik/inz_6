@@ -27,21 +27,58 @@ Grammar Http_grammar_adapter::get_grammar() const
 void Http_grammar_adapter::nonterminals_from_http(const std::string & param)
 {	
 	std::vector<std::string> str_nonterminals = Utils::vector_from_str(param);
-	Non_terminals nonterminals(str_nonterminals);
-	this->grammar.set_nonterminals(nonterminals);
+	if (str_nonterminals.size() == 0)
+	{
+		Error_desc error;
+		error.error = EMPTY_FIELD;
+		error.description = "empty nonterminals";
+		this->errors.push_back(error);
+	}
+	else 
+	{
+		Non_terminals nonterminals(str_nonterminals);
+		this->grammar.set_nonterminals(nonterminals);
+	}
 }
 
 void Http_grammar_adapter::terminals_from_http(const std::string & param)
 {
 	std::vector<std::string> str_terminals = Utils::vector_from_str(param);
-	Non_terminals terminals(str_terminals);
-	this->grammar.set_terminals(terminals);
+	if (str_terminals.size() == 0)
+	{
+		Error_desc error;
+		error.error = EMPTY_FIELD;
+		error.description = "empty terminals";
+		this->errors.push_back(error);
+	}
+	else 
+	{
+		Non_terminals terminals(str_terminals);
+		this->grammar.set_terminals(terminals);
+	}
 }
 
 void Http_grammar_adapter::head_from_http(const std::string & param)
 {
 	std::vector<Head> head = Utils::vector_from_str(param);
-	this->grammar.set_head(head[0]);
+	if (head.size() == 0)
+	{
+		Error_desc error;
+		error.error = EMPTY_FIELD;
+		error.description = "empty head";
+		this->errors.push_back(error);
+	}
+	else if (head.size() >1)
+	{
+		Error_desc error;
+		error.error = MULTIPLE_HEADS;
+		error.description = "";
+		this->errors.push_back(error);
+	}
+	else 
+	{
+		this->grammar.set_head(head[0]);
+	}
 }
 
 void Http_grammar_adapter::rules_from_http(const std::string & param)

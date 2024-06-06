@@ -58,3 +58,22 @@ std::string Grammar::to_string() const
 	
 	return res;
 }
+
+
+void Grammar::check_errors()
+{
+	terminals.check_for_internal_errors();
+	nonterminals.check_for_internal_errors();
+	
+	terminals.check_for_intersection_errors(nonterminals);
+	nonterminals.check_for_intersection_errors(terminals);
+	
+	// if (terminals.contains(head))
+	// {
+		// errors.push_back(HEAD_IN_TERMINALS);
+	// }
+	// if (!nonterminals.contains(head))
+	// {
+		// errors.push_back(HEAD_NOT_IN_NONTERMINALS);
+	// }
+}

@@ -26,6 +26,15 @@ struct Rule
 typedef std::vector<Rule> Rules;
 typedef std::string Head;
 
+// struct Head
+// {
+	// Symbol symbol;
+	// Errors errors;
+	
+	// void check_for_terminals_errors(const Non_terminals & terminals);
+	// void check_for_nonterminals_errors(const Non_terminals & nonterminals);
+// }
+
 
 /** 
  * \brief grammar in Chomsky's normal form
@@ -37,6 +46,8 @@ class Grammar
 	Non_terminals terminals;
 	Head head;
 	Rules rules;
+	
+	Errors errors;
 
 	public:
 	
@@ -86,6 +97,8 @@ class Grammar
 	 * \brief get grammar's printf friendly description
 	 */
 	std::string to_string() const;
+	
+	void check_errors();
 
 };
 
