@@ -20,6 +20,8 @@ struct Rule
 {
     Symbol left;
     Symbol right1, right2;
+	
+	Errors errors;
 
 	std::string to_string() const;
 };

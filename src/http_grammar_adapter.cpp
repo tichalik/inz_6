@@ -92,12 +92,135 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 	std::string line;
 	while(std::getline(ss, line))
 	{
+		//state variable -- true if on LHS of the rule
+		bool is_LHS = true;
+		//control variable -- true if line is empty
+		bool is_empty = true;
+		
+		std::string str_LHS, str_RHS1, str_RHS2;
+		
+		Rule rule;
+		
 		std::string tmp;
-		Rule r; 
-		std::stringstream sss; 
-		sss << line;
-		sss >> r.left.symbol >> tmp >> r.right1.symbol >> r.right2.symbol;
-		_tules.push_back(r);
+		//THE ARROW HAS TO BE SURROUNDED BY WHITESPACE!!!
+		for (size_t i=0; i<line.size(); i++)
+		{
+			switch(line[i])
+			{
+				case ' ':
+				case '\t':
+				{
+					//whitespace character
+					if (!is_empty)
+					{
+						//if there was some input 
+						if (tmp == "->")
+						{
+							//last parsed item was an arrow
+							if (is_LHS == true)
+							{
+								//there already has been an arrow
+								rule.errors.push_back(MULTIPLE_ARROWS);
+							}
+							else
+							{
+								//we are on LHS and encounter the arrow -- 
+								//  -- we switch to RHS
+								is_LHS = false;
+							}
+						}
+						else
+						{
+							//last parsed item was a token of the rule
+							if (is_LHS == true)
+							{
+								//we are on the LHS
+								if (str_LHS != "")
+								{
+									//the LHS was already filled! 
+									rule.errors.push_back(TOO_MANY_LHS);									
+								}
+								else
+								{
+									//it is the first LHS 
+									str_LHS = tmp;
+								}
+							}
+							else 
+							{
+								//we are on RHS
+								if (str_RHS1 == "")
+								{
+									//RHS1 is empty -- we fill it
+									str_RHS1 = tmp;
+								}
+								else if (str_RHS2 == "")
+								{
+									//RHS2 is empty -- we fill it
+									str_RHS2 = tmp;
+								}
+								else 
+								{
+									//both RHS1 and RHS2 have been filled -- error
+									rule.errors.push_back(TOO_MANY_RHS);									
+								}
+							}
+						}
+						
+						//clear tmp
+						tmp = "";
+					}
+					else
+					{
+						//whitespace at the beginning of line -- skip it
+					}
+				
+					break;
+				}
+				default:
+				{
+					//non-whitespace character
+					is_empty = false;
+					tmp += line[i];
+					break;
+				}
+			}
+		}
+		
+		//skipping empty lines
+		if (!is_empty)
+		{
+			//check if rule misses any pieces 
+			bool ok = true;
+			
+			if (str_LHS == "")
+			{
+				rule.errors.push_back(MISSING_LHS);		
+				ok = false;
+			}
+			
+			if (str_RHS1 == "" || str_RHS2 == "")
+			{
+				rule.errors.push_back(TOO_FEW_RHS);									
+				ok = false;
+			}
+			
+			if (ok == true)
+			{
+				rule.left.symbol = str_LHS;
+				rule.right1.symbol = str_RHS1;
+				rule.right2.symbol = str_RHS2;
+				_tules.push_back(rule);
+			}
+		}
+	}
+	
+	if (_tules.size() == 0)
+	{
+		Error_desc error;
+		error.error = EMPTY_FIELD;
+		error.description = "empty rules";
+		this->errors.push_back(error);
 	}
 	
 	this->grammar.set_rules(_tules);

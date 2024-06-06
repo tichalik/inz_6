@@ -60,15 +60,15 @@ std::string error2str(const EN_ERROR_TYPE &error)
 		case IN_BOTH_TERMINALS_AND_NONTERMINALS:
 			res = "IN_BOTH_TERMINALS_AND_NONTERMINALS";
 			break;
-		case MALFORMED_RULE:
-			res = "MALFORMED_RULE";
-			break;
+		// case MALFORMED_RULE:
+			// res = "MALFORMED_RULE";
+			// break;
 		case UNKNOWN_SYMBOL:
 			res = "UNKNOWN_SYMBOL";
 			break;
-		case NON_CHOMSKY_RULE:
-			res = "NON_CHOMSKY_RULE";
-			break;
+		// case NON_CHOMSKY_RULE:
+			// res = "NON_CHOMSKY_RULE";
+			// break;
 		default:
 			break;
 	}
