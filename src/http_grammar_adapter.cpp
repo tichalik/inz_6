@@ -163,3 +163,8 @@ std::string Http_grammar_adapter::rules_to_http() const
 	
 	return res;
 }
+
+bool Http_grammar_adapter::has_errors() const
+{
+	return this->errors.size()!=0;
+}

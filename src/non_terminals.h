@@ -74,6 +74,8 @@ public:
 	 */
 	std::vector<Symbol> get_symbols() const;
 	
+	bool has_errors();
+	
 };
 
 #endif //_NON_TERMINALS_H_

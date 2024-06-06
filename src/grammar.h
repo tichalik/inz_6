@@ -99,6 +99,8 @@ class Grammar
 	std::string to_string() const;
 	
 	void check_errors();
+	
+	bool has_errors();
 
 };
 

@@ -27,10 +27,9 @@ void Server::post_handler(const httplib::Request & req,
 	Grammar grammar = http_grammar_adapter.get_grammar();
 	
 	Parsing_grammar_adapter parsing_grammar_adapter(grammar);
+	grammar.check_errors();
 
 	std::cout << grammar.to_string() <<std::endl;
-	
-	// std::vector<Error> grammar_errors = grammar.get_errors();
 
 	Word input;
 	input.from_http(req.get_param_value("input"));
@@ -38,8 +37,9 @@ void Server::post_handler(const httplib::Request & req,
 
 	// std::vector<Error> input_errors = input.get_errors();
 
-	// if (grammar_errors.size() == 0 && input_errors.size() == 0)
-	// {
+	if (!grammar.has_errors() || http_grammar_adapter.has_errors())
+		// == 0 && input_errors.size() == 0)
+	{
 		Parser parser;
 
 		PTrees result = parser.parse(input, parsing_grammar_adapter );
@@ -49,7 +49,7 @@ void Server::post_handler(const httplib::Request & req,
 		// std::vector<Errors> parser_errors = parser.get_errors();
 		response.fill_response(RESP_FIELDS::RESULTS, result.to_http());
 		
-	// }
+	}
 	response.fill_response(RESP_FIELDS::HEAD, http_grammar_adapter.head_to_http());
 	response.fill_response(RESP_FIELDS::TERMINALS, http_grammar_adapter.terminals_to_http());
 	response.fill_response(RESP_FIELDS::NONTERMINALS, http_grammar_adapter.nonterminals_to_http());

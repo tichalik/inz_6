@@ -77,3 +77,10 @@ void Grammar::check_errors()
 		// errors.push_back(HEAD_NOT_IN_NONTERMINALS);
 	// }
 }
+
+bool Grammar::has_errors()
+{
+	return this->errors.size() != 0 
+		|| this->nonterminals.has_errors()
+		|| this->terminals.has_errors();
+}

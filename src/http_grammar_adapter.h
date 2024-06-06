@@ -113,6 +113,8 @@ class Http_grammar_adapter
 	 */
 	Grammar get_grammar() const;
 	
+	bool has_errors() const;
+	
 };
 
 #endif //HTTP_GRAMMAR_ADAPTER_H_

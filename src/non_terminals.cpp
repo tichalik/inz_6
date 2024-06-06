@@ -62,3 +62,8 @@ bool Non_terminals::contains(const Symbol & symbol) const
 	}
 	return res;
 }
+
+bool Non_terminals::has_errors()
+{
+	return this->errors.size() != 0;
+}
