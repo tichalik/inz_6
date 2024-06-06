@@ -60,7 +60,7 @@ void Http_grammar_adapter::terminals_from_http(const std::string & param)
 
 void Http_grammar_adapter::head_from_http(const std::string & param)
 {
-	std::vector<Head> head = Utils::vector_from_str(param);
+	std::vector<std::string> head = Utils::vector_from_str(param);
 	if (head.size() == 0)
 	{
 		Error_desc error;
@@ -77,7 +77,8 @@ void Http_grammar_adapter::head_from_http(const std::string & param)
 	}
 	else 
 	{
-		this->grammar.set_head(head[0]);
+		Head _head(head[0]);
+		this->grammar.set_head(_head);
 	}
 }
 
@@ -146,7 +147,7 @@ std::string Http_grammar_adapter::terminals_to_http() const
 
 std::string Http_grammar_adapter::head_to_http() const
 {
-	return this->grammar.get_head();
+	return this->grammar.get_head().to_string();
 }
 
 std::string Http_grammar_adapter::rules_to_http() const

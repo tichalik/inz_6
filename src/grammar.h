@@ -10,6 +10,7 @@
 #include "error.h"
 #include "symbol.h"
 #include "non_terminals.h"
+#include "head.h"
 
 /** 
  * \brief representation of grammatical rule in form 
@@ -24,17 +25,6 @@ struct Rule
 };
 
 typedef std::vector<Rule> Rules;
-typedef std::string Head;
-
-// struct Head
-// {
-	// Symbol symbol;
-	// Errors errors;
-	
-	// void check_for_terminals_errors(const Non_terminals & terminals);
-	// void check_for_nonterminals_errors(const Non_terminals & nonterminals);
-// }
-
 
 /** 
  * \brief grammar in Chomsky's normal form
@@ -51,6 +41,7 @@ class Grammar
 
 	public:
 	
+	Grammar() {}
 	
     /** 
 	 * \brief getter

@@ -45,7 +45,7 @@ std::string Grammar::to_string() const
 	res += "NONTERMINALS\n";
 	// res += "<" + Utils::vector2str(nonterminals, "> <") + ">\n";
 	res += "HEAD\n";
-	res += "<" + head + ">\n";
+	res += "<" + head.to_string() + ">\n";
 	
 	std::string str_rules;
 	for (size_t i=0; i<rules.size(); i++)
