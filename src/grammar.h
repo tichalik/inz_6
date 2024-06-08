@@ -11,22 +11,7 @@
 #include "symbol.h"
 #include "non_terminals.h"
 #include "head.h"
-
-/** 
- * \brief representation of grammatical rule in form 
- *	left -> right1 right 2
- */
-struct Rule
-{
-    Symbol left;
-    Symbol right1, right2;
-	
-	Errors errors;
-
-	std::string to_string() const;
-};
-
-typedef std::vector<Rule> Rules;
+#include "rules.h"
 
 /** 
  * \brief grammar in Chomsky's normal form

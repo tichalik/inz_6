@@ -3,9 +3,6 @@
 
 #include "error.h"
 #include <string>
-
-// typedef std::string Symbol;
-
 struct Symbol
 {
 	std::string symbol;
@@ -19,6 +16,9 @@ struct Symbol
 	{
 		return symbol;
 	}
+	
+	
+	bool has_errors();
 };
 
 

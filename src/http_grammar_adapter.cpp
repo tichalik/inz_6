@@ -84,7 +84,7 @@ void Http_grammar_adapter::head_from_http(const std::string & param)
 
 void Http_grammar_adapter::rules_from_http(const std::string & param)
 {
-	std::vector<Rule> _tules;
+	Rules _tules;
 	
 	std::stringstream ss;
 	ss << param;

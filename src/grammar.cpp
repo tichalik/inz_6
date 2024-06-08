@@ -1,11 +1,5 @@
 #include "grammar.h"
 
-std::string Rule::to_string() const 
-{
-	return "<" + left.to_string() 
-		+ "> -> <" + right1.to_string()  + "> <" + right2.to_string()  +">";
-}
-
 
 Non_terminals Grammar::get_nonterminals() const {return nonterminals;}
 Non_terminals Grammar::get_terminals() const {return terminals;}

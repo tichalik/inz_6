@@ -15,13 +15,15 @@ enum EN_ERROR_TYPE
 	IN_BOTH_TERMINALS_AND_NONTERMINALS,
 	
 	//rule related errors
+		//parsing related
 	MISSING_LHS,
 	TOO_MANY_LHS,
 	TOO_FEW_RHS,
 	TOO_MANY_RHS,
-	TERMINAL_AS_LHS,
 	MISSING_ARROW,
 	MULTIPLE_ARROWS,
+		//semantic related
+	TERMINAL_AS_LHS,
 	
 	//head related errors
 	HEAD_NOT_IN_NONTERMINALS,

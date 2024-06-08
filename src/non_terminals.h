@@ -6,6 +6,8 @@
 #include <vector>
 
 
+class Symbol;
+
 /** 
  * \brief set of symbols used either as terminals or nonterminals
  */
