@@ -76,7 +76,7 @@ public:
 	 */
 	std::vector<Symbol> get_symbols() const;
 	
-	bool has_errors();
+	bool has_errors() const;
 	
 };
 

@@ -1,6 +1,6 @@
 
 
-FLAGS = 
+FLAGS = -fno-access-control
 
 main : ./debug/src/grammar.o ./debug/src/head.o ./debug/src/html_response.o ./debug/src/http_grammar_adapter.o ./debug/src/main.o ./debug/src/non_terminals.o ./debug/src/parser.o ./debug/src/parsing_grammar_adapter.o ./debug/src/ptree.o ./debug/src/rules.o ./debug/src/server.o ./debug/src/symbol.o ./debug/src/tester.o ./debug/src/utils.o ./debug/src/word.o 
 	g++ ./debug/src/grammar.o ./debug/src/head.o ./debug/src/html_response.o ./debug/src/http_grammar_adapter.o ./debug/src/main.o ./debug/src/non_terminals.o ./debug/src/parser.o ./debug/src/parsing_grammar_adapter.o ./debug/src/ptree.o ./debug/src/rules.o ./debug/src/server.o ./debug/src/symbol.o ./debug/src/tester.o ./debug/src/utils.o ./debug/src/word.o  -o ./debug/main

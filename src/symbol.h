@@ -18,7 +18,7 @@ struct Symbol
 	}
 	
 	
-	bool has_errors();
+	bool has_errors() const;
 };
 
 
