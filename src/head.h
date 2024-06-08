@@ -17,8 +17,11 @@ class Head
 	Head() {}
 	Head(const std::string & _head);
 	
-	void check_for_terminals_errors(const Non_terminals & terminals);
-	void check_for_nonterminals_errors(const Non_terminals & nonterminals);
+	void check_errors(
+		const Non_terminals & terminals,
+		const Non_terminals & nonterminals
+	);
+	
 	bool has_errors() const;
 	
 	std::string to_string() const;

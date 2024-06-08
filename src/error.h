@@ -27,7 +27,6 @@ enum EN_ERROR_TYPE
 	
 	//head related errors
 	HEAD_NOT_IN_NONTERMINALS,
-	HEAD_IN_TERMINALS,
 	MULTIPLE_HEADS
 };
 

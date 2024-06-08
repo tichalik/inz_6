@@ -90,9 +90,6 @@ std::string error2str(const EN_ERROR_TYPE &error)
 		case HEAD_NOT_IN_NONTERMINALS:
 			res="HEAD_NOT_IN_NONTERMINALS";
 			break;
-		case HEAD_IN_TERMINALS:
-			res="HEAD_IN_TERMINALS";
-			break;
 		case MULTIPLE_HEADS:
 			res="MULTIPLE_HEADS";
 			break;
@@ -275,7 +272,7 @@ std::string error_descs2str(std::vector<Error_desc> errors)
 }
 
 
-void Tester::test_http_grammar_adapter_with_empty_fields()
+void Tester::test_http_grammar_adapter_errors()
 {
 	std::string str_ok_terminals = "a b c d";
 	std::string str_ok_nonterminals = "A B C D";
@@ -392,6 +389,110 @@ void Tester::test_http_grammar_adapter_with_empty_fields()
 		
 		std::cout << "errors: " << error_descs2str(http_grammar_adapter.errors) << std::endl;
 		std::cout << "has_errors(): " << http_grammar_adapter.has_errors() << std::endl;
+	}
+	
+		
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " double head " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Http_grammar_adapter http_grammar_adapter (
+			str_ok_terminals,
+			str_ok_nonterminals,
+			"A A A",
+			str_ok_rules
+		);
+		
+		// http_grammar_adapter.check_errors();
+		
+		std::cout << "errors: " << error_descs2str(http_grammar_adapter.errors) << std::endl;
+		std::cout << "has_errors(): " << http_grammar_adapter.has_errors() << std::endl;
+	}
+	
+	
+}
+
+void Tester::test_head_from_http()
+{
+	//head as unknown symbol 
+	//head in terminals
+	{	
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " normal head " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		//http adapter -- filling head and rules with dummies
+		Http_grammar_adapter http_grammar_adapter(
+			"a b c d" , "A B C D", "A", "");
+			
+		//obtaining the grammar
+		Grammar grammar = http_grammar_adapter.get_grammar();
+		grammar.check_errors();
+		
+		//obtaining the terminals/nonterminals
+		Head head = grammar.get_head();
+		Non_terminals nonterminals = grammar.get_nonterminals();
+		
+		std::cout << "head symbol.symbol: <" << head.symbol.symbol << ">" << std::endl;
+		
+		std::cout << "head symbol.errors: <" << errors2str(head.symbol.errors)<< ">" << std::endl;
+		std::cout << "head symbol.has_errors(): <" << head.symbol.has_errors()<< ">" << std::endl;
+		
+		std::cout << "head errors: <" << errors2str(head.errors)<< ">" << std::endl;
+		std::cout << "head has_errors(): <" << head.has_errors()<< ">" << std::endl;
+	}
+	
+	{	
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " head in terminals " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		//http adapter -- filling head and rules with dummies
+		Http_grammar_adapter http_grammar_adapter(
+			"a b c d" , "", "a", "");
+			
+		//obtaining the grammar
+		Grammar grammar = http_grammar_adapter.get_grammar();
+		grammar.check_errors();
+		
+		//obtaining the terminals/nonterminals
+		Head head = grammar.get_head();
+		Non_terminals nonterminals = grammar.get_nonterminals();
+		
+		std::cout << "head symbol.symbol: <" << head.symbol.symbol << ">" << std::endl;
+		
+		std::cout << "head symbol.errors: <" << errors2str(head.symbol.errors)<< ">" << std::endl;
+		std::cout << "head symbol.has_errors(): <" << head.symbol.has_errors()<< ">" << std::endl;
+		
+		std::cout << "head errors: <" << errors2str(head.errors)<< ">" << std::endl;
+		std::cout << "head has_errors(): <" << head.has_errors()<< ">" << std::endl;
+	}
+	
+	{	
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " completely unknown head " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		//http adapter -- filling head and rules with dummies
+		Http_grammar_adapter http_grammar_adapter(
+			"a b c d" , "", "whatevevr", "");
+			
+		//obtaining the grammar
+		Grammar grammar = http_grammar_adapter.get_grammar();
+		grammar.check_errors();
+		
+		//obtaining the terminals/nonterminals
+		Head head = grammar.get_head();
+		Non_terminals nonterminals = grammar.get_nonterminals();
+		
+		std::cout << "head symbol.symbol: <" << head.symbol.symbol << ">" << std::endl;
+		
+		std::cout << "head symbol.errors: <" << errors2str(head.symbol.errors)<< ">" << std::endl;
+		std::cout << "head symbol.has_errors(): <" << head.symbol.has_errors()<< ">" << std::endl;
+		
+		std::cout << "head errors: <" << errors2str(head.errors)<< ">" << std::endl;
+		std::cout << "head has_errors(): <" << head.has_errors()<< ">" << std::endl;
 	}
 	
 }

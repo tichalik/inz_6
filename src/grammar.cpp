@@ -62,8 +62,7 @@ void Grammar::check_errors()
 	nonterminals.check_for_internal_errors();
 	nonterminals.check_for_intersection_errors(terminals);
 	
-	head.check_for_terminals_errors(terminals);
-	head.check_for_nonterminals_errors(nonterminals);
+	head.check_errors(terminals, nonterminals);
 }
 
 bool Grammar::has_errors()
