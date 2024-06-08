@@ -8,7 +8,8 @@ int main()
 {
     Tester t;
     // t.test_infix_chomsky_grammar();
-	t.test_non_terminal_from_http();
+	// t.test_non_terminal_from_http();
+	t.test_http_grammar_adapter_with_empty_fields();
 	// t.test_non_terminal_to_http();
 	// t.test_html_response();
 

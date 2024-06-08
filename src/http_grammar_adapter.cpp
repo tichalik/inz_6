@@ -85,6 +85,8 @@ void Http_grammar_adapter::head_from_http(const std::string & param)
 void Http_grammar_adapter::rules_from_http(const std::string & param)
 {
 	Rules _tules;
+	//whether the field is all whitechars 
+	bool all_empty = true;
 	
 	std::stringstream ss;
 	ss << param;
@@ -181,6 +183,7 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 				{
 					//non-whitespace character
 					is_empty = false;
+					all_empty = false;
 					tmp += line[i];
 					break;
 				}
@@ -215,7 +218,7 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 		}
 	}
 	
-	if (_tules.size() == 0)
+	if (all_empty)
 	{
 		Error_desc error;
 		error.error = EMPTY_FIELD;
