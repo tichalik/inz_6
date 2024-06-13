@@ -2,8 +2,8 @@
 
 FLAGS = -fno-access-control
 
-main : ./debug/src/grammar.o ./debug/src/head.o ./debug/src/html_response.o ./debug/src/http_grammar_adapter.o ./debug/src/main.o ./debug/src/non_terminals.o ./debug/src/parser.o ./debug/src/parsing_grammar_adapter.o ./debug/src/ptree.o ./debug/src/rules.o ./debug/src/server.o ./debug/src/symbol.o ./debug/src/tester.o ./debug/src/tst_html_response.o ./debug/src/utils.o ./debug/src/word.o 
-	g++ ./debug/src/grammar.o ./debug/src/head.o ./debug/src/html_response.o ./debug/src/http_grammar_adapter.o ./debug/src/main.o ./debug/src/non_terminals.o ./debug/src/parser.o ./debug/src/parsing_grammar_adapter.o ./debug/src/ptree.o ./debug/src/rules.o ./debug/src/server.o ./debug/src/symbol.o ./debug/src/tester.o ./debug/src/tst_html_response.o ./debug/src/utils.o ./debug/src/word.o  -o ./debug/main
+main : ./debug/src/grammar.o ./debug/src/head.o ./debug/src/html_response.o ./debug/src/http_grammar_adapter.o ./debug/src/main.o ./debug/src/non_terminals.o ./debug/src/parser.o ./debug/src/parsing_grammar_adapter.o ./debug/src/ptree.o ./debug/src/rules.o ./debug/src/server.o ./debug/src/symbol.o ./debug/src/tester.o ./debug/src/tst_html_response.o ./debug/src/tst_http_grammar_adapter.o ./debug/src/tst_parser.o ./debug/src/utils.o ./debug/src/word.o 
+	g++ ./debug/src/grammar.o ./debug/src/head.o ./debug/src/html_response.o ./debug/src/http_grammar_adapter.o ./debug/src/main.o ./debug/src/non_terminals.o ./debug/src/parser.o ./debug/src/parsing_grammar_adapter.o ./debug/src/ptree.o ./debug/src/rules.o ./debug/src/server.o ./debug/src/symbol.o ./debug/src/tester.o ./debug/src/tst_html_response.o ./debug/src/tst_http_grammar_adapter.o ./debug/src/tst_parser.o ./debug/src/utils.o ./debug/src/word.o  -o ./debug/main
 
 ./debug/src/grammar.o: src/grammar.cpp src/grammar.h src/utils.h src/error.h \
  src/symbol.h src/non_terminals.h src/head.h src/rules.h
@@ -29,7 +29,7 @@ main : ./debug/src/grammar.o ./debug/src/head.o ./debug/src/html_response.o ./de
  src/non_terminals.h src/head.h src/rules.h src/parser.h \
  src/parsing_grammar_adapter.h src/word.h src/ptree.h src/tester.h \
  src/http_grammar_adapter.h src/html_response.h src/server.h \
- src/httplib.h
+ src/httplib.h src/tst_html_response.h src/tst_parser.h
 
 	g++ -std=c++20 ./src/main.cpp -o ./debug/src/main.o -c $(FLAGS) 
 
@@ -85,6 +85,21 @@ main : ./debug/src/grammar.o ./debug/src/head.o ./debug/src/html_response.o ./de
  src/html_response.h
 
 	g++ -std=c++20 ./src/tst_html_response.cpp -o ./debug/src/tst_html_response.o -c $(FLAGS) 
+
+./debug/src/tst_http_grammar_adapter.o: src/tst_http_grammar_adapter.cpp \
+ src/tst_http_grammar_adapter.h src/tester.h src/parser.h \
+ src/parsing_grammar_adapter.h src/grammar.h src/utils.h src/error.h \
+ src/symbol.h src/non_terminals.h src/head.h src/rules.h src/word.h \
+ src/ptree.h src/http_grammar_adapter.h src/html_response.h
+
+	g++ -std=c++20 ./src/tst_http_grammar_adapter.cpp -o ./debug/src/tst_http_grammar_adapter.o -c $(FLAGS) 
+
+./debug/src/tst_parser.o: src/tst_parser.cpp src/tst_parser.h src/tester.h \
+ src/parser.h src/parsing_grammar_adapter.h src/grammar.h src/utils.h \
+ src/error.h src/symbol.h src/non_terminals.h src/head.h src/rules.h \
+ src/word.h src/ptree.h src/http_grammar_adapter.h src/html_response.h
+
+	g++ -std=c++20 ./src/tst_parser.cpp -o ./debug/src/tst_parser.o -c $(FLAGS) 
 
 ./debug/src/utils.o: src/utils.cpp src/utils.h
 
