@@ -4,9 +4,15 @@
 #include "server.h"
 
 
+#include "tst_html_response.h"
+
 int main()
 {
     Tester t;
+	
+	TST_html_reponse t1;
+	t1.test();
+	
     // t.test_infix_chomsky_grammar();
 	// t.test_non_terminal_from_http();
 	// t.test_http_grammar_adapter_errors();

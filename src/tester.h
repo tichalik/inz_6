@@ -22,7 +22,5 @@ public:
 	
 	void test_non_terminal_to_http();
 	void test_http_grammar_adapter_errors();
-	
-	void test_html_response();
 };
 #endif
