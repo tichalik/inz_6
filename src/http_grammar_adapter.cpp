@@ -91,6 +91,7 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 	std::stringstream ss;
 	ss << param;
 
+
 	std::string line;
 	while(std::getline(ss, line))
 	{
@@ -104,22 +105,29 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 		Rule rule;
 		
 		std::string tmp;
+		
+		//add an artificial whitespace at the end of the line
+		// to trigger behavior for completing the string
+		line += " ";
+		
 		//THE ARROW HAS TO BE SURROUNDED BY WHITESPACE!!!
 		for (size_t i=0; i<line.size(); i++)
 		{
+					// std::cout << "<<" << line[i]  << ">>" << std::endl;
+
 			switch(line[i])
 			{
 				case ' ':
 				case '\t':
 				{
 					//whitespace character
-					if (!is_empty)
+					if (tmp != "")
 					{
 						//if there was some input 
 						if (tmp == "->")
 						{
 							//last parsed item was an arrow
-							if (is_LHS == true)
+							if (is_LHS == false)
 							{
 								//there already has been an arrow
 								rule.errors.push_back(MULTIPLE_ARROWS);
@@ -131,7 +139,7 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 								is_LHS = false;
 							}
 						}
-						else
+						else // if (tmp != "->")
 						{
 							//last parsed item was a token of the rule
 							if (is_LHS == true)
@@ -148,7 +156,7 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 									str_LHS = tmp;
 								}
 							}
-							else 
+							else // if (is_LHS == false)
 							{
 								//we are on RHS
 								if (str_RHS1 == "")
@@ -171,10 +179,10 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 						
 						//clear tmp
 						tmp = "";
-					}
-					else
+					}// end if tmp!=""
+					else 
 					{
-						//whitespace at the beginning of line -- skip it
+						//it's a sequence of whitespaces OR a leading one on the line
 					}
 				
 					break;
@@ -187,36 +195,40 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 					tmp += line[i];
 					break;
 				}
-			}
-		}
+			} //end switch 
+			
+		// std::cout << "\tis_empty: " << is_empty << std::endl;
+		// std::cout << "\tis_LHS: " << is_LHS << std::endl;
+		// std::cout << "\tstr_LHS: <" << str_LHS << ">"<<  std::endl;
+		// std::cout << "\tstr_RHS1: <" << str_RHS1 << ">"<<  std::endl;
+		// std::cout << "\tstr_RHS2: <" << str_RHS2 << ">"<< std::endl;
+		
+		
+		} //end for each character
 		
 		//skipping empty lines
 		if (!is_empty)
 		{
 			//check if rule misses any pieces 
-			bool ok = true;
 			
 			if (str_LHS == "")
 			{
 				rule.errors.push_back(MISSING_LHS);		
-				ok = false;
 			}
 			
 			if (str_RHS1 == "" || str_RHS2 == "")
 			{
 				rule.errors.push_back(TOO_FEW_RHS);									
-				ok = false;
 			}
 			
-			if (ok == true)
-			{
-				rule.left.symbol = str_LHS;
-				rule.right1.symbol = str_RHS1;
-				rule.right2.symbol = str_RHS2;
-				_tules.push_back(rule);
-			}
+			rule.left.symbol = str_LHS;
+			rule.right1.symbol = str_RHS1;
+			rule.right2.symbol = str_RHS2;
+			_tules.push_back(rule);
 		}
+		
 	}
+	
 	
 	if (all_empty)
 	{

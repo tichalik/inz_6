@@ -18,6 +18,7 @@ public:
 	
 	void test_non_terminal_from_http();
 	void test_head_from_http();
+	void test_rules_from_http();
 	
 	void test_non_terminal_to_http();
 	void test_http_grammar_adapter_errors();
