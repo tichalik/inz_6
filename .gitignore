@@ -1,5 +1,6 @@
-bin/**
-obj/**
-debug/**
-doc/**
-html_resp_tests/**
+**/bin/**
+**/obj/**
+**/debug/**
+**/doc/**
+tests/src/sw/**
+**/html_resp_tests/**
