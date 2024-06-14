@@ -27,7 +27,10 @@ enum EN_ERROR_TYPE
 	
 	//head related errors
 	HEAD_NOT_IN_NONTERMINALS,
-	MULTIPLE_HEADS
+	MULTIPLE_HEADS,
+	
+	//input (word) related errors
+	SYMBOL_IN_NONTERMINALS
 };
 
 

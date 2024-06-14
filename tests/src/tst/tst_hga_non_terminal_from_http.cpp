@@ -1,20 +1,6 @@
 #include "tst_http_grammar_adapter.h"
 
 
-void TST_http_grammar_adapter::show_non_terminals(const Non_terminals & nt)
-{
-	std::cout << "symbols: [<symbol>\\terrors\\thas_errors()]" << std::endl;
-	std::vector<Symbol> symbols = nt.get_symbols();
-	for (size_t i=0; i<symbols.size(); i++)
-	{
-		std::cout << "<" << symbols[i].symbol << ">"
-			<< "\t" << errors2str(symbols[i].errors) 
-			<< "\t" << symbols[i].has_errors() << std::endl;
-	}
-	std::cout << "errors: " << std::endl << errors2str(nt.errors) << std::endl; 
-	std::cout << "has_errors(): " << std::endl << nt.has_errors() << std::endl; 
-}
-
 void TST_http_grammar_adapter::test_terminals_and_nonterminals(
 	const std::string & str_terminals,
 	const std::string & str_nonterminals

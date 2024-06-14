@@ -5,12 +5,6 @@
 
 class TST_http_grammar_adapter: public Tester
 {
-		
-	std::string error2str(const EN_ERROR_TYPE &error);
-	
-	std::string errors2str(Errors errors);
-	
-	void show_non_terminals(const Non_terminals & nt);
 	
 	void test_terminals_and_nonterminals(
 		const std::string & str_terminals,

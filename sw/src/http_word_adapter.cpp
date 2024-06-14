@@ -15,6 +15,11 @@ Http_word_adapter::Http_word_adapter(const std::string & http_word)
 		res.push_back(symbol);
 	}
 	
+	if (res.size() == 0)
+	{
+		this->errors.push_back(EMPTY_FIELD);
+	}
+	
 	this->word = Word(res);
 }
 

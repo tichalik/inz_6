@@ -25,7 +25,8 @@ public:
 	Word(){};
 	
 	void check_errors(
-		const Non_terminals & terminals
+		const Non_terminals & terminals,
+		const Non_terminals & nonterminals
 	);
 	
 	bool has_errors() const;

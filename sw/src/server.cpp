@@ -30,7 +30,10 @@ void Server::post_handler(const httplib::Request & req,
 
 	Http_word_adapter http_word_adapter(http_input);
 	Word input = http_word_adapter.get_word();
-	input.check_errors(grammar.get_terminals());
+	input.check_errors(
+		grammar.get_terminals(),
+		grammar.get_nonterminals()
+	);
 
 
 	if (grammar.has_errors() || http_grammar_adapter.has_errors()

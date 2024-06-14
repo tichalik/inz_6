@@ -1,6 +1,7 @@
 #include "tester.h"
 #include "tst_html_response.h"
 #include "tst_http_grammar_adapter.h"
+#include "tst_http_word_adapter.h"
 #include "tst_parser.h"
 
 int main()
@@ -11,11 +12,14 @@ int main()
 	// TST_parser t2;
 	// t2.test();
 	
-	TST_http_grammar_adapter t3;
-	// t3.test_non_terminal_from_http();
-	// t3.test_head_from_http();
-	t3.test_rules_from_http();
+	// TST_http_grammar_adapter t3;
+	// // t3.test_non_terminal_from_http();
+	// // t3.test_head_from_http();
+	// t3.test_rules_from_http();
 	// t3.test_http_grammar_adapter_errors();
+	
+	TST_http_word_adapter t4;
+	t4.test();
 	
 	
 }
