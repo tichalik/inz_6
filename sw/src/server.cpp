@@ -17,6 +17,7 @@ void Server::post_handler(const httplib::Request & req,
 	const std::string http_nonterminals = req.get_param_value("nonterminals");
 	const std::string http_head = req.get_param_value("head");
 	const std::string http_rules = req.get_param_value("rules");
+	const std::string http_input = req.get_param_value("input");
 	
 	Http_grammar_adapter http_grammar_adapter(
 		http_terminals,
@@ -25,21 +26,18 @@ void Server::post_handler(const httplib::Request & req,
 		http_rules);
 		
 	Grammar grammar = http_grammar_adapter.get_grammar();
-	
-	Parsing_grammar_adapter parsing_grammar_adapter(grammar);
 	grammar.check_errors();
 
-	std::cout << grammar.to_string() <<std::endl;
+	Http_word_adapter http_word_adapter(http_input);
+	Word input = http_word_adapter.get_word();
+	input.check_errors(grammar.get_terminals());
 
-	Word input;
-	input.from_http(req.get_param_value("input"));
-	std::cout << "INPUT\n" << input.to_string() <<std::endl;
 
-	// std::vector<Error> input_errors = input.get_errors();
-
-	if (!grammar.has_errors() || http_grammar_adapter.has_errors())
-		// == 0 && input_errors.size() == 0)
+	if (grammar.has_errors() || http_grammar_adapter.has_errors()
+		|| input.has_errors() || http_word_adapter.has_errors()
+	)
 	{
+		Parsing_grammar_adapter parsing_grammar_adapter(grammar);
 		Parser parser;
 
 		PTrees result = parser.parse(input, parsing_grammar_adapter );
@@ -54,7 +52,7 @@ void Server::post_handler(const httplib::Request & req,
 	response.fill_response(RESP_FIELDS::TERMINALS, http_grammar_adapter.terminals_to_http());
 	response.fill_response(RESP_FIELDS::NONTERMINALS, http_grammar_adapter.nonterminals_to_http());
 	response.fill_response(RESP_FIELDS::RULES, http_grammar_adapter.rules_to_http());
-	response.fill_response(RESP_FIELDS::INPUT, input.to_http());
+	response.fill_response(RESP_FIELDS::INPUT, http_word_adapter.to_http());
 	
 	resp.set_content(response.get_response(), "text/html");
 

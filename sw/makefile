@@ -2,8 +2,8 @@
 
 FLAGS = 
 
-main : ./debug/src/grammar.o ./debug/src/head.o ./debug/src/html_response.o ./debug/src/http_grammar_adapter.o ./debug/src/main.o ./debug/src/non_terminals.o ./debug/src/parser.o ./debug/src/parsing_grammar_adapter.o ./debug/src/ptree.o ./debug/src/rules.o ./debug/src/server.o ./debug/src/symbol.o ./debug/src/utils.o ./debug/src/word.o 
-	g++ ./debug/src/grammar.o ./debug/src/head.o ./debug/src/html_response.o ./debug/src/http_grammar_adapter.o ./debug/src/main.o ./debug/src/non_terminals.o ./debug/src/parser.o ./debug/src/parsing_grammar_adapter.o ./debug/src/ptree.o ./debug/src/rules.o ./debug/src/server.o ./debug/src/symbol.o ./debug/src/utils.o ./debug/src/word.o  -o ./debug/main
+main : ./debug/src/grammar.o ./debug/src/head.o ./debug/src/html_response.o ./debug/src/http_grammar_adapter.o ./debug/src/http_word_adapter.o ./debug/src/main.o ./debug/src/non_terminals.o ./debug/src/parser.o ./debug/src/parsing_grammar_adapter.o ./debug/src/ptree.o ./debug/src/rules.o ./debug/src/server.o ./debug/src/symbol.o ./debug/src/utils.o ./debug/src/word.o 
+	g++ ./debug/src/grammar.o ./debug/src/head.o ./debug/src/html_response.o ./debug/src/http_grammar_adapter.o ./debug/src/http_word_adapter.o ./debug/src/main.o ./debug/src/non_terminals.o ./debug/src/parser.o ./debug/src/parsing_grammar_adapter.o ./debug/src/ptree.o ./debug/src/rules.o ./debug/src/server.o ./debug/src/symbol.o ./debug/src/utils.o ./debug/src/word.o  -o ./debug/main
 
 ./debug/src/grammar.o: src//grammar.cpp src//grammar.h src//utils.h src//error.h \
  src//symbol.h src//non_terminals.h src//head.h src//rules.h
@@ -24,6 +24,11 @@ main : ./debug/src/grammar.o ./debug/src/head.o ./debug/src/html_response.o ./de
  src//symbol.h src//non_terminals.h src//head.h src//rules.h
 
 	g++ -std=c++20 ./src//http_grammar_adapter.cpp -o ./debug/src/http_grammar_adapter.o  -I ./src/ -c $(FLAGS) 
+
+./debug/src/http_word_adapter.o: src//http_word_adapter.cpp src//http_word_adapter.h \
+ src//word.h src//error.h src//utils.h
+
+	g++ -std=c++20 ./src//http_word_adapter.cpp -o ./debug/src/http_word_adapter.o  -I ./src/ -c $(FLAGS) 
 
 ./debug/src/main.o: src//main.cpp src//grammar.h src//utils.h src//error.h \
  src//symbol.h src//non_terminals.h src//head.h src//rules.h \
@@ -50,9 +55,9 @@ main : ./debug/src/grammar.o ./debug/src/head.o ./debug/src/html_response.o ./de
 
 	g++ -std=c++20 ./src//parsing_grammar_adapter.cpp -o ./debug/src/parsing_grammar_adapter.o  -I ./src/ -c $(FLAGS) 
 
-./debug/src/ptree.o: src//ptree.cpp src//ptree.h src//word.h src//grammar.h \
- src//utils.h src//error.h src//symbol.h src//non_terminals.h src//head.h \
- src//rules.h
+./debug/src/ptree.o: src//ptree.cpp src//ptree.h src//word.h src//error.h \
+ src//grammar.h src//utils.h src//symbol.h src//non_terminals.h \
+ src//head.h src//rules.h
 
 	g++ -std=c++20 ./src//ptree.cpp -o ./debug/src/ptree.o  -I ./src/ -c $(FLAGS) 
 
@@ -76,8 +81,7 @@ main : ./debug/src/grammar.o ./debug/src/head.o ./debug/src/html_response.o ./de
 
 	g++ -std=c++20 ./src//utils.cpp -o ./debug/src/utils.o  -I ./src/ -c $(FLAGS) 
 
-./debug/src/word.o: src//word.cpp src//word.h src//grammar.h src//utils.h \
- src//error.h src//symbol.h src//non_terminals.h src//head.h src//rules.h
+./debug/src/word.o: src//word.cpp src//word.h src//error.h
 
 	g++ -std=c++20 ./src//word.cpp -o ./debug/src/word.o  -I ./src/ -c $(FLAGS) 
 
@@ -86,5 +90,4 @@ clean:
 	rm -d -r debug
 	mkdir debug
 	mkdir debug/src
-	mkdir debug/src/tst
 

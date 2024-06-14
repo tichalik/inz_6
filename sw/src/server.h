@@ -2,13 +2,12 @@
 #define SERVER_H_
 
 #include "httplib.h"
-#include "grammar.h"
 #include "http_grammar_adapter.h"
+#include "http_word_adapter.h"
 #include "parsing_grammar_adapter.h"
 #include "html_response.h"
 #include "utils.h"
 #include "parser.h"
-#include "word.h"
 #include "error.h"
 
 //handlers cannot be non-static

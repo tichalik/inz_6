@@ -5,19 +5,30 @@
 #include <vector>
 #include <sstream>
 
-#include "grammar.h"
+#include "error.h"
+#include "symbol.h"
+#include "non_terminals.h"
 
-class Word: public std::vector<Symbol>
+class Word
 {
-	const std::string SEPARATOR = " ";
+	std::vector<Symbol> symbols;
+	Errors errors;
+	
 public:
 	std::string to_string();
 	
-	Word(std::initializer_list<std::string> il);
+	Word(const std::vector<Symbol> & _symbols):
+		symbols(_symbols){};
+	
+	std::vector<Symbol> get_symbols() const;
+	
 	Word(){};
 	
-	void from_http(const std::string param);
-	std::string to_http();
+	void check_errors(
+		const Non_terminals & terminals
+	);
+	
+	bool has_errors() const;
 
 };
 

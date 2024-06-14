@@ -1,48 +1,29 @@
 #include "word.h"
 
-std::string Word::to_string()
+bool Word::has_errors() const
 {
-	std::string res;
-	for (int i=0; i<this->size(); i++)
+	bool errors = false;
+	for (size_t i=0; i<this->symbols.size(); i++)
 	{
-		res += this->at(i).symbol + "> <";
+		errors |= this->symbols[i].has_errors();
 	}
-	res = res.substr(0, res.size() - 3);
-	return "<" + res + ">" ;
+	return errors || this->errors.size() != 0;
 }
 
-Word::Word(std::initializer_list<std::string> il)
+std::vector<Symbol> Word::get_symbols() const
 {
-	for (auto i: il)
-	{
-		Symbol s;
-		s.symbol = i;
-		this->push_back(s);
-	}
+	return this->symbols;
 }
 
-void Word::from_http(const std::string param)
+void Word::check_errors(
+	const Non_terminals & terminals
+)
 {
-	std::stringstream ss;
-	ss << param;
-	
-	std::string s; 
-	while (ss >> s)
+	for (size_t i=0; i<this->symbols.size(); i++)
 	{
-		Symbol symbol;
-		symbol.symbol = s;
-		this->push_back(symbol);
+		if (terminals.contains(this->symbols[i]))
+		{
+			this->symbols[i].errors.push_back(UNKNOWN_SYMBOL);			
+		}
 	}
-}
-
-std::string Word::to_http()
-{
-	std::string res; 
-	for (size_t i=0; i<this->size(); i++)
-	{
-		res += this->at(i).symbol + " ";
-	}
-	res = res.substr(0, res.size()-1);
-	
-	return res;
 }
