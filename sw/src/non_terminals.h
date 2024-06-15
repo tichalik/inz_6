@@ -78,6 +78,7 @@ public:
 	
 	bool has_errors() const;
 	
+	
 };
 
 #endif //_NON_TERMINALS_H_

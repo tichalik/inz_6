@@ -6,9 +6,9 @@ void Errorable::add_error(
 	const std::string & description
 )
 {
-	// Error error;
-	// error.type = type;
-	// error.description = description;
+	Error error;
+	error.type = type;
+	error.description = description;
 	
-	this->errors.push_back(type);
+	this->errors.push_back(error);
 }

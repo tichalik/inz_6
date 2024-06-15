@@ -77,6 +77,8 @@ class Grammar: public Errorable
 	void check_errors();
 	
 	bool has_errors();
+	
+	
 
 };
 

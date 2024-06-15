@@ -5,14 +5,14 @@
 #include <sstream>
 #include <vector>
 
-#include "errorable.h"
+#include "http_adapter.h"
 #include "grammar.h"
 #include "utils.h"
 
 /** 
  * \brief mediates between a Grammar and its http representation
  */
-class Http_grammar_adapter: public Errorable
+class Http_grammar_adapter: public Http_adapter
 {
 	/** 
 	 * \brief the Grammar of which the object is a view

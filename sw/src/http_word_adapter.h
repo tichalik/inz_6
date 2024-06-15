@@ -6,13 +6,13 @@
 #include <vector>
 
 #include "word.h"
-#include "errorable.h"
+#include "http_adapter.h"
 #include "utils.h"
 
 /** 
  * \brief mediates between a Word and its http representation
  */
-class Http_word_adapter: public Errorable
+class Http_word_adapter: public Http_adapter
 {
 	/** 
 	 * \brief the Word of which the object is a view

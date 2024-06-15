@@ -19,6 +19,7 @@ struct Symbol: public Errorable
 	
 	
 	bool has_errors() const;
+	
 };
 
 

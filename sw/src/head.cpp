@@ -18,9 +18,11 @@ void Head::check_errors(
 		{
 			this->symbol.add_error(UNKNOWN_SYMBOL);
 		}	}}
+
 bool Head::has_errors() const
 {
 	return this->symbol.has_errors() || this->errors.size() != 0;}
+
 
 std::string Head::to_string() const
 {

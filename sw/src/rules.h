@@ -32,6 +32,7 @@ struct Rule: public Errorable
 	);
 	
 	bool has_errors();
+	
 };
 
 class Rules: public std::vector<Rule>
@@ -44,6 +45,7 @@ class Rules: public std::vector<Rule>
 	);
 	
 	bool has_errors();
+	
 };
 
 

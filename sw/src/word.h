@@ -30,6 +30,7 @@ public:
 	);
 	
 	bool has_errors() const;
+	
 
 };
 

@@ -9,6 +9,9 @@ class Errorable
 	
 	Errors errors;
 	
+	std::vector<Errorable*> errorable_components;
+	
+	
 	public:
 	
 	void add_error(
