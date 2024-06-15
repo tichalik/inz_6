@@ -5,27 +5,19 @@
 #include <sstream>
 #include <vector>
 
+#include "errorable.h"
 #include "grammar.h"
 #include "utils.h"
-
-struct Error_desc
-{
-	Error error;
-	std::string description;
-};
 
 /** 
  * \brief mediates between a Grammar and its http representation
  */
-class Http_grammar_adapter
+class Http_grammar_adapter: public Errorable
 {
 	/** 
 	 * \brief the Grammar of which the object is a view
 	 */
 	Grammar grammar;
-	
-	std::vector<Error_desc> errors;
-	
 	
 	
     /** 

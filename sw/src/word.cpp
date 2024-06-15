@@ -25,12 +25,12 @@ void Word::check_errors(
 		if (!terminals.contains(this->symbols[i])
 			&& !nonterminals.contains(this->symbols[i]))
 		{
-			this->symbols[i].errors.push_back(UNKNOWN_SYMBOL);			
+			this->symbols[i].add_error(UNKNOWN_SYMBOL);			
 		}
 		
 		if (nonterminals.contains(this->symbols[i]))
 		{
-			this->symbols[i].errors.push_back(SYMBOL_IN_NONTERMINALS);			
+			this->symbols[i].add_error(SYMBOL_IN_NONTERMINALS);			
 		}
 		
 	}

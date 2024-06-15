@@ -1,12 +1,12 @@
 #ifndef _SYMBOL_H_
 #define _SYMBOL_H_
 
-#include "error.h"
+#include "errorable.h"
+
 #include <string>
-struct Symbol
+struct Symbol: public Errorable
 {
 	std::string symbol;
-	Errors errors;
 	
 	inline std::string to_string() const
 	{

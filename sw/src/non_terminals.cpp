@@ -32,7 +32,7 @@ void Non_terminals::check_for_internal_errors()
 			// ITERATION
 			if (i != j && symbols[i].symbol == symbols[j].symbol)
 			{
-				symbols[i].errors.push_back(REPEATING_SYMBOL);
+				symbols[i].add_error(REPEATING_SYMBOL);
 				break;
 			}
 		}
@@ -45,7 +45,7 @@ void Non_terminals::check_for_intersection_errors(const Non_terminals & other)
 	{
 		if (other.contains(this->symbols[i]))
 		{
-			this->symbols[i].errors.push_back(IN_BOTH_TERMINALS_AND_NONTERMINALS);			
+			this->symbols[i].add_error(IN_BOTH_TERMINALS_AND_NONTERMINALS);			
 		}
 	}
 }

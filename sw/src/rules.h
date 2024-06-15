@@ -5,7 +5,7 @@
 
 
 #include "utils.h"
-#include "error.h"
+#include "errorable.h"
 #include "symbol.h"
 #include "non_terminals.h"
 
@@ -13,13 +13,11 @@
  * \brief representation of grammatical rule in form 
  *	left -> right1 right 2
  */
-struct Rule
+struct Rule: public Errorable
 {
     Symbol left;
     Symbol right1, right2;
 	
-	Errors errors;
-
 	std::string to_string() const;
 	
 	void check_symbol_errors(

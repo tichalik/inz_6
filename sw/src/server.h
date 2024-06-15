@@ -8,7 +8,7 @@
 #include "html_response.h"
 #include "utils.h"
 #include "parser.h"
-#include "error.h"
+
 
 //handlers cannot be non-static
 //in consequence most method of this class would be static

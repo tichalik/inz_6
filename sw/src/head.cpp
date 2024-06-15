@@ -12,11 +12,11 @@ void Head::check_errors(
 
 	if (!nonterminals.contains(this->symbol))
 	{
-		this->errors.push_back(HEAD_NOT_IN_NONTERMINALS);
+		this->add_error(HEAD_NOT_IN_NONTERMINALS);
 
 		if (!terminals.contains(this->symbol))
 		{
-			this->symbol.errors.push_back(UNKNOWN_SYMBOL);
+			this->symbol.add_error(UNKNOWN_SYMBOL);
 		}	}}
 bool Head::has_errors() const
 {

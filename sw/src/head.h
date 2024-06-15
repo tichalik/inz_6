@@ -4,14 +4,13 @@
 #include <string>
 
 #include "utils.h"
-#include "error.h"
+#include "errorable.h"
 #include "symbol.h"
 #include "non_terminals.h"
 
-class Head
+class Head: public Errorable
 {
 	Symbol symbol;
-	Errors errors;
 	
 	public:
 	Head() {}

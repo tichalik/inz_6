@@ -29,10 +29,7 @@ void Http_grammar_adapter::nonterminals_from_http(const std::string & param)
 	std::vector<std::string> str_nonterminals = Utils::vector_from_str(param);
 	if (str_nonterminals.size() == 0)
 	{
-		Error_desc error;
-		error.error = EMPTY_FIELD;
-		error.description = "empty nonterminals";
-		this->errors.push_back(error);
+		this->add_error(EMPTY_FIELD, "empty nonterminals");
 	}
 	else 
 	{
@@ -46,10 +43,7 @@ void Http_grammar_adapter::terminals_from_http(const std::string & param)
 	std::vector<std::string> str_terminals = Utils::vector_from_str(param);
 	if (str_terminals.size() == 0)
 	{
-		Error_desc error;
-		error.error = EMPTY_FIELD;
-		error.description = "empty terminals";
-		this->errors.push_back(error);
+		this->add_error(EMPTY_FIELD, "empty terminals");
 	}
 	else 
 	{
@@ -63,17 +57,11 @@ void Http_grammar_adapter::head_from_http(const std::string & param)
 	std::vector<std::string> head = Utils::vector_from_str(param);
 	if (head.size() == 0)
 	{
-		Error_desc error;
-		error.error = EMPTY_FIELD;
-		error.description = "empty head";
-		this->errors.push_back(error);
+		this->add_error(EMPTY_FIELD, "empty head");
 	}
 	else if (head.size() >1)
 	{
-		Error_desc error;
-		error.error = MULTIPLE_HEADS;
-		error.description = "";
-		this->errors.push_back(error);
+		this->add_error(MULTIPLE_HEADS);
 	}
 	else 
 	{
@@ -130,7 +118,7 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 							if (is_LHS == false)
 							{
 								//there already has been an arrow
-								rule.errors.push_back(MULTIPLE_ARROWS);
+								rule.add_error(MULTIPLE_ARROWS);
 							}
 							else
 							{
@@ -148,7 +136,7 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 								if (str_LHS != "")
 								{
 									//the LHS was already filled! 
-									rule.errors.push_back(TOO_MANY_LHS);									
+									rule.add_error(TOO_MANY_LHS);									
 								}
 								else
 								{
@@ -172,7 +160,7 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 								else 
 								{
 									//both RHS1 and RHS2 have been filled -- error
-									rule.errors.push_back(TOO_MANY_RHS);									
+									rule.add_error(TOO_MANY_RHS);									
 								}
 							}
 						}
@@ -213,12 +201,12 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 			
 			if (str_LHS == "")
 			{
-				rule.errors.push_back(MISSING_LHS);		
+				rule.add_error(MISSING_LHS);		
 			}
 			
 			if (str_RHS1 == "" || str_RHS2 == "")
 			{
-				rule.errors.push_back(TOO_FEW_RHS);									
+				rule.add_error(TOO_FEW_RHS);									
 			}
 			
 			rule.left.symbol = str_LHS;
@@ -232,10 +220,7 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 	
 	if (all_empty)
 	{
-		Error_desc error;
-		error.error = EMPTY_FIELD;
-		error.description = "empty rules";
-		this->errors.push_back(error);
+		this->add_error(EMPTY_FIELD, "empty rules");
 	}
 	
 	this->grammar.set_rules(_tules);

@@ -15,7 +15,7 @@ void Rule::check_symbol_errors(
 {
 	if (!terminals.contains(s) && !nonterminals.contains(s))
 	{
-		s.errors.push_back(UNKNOWN_SYMBOL);
+		s.add_error(UNKNOWN_SYMBOL);
 	}
 }
 
@@ -30,7 +30,7 @@ void Rule::check_errors(
 	
 	if (terminals.contains(left))
 	{
-		this->errors.push_back(TERMINAL_AS_LHS);
+		this->add_error(TERMINAL_AS_LHS);
 	}
 	
 }

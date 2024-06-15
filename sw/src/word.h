@@ -5,14 +5,14 @@
 #include <vector>
 #include <sstream>
 
-#include "error.h"
+#include "errorable.h"
+
 #include "symbol.h"
 #include "non_terminals.h"
 
-class Word
+class Word: public Errorable
 {
 	std::vector<Symbol> symbols;
-	Errors errors;
 	
 public:
 	std::string to_string();

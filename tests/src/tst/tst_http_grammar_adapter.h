@@ -19,9 +19,6 @@ class TST_http_grammar_adapter: public Tester
 		const std::string & str_rules
 	);
 	
-	std::string error_descs2str(std::vector<Error_desc> errors);
-	
-	
 public:
 	
 	void test_non_terminal_from_http();

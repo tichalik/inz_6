@@ -2,7 +2,7 @@
 #define _NON_TERMINALS_H_
 
 #include "symbol.h"
-#include "error.h"
+#include "errorable.h"
 #include <vector>
 
 
@@ -11,7 +11,7 @@ class Symbol;
 /** 
  * \brief set of symbols used either as terminals or nonterminals
  */
-class Non_terminals 
+class Non_terminals: public Errorable
 {
 	
 	Errors errors;

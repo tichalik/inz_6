@@ -7,7 +7,7 @@
 #include <sstream>
 
 #include "utils.h"
-#include "error.h"
+#include "errorable.h"
 #include "symbol.h"
 #include "non_terminals.h"
 #include "head.h"
@@ -16,15 +16,13 @@
 /** 
  * \brief grammar in Chomsky's normal form
  */
-class Grammar
+class Grammar: public Errorable
 {
 	
 	Non_terminals nonterminals;
 	Non_terminals terminals;
 	Head head;
 	Rules rules;
-	
-	Errors errors;
 
 	public:
 	

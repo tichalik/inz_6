@@ -1,16 +1,6 @@
 #include "tst_http_grammar_adapter.h"
 
 
-std::string TST_http_grammar_adapter::error_descs2str(std::vector<Error_desc> errors)
-{
-	std::string res;
-	for (size_t i=0; i<errors.size(); i++)
-	{
-		res += "(" + error2str(errors[i].error) + ", " + errors[i].description + ") ";
-	}
-	return res;
-}
-
 
 void TST_http_grammar_adapter::test_http_grammar_adapter_errors()
 {
@@ -37,7 +27,7 @@ void TST_http_grammar_adapter::test_http_grammar_adapter_errors()
 		
 		// http_grammar_adapter.check_errors();
 		
-		std::cout << "errors: " << error_descs2str(http_grammar_adapter.errors) << std::endl;
+		std::cout << "errors: " << errors2str(http_grammar_adapter.errors) << std::endl;
 		std::cout << "has_errors(): " << http_grammar_adapter.has_errors() << std::endl;
 	}
 	
@@ -55,7 +45,7 @@ void TST_http_grammar_adapter::test_http_grammar_adapter_errors()
 		
 		// http_grammar_adapter.check_errors();
 		
-		std::cout << "errors: " << error_descs2str(http_grammar_adapter.errors) << std::endl;
+		std::cout << "errors: " << errors2str(http_grammar_adapter.errors) << std::endl;
 		std::cout << "has_errors(): " << http_grammar_adapter.has_errors() << std::endl;
 	}
 	
@@ -73,7 +63,7 @@ void TST_http_grammar_adapter::test_http_grammar_adapter_errors()
 		
 		// http_grammar_adapter.check_errors();
 		
-		std::cout << "errors: " << error_descs2str(http_grammar_adapter.errors) << std::endl;
+		std::cout << "errors: " << errors2str(http_grammar_adapter.errors) << std::endl;
 		std::cout << "has_errors(): " << http_grammar_adapter.has_errors() << std::endl;
 	}
 	
@@ -91,7 +81,7 @@ void TST_http_grammar_adapter::test_http_grammar_adapter_errors()
 		
 		// http_grammar_adapter.check_errors();
 		
-		std::cout << "errors: " << error_descs2str(http_grammar_adapter.errors) << std::endl;
+		std::cout << "errors: " << errors2str(http_grammar_adapter.errors) << std::endl;
 		std::cout << "has_errors(): " << http_grammar_adapter.has_errors() << std::endl;
 	}
 	
@@ -109,7 +99,7 @@ void TST_http_grammar_adapter::test_http_grammar_adapter_errors()
 		
 		// http_grammar_adapter.check_errors();
 		
-		std::cout << "errors: " << error_descs2str(http_grammar_adapter.errors) << std::endl;
+		std::cout << "errors: " << errors2str(http_grammar_adapter.errors) << std::endl;
 		std::cout << "has_errors(): " << http_grammar_adapter.has_errors() << std::endl;
 	}
 	
@@ -127,7 +117,7 @@ void TST_http_grammar_adapter::test_http_grammar_adapter_errors()
 		
 		// http_grammar_adapter.check_errors();
 		
-		std::cout << "errors: " << error_descs2str(http_grammar_adapter.errors) << std::endl;
+		std::cout << "errors: " << errors2str(http_grammar_adapter.errors) << std::endl;
 		std::cout << "has_errors(): " << http_grammar_adapter.has_errors() << std::endl;
 	}
 	
@@ -146,7 +136,7 @@ void TST_http_grammar_adapter::test_http_grammar_adapter_errors()
 		
 		// http_grammar_adapter.check_errors();
 		
-		std::cout << "errors: " << error_descs2str(http_grammar_adapter.errors) << std::endl;
+		std::cout << "errors: " << errors2str(http_grammar_adapter.errors) << std::endl;
 		std::cout << "has_errors(): " << http_grammar_adapter.has_errors() << std::endl;
 	}
 	

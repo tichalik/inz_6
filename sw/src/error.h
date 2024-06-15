@@ -33,6 +33,15 @@ enum EN_ERROR_TYPE
 	SYMBOL_IN_NONTERMINALS
 };
 
+// struct Error
+// {
+	// EN_ERROR_TYPE type;
+	// std::string description;
+	// std::vector<std::string> source;
+	
+	// std::string to_string();
+// };
+
 
 typedef EN_ERROR_TYPE Error;
 typedef std::vector<Error> Errors;
