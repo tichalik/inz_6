@@ -74,3 +74,23 @@ bool Grammar::has_errors()
 		|| this->terminals.has_errors()
 		|| this->head.has_errors();
 }
+
+
+	
+Errors Grammar::get_errors() const
+{
+	Errors res;
+	res.insert(res.end(), this->errors.begin(), this->errors.end());
+	
+	Errors terminals_errors = this->terminals.get_errors();
+	Errors nonterminals_errors = this->nonterminals.get_errors();
+	Errors head_errors = this->head.get_errors();
+	Errors rules_errors = this->rules.get_errors();
+	
+	res.insert(res.end(), terminals_errors.begin(), terminals_errors.end());
+	res.insert(res.end(), nonterminals_errors.begin(), nonterminals_errors.end());
+	res.insert(res.end(), head_errors.begin(), head_errors.end());
+	res.insert(res.end(), rules_errors.begin(), rules_errors.end());
+	
+	return res;
+}

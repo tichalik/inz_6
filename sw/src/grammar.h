@@ -78,8 +78,7 @@ class Grammar: public Errorable
 	
 	bool has_errors();
 	
-	
-
+	Errors get_errors() const;
 };
 
 

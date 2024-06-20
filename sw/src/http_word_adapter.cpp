@@ -49,3 +49,8 @@ bool Http_word_adapter::has_errors() const
 	return this->errors.size() != 0 
 		|| this->word.has_errors();
 }
+
+Errors Http_word_adapter::get_errors() const
+{
+	return this->errors;
+}

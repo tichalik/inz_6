@@ -292,3 +292,8 @@ bool Http_grammar_adapter::has_errors() const
 {
 	return this->errors.size()!=0;
 }
+
+Errors Http_grammar_adapter::get_errors() const
+{
+	return this->errors;
+}

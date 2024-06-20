@@ -35,3 +35,17 @@ void Word::check_errors(
 		
 	}
 }
+
+Errors Word::get_errors() const
+{
+	Errors res;
+	res.insert(res.end(), this->errors.begin(), this->errors.end());
+	
+	for (size_t i=0; i<this->symbols.size(); i++)
+	{
+		Errors tmp = this->symbols[i].get_errors();
+		res.insert(res.end(), tmp.begin(), tmp.end());		
+	}
+	
+	return res;
+}

@@ -107,6 +107,8 @@ class Http_grammar_adapter: public Http_adapter
 	
 	bool has_errors() const;
 	
+	Errors get_errors() const;
+	
 };
 
 #endif //HTTP_GRAMMAR_ADAPTER_H_

@@ -31,6 +31,8 @@ public:
 	
 	bool has_errors() const;
 	
+	Errors get_errors() const;
+	
 
 };
 

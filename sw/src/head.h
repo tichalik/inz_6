@@ -23,6 +23,8 @@ class Head: public Errorable
 	
 	bool has_errors() const;
 	
+	Errors get_errors() const;
+	
 	
 	std::string to_string() const;
 };

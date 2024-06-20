@@ -43,6 +43,23 @@ bool Rule::has_errors()
 		|| right2.has_errors();
 }
 
+
+Errors Rule::get_errors() const
+{
+	Errors res;
+	res.insert(res.end(), this->errors.begin(), this->errors.end());
+	
+	Errors left_errors = this->left.get_errors();
+	Errors right1_errors = this->right1.get_errors();
+	Errors right2_errors = this->right2.get_errors();
+	
+	res.insert(res.end(), left_errors.begin(), left_errors.end());
+	res.insert(res.end(), right1_errors.begin(), right1_errors.end());
+	res.insert(res.end(), right2_errors.begin(), right2_errors.end());
+	
+	return res;
+}
+
 //--------------------------RuleSSSSSSS---------------------------
 
 void Rules::check_errors(
@@ -65,4 +82,18 @@ bool Rules::has_errors()
 	}
 	
 	return errors;
+}
+
+
+Errors Rules::get_errors() const
+{
+	Errors res;
+	
+	for (size_t i=0; i<this->size(); i++)
+	{
+		Errors tmp = this->at(i).get_errors();
+		res.insert(res.end(), tmp.begin(), tmp.end());		
+	}
+	
+	return res;
 }
