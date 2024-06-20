@@ -13,7 +13,7 @@ void Rule::check_symbol_errors(
 	const Non_terminals & nonterminals
 )
 {
-	if (!terminals.contains(s) && !nonterminals.contains(s))
+	if (!terminals.contains(s) && !nonterminals.contains(s) && s.symbol != "")
 	{
 		s.add_error(UNKNOWN_SYMBOL);
 	}
