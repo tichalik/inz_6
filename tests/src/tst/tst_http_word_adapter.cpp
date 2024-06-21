@@ -31,6 +31,7 @@ void TST_http_word_adapter::_test(
 	show_word(input);
 	
 	std::cout << "http_word_adapter.errors:" << errors2str(http_word_adapter.errors) << std::endl;
+	std::cout << "http_word_adapter.get_errors:" << errors2str(http_word_adapter.get_errors()) << std::endl;
 	std::cout << "http_word_adapter.has_errors:" << http_word_adapter.has_errors() << std::endl;
 }
 

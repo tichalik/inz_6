@@ -18,7 +18,8 @@ class Tester
 	void show_non_terminals(const Non_terminals & nt) const;
 	
 		
-	std::string error2str(const EN_ERROR_TYPE &error) const ;
+	std::string error2str(const Error &error) const ;
+	std::string error_type2str(const EN_ERROR_TYPE &error) const;
 	std::string errors2str(const Errors &errors) const ;
 	
 public:

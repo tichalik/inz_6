@@ -5,7 +5,20 @@
 
 class TST_http_grammar_adapter: public Tester
 {
+			
+	void _test_http_grammar_adapter_errors(
+		const std::string & str_terminals,
+		const std::string & str_nonterminals,
+		const std::string & str_head,
+		const std::string & str_rules
+	);
 	
+	void _test_head_from_http(
+		const std::string & str_terminals,
+		const std::string & str_nonterminals,
+		const std::string & str_head
+	);
+
 	void test_terminals_and_nonterminals(
 		const std::string & str_terminals,
 		const std::string & str_nonterminals

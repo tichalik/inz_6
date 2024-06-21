@@ -29,6 +29,7 @@ void TST_http_grammar_adapter::_test_rules_from_http(
 	Rules rules = grammar.get_rules();
 	
 	std::cout << "rules lenght : " << rules.size() << std::endl;
+	std::cout << "rules get_errors() : " << errors2str(rules.get_errors()) << std::endl;
 	std::cout << "rules has_errors : " << rules.has_errors() << std::endl;
 	
 	for (size_t i=0; i<rules.size();i++)
@@ -39,21 +40,25 @@ void TST_http_grammar_adapter::_test_rules_from_http(
 		std::cout << std::endl;
 		std::cout << "\trule.left.symbol : <" << rule.left.symbol << ">" << std::endl;
 		std::cout << "\trule.left.errors : <" << errors2str(rule.left.errors) << ">" << std::endl;
+		std::cout << "\trule.left.get_errors : <" << errors2str(rule.left.get_errors()) << ">" << std::endl;
 		std::cout << "\trule.left has_errors : " << rule.left.has_errors() << std::endl;
 		
 		std::cout << std::endl;
 		std::cout << "\trule.right1.symbol : <" << rule.right1.symbol << ">" << std::endl;
 		std::cout << "\trule.right1.errors : <" << errors2str(rule.right1.errors) << ">" << std::endl;
+		std::cout << "\trule.right1.get_errors : <" << errors2str(rule.right1.get_errors()) << ">" << std::endl;
 		std::cout << "\trule.right1 has_errors : " << rule.right1.has_errors() << std::endl;
 		
 		std::cout << std::endl;
 		std::cout << "\trule.right2.symbol : <" << rule.right2.symbol << ">" << std::endl;
 		std::cout << "\trule.right2.errors : <" << errors2str(rule.right2.errors) << ">" << std::endl;
+		std::cout << "\trule.right2.get_errors : <" << errors2str(rule.right2.get_errors()) << ">" << std::endl;
 		std::cout << "\trule.right2 has_errors : " << rule.right2.has_errors() << std::endl;
 		
 		
 		std::cout << std::endl;
 		std::cout << "\trule.errors : <" << errors2str(rule.errors) << ">" << std::endl;
+		std::cout << "\trule.get_errors : <" << errors2str(rule.get_errors()) << ">" << std::endl;
 		std::cout << "\trule has_errors : " << rule.has_errors() << std::endl;
 		
 	}
@@ -190,6 +195,17 @@ void TST_http_grammar_adapter::test_rules_from_http()
 			"           \n"
 			"AASDFA -> c b"
 			"\t\t \t \n"
+		);
+		
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " normal multiple rules with errors" << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		_test_rules_from_http("a b c" , "A", "A", 
+			"\n"
+			"A ->  A\n"
+			"a -> b \n"
+			"A -> G b"
 		);
 	}
 

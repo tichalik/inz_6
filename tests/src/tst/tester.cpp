@@ -2,7 +2,21 @@
 
 
 
-std::string Tester::error2str(const EN_ERROR_TYPE &error) const
+std::string Tester::error2str(const Error &error) const
+{
+	std::string res;
+	
+	for (size_t i=0; i<error.source.size(); i++)
+	{
+		res += error.source[i] + ":\t";
+	}
+	
+	res +=  error_type2str(error.type) + "\t" + error.description;
+	
+	return res;
+}
+
+std::string Tester::error_type2str(const EN_ERROR_TYPE &error) const
 {
 	std::string res;
 	switch (error)
@@ -105,5 +119,6 @@ void Tester::show_non_terminals(const Non_terminals & nt) const
 			<< "\t" << symbols[i].has_errors() << std::endl;
 	}
 	std::cout << "errors: " << std::endl << errors2str(nt.errors) << std::endl; 
+	std::cout << "get_errors(): " << std::endl << errors2str(nt.get_errors()) << std::endl; 
 	std::cout << "has_errors(): " << std::endl << nt.has_errors() << std::endl; 
 }
