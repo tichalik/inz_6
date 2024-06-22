@@ -13,49 +13,68 @@ void Server::get_handler(const httplib::Request & req,
 void Server::post_handler(const httplib::Request & req,
 	httplib::Response & resp)
 {
+	//get data from http 
 	const std::string http_terminals = req.get_param_value("terminals");
 	const std::string http_nonterminals = req.get_param_value("nonterminals");
 	const std::string http_head = req.get_param_value("head");
 	const std::string http_rules = req.get_param_value("rules");
-	const std::string http_input = req.get_param_value("input");
+	const std::string http_word = req.get_param_value("input");
 	
-	Http_grammar_adapter http_grammar_adapter(
+	//transform http into Grammar and Word
+	Mod_from_http mod_from_http(
 		http_terminals,
 		http_nonterminals,
 		http_head,
-		http_rules);
+		http_rules,
+		http_word
+	);
 		
-	Grammar grammar = http_grammar_adapter.get_grammar();
+	Grammar grammar = mod_from_http.get_grammar();
+	Word word = mod_from_http.get_word();
+	
+	//check errors
 	grammar.check_errors();
-
-	Http_word_adapter http_word_adapter(http_input);
-	Word input = http_word_adapter.get_word();
-	input.check_errors(
+	word.check_errors(
 		grammar.get_terminals(),
 		grammar.get_nonterminals()
 	);
+	
+	//get and merge errors
+	const Errors http_errors = mod_from_http.get_errors();
+	const Errors grammar_errors = grammar.get_errors();
+	const Errors word_errors = word.get_errors();
+	
+	Errors errors;
+	errors.insert(errors.end(), http_errors.begin(), http_errors.end());
+	errors.insert(errors.end(), grammar_errors.begin(), grammar_errors.end());
+	errors.insert(errors.end(), word_errors.begin(), word_errors.end());
+	
+	PTrees parsing_trees;
 
-
-	if (grammar.has_errors() || http_grammar_adapter.has_errors()
-		|| input.has_errors() || http_word_adapter.has_errors()
-	)
+	//parse if there are no errors
+	if (errors.size() != 0 )
 	{
 		Parsing_grammar_adapter parsing_grammar_adapter(grammar);
 		Parser parser;
 
-		PTrees result = parser.parse(input, parsing_grammar_adapter );
-		
-		std::cout << "RESULTS\n" << result.to_string() << std::endl;
-
-		// std::vector<Errors> parser_errors = parser.get_errors();
-		response.fill_response(RESP_FIELDS::RESULTS, result.to_http());
-		
+		parsing_trees = parser.parse(word, parsing_grammar_adapter);
 	}
-	response.fill_response(RESP_FIELDS::HEAD, http_grammar_adapter.head_to_http());
-	response.fill_response(RESP_FIELDS::TERMINALS, http_grammar_adapter.terminals_to_http());
-	response.fill_response(RESP_FIELDS::NONTERMINALS, http_grammar_adapter.nonterminals_to_http());
-	response.fill_response(RESP_FIELDS::RULES, http_grammar_adapter.rules_to_http());
-	response.fill_response(RESP_FIELDS::INPUT, http_word_adapter.to_http());
+	
+	//transform Errors and Ptrees into http
+	Mod_to_http mod_to_http(
+		errors,
+		parsing_trees
+	);
+	
+	//fill out html form 
+	response.fill_response(RESP_FIELDS::TERMINALS, http_terminals);
+	response.fill_response(RESP_FIELDS::NONTERMINALS, http_nonterminals);
+	response.fill_response(RESP_FIELDS::HEAD, http_head);
+	response.fill_response(RESP_FIELDS::RULES, http_rules);
+	response.fill_response(RESP_FIELDS::INPUT, http_word);
+	
+	response.fill_response(RESP_FIELDS::ERRORS, mod_to_http.get_http_errors());
+	response.fill_response(RESP_FIELDS::RESULTS, mod_to_http.get_http_parse_trees());
 	
 	resp.set_content(response.get_response(), "text/html");
 

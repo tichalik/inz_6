@@ -1,30 +1,6 @@
-#include "http_grammar_adapter.h"
+#include "mod_from_http.h"
 
-Http_grammar_adapter::Http_grammar_adapter(
-	const std::string & http_terminals,
-	const std::string & http_nonterminals,
-	const std::string & http_head,
-	const std::string & http_rules)
-{
-	terminals_from_http(http_terminals);
-	nonterminals_from_http(http_nonterminals);
-	head_from_http(http_head);
-	rules_from_http(http_rules);
-}
-
-Http_grammar_adapter::Http_grammar_adapter( const Grammar & _grammar):
-	grammar(_grammar)
-{
-	
-}
-
-Grammar Http_grammar_adapter::get_grammar() const
-{
-	return this->grammar;
-}
-
-
-void Http_grammar_adapter::nonterminals_from_http(const std::string & param)
+void Mod_from_http::nonterminals_from_http(const std::string & param)
 {	
 	std::vector<std::string> str_nonterminals = Utils::vector_from_str(param);
 	if (str_nonterminals.size() == 0)
@@ -38,7 +14,7 @@ void Http_grammar_adapter::nonterminals_from_http(const std::string & param)
 	}
 }
 
-void Http_grammar_adapter::terminals_from_http(const std::string & param)
+void Mod_from_http::terminals_from_http(const std::string & param)
 {
 	std::vector<std::string> str_terminals = Utils::vector_from_str(param);
 	if (str_terminals.size() == 0)
@@ -52,7 +28,7 @@ void Http_grammar_adapter::terminals_from_http(const std::string & param)
 	}
 }
 
-void Http_grammar_adapter::head_from_http(const std::string & param)
+void Mod_from_http::head_from_http(const std::string & param)
 {
 	std::vector<std::string> head = Utils::vector_from_str(param);
 	if (head.size() == 0)
@@ -70,7 +46,7 @@ void Http_grammar_adapter::head_from_http(const std::string & param)
 	}
 }
 
-void Http_grammar_adapter::rules_from_http(const std::string & param)
+void Mod_from_http::rules_from_http(const std::string & param)
 {
 	Rules _tules;
 	//whether the field is all whitechars 
@@ -226,74 +202,55 @@ void Http_grammar_adapter::rules_from_http(const std::string & param)
 	this->grammar.set_rules(_tules);
 }
 
-
-
-std::string Http_grammar_adapter::rule_to_http(const Rule & rule) const 
+void Mod_from_http::word_from_http(const std::string & param)
 {
-	return rule.left.to_http() + " -> " 
-		+ rule.right1.to_http() + " " + rule.right2.to_http();
-}
-
-
-
-std::string Http_grammar_adapter::nonterminals_to_http() const
-{
-	Non_terminals nonterminals = grammar.get_nonterminals();
-	std::vector<Symbol> symbols = nonterminals.get_symbols();
+	std::vector<Symbol> res;
 	
-	std::string res;
-	for (size_t i=0; i< symbols.size(); i++)
+	std::stringstream ss;
+	ss << param;
+	
+	std::string s; 
+	while (ss >> s)
 	{
-		res += symbols[i].symbol + " ";
+		Symbol symbol;
+		symbol.symbol = s;
+		res.push_back(symbol);
 	}
 	
-	res = res.substr(0, res.size()-1);
-	
-	return res ;
-}
-
-std::string Http_grammar_adapter::terminals_to_http() const
-{
-	Non_terminals terminals = grammar.get_terminals();
-	std::vector<Symbol> symbols = terminals.get_symbols();
-	
-	std::string res;
-	for (size_t i=0; i< symbols.size(); i++)
+	if (res.size() == 0)
 	{
-		res += symbols[i].symbol + " ";
+		this->add_error(EMPTY_FIELD);
 	}
 	
-	res = res.substr(0, res.size()-1);
-	
-	return res ;
+	this->word = Word(res);
 }
 
-std::string Http_grammar_adapter::head_to_http() const
+Mod_from_http::Mod_from_http(
+	const std::string & http_terminals,
+	const std::string & http_nonterminals,
+	const std::string & http_head,
+	const std::string & http_rules,
+	const std::string & http_word
+)
 {
-	return this->grammar.get_head().to_string();
+	terminals_from_http(http_terminals);
+	nonterminals_from_http(http_nonterminals);
+	head_from_http(http_head);
+	rules_from_http(http_rules);
+	word_from_http(http_word);
 }
 
-std::string Http_grammar_adapter::rules_to_http() const
+Grammar Mod_from_http::get_grammar() const
 {
-	std::string res; 
-	
-	Rules rules = this->grammar.get_rules();
-	
-	for (size_t i=0; i< rules.size(); i++)
-	{
-		res += rule_to_http(rules[i]) + "\n";
-	}
-	res = res.substr(0, res.size()-1);
-	
-	return res;
+	return this->grammar;
 }
 
-bool Http_grammar_adapter::has_errors() const
+Word Mod_from_http::get_word() const
 {
-	return this->errors.size()!=0;
+	return this->word;
 }
 
-Errors Http_grammar_adapter::get_errors() const
+Errors Mod_from_http::get_errors() const
 {
 	return this->errors;
 }

@@ -2,8 +2,8 @@
 #define SERVER_H_
 
 #include "httplib.h"
-#include "http_grammar_adapter.h"
-#include "http_word_adapter.h"
+#include "mod_from_http.h"
+#include "mod_to_http.h"
 #include "parsing_grammar_adapter.h"
 #include "html_response.h"
 #include "utils.h"

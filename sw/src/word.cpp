@@ -38,7 +38,7 @@ void Word::check_errors(
 
 Errors Word::get_errors() const
 {
-	Errors ;
+	Errors res;
 	res.insert(res.end(), this->errors.begin(), this->errors.end());
 	
 	for (size_t i=0; i<this->symbols.size(); i++)
