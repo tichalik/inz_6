@@ -33,25 +33,23 @@ void Server::post_handler(const httplib::Request & req,
 	Word word = mod_from_http.get_word();
 	
 	//check errors
-	grammar.check_errors();
-	word.check_errors(
-		grammar.get_terminals(),
-		grammar.get_nonterminals()
+	Mod_check_errors mod_check_errors(
+		grammar, 
+		word
 	);
 	
-	//get and merge errors
 	const Errors http_errors = mod_from_http.get_errors();
-	const Errors grammar_errors = grammar.get_errors();
-	const Errors word_errors = word.get_errors();
+	const Errors semantic_errors = mod_check_errors.get_errors();
 	
 	Errors errors;
 	errors.insert(errors.end(), http_errors.begin(), http_errors.end());
-	errors.insert(errors.end(), grammar_errors.begin(), grammar_errors.end());
-	errors.insert(errors.end(), word_errors.begin(), word_errors.end());
-	
-	PTrees parsing_trees;
+	errors.insert(errors.end(), semantic_errors.begin(), semantic_errors.end());
+
 
 	//parse if there are no errors
+
+	PTrees parsing_trees;
+
 	if (errors.size() != 0 )
 	{
 		Parsing_grammar_adapter parsing_grammar_adapter(grammar);

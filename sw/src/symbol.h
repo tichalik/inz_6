@@ -17,9 +17,6 @@ struct Symbol: public Errorable
 		return symbol;
 	}
 	
-	
-	bool has_errors() const;
-	
 	Errors get_errors() const;
 	
 };

@@ -20,24 +20,11 @@ struct Rule: public Errorable
 	
 	std::string to_string() const;
 	
-	void check_symbol_errors(
-		Symbol &s,
-		const Non_terminals & terminals,
-		const Non_terminals & nonterminals
-	);
-	
-	void check_errors(
-		const Non_terminals & terminals,
-		const Non_terminals & nonterminals
-	);
-	
-	bool has_errors();
-	
 	Errors get_errors() const;
 	
 };
 
-class Rules: public std::vector<Rule>
+struct Rules: public std::vector<Rule>
 {
 	public:
 	

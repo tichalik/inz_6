@@ -2,7 +2,7 @@
 
 Parsing_grammar_adapter::Parsing_grammar_adapter(const Grammar & _grammar)
 {
-	const Rules rules = _grammar.get_rules();
+	const Rules rules = _grammar.rules;
 	for (size_t i=0; i<rules.size(); i++)
 	{
 		std::string key = rules[i].right1.symbol 

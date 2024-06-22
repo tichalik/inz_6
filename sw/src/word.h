@@ -10,11 +10,10 @@
 #include "symbol.h"
 #include "non_terminals.h"
 
-class Word: public Errorable
+struct Word: public Errorable
 {
 	std::vector<Symbol> symbols;
 	
-public:
 	std::string to_string();
 	
 	Word(const std::vector<Symbol> & _symbols):
@@ -23,13 +22,6 @@ public:
 	std::vector<Symbol> get_symbols() const;
 	
 	Word(){};
-	
-	void check_errors(
-		const Non_terminals & terminals,
-		const Non_terminals & nonterminals
-	);
-	
-	bool has_errors() const;
 	
 	Errors get_errors() const;
 	

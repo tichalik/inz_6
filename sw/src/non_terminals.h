@@ -6,12 +6,12 @@
 #include <vector>
 
 
-class Symbol;
+struct Symbol;
 
 /** 
  * \brief set of symbols used either as terminals or nonterminals
  */
-class Non_terminals: public Errorable
+struct Non_terminals: public Errorable
 {
 	
 	Errors errors;
@@ -33,7 +33,6 @@ class Non_terminals: public Errorable
 	 */
 	size_t get_index(const Symbol & symbol) const;
 	
-public:
 
 	/** 
 	 * \brief construct the symbols from given strings
@@ -49,21 +48,6 @@ public:
 	Non_terminals();
 	
 	/** 
-	 * \brief check if symbols repeat
-	 *
-	 * Repeating symbols are marked with proper error message
-	 */
-	void check_for_internal_errors();
-	
-	/** 
-	 * \brief check if there are symbols common to this object and the parameter
-	 *
-	 * common symbols are marked with proper error message. Applies only to this 
-	 * object.
-	 */
-	void check_for_intersection_errors( const Non_terminals & other);
-	
-	/** 
 	 * \brief whether a symbol of given `symbol` field is present in the container
 	 */
 	bool contains(const Symbol & symbol) const;
@@ -76,7 +60,6 @@ public:
 	 */
 	std::vector<Symbol> get_symbols() const;
 	
-	bool has_errors() const;
 	
 	Errors get_errors() const;
 	

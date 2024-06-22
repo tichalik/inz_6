@@ -4,6 +4,7 @@
 #include "httplib.h"
 #include "mod_from_http.h"
 #include "mod_to_http.h"
+#include "mod_check_errors.h"
 #include "parsing_grammar_adapter.h"
 #include "html_response.h"
 #include "utils.h"

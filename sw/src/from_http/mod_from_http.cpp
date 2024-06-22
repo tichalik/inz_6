@@ -227,10 +227,10 @@ Mod_from_http::Mod_from_http(
 	const std::string & http_word
 )
 {
-	this->grammar.set_terminals(non_terminals_from_http(http_terminals, false));
-	this->grammar.set_nonterminals(non_terminals_from_http(http_nonterminals, true));
-	this->grammar.set_head(head_from_http(http_head));
-	this->grammar.set_rules(rules_from_http(http_rules));
+	this->grammar.terminals = non_terminals_from_http(http_terminals, false);
+	this->grammar.nonterminals = non_terminals_from_http(http_nonterminals, true);
+	this->grammar.head = head_from_http(http_head);
+	this->grammar.rules = rules_from_http(http_rules);
 	
 	this->word = word_from_http(http_terminals);
 }
