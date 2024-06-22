@@ -21,10 +21,16 @@ class Mod_from_http: Errorable
     /** 
 	 * \brief extract grammar information from a string obtained from http request
 	 *
+	 * \param is_nonterminals if param is empty and this is true raise nonterminals error
+	 * else if param is empty and this is false raise terminals error
+	 *
 	 * assume the string is already processed (htpp entities are translated to 
 	 * normal string)
 	 */
-	void nonterminals_from_http(const std::string & param);
+	Non_terminals non_terminals_from_http(
+		const std::string & param,
+		const bool is_nonterminals
+	);
 	
     /** 
 	 * \brief extract grammar information from a string obtained from http request
@@ -32,7 +38,7 @@ class Mod_from_http: Errorable
 	 * assume the string is already processed (htpp entities are translated to 
 	 * normal string)
 	 */
-	void terminals_from_http(const std::string & param);
+	Head head_from_http(const std::string & param);
 	
     /** 
 	 * \brief extract grammar information from a string obtained from http request
@@ -40,18 +46,10 @@ class Mod_from_http: Errorable
 	 * assume the string is already processed (htpp entities are translated to 
 	 * normal string)
 	 */
-	void head_from_http(const std::string & param);
-	
-    /** 
-	 * \brief extract grammar information from a string obtained from http request
-	 *
-	 * assume the string is already processed (htpp entities are translated to 
-	 * normal string)
-	 */
-	void rules_from_http(const std::string & param);
+	Rules rules_from_http(const std::string & param);
 	
 	
-	void word_from_http(const std::string & param);
+	Word word_from_http(const std::string & param);
 	
 	public:
 	

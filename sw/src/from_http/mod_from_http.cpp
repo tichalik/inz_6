@@ -1,52 +1,46 @@
 #include "mod_from_http.h"
 
-void Mod_from_http::nonterminals_from_http(const std::string & param)
+Non_terminals Mod_from_http::non_terminals_from_http(
+	const std::string & param, 
+	const bool is_nonterminals
+)
 {	
+	Non_terminals nonterminals;
 	std::vector<std::string> str_nonterminals = Utils::vector_from_str(param);
 	if (str_nonterminals.size() == 0)
 	{
-		this->add_error(EMPTY_FIELD, "empty nonterminals");
+		this->add_error(EMPTY_FIELD, 
+			(is_nonterminals? "empty nonterminals" : "empty terminals" )
+		);
 	}
 	else 
 	{
-		Non_terminals nonterminals(str_nonterminals);
-		this->grammar.set_nonterminals(nonterminals);
+		nonterminals = Non_terminals(str_nonterminals);
 	}
+	return nonterminals;
 }
 
-void Mod_from_http::terminals_from_http(const std::string & param)
+Head Mod_from_http::head_from_http(const std::string & param)
 {
-	std::vector<std::string> str_terminals = Utils::vector_from_str(param);
-	if (str_terminals.size() == 0)
-	{
-		this->add_error(EMPTY_FIELD, "empty terminals");
-	}
-	else 
-	{
-		Non_terminals terminals(str_terminals);
-		this->grammar.set_terminals(terminals);
-	}
-}
-
-void Mod_from_http::head_from_http(const std::string & param)
-{
-	std::vector<std::string> head = Utils::vector_from_str(param);
-	if (head.size() == 0)
+	Head head;
+	std::vector<std::string> vect_head = Utils::vector_from_str(param);
+	if (vect_head.size() == 0)
 	{
 		this->add_error(EMPTY_FIELD, "empty head");
 	}
-	else if (head.size() >1)
+	else if (vect_head.size() >1)
 	{
 		this->add_error(MULTIPLE_HEADS);
 	}
 	else 
 	{
-		Head _head(head[0]);
-		this->grammar.set_head(_head);
+		head = (vect_head[0]);
 	}
+	
+	return head;
 }
 
-void Mod_from_http::rules_from_http(const std::string & param)
+Rules Mod_from_http::rules_from_http(const std::string & param)
 {
 	Rules _tules;
 	//whether the field is all whitechars 
@@ -199,10 +193,10 @@ void Mod_from_http::rules_from_http(const std::string & param)
 		this->add_error(EMPTY_FIELD, "empty rules");
 	}
 	
-	this->grammar.set_rules(_tules);
+	return _tules;
 }
 
-void Mod_from_http::word_from_http(const std::string & param)
+Word Mod_from_http::word_from_http(const std::string & param)
 {
 	std::vector<Symbol> res;
 	
@@ -219,10 +213,10 @@ void Mod_from_http::word_from_http(const std::string & param)
 	
 	if (res.size() == 0)
 	{
-		this->add_error(EMPTY_FIELD);
+		this->add_error(EMPTY_FIELD, "input");
 	}
 	
-	this->word = Word(res);
+	return res;
 }
 
 Mod_from_http::Mod_from_http(
@@ -233,11 +227,12 @@ Mod_from_http::Mod_from_http(
 	const std::string & http_word
 )
 {
-	terminals_from_http(http_terminals);
-	nonterminals_from_http(http_nonterminals);
-	head_from_http(http_head);
-	rules_from_http(http_rules);
-	word_from_http(http_word);
+	this->grammar.set_terminals(non_terminals_from_http(http_terminals, false));
+	this->grammar.set_nonterminals(non_terminals_from_http(http_nonterminals, true));
+	this->grammar.set_head(head_from_http(http_head));
+	this->grammar.set_rules(rules_from_http(http_rules));
+	
+	this->word = word_from_http(http_terminals);
 }
 
 Grammar Mod_from_http::get_grammar() const
