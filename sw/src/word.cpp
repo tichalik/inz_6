@@ -38,13 +38,18 @@ void Word::check_errors(
 
 Errors Word::get_errors() const
 {
-	Errors res;
+	Errors ;
 	res.insert(res.end(), this->errors.begin(), this->errors.end());
 	
 	for (size_t i=0; i<this->symbols.size(); i++)
 	{
 		Errors tmp = this->symbols[i].get_errors();
 		res.insert(res.end(), tmp.begin(), tmp.end());		
+	}
+	
+	for (size_t i=0; i<res.size(); i++)
+	{
+		res[i].source.push_back("input");
 	}
 	
 	return res;

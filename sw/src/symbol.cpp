@@ -9,5 +9,11 @@ bool Symbol::has_errors() const
 
 Errors Symbol::get_errors() const
 {
-	return this->errors;
+	Errors res = this->errors;
+	for (size_t i=0; i<res.size(); i++)
+	{
+		res[i].source.push_back("symbol <"+this->symbol+">");
+	}
+	
+	return res;
 }

@@ -57,6 +57,12 @@ Errors Rule::get_errors() const
 	res.insert(res.end(), right1_errors.begin(), right1_errors.end());
 	res.insert(res.end(), right2_errors.begin(), right2_errors.end());
 	
+	for (size_t i=0; i<res.size(); i++)
+	{
+		res[i].source.push_back("rule "+this->to_string());
+	}
+	
+	
 	return res;
 }
 

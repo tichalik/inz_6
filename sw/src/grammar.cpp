@@ -87,6 +87,26 @@ Errors Grammar::get_errors() const
 	Errors head_errors = this->head.get_errors();
 	Errors rules_errors = this->rules.get_errors();
 	
+	for (size_t i=0; i<terminals_errors.size(); i++)
+	{
+		terminals_errors[i].source.push_back("terminals");
+	}
+	
+	for (size_t i=0; i<nonterminals_errors.size(); i++)
+	{
+		nonterminals_errors[i].source.push_back("nonterminals");
+	}
+	
+	for (size_t i=0; i<head_errors.size(); i++)
+	{
+		head_errors[i].source.push_back("head");
+	}
+	
+	for (size_t i=0; i<rules_errors.size(); i++)
+	{
+		rules_errors[i].source.push_back("rules");
+	}
+	
 	res.insert(res.end(), terminals_errors.begin(), terminals_errors.end());
 	res.insert(res.end(), nonterminals_errors.begin(), nonterminals_errors.end());
 	res.insert(res.end(), head_errors.begin(), head_errors.end());

@@ -7,46 +7,46 @@ std::string Http_adapter::EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const
 	switch (error)
 	{
 		case EMPTY_FIELD:
-			res="EMPTY_FIELD";
+			res=""; //when the field is empty, the source is in Error::description
 			break;
 		case UNKNOWN_SYMBOL:
-			res="UNKNOWN_SYMBOL";
+			res="unknown symbol";
 			break;
 		case REPEATING_SYMBOL:
-			res="REPEATING_SYMBOL";
+			res="symbol repeating within a set";
 			break;
 		case IN_BOTH_TERMINALS_AND_NONTERMINALS:
-			res="IN_BOTH_TERMINALS_AND_NONTERMINALS";
+			res="symbol cannot be in both terminals and nonterminals";
 			break;
 		case MISSING_LHS:
-			res="MISSING_LHS";
+			res="no LHS in the rule";
 			break;
 		case TOO_MANY_LHS:
-			res="TOO_MANY_LHS";
+			res="only single symbol on LHS is permitted (for context free parsing)";
 			break;
 		case TOO_FEW_RHS:
-			res="TOO_FEW_RHS";
+			res="only rules with 2 symbols on RHS are permitted";
 			break;
 		case TOO_MANY_RHS:
-			res="TOO_MANY_RHS";
+			res="only rules with 2 symbols on RHS are permitted";
 			break;
 		case MISSING_ARROW:
-			res="MISSING_ARROW";
+			res="no arrown separating LHS and RHS";
 			break;
 		case MULTIPLE_ARROWS:
-			res="MULTIPLE_ARROWS";
+			res="only one arrow (between LHS and RHS) is permitted";
 			break;
 		case TERMINAL_AS_LHS:
-			res="TERMINAL_AS_LHS";
+			res="terminal symbol not permitted on rule LHS";
 			break;
 		case HEAD_NOT_IN_NONTERMINALS:
-			res="HEAD_NOT_IN_NONTERMINALS";
+			res="head has to belong to nonterminals";
 			break;
 		case MULTIPLE_HEADS:
-			res="MULTIPLE_HEADS";
+			res="head must be a single symbol";
 			break;
 		case SYMBOL_IN_NONTERMINALS:
-			res="SYMBOL_IN_NONTERMINALS";
+			res="input must consist of terminals only";
 			break;
 		default:
 			res = "UNKNOWN ERROR";
