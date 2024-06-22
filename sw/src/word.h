@@ -5,27 +5,21 @@
 #include <vector>
 #include <sstream>
 
-#include "errorable.h"
-
 #include "symbol.h"
-#include "non_terminals.h"
 
-struct Word: public Errorable
+struct Word
 {
 	std::vector<Symbol> symbols;
 	
 	std::string to_string();
 	
 	Word(const std::vector<Symbol> & _symbols):
-		symbols(_symbols){};
-	
-	std::vector<Symbol> get_symbols() const;
+		symbols(_symbols)
+	{
+		
+	}
 	
 	Word(){};
-	
-	Errors get_errors() const;
-	
-
 };
 
 #endif // WORD_H_

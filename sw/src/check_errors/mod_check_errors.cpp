@@ -3,6 +3,7 @@
 
 
 void Mod_check_errors::check_symbol_errors(
+	const std::string & parent_source,
 	Symbol &s,
 	const Non_terminals & terminals,
 	const Non_terminals & nonterminals
@@ -10,11 +11,12 @@ void Mod_check_errors::check_symbol_errors(
 {
 	if (!terminals.contains(s) && !nonterminals.contains(s) && s.symbol != "")
 	{
-		s.add_error(UNKNOWN_SYMBOL);
+		add_error(UNKNOWN_SYMBOL, parent_source + " <" + s.symbol+ ">:");
 	}
 }
 
 void Mod_check_errors::word_check_errors(
+	const std::string & parent_source,
 	Word &input,
 	const Non_terminals & terminals,
 	const Non_terminals & nonterminals
@@ -22,31 +24,42 @@ void Mod_check_errors::word_check_errors(
 {
 	for (size_t i=0; i<input.symbols.size(); i++)
 	{
-		if (!terminals.contains(input.symbols[i])
-			&& !nonterminals.contains(input.symbols[i]))
+		Symbol s = input.symbols[i];
+		
+		if (!terminals.contains(s) && !nonterminals.contains(s))
 		{
-			input.symbols[i].add_error(UNKNOWN_SYMBOL);			
+			add_error(UNKNOWN_SYMBOL, 
+				parent_source + " <" + s.symbol+ ">:");			
 		}
 		
-		if (nonterminals.contains(input.symbols[i]))
+		if (nonterminals.contains(s))
 		{
-			input.symbols[i].add_error(SYMBOL_IN_NONTERMINALS);			
+			add_error(SYMBOL_IN_NONTERMINALS, 
+				 parent_source + " <" + s.symbol+ ">:");			
 		}
 		
 	}
 }
 
 
-void Mod_check_errors::grammar_check_errors(Grammar &input)
+void Mod_check_errors::grammar_check_errors(
+	const std::string & parent_source,
+	Grammar &input
+)
 {
-	non_terminals_check_errors(input.terminals, input.nonterminals);	
-	non_terminals_check_errors(input.nonterminals, input.terminals);	
-	head_check_errors(input.head, input.terminals, input.nonterminals);
-	rules_check_errors(input.rules, input.terminals, input.nonterminals);
+	non_terminals_check_errors(parent_source + "terminals:",
+		input.terminals, input.nonterminals);	
+	non_terminals_check_errors(parent_source +"nonterminals:",
+		input.nonterminals, input.terminals);	
+	head_check_errors(parent_source +"head:",
+		input.head, input.terminals, input.nonterminals);
+	rules_check_errors(parent_source +"rules:",
+		input.rules, input.terminals, input.nonterminals);
 }
 
 
 void Mod_check_errors::head_check_errors(
+	const std::string & parent_source,
 	Head &input,
 	const Non_terminals & terminals,
 	const Non_terminals & nonterminals
@@ -55,35 +68,39 @@ void Mod_check_errors::head_check_errors(
 
 	if (!nonterminals.contains(input.symbol))
 	{
-		input.add_error(HEAD_NOT_IN_NONTERMINALS);
+		add_error(HEAD_NOT_IN_NONTERMINALS, parent_source);
 
 		if (!terminals.contains(input.symbol))
 		{
-			input.symbol.add_error(UNKNOWN_SYMBOL);
+			add_error(UNKNOWN_SYMBOL, parent_source);
 		}
 	}
 }
 
 
 void Mod_check_errors::rule_check_errors(
+	const std::string & parent_source,
 	Rule &input,
 	const Non_terminals& terminals,
 	const Non_terminals& nonterminals
 )
 {
+	std::string error_source = parent_source + " rule < <" + input.left.symbol
+		+ "> -> <" + input.right1.symbol + "> <" + input.right2.symbol +"> >:";
 	
-	check_symbol_errors(input.left, terminals, nonterminals);
-	check_symbol_errors(input.right1, terminals, nonterminals);
-	check_symbol_errors(input.right2, terminals, nonterminals);
+	check_symbol_errors(error_source, input.left, terminals, nonterminals);
+	check_symbol_errors(error_source, input.right1, terminals, nonterminals);
+	check_symbol_errors(error_source, input.right2, terminals, nonterminals);
 	
 	if (terminals.contains(input.left))
 	{
-		input.add_error(TERMINAL_AS_LHS);
+		add_error(TERMINAL_AS_LHS, error_source);
 	}
 	
 }
 
 void Mod_check_errors::rules_check_errors(
+	const std::string & parent_source,
 	Rules &input,
 	const Non_terminals & terminals,
 	const Non_terminals & nonterminals
@@ -91,17 +108,20 @@ void Mod_check_errors::rules_check_errors(
 {
 	for (size_t i=0; i<input.size(); i++)
 	{
-		rule_check_errors(input[i], terminals, nonterminals);
+		rule_check_errors(parent_source + " rules:", 
+			input[i], terminals, nonterminals);
 	}
 }
 
 void Mod_check_errors::non_terminals_check_errors(
+	const std::string & parent_source,
 	Non_terminals& input,
 	const Non_terminals & other
 )
 {
 	for (size_t i=0; i<input.symbols.size(); i++)
 	{
+		Symbol s = input.symbols[i];
 		//possible optimization?? 
 		// for (size_t j=i; j<symbols.size(); j++)
 			
@@ -111,7 +131,8 @@ void Mod_check_errors::non_terminals_check_errors(
 			// ITERATION
 			if (i != j && input.symbols[i].symbol == input.symbols[j].symbol)
 			{
-				input.symbols[i].add_error(REPEATING_SYMBOL);
+				add_error(REPEATING_SYMBOL,
+					parent_source + " <" + s.symbol+ ">:");
 				break;
 			}
 		}
@@ -119,7 +140,8 @@ void Mod_check_errors::non_terminals_check_errors(
 		
 		if (other.contains(input.symbols[i]))
 		{
-			input.symbols[i].add_error(IN_BOTH_TERMINALS_AND_NONTERMINALS);			
+			add_error(IN_BOTH_TERMINALS_AND_NONTERMINALS, 
+				parent_source + " <" + s.symbol+ ">:");			
 		}
 	}
 }
@@ -134,18 +156,25 @@ Mod_check_errors::Mod_check_errors(
 	Grammar _grammar = grammar;
 	Word _word = word;
 	
-	grammar_check_errors(_grammar);
-	word_check_errors(_word, grammar.terminals, grammar.nonterminals);
-	
-	Errors grammar_errors = _grammar.get_errors();
-	Errors word_errors = _word.get_errors();
-	
-	this->errors.insert(this->errors.end(), grammar_errors.begin(), grammar_errors.end());
-	this->errors.insert(this->errors.end(), word_errors.begin(), word_errors.end());
+	grammar_check_errors("grammar: ",_grammar);
+	word_check_errors("word: ",_word, grammar.terminals, grammar.nonterminals);
 }
 
 
 Errors Mod_check_errors::get_errors() const
 {
 	return this->errors;
+}
+
+
+void Mod_check_errors::add_error(
+	const EN_ERROR_TYPE & type,
+	const std::string & source
+)
+{
+	Error error;
+	error.type = type;
+	error.source = source;
+	
+	this->errors.push_back(error);
 }

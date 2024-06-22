@@ -6,8 +6,14 @@
 
 enum EN_ERROR_TYPE
 {
+	//http errors
+	EMPTY_NONTERMINALS,
+	EMPTY_TERMINALS,
+	EMPTY_HEAD,
+	EMPTY_RULES,
+	EMPTY_WORD,
+	
 	//general errors
-	EMPTY_FIELD,
 	UNKNOWN_SYMBOL,
 	
 	//non/terminals related errors
@@ -36,8 +42,7 @@ enum EN_ERROR_TYPE
 struct Error
 {
 	EN_ERROR_TYPE type;
-	std::string description;
-	std::vector<std::string> source;
+	std::string source;
 };
 
 

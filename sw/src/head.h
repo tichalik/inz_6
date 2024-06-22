@@ -4,19 +4,15 @@
 #include <string>
 
 #include "utils.h"
-#include "errorable.h"
 #include "symbol.h"
 #include "non_terminals.h"
 
-struct Head: public Errorable
+struct Head
 {
 	Symbol symbol;
 	
 	Head() {}
 	Head(const std::string & _head);
-	
-	Errors get_errors() const;
-	
 	
 	std::string to_string() const;
 };

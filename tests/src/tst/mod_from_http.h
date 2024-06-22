@@ -1,5 +1,5 @@
-#ifndef TST_HTTP_GRAMMAR_ADAPTER_H_
-#define TST_HTTP_GRAMMAR_ADAPTER_H_
+#ifndef TST_MOD_FROM_HTTP_H_
+#define TST_MOD_FROM_HTTP_H_
 
 #include "tester.h"
 

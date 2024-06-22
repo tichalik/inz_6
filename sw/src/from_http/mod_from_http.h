@@ -9,14 +9,18 @@
 #include "word.h"
 #include "error.h"
 
-class Mod_from_http: Errorable
+class Mod_from_http
 {
 	
 	Grammar grammar;
 	Word word;
-	// Errors errors;
+	Errors errors;
 	
 	
+	void add_error(
+		const EN_ERROR_TYPE & type,
+		const std::string & source = ""
+	);
 	
     /** 
 	 * \brief extract grammar information from a string obtained from http request

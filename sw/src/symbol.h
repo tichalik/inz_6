@@ -1,10 +1,9 @@
 #ifndef _SYMBOL_H_
 #define _SYMBOL_H_
 
-#include "errorable.h"
 
 #include <string>
-struct Symbol: public Errorable
+struct Symbol
 {
 	std::string symbol;
 	
@@ -16,8 +15,6 @@ struct Symbol: public Errorable
 	{
 		return symbol;
 	}
-	
-	Errors get_errors() const;
 	
 };
 

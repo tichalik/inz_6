@@ -2,7 +2,6 @@
 #define _NON_TERMINALS_H_
 
 #include "symbol.h"
-#include "errorable.h"
 #include <vector>
 
 
@@ -11,11 +10,8 @@ struct Symbol;
 /** 
  * \brief set of symbols used either as terminals or nonterminals
  */
-struct Non_terminals: public Errorable
+struct Non_terminals
 {
-	
-	Errors errors;
-	
 	
 	/** 
 	 * \brief collection of symbols
@@ -51,17 +47,6 @@ struct Non_terminals: public Errorable
 	 * \brief whether a symbol of given `symbol` field is present in the container
 	 */
 	bool contains(const Symbol & symbol) const;
-	
-	
-	/** 
-	 * \brief getter for the internal container
-	 *
-	 * stupid but necessary for creating html representation in `Http_grammar_adapter`
-	 */
-	std::vector<Symbol> get_symbols() const;
-	
-	
-	Errors get_errors() const;
 	
 	
 };

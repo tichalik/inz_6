@@ -9,8 +9,8 @@ Non_terminals Mod_from_http::non_terminals_from_http(
 	std::vector<std::string> str_nonterminals = Utils::vector_from_str(param);
 	if (str_nonterminals.size() == 0)
 	{
-		this->add_error(EMPTY_FIELD, 
-			(is_nonterminals? "empty nonterminals" : "empty terminals" )
+		this->add_error( 
+			(is_nonterminals? EMPTY_NONTERMINALS: EMPTY_TERMINALS )
 		);
 	}
 	else 
@@ -26,7 +26,7 @@ Head Mod_from_http::head_from_http(const std::string & param)
 	std::vector<std::string> vect_head = Utils::vector_from_str(param);
 	if (vect_head.size() == 0)
 	{
-		this->add_error(EMPTY_FIELD, "empty head");
+		this->add_error(EMPTY_HEAD);
 	}
 	else if (vect_head.size() >1)
 	{
@@ -88,7 +88,8 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 							if (is_LHS == false)
 							{
 								//there already has been an arrow
-								rule.add_error(MULTIPLE_ARROWS);
+								this->add_error(MULTIPLE_ARROWS, 
+									"rule: <" + line + ">");
 							}
 							else
 							{
@@ -106,7 +107,8 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 								if (str_LHS != "")
 								{
 									//the LHS was already filled! 
-									rule.add_error(TOO_MANY_LHS);									
+									this->add_error(TOO_MANY_LHS, 
+										"rule: <" + line + ">");									
 								}
 								else
 								{
@@ -130,7 +132,8 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 								else 
 								{
 									//both RHS1 and RHS2 have been filled -- error
-									rule.add_error(TOO_MANY_RHS);									
+									this->add_error(TOO_MANY_RHS, 
+										"rule: <" + line + ">");									
 								}
 							}
 						}
@@ -171,12 +174,12 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 			
 			if (str_LHS == "")
 			{
-				rule.add_error(MISSING_LHS);		
+				this->add_error(MISSING_LHS, "rule: <" + line + ">");		
 			}
 			
 			if (str_RHS1 == "" || str_RHS2 == "")
 			{
-				rule.add_error(TOO_FEW_RHS);									
+				this->add_error(TOO_FEW_RHS, "rule: <" + line + ">");									
 			}
 			
 			rule.left.symbol = str_LHS;
@@ -190,7 +193,7 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 	
 	if (all_empty)
 	{
-		this->add_error(EMPTY_FIELD, "empty rules");
+		this->add_error(EMPTY_RULES);
 	}
 	
 	return _tules;
@@ -213,7 +216,7 @@ Word Mod_from_http::word_from_http(const std::string & param)
 	
 	if (res.size() == 0)
 	{
-		this->add_error(EMPTY_FIELD, "input");
+		this->add_error(EMPTY_WORD);
 	}
 	
 	return res;
@@ -248,4 +251,16 @@ Word Mod_from_http::get_word() const
 Errors Mod_from_http::get_errors() const
 {
 	return this->errors;
+}
+
+void Mod_from_http::add_error(
+	const EN_ERROR_TYPE & type,
+	const std::string & source
+)
+{
+	Error error;
+	error.type = type;
+	error.source = source;
+	
+	this->errors.push_back(error);
 }

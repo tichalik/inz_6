@@ -7,7 +7,6 @@
 #include <sstream>
 
 #include "utils.h"
-#include "errorable.h"
 #include "symbol.h"
 #include "non_terminals.h"
 #include "head.h"
@@ -16,7 +15,7 @@
 /** 
  * \brief grammar in Chomsky's normal form
  */
-struct Grammar: public Errorable
+struct Grammar
 {
 	
 	Non_terminals nonterminals;
@@ -31,8 +30,6 @@ struct Grammar: public Errorable
 	 * \brief get grammar's printf friendly description
 	 */
 	std::string to_string() const;
-	
-	Errors get_errors() const;
 };
 
 

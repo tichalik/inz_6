@@ -1,4 +1,4 @@
-#include "tst_http_grammar_adapter.h"
+#include "mod_from_http.h"
 
 void TST_http_grammar_adapter::_test_rules_from_http(
 	const std::string & str_terminals,

@@ -4,7 +4,7 @@
 
 PTrees Parser::parse(const Word & word_input, const Parsing_grammar_adapter & g)
 {
-	std::vector<Symbol> input = word_input.get_symbols();
+	std::vector<Symbol> input = word_input.symbols;
     const int N = input.size();
 
     //initializing the table

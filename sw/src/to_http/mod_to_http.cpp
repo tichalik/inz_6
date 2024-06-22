@@ -63,8 +63,20 @@ std::string Mod_to_http::EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const
 	std::string res;
 	switch (error)
 	{
-		case EMPTY_FIELD:
-			res=""; //when the field is empty, the source is in Error::description
+		case EMPTY_NONTERMINALS:
+			res="no nonterminals provided";
+			break;
+		case EMPTY_TERMINALS:
+			res="no terminals provided";
+			break;
+		case EMPTY_HEAD:
+			res="no head provided";
+			break;
+		case EMPTY_RULES:
+			res="no rules provided";
+			break;
+		case EMPTY_WORD:
+			res="no word provided";
 			break;
 		case UNKNOWN_SYMBOL:
 			res="unknown symbol";
@@ -115,17 +127,7 @@ std::string Mod_to_http::EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const
 
 std::string Mod_to_http::error_to_http(const Error & error) const
 {
-	std::string res;
-	
-	for (size_t i=0; i<error.source.size(); i++)
-	{
-		res += error.source[i] + ":\t";
-	}
-	
-	res +=  EN_ERROR_TYPE2str(error.type) + "\t" + error.description;
-	
-	return res;
-	
+	return error.source +":\t" + EN_ERROR_TYPE2str(error.type);
 }
 
 std::string Mod_to_http::errors_to_http(const Errors & _errors) const
