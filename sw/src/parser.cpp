@@ -2,9 +2,8 @@
 
 #include <iostream>
 
-PTrees Parser::parse(const Word & word_input, const Parsing_grammar_adapter & g)
+PTrees Parser::parse(const Word & input, const Parsing_grammar_adapter & g)
 {
-	std::vector<Symbol> input = word_input.symbols;
     const int N = input.size();
 
     //initializing the table
@@ -18,7 +17,7 @@ PTrees Parser::parse(const Word & word_input, const Parsing_grammar_adapter & g)
     for (int i=0; i<N; i++)
     {
         PNode pnode;
-        pnode.tag = input[i].symbol;
+        pnode.tag = input[i];
 
         matrix[0][i].push_back(pnode);
     }

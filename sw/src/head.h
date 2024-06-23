@@ -3,19 +3,9 @@
 
 #include <string>
 
-#include "utils.h"
 #include "symbol.h"
-#include "non_terminals.h"
 
-struct Head
-{
-	Symbol symbol;
-	
-	Head() {}
-	Head(const std::string & _head);
-	
-	std::string to_string() const;
-};
+typedef std::string Head;
 
 
 

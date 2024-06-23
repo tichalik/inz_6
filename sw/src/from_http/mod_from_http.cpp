@@ -182,9 +182,9 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 				this->add_error(TOO_FEW_RHS, "rule: <" + line + ">");									
 			}
 			
-			rule.left.symbol = str_LHS;
-			rule.right1.symbol = str_RHS1;
-			rule.right2.symbol = str_RHS2;
+			rule.left = str_LHS;
+			rule.right1 = str_RHS1;
+			rule.right2 = str_RHS2;
 			_tules.push_back(rule);
 		}
 		
@@ -201,7 +201,7 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 
 Word Mod_from_http::word_from_http(const std::string & param)
 {
-	std::vector<Symbol> res;
+	Word res;
 	
 	std::stringstream ss;
 	ss << param;
@@ -209,9 +209,7 @@ Word Mod_from_http::word_from_http(const std::string & param)
 	std::string s; 
 	while (ss >> s)
 	{
-		Symbol symbol;
-		symbol.symbol = s;
-		res.push_back(symbol);
+		res.push_back(s);
 	}
 	
 	if (res.size() == 0)

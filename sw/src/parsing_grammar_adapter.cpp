@@ -5,9 +5,9 @@ Parsing_grammar_adapter::Parsing_grammar_adapter(const Grammar & _grammar)
 	const Rules rules = _grammar.rules;
 	for (size_t i=0; i<rules.size(); i++)
 	{
-		std::string key = rules[i].right1.symbol 
-			+ RULE_MAP_SEPARATOR + rules[i].right2.symbol;
-		rule_map[key].push_back(rules[i].left.symbol);
+		std::string key = rules[i].right1
+			+ RULE_MAP_SEPARATOR + rules[i].right2;
+		rule_map[key].push_back(rules[i].left);
 	}
 }
 

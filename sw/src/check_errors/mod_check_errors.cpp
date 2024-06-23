@@ -9,9 +9,9 @@ void Mod_check_errors::check_symbol_errors(
 	const Non_terminals & nonterminals
 )
 {
-	if (!terminals.contains(s) && !nonterminals.contains(s) && s.symbol != "")
+	if (!terminals.contains(s) && !nonterminals.contains(s) && s != "")
 	{
-		add_error(UNKNOWN_SYMBOL, parent_source + " <" + s.symbol+ ">:");
+		add_error(UNKNOWN_SYMBOL, parent_source + " <" + s+ ">:");
 	}
 }
 
@@ -22,20 +22,20 @@ void Mod_check_errors::word_check_errors(
 	const Non_terminals & nonterminals
 )
 {
-	for (size_t i=0; i<input.symbols.size(); i++)
+	for (size_t i=0; i<input.size(); i++)
 	{
-		Symbol s = input.symbols[i];
+		Symbol s = input[i];
 		
 		if (!terminals.contains(s) && !nonterminals.contains(s))
 		{
 			add_error(UNKNOWN_SYMBOL, 
-				parent_source + " <" + s.symbol+ ">:");			
+				parent_source + " <" + s+ ">:");			
 		}
 		
 		if (nonterminals.contains(s))
 		{
 			add_error(SYMBOL_IN_NONTERMINALS, 
-				 parent_source + " <" + s.symbol+ ">:");			
+				 parent_source + " <" + s+ ">:");			
 		}
 		
 	}
@@ -66,11 +66,11 @@ void Mod_check_errors::head_check_errors(
 )
 {
 
-	if (!nonterminals.contains(input.symbol))
+	if (!nonterminals.contains(input))
 	{
 		add_error(HEAD_NOT_IN_NONTERMINALS, parent_source);
 
-		if (!terminals.contains(input.symbol))
+		if (!terminals.contains(input))
 		{
 			add_error(UNKNOWN_SYMBOL, parent_source);
 		}
@@ -85,8 +85,8 @@ void Mod_check_errors::rule_check_errors(
 	const Non_terminals& nonterminals
 )
 {
-	std::string error_source = parent_source + " rule < <" + input.left.symbol
-		+ "> -> <" + input.right1.symbol + "> <" + input.right2.symbol +"> >:";
+	std::string error_source = parent_source + " rule < <" + input.left
+		+ "> -> <" + input.right1 + "> <" + input.right2 +"> >:";
 	
 	check_symbol_errors(error_source, input.left, terminals, nonterminals);
 	check_symbol_errors(error_source, input.right1, terminals, nonterminals);
@@ -129,19 +129,19 @@ void Mod_check_errors::non_terminals_check_errors(
 		{
 			//OPTIMIZE!! ADD ERROR TO BOTH SYMBOLS, SKIP OTHER FROM 
 			// ITERATION
-			if (i != j && input.symbols[i].symbol == input.symbols[j].symbol)
+			if (i != j && s == input.symbols[j])
 			{
 				add_error(REPEATING_SYMBOL,
-					parent_source + " <" + s.symbol+ ">:");
+					parent_source + " <" + s+ ">:");
 				break;
 			}
 		}
 		
 		
-		if (other.contains(input.symbols[i]))
+		if (other.contains(s))
 		{
 			add_error(IN_BOTH_TERMINALS_AND_NONTERMINALS, 
-				parent_source + " <" + s.symbol+ ">:");			
+				parent_source + " <" + s+ ">:");			
 		}
 	}
 }

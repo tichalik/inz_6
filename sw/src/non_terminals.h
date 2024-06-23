@@ -5,8 +5,6 @@
 #include <vector>
 
 
-struct Symbol;
-
 /** 
  * \brief set of symbols used either as terminals or nonterminals
  */
