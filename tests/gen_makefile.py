@@ -56,7 +56,10 @@ res = """
 
 FLAGS = -fno-access-control
 
-main : """+ link_files + "\n" \
+run: ./debug/main
+	./debug/main > ./debug/results.txt
+
+./debug/main : """+ link_files + "\n" \
     +"\tg++ " +link_files + " -o " + dest + "main\n\n" \
     + res
 

@@ -18,14 +18,14 @@ class Mod_check_errors
 		
 	void check_symbol_errors(
 		const std::string & parent_source,
-		Symbol &s,
+		const Symbol &s,
 		const Non_terminals & terminals,
 		const Non_terminals & nonterminals
 	);
 	
 	void word_check_errors(
 		const std::string & parent_source,
-		Word &input,
+		const Word &input,
 		const Non_terminals & terminals,
 		const Non_terminals & nonterminals
 	);
@@ -33,32 +33,32 @@ class Mod_check_errors
 
 	void grammar_check_errors(
 		const std::string & parent_source,
-		Grammar &input
+		const Grammar &input
 	);
 
 	void rule_check_errors(
 		const std::string & parent_source,
-		Rule &input,
+		const Rule &input,
 		const Non_terminals& terminals,
 		const Non_terminals& nonterminals
 	);
 
 	void rules_check_errors(
 		const std::string & parent_source,
-		Rules &input,
+		const Rules &input,
 		const Non_terminals & terminals,
 		const Non_terminals & nonterminals
 	);
 	
 	void non_terminals_check_errors(
 		const std::string & parent_source,
-		Non_terminals& input,
+		const Non_terminals& input,
 		const Non_terminals & other
 	);
 	
 	void head_check_errors(
 		const std::string & parent_source,
-		Head &input,
+		const Head &input,
 		const Non_terminals & terminals,
 		const Non_terminals & nonterminals
 	);

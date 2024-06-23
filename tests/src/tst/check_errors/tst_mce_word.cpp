@@ -15,7 +15,7 @@ void TST_mod_check_errors::_test_word_errors(
 	
 	//mod_check_errors performed error checking on empty grammar and word
 	//leaving results in mod_check_errors.errors. The results are ignored
-	mod_check_errors.errors.clean();
+	mod_check_errors.errors.clear();
 	
 	//perform error checking
 	mod_check_errors.word_check_errors(
@@ -33,20 +33,20 @@ void TST_mod_check_errors::_test_word_errors(
 	}
 	else
 	{
-		std::cout << "FAIL" << std::endl;
+		std::cout << __FILE__ << "\tFAIL" << std::endl;
 	}
 	
 }
 
 
-void TST_mod_check_errors::test_head_errors()
+void TST_mod_check_errors::test_word_errors()
 {
 	Non_terminals terminals;
 	terminals.symbols.push_back("a");
 	terminals.symbols.push_back("b");
 	terminals.symbols.push_back("c");
 	
-	Non_nonterminals nonterminals;
+	Non_terminals nonterminals;
 	nonterminals.symbols.push_back("A");
 	nonterminals.symbols.push_back("B");
 	nonterminals.symbols.push_back("C");

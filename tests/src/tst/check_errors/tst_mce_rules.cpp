@@ -1,10 +1,10 @@
 #include "tst_mod_check_errors.h"
 
 
-void TST_mod_check_errors::_test_rule_errors(
+void TST_mod_check_errors::_test_rules_errors(
 	const Rule & rule,
 	const Non_terminals& terminals,
-	const Non_terminals& nonterminals
+	const Non_terminals& nonterminals,
 	const Errors & expected_errors
 )
 {
@@ -15,7 +15,7 @@ void TST_mod_check_errors::_test_rule_errors(
 	
 	//mod_check_errors performed error checking on empty grammar and word
 	//leaving results in mod_check_errors.errors. The results are ignored
-	mod_check_errors.errors.clean();
+	mod_check_errors.errors.clear();
 	
 	//perform error checking
 	mod_check_errors.rule_check_errors(
@@ -33,20 +33,20 @@ void TST_mod_check_errors::_test_rule_errors(
 	}
 	else
 	{
-		std::cout << "FAIL" << std::endl;
+		std::cout << __FILE__ << "\tFAIL" << std::endl;
 	}
 	
 }
 
 
-void TST_mod_check_errors::test_head_errors()
+void TST_mod_check_errors::test_rules_errors()
 {
 	Non_terminals terminals;
 	terminals.symbols.push_back("a");
 	terminals.symbols.push_back("b");
 	terminals.symbols.push_back("c");
 	
-	Non_nonterminals nonterminals;
+	Non_terminals nonterminals;
 	nonterminals.symbols.push_back("A");
 	nonterminals.symbols.push_back("B");
 	nonterminals.symbols.push_back("C");
@@ -57,13 +57,13 @@ void TST_mod_check_errors::test_head_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left.symbol = "A";
-		rule.right1.symbol = "B";
-		rule.right2.symbol = "C";
+		rule.left = "A";
+		rule.right1 = "B";
+		rule.right2 = "C";
 		
 		Errors expected_errors;
 		
-		_test_rule_errors(
+		_test_rules_errors(
 			rule, 
 			terminals,
 			nonterminals,
@@ -76,13 +76,13 @@ void TST_mod_check_errors::test_head_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left.symbol = "A";
-		rule.right1.symbol = "b";
-		rule.right2.symbol = "c";
+		rule.left = "A";
+		rule.right1 = "b";
+		rule.right2 = "c";
 		
 		Errors expected_errors;
 		
-		_test_rule_errors(
+		_test_rules_errors(
 			rule, 
 			terminals,
 			nonterminals,
@@ -95,13 +95,13 @@ void TST_mod_check_errors::test_head_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left.symbol = "A";
-		rule.right1.symbol = "b";
-		rule.right2.symbol = "C";
+		rule.left = "A";
+		rule.right1 = "b";
+		rule.right2 = "C";
 		
 		Errors expected_errors;
 		
-		_test_rule_errors(
+		_test_rules_errors(
 			rule, 
 			terminals,
 			nonterminals,
@@ -114,13 +114,13 @@ void TST_mod_check_errors::test_head_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left.symbol = "A";
-		rule.right1.symbol = "B";
-		rule.right2.symbol = "c";
+		rule.left = "A";
+		rule.right1 = "B";
+		rule.right2 = "c";
 		
 		Errors expected_errors;
 		
-		_test_rule_errors(
+		_test_rules_errors(
 			rule, 
 			terminals,
 			nonterminals,
@@ -133,9 +133,9 @@ void TST_mod_check_errors::test_head_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left.symbol = "a";
-		rule.right1.symbol = "b";
-		rule.right2.symbol = "c";
+		rule.left = "a";
+		rule.right1 = "b";
+		rule.right2 = "c";
 		
 		Errors expected_errors;
 		
@@ -145,7 +145,7 @@ void TST_mod_check_errors::test_head_errors()
 		expected_errors.push_back(error1);
 		
 		
-		_test_rule_errors(
+		_test_rules_errors(
 			rule, 
 			terminals,
 			nonterminals,
@@ -158,9 +158,9 @@ void TST_mod_check_errors::test_head_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left.symbol = "x";
-		rule.right1.symbol = "y";
-		rule.right2.symbol = "z";
+		rule.left = "x";
+		rule.right1 = "y";
+		rule.right2 = "z";
 		
 		Errors expected_errors;
 		
@@ -180,7 +180,7 @@ void TST_mod_check_errors::test_head_errors()
 		expected_errors.push_back(error3);
 		
 		
-		_test_rule_errors(
+		_test_rules_errors(
 			rule, 
 			terminals,
 			nonterminals,

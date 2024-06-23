@@ -1,6 +1,6 @@
--> split EMPTY_FIELD error into specific types of empty fields, remove Error::description
 -> optimize returning and copy constructors 
 -> optimize parser table with pointers
-
--> split Http_adapter into From_http and To_http
--> remove error checking from data, move it into a module
+-> Non_terminals into std::set
+-> error types into class -- make distinction between syntactics errors 
+	(EMPTY_, malformed rules, duplicates in set (once terminals are a set)) 
+	returned by From_http and semantic errors returned by Check_errors

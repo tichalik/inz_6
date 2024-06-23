@@ -18,24 +18,24 @@ void TST_mod_from_http::_test_word_from_http(
 
 	
 	//mod_from_http extracted Grammar and Word from empty strings 
-	//leaving errors in mod_check_errors.errors. Thes results are ignored
-	mod_from_http.errors.clean();
+	//leaving errors in mod_from_http.errors. Thes results are ignored
+	mod_from_http.errors.clear();
 	
 	//perform the conversion
 	Word result = mod_from_http.word_from_http(str_input);
 	
 	//check if the result is identical to expected
-	bool ok_result = compare_word(expected, result)
+	bool ok_result = compare_word(expected, result);
 	
 	//check if obtained errors are identical to expected 
-	bool ok_errors = compare_errors(expected_errors, mod_check_errors.errors);
+	bool ok_errors = compare_errors(expected_errors, mod_from_http.errors);
 	if (ok_errors && ok_result)
 	{
 		std::cout << "OK" << std::endl;
 	}
 	else
 	{
-		std::cout << "FAIL" << std::endl;
+		std::cout << __FILE__ << "\tFAIL" << std::endl;
 	}
 	
 }
@@ -45,12 +45,14 @@ void TST_mod_from_http::test_word_from_http()
 {
 	Errors no_errors;
 	
-	Errors empty_word;
+	Errors empty_word_errors;
 
 	Error error1;
 	error1.type = EMPTY_WORD;
 	error1.source = "";
-	empty_word.push_back(error1);
+	empty_word_errors.push_back(error1);
+	
+	Word empty_word;
 	
 	Word expected_word;
 	expected_word.push_back("aaaa");
@@ -112,8 +114,8 @@ void TST_mod_from_http::test_word_from_http()
 		
 		_test_word_from_http(
 			"",
-			expected_word,
-			empty_word
+			empty_word,
+			empty_word_errors
 		);
 	}
 	{
@@ -123,8 +125,8 @@ void TST_mod_from_http::test_word_from_http()
 		
 		_test_word_from_http(
 			"\n\n\n        \t\n\t   \t \n",
-			expected_word,
-			empty_word
+			empty_word,
+			empty_word_errors
 		);
 	}
 	

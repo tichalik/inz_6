@@ -4,7 +4,7 @@
 
 void Mod_check_errors::check_symbol_errors(
 	const std::string & parent_source,
-	Symbol &s,
+	const Symbol &s,
 	const Non_terminals & terminals,
 	const Non_terminals & nonterminals
 )
@@ -17,7 +17,7 @@ void Mod_check_errors::check_symbol_errors(
 
 void Mod_check_errors::word_check_errors(
 	const std::string & parent_source,
-	Word &input,
+	const Word &input,
 	const Non_terminals & terminals,
 	const Non_terminals & nonterminals
 )
@@ -44,7 +44,7 @@ void Mod_check_errors::word_check_errors(
 
 void Mod_check_errors::grammar_check_errors(
 	const std::string & parent_source,
-	Grammar &input
+	const Grammar &input
 )
 {
 	non_terminals_check_errors(parent_source + "terminals:",
@@ -60,7 +60,7 @@ void Mod_check_errors::grammar_check_errors(
 
 void Mod_check_errors::head_check_errors(
 	const std::string & parent_source,
-	Head &input,
+	const Head &input,
 	const Non_terminals & terminals,
 	const Non_terminals & nonterminals
 )
@@ -80,7 +80,7 @@ void Mod_check_errors::head_check_errors(
 
 void Mod_check_errors::rule_check_errors(
 	const std::string & parent_source,
-	Rule &input,
+	const Rule &input,
 	const Non_terminals& terminals,
 	const Non_terminals& nonterminals
 )
@@ -101,7 +101,7 @@ void Mod_check_errors::rule_check_errors(
 
 void Mod_check_errors::rules_check_errors(
 	const std::string & parent_source,
-	Rules &input,
+	const Rules &input,
 	const Non_terminals & terminals,
 	const Non_terminals & nonterminals
 )
@@ -115,7 +115,7 @@ void Mod_check_errors::rules_check_errors(
 
 void Mod_check_errors::non_terminals_check_errors(
 	const std::string & parent_source,
-	Non_terminals& input,
+	const Non_terminals& input,
 	const Non_terminals & other
 )
 {

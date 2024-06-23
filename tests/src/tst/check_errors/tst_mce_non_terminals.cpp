@@ -2,7 +2,7 @@
 
 
 
-void TST_mod_check_errors::_test_non_terminal_errors(
+void TST_mod_check_errors::_test_non_terminals_errors(
 	const Non_terminals& input,
 	const Non_terminals & other,
 	const Errors & expected_errors
@@ -15,13 +15,13 @@ void TST_mod_check_errors::_test_non_terminal_errors(
 	
 	//mod_check_errors performed error checking on empty grammar and word
 	//leaving results in mod_check_errors.errors. The results are ignored
-	mod_check_errors.errors.clean();
+	mod_check_errors.errors.clear();
 	
 	//perform error checking
 	mod_check_errors.non_terminals_check_errors(
 		"", //skipping source
 		input, 
-		other, 
+		other
 	);
 	
 	//check if obtained errors are identical to expected 
@@ -32,13 +32,13 @@ void TST_mod_check_errors::_test_non_terminal_errors(
 	}
 	else
 	{
-		std::cout << "FAIL" << std::endl;
+		std::cout << __FILE__ << "\tFAIL" << std::endl;
 	}
 	
 }
 
 
-void TST_mod_check_errors::test_non_terminal_errors()
+void TST_mod_check_errors::test_non_terminals_errors()
 {
 	Non_terminals other;
 	other.symbols.push_back("a");
@@ -51,14 +51,14 @@ void TST_mod_check_errors::test_non_terminal_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Non_terminals input;
-		input.push_back("A");
-		input.push_back("B");
-		input.push_back("C");
-		input.push_back("D");
+		input.symbols.push_back("A");
+		input.symbols.push_back("B");
+		input.symbols.push_back("C");
+		input.symbols.push_back("D");
 		
 		Errors expected_errors;
 		
-		_test_non_terminal_errors(
+		_test_non_terminals_errors(
 			input, 
 			other,
 			expected_errors
@@ -70,10 +70,10 @@ void TST_mod_check_errors::test_non_terminal_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Non_terminals input;
-		input.push_back("B");
-		input.push_back("B");
-		input.push_back("C");
-		input.push_back("D");
+		input.symbols.push_back("B");
+		input.symbols.push_back("B");
+		input.symbols.push_back("C");
+		input.symbols.push_back("D");
 		
 		Errors expected_errors;
 		
@@ -82,7 +82,7 @@ void TST_mod_check_errors::test_non_terminal_errors()
 		error1.source = "symbol <B>:";
 		expected_errors.push_back(error1);
 		
-		_test_non_terminal_errors(
+		_test_non_terminals_errors(
 			input, 
 			other,
 			expected_errors
@@ -94,10 +94,10 @@ void TST_mod_check_errors::test_non_terminal_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Non_terminals input;
-		input.push_back("a");
-		input.push_back("B");
-		input.push_back("C");
-		input.push_back("D");
+		input.symbols.push_back("a");
+		input.symbols.push_back("B");
+		input.symbols.push_back("C");
+		input.symbols.push_back("D");
 		
 		Errors expected_errors;
 		
@@ -106,7 +106,7 @@ void TST_mod_check_errors::test_non_terminal_errors()
 		error1.source = "symbol <a>:";
 		expected_errors.push_back(error1);
 		
-		_test_non_terminal_errors(
+		_test_non_terminals_errors(
 			input, 
 			other,
 			expected_errors
@@ -118,10 +118,10 @@ void TST_mod_check_errors::test_non_terminal_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Non_terminals input;
-		input.push_back("a");
-		input.push_back("B");
-		input.push_back("B");
-		input.push_back("D");
+		input.symbols.push_back("a");
+		input.symbols.push_back("B");
+		input.symbols.push_back("B");
+		input.symbols.push_back("D");
 		
 		Errors expected_errors;
 		
@@ -135,7 +135,7 @@ void TST_mod_check_errors::test_non_terminal_errors()
 		error2.source = "symbol <B>:";
 		expected_errors.push_back(error2);
 		
-		_test_non_terminal_errors(
+		_test_non_terminals_errors(
 			input, 
 			other,
 			expected_errors

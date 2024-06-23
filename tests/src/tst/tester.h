@@ -8,6 +8,7 @@
 #include "grammar.h"
 #include "word.h"
 #include "html_response.h"
+#include "error.h"
 
 
 class Tester
@@ -32,6 +33,5 @@ class Tester
 	
 public:
 	
-	void test_non_terminal_to_http();
 };
 #endif

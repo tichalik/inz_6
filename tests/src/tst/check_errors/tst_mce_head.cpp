@@ -15,7 +15,7 @@ void TST_mod_check_errors::_test_head_errors(
 	
 	//mod_check_errors performed error checking on empty grammar and word
 	//leaving results in mod_check_errors.errors. The results are ignored
-	mod_check_errors.errors.clean();
+	mod_check_errors.errors.clear();
 	
 	//perform error checking
 	mod_check_errors.head_check_errors(
@@ -33,7 +33,7 @@ void TST_mod_check_errors::_test_head_errors(
 	}
 	else
 	{
-		std::cout << "FAIL" << std::endl;
+		std::cout << __FILE__ << "\tFAIL" << std::endl;
 	}
 	
 }
@@ -46,10 +46,20 @@ void TST_mod_check_errors::test_head_errors()
 	terminals.symbols.push_back("b");
 	terminals.symbols.push_back("c");
 	
-	Non_nonterminals nonterminals;
+	Non_terminals nonterminals;
 	nonterminals.symbols.push_back("A");
 	nonterminals.symbols.push_back("B");
 	nonterminals.symbols.push_back("C");
+	
+
+	Error head_not_in_nonterminals;
+	head_not_in_nonterminals.type = HEAD_NOT_IN_NONTERMINALS;
+	head_not_in_nonterminals.source = "";
+
+
+	Error unknown_head;
+	unknown_head.type = UNKNOWN_SYMBOL;
+	unknown_head.source = "";
 	
 	
 	{
@@ -57,8 +67,7 @@ void TST_mod_check_errors::test_head_errors()
 		std::cout << " normal head " << std::endl;
 		std::cout << "===============================================================" << std::endl;
 		
-		Head head;
-		head.symbol = "A";
+		Head head = "A";
 		
 		Errors expected_errors;
 		
@@ -74,15 +83,11 @@ void TST_mod_check_errors::test_head_errors()
 		std::cout << " head in terminals " << std::endl;
 		std::cout << "===============================================================" << std::endl;
 		
-		Head head;
-		head.symbol = "a";
+		Head head = "a";
 		
 		Errors expected_errors;
 		
-		Error head_in_terminals;
-		head_in_terminals.type = HEAD_NOT_IN_NONTERMINALS;
-		head_in_terminals.source = "";
-		expected_errors.push_back(head_in_terminals);
+		expected_errors.push_back(head_not_in_nonterminals);
 		
 		_test_head_errors(
 			head,
@@ -96,14 +101,11 @@ void TST_mod_check_errors::test_head_errors()
 		std::cout << " completely unknown head " << std::endl;
 		std::cout << "===============================================================" << std::endl;
 		
-		Head head;
-		head.symbol = "q";
+		Head head = "q";
 		
 		Errors expected_errors;
 		
-		Error unknown_head;
-		unknown_head.type = UNKNOWN_SYMBOL;
-		unknown_head.source = "";
+		expected_errors.push_back(head_not_in_nonterminals);
 		expected_errors.push_back(unknown_head);
 		
 		_test_head_errors(

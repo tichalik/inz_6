@@ -19,24 +19,24 @@ void TST_mod_from_http::_test_non_terminals_from_http(
 
 	
 	//mod_from_http extracted Grammar and Word from empty strings 
-	//leaving errors in mod_check_errors.errors. Thes results are ignored
-	mod_from_http.errors.clean();
+	//leaving errors in mod_from_http.errors. Thes results are ignored
+	mod_from_http.errors.clear();
 	
 	//perform the conversion
 	Non_terminals result = mod_from_http.non_terminals_from_http(str_input, is_nonterminals);
 	
 	//check if the result is identical to expected
-	bool ok_result = compare_non_terminals(expected, result)
+	bool ok_result = compare_non_terminals(expected, result);
 	
 	//check if obtained errors are identical to expected 
-	bool ok_errors = compare_errors(expected_errors, mod_check_errors.errors);
+	bool ok_errors = compare_errors(expected_errors, mod_from_http.errors);
 	if (ok_errors && ok_result)
 	{
 		std::cout << "OK" << std::endl;
 	}
 	else
 	{
-		std::cout << "FAIL" << std::endl;
+		std::cout << __FILE__ << "\tFAIL" << std::endl;
 	}
 	
 }
@@ -61,10 +61,10 @@ void TST_mod_from_http::test_non_terminal_from_http()
 	empty_terminals.push_back(error2);
 	
 	Non_terminals expected_non_terminals;
-	expected_non_terminals.push_back("a");
-	expected_non_terminals.push_back("b");
-	expected_non_terminals.push_back("c");
-	expected_non_terminals.push_back("d");
+	expected_non_terminals.symbols.push_back("a");
+	expected_non_terminals.symbols.push_back("b");
+	expected_non_terminals.symbols.push_back("c");
+	expected_non_terminals.symbols.push_back("d");
 	
 	Non_terminals empty_non_terminals;
 	
@@ -112,7 +112,7 @@ void TST_mod_from_http::test_non_terminal_from_http()
 		std::cout << "===============================================================" << std::endl;
 		
 		_test_non_terminals_from_http(
-			"a\nb\tc \n\n     \t\t d            ", "            A \nB    C D",
+			"a\nb\tc \n\n     \t\t d           \n\n ", 
 			false, 
 			expected_non_terminals,
 			no_errors

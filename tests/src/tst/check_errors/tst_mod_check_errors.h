@@ -13,14 +13,14 @@ class TST_mod_check_errors: public Tester
 		const Errors & expected_errors
 	);
 
-	void _test_rule_errors(
+	void _test_rules_errors(
 		const Rule & rule,
 		const Non_terminals& terminals,
-		const Non_terminals& nonterminals
+		const Non_terminals& nonterminals,
 		const Errors & expected_errors
 	);
 	
-	void _test_non_terminal_errors(
+	void _test_non_terminals_errors(
 		const Non_terminals& input,
 		const Non_terminals & other,
 		const Errors & expected_errors
@@ -37,8 +37,8 @@ class TST_mod_check_errors: public Tester
 public:
 	
 	void test_head_errors();
-	void test_rule_errors();
-	void test_non_terminal_errors();
+	void test_rules_errors();
+	void test_non_terminals_errors();
 	void test_word_errors();
 	
 	

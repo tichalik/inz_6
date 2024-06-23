@@ -18,24 +18,24 @@ void TST_mod_from_http::_test_head_from_http(
 
 	
 	//mod_from_http extracted Grammar and Word from empty strings 
-	//leaving errors in mod_check_errors.errors. Thes results are ignored
-	mod_from_http.errors.clean();
+	//leaving errors in mod_from_http.errors. Thes results are ignored
+	mod_from_http.errors.clear();
 	
 	//perform the conversion
 	Head result = mod_from_http.head_from_http(str_input);
 	
 	//check if the result is identical to expected
-	bool ok_result = compare_head(expected, result)
+	bool ok_result = compare_head(expected, result);
 	
 	//check if obtained errors are identical to expected 
-	bool ok_errors = compare_errors(expected_errors, mod_check_errors.errors);
+	bool ok_errors = compare_errors(expected_errors, mod_from_http.errors);
 	if (ok_errors && ok_result)
 	{
 		std::cout << "OK" << std::endl;
 	}
 	else
 	{
-		std::cout << "FAIL" << std::endl;
+		std::cout << __FILE__ << "\tFAIL" << std::endl;
 	}
 	
 }
@@ -108,7 +108,7 @@ void TST_mod_from_http::test_head_from_http()
 		
 		_test_head_from_http(
 			"",
-			expected_head,
+			empty_head,
 			empty_head_errors
 		);
 	}
@@ -120,7 +120,7 @@ void TST_mod_from_http::test_head_from_http()
 		
 		_test_head_from_http(
 			"\n\n\t            \n\n",
-			expected_head,
+			empty_head,
 			empty_head_errors
 		);
 	}
@@ -132,7 +132,8 @@ void TST_mod_from_http::test_head_from_http()
 				
 		_test_head_from_http(
 			"head\n\n         \t\nevil_head\n\nevil_head2\n\n",
-			expected_head,
+			empty_head, // if there are more than 1 heads provided we dont know which is the real
+						// so we ignore them all
 			multiple_head_errors
 		);
 	}
