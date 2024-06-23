@@ -7,12 +7,20 @@
 #include "parser.h"
 #include "grammar.h"
 #include "word.h"
-#include "http_grammar_adapter.h"
 #include "html_response.h"
 
 
 class Tester
 {
+	bool compare_error(
+		const Error & expected,
+		const Error & real
+	);
+	
+	bool compare_errors(
+		const Errors & expected,
+		const Errors & real
+	);
 		
 	void show_word(const Word &w) const ;
 	void show_non_terminals(const Non_terminals & nt) const;

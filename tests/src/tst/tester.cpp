@@ -1,6 +1,54 @@
 #include "tester.h"
 
 
+bool Tester::compare_error(
+	const Error & expected,
+	const Error & real
+)
+{
+	bool same = true;
+	if (expected.type != real.type)
+	{
+		same = false;
+		std::cout << "DIFFERENT Error::type: expected: " 
+			<< error2str(expected.type) << ", real: " 
+			<< error2str(real.type) << std::endl;
+	}
+	
+	if (expected.source != real.source)
+	{
+		same = false;
+		std::cout << "DIFFERENT Error::source: expected: " 
+			<< expected.source << ", real: " 
+			<< real.source << std::endl;
+	}
+	
+	return same;
+}
+
+bool Tester::compare_errors(
+	const Errors & expected,
+	const Errors & real
+)
+{
+	bool same = true;
+	if (expected.size() != real.size())
+	{
+		same = false
+		std::cout << "DIFFERENT Errors::size: expected: " 
+			<< expected.size() << ", real: " 
+			<< real.size() << std::endl;		
+	}
+	else 
+	{
+		for (size_t i=0; i<expected.size(); i++)
+		{
+			same &= compare_error(expected[i], real[i]);
+		}
+	}
+	
+	return same;
+}
 
 std::string Tester::error2str(const Error &error) const
 {
