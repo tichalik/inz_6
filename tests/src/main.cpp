@@ -7,6 +7,7 @@ int main()
 	TST_mod_from_http mfh;
 	mfh.test_non_terminal_from_http();
 	mfh.test_head_from_http();
+	mfh.test_rule_from_http();
 	mfh.test_rules_from_http();
 	mfh.test_word_from_http();
 	

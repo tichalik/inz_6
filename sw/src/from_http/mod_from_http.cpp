@@ -57,8 +57,11 @@ Head Mod_from_http::head_from_http(const std::string & param)
 	return head;
 }
 
-Rule Mod_from_http::rule_from_http(const std::string & param)
+Rule Mod_from_http::rule_from_http(const std::string & param, bool & ok)
 {
+	//auxiliary return value -- no errors occured
+	ok = true;
+	
 	//state variable -- true if on LHS of the rule
 	bool is_LHS = true;
 	//control variable -- true if line is empty
@@ -82,6 +85,8 @@ Rule Mod_from_http::rule_from_http(const std::string & param)
 		switch(line[i])
 		{
 			case ' ':
+			case '\n':
+			case '\r':
 			case '\t':
 			{
 				//whitespace character
@@ -96,6 +101,7 @@ Rule Mod_from_http::rule_from_http(const std::string & param)
 							//there already has been an arrow
 							this->add_error(MULTIPLE_ARROWS, 
 								"rule: <" + line + ">");
+							ok = false;
 						}
 						else
 						{
@@ -115,6 +121,7 @@ Rule Mod_from_http::rule_from_http(const std::string & param)
 								//the LHS was already filled! 
 								this->add_error(TOO_MANY_LHS, 
 									"rule: <" + line + ">");									
+								ok = false;
 							}
 							else
 							{
@@ -140,6 +147,7 @@ Rule Mod_from_http::rule_from_http(const std::string & param)
 								//both RHS1 and RHS2 have been filled -- error
 								this->add_error(TOO_MANY_RHS, 
 									"rule: <" + line + ">");									
+								ok = false;
 							}
 						}
 					}
@@ -173,16 +181,22 @@ Rule Mod_from_http::rule_from_http(const std::string & param)
 		if (str_LHS == "")
 		{
 			this->add_error(MISSING_LHS, "rule: <" + line + ">");		
+			ok = false;
 		}
 		
 		if (str_RHS1 == "" || str_RHS2 == "")
 		{
 			this->add_error(TOO_FEW_RHS, "rule: <" + line + ">");									
+			ok = false;
 		}
 		
 		rule.left = str_LHS;
 		rule.right1 = str_RHS1;
 		rule.right2 = str_RHS2;
+	}
+	else
+	{
+		ok = false;
 	}
 	
 	return rule;
@@ -196,7 +210,12 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 	std::string line;
 	while(std::getline(ss, line))
 	{
-		rules.push_back(rule_from_http(line));
+		bool ok;
+		Rule rule = rule_from_http(line, ok);
+		if (ok)
+		{
+			rules.push_back(rule);
+		}
 	}
 	
 	
@@ -242,7 +261,7 @@ Mod_from_http::Mod_from_http(
 	this->grammar.head = head_from_http(http_head);
 	this->grammar.rules = rules_from_http(http_rules);
 	
-	this->word = word_from_http(http_terminals);
+	this->word = word_from_http(http_word);
 }
 
 Grammar Mod_from_http::get_grammar() const

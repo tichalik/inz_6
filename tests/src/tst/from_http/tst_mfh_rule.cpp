@@ -2,6 +2,7 @@
 
 void TST_mod_from_http::_test_rule_from_http(
 	const std::string & str_input,
+	const bool expected_ok,
 	const Rule & expected,
 	const Errors & expected_errors
 )
@@ -21,15 +22,27 @@ void TST_mod_from_http::_test_rule_from_http(
 	//leaving errors in mod_from_http.errors. Thes results are ignored
 	mod_from_http.errors.clear();
 	
-	//perform the conversion
-	Rule result = mod_from_http.rule_from_http(str_input);
+	bool ok;
 	
+	//perform the conversion
+	Rule result = mod_from_http.rule_from_http(str_input, ok);
+	
+	if (ok != expected_ok)
+	{
+		std::cout << "wrong ok " << std::endl;
+	}
+	
+	bool ok_result = true;
 	//check if the result is identical to expected
-	bool ok_result = compare_rule(expected, result);
+	// but when there are errors, the rule does not matter
+	if (expected_ok == true)
+	{
+		ok_result = compare_rule(expected, result);
+	}
 	
 	//check if obtained errors are identical to expected 
 	bool ok_errors = compare_errors(expected_errors, mod_from_http.errors);
-	if (ok_errors && ok_result)
+	if (ok_errors && ok_result && ok == expected_ok)
 	{
 		std::cout << "OK" << std::endl;
 	}
@@ -60,6 +73,7 @@ void TST_mod_from_http::test_rule_from_http()
 		
 		_test_rule_from_http(
 			"a -> a a",
+			true,
 			expected_rule,
 			no_errors
 		);
@@ -72,6 +86,7 @@ void TST_mod_from_http::test_rule_from_http()
 		
 		_test_rule_from_http(
 			"a\t->\ta\ta",
+			true,
 			expected_rule,
 			no_errors
 		);
@@ -85,6 +100,7 @@ void TST_mod_from_http::test_rule_from_http()
 		
 		_test_rule_from_http(
 			"   \t\t a -> a a",
+			true,
 			expected_rule,
 			no_errors
 		);
@@ -98,6 +114,7 @@ void TST_mod_from_http::test_rule_from_http()
 		
 		_test_rule_from_http(
 			"a -> a a\t     \t",
+			true,
 			expected_rule,
 			no_errors
 		);
@@ -111,6 +128,7 @@ void TST_mod_from_http::test_rule_from_http()
 		
 		_test_rule_from_http(
 			"a     ->\t\t    \ta       a",
+			true,
 			expected_rule,
 			no_errors
 		);
@@ -132,6 +150,7 @@ void TST_mod_from_http::test_rule_from_http()
 		
 		_test_rule_from_http(
 			"- -> < >",
+			true,
 			expected_rule2,
 			no_errors
 		);
@@ -151,6 +170,7 @@ void TST_mod_from_http::test_rule_from_http()
 		
 		_test_rule_from_http(
 			"->aa -> a->a aa->",
+			true,
 			expected_rule3,
 			no_errors
 		);
@@ -159,7 +179,7 @@ void TST_mod_from_http::test_rule_from_http()
 	
 	{
 		std::cout << "===============================================================" << std::endl;
-		std::cout << " evil rule <a-a -> -aa> > " << std::endl;
+		std::cout << " evil rule <a-a -> -aa> a-a>> " << std::endl;
 		std::cout << "===============================================================" << std::endl;
 						
 		Rule expected_rule4;
@@ -169,7 +189,28 @@ void TST_mod_from_http::test_rule_from_http()
 		
 		
 		_test_rule_from_http(
-			"->aa -> a->a aa->",
+			"a-a -> -aa> a-a>",
+			true,
+			expected_rule4,
+			no_errors
+		);
+		
+	}
+	
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " apparently problematic rule <exp -> exp1 exp >" << std::endl;
+		std::cout << "===============================================================" << std::endl;
+						
+		Rule expected_rule4;
+		expected_rule4.left = "exp";
+		expected_rule4.right1 = "exp1";
+		expected_rule4.right2 = "exp";
+		
+		
+		_test_rule_from_http(
+			"exp -> exp1 exp ",
+			true,
 			expected_rule4,
 			no_errors
 		);

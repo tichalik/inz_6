@@ -196,4 +196,51 @@ void TST_mod_from_http::test_non_terminal_from_http()
 			expected_errors
 		);
 	}
+	
+	
+	
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << "special character non_terminals " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Non_terminals special_non_terminals;
+		special_non_terminals.insert("!");
+		special_non_terminals.insert("@");
+		special_non_terminals.insert("#");
+		special_non_terminals.insert("$");
+		special_non_terminals.insert("%");
+		special_non_terminals.insert("^");
+		special_non_terminals.insert("&");
+		special_non_terminals.insert("*");
+		special_non_terminals.insert("(");
+		special_non_terminals.insert(")");
+		special_non_terminals.insert("[");
+		special_non_terminals.insert("]");
+		special_non_terminals.insert("{");
+		special_non_terminals.insert("}");
+		special_non_terminals.insert(".");
+		special_non_terminals.insert(",");
+		special_non_terminals.insert(":");
+		special_non_terminals.insert(";");
+		special_non_terminals.insert("\"");
+		special_non_terminals.insert("\\");
+		special_non_terminals.insert("'");
+		special_non_terminals.insert("<");
+		special_non_terminals.insert(">");
+		special_non_terminals.insert("/");
+		special_non_terminals.insert("?");
+		special_non_terminals.insert("|");
+		special_non_terminals.insert("_");
+		special_non_terminals.insert("-");
+		special_non_terminals.insert("+");
+		special_non_terminals.insert("=");
+		
+		_test_non_terminals_from_http(
+			"! @ # $ % ^ & * ( ) [ ] { } . , : ; \" \\ ' < > / ? | _ - + =",
+			false, 
+			special_non_terminals,
+			no_errors
+		);
+	}
 }

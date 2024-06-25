@@ -176,6 +176,78 @@ void TST_mod_from_http::test_rules_from_http()
 		
 	}
 	
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " apparently problematic rules" << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Rules rules;
+		
+		Rule r1;
+		r1.left = "exp";
+		r1.right1 = "exp1";
+		r1.right2 = "exp";
+		rules.push_back(r1);
+		
+		Rule r2;
+		r2.left = "exp";
+		r2.right1 = "exp2";
+		r2.right2 = ")";
+		rules.push_back(r2);
+		
+		Rule r3;
+		r3.left = "exp";
+		r3.right1 = "exp2";
+		r3.right2 = ")";
+		rules.push_back(r3);
+		
+		Rule r4;
+		r4.left = "exp1";
+		r4.right1 = "exp";
+		r4.right2 = "+";
+		rules.push_back(r4);
+		
+		Rule r5;
+		r5.left = "exp1";
+		r5.right1 = "exp";
+		r5.right2 = "-";
+		rules.push_back(r5);
+		
+		Rule r6;
+		r6.left = "exp1";
+		r6.right1 = "exp";
+		r6.right2 = "/";
+		rules.push_back(r6);
+		
+		Rule r7;
+		r7.left = "exp1";
+		r7.right1 = "exp";
+		r7.right2 = "*";
+		rules.push_back(r7);
+		
+		Rule r8;
+		r8.left = "exp2";
+		r8.right1 = "(";
+		r8.right2 = "exp";
+		rules.push_back(r8);
+		
+		
+		
+		_test_rules_from_http(
+			"exp -> exp1 exp \n"
+			"exp -> exp2 )\n"
+			"exp -> exp2 )\n"
+			"exp1 -> exp  +\n"
+			"exp1 -> exp  -\n"
+			"exp1 -> exp  /\n"
+			"exp1 -> exp  *\n"
+			"exp2 -> ( exp\n",
+			rules,
+			no_errors
+		);
+		
+	}
+	
 	
 	
 }

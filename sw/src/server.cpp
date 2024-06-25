@@ -27,6 +27,7 @@ void Server::post_handler(const httplib::Request & req,
 	response.fill_response(RESP_FIELDS::RULES, http_rules);
 	response.fill_response(RESP_FIELDS::INPUT, http_word);
 	
+	std::cout << "http_rules: <" << http_rules << ">\n";
 	
 	Errors errors;
 	PTrees parsing_trees;
@@ -58,7 +59,6 @@ void Server::post_handler(const httplib::Request & req,
 		const Errors semantic_errors = mod_check_errors.get_errors();
 		errors.insert(errors.end(), semantic_errors.begin(), semantic_errors.end());
 
-		
 		//parse if there are no errors
 		if (semantic_errors.size() == 0)
 		{
