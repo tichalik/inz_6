@@ -42,14 +42,14 @@ void TST_mod_check_errors::_test_word_errors(
 void TST_mod_check_errors::test_word_errors()
 {
 	Non_terminals terminals;
-	terminals.symbols.push_back("a");
-	terminals.symbols.push_back("b");
-	terminals.symbols.push_back("c");
+	terminals.insert("a");
+	terminals.insert("b");
+	terminals.insert("c");
 	
 	Non_terminals nonterminals;
-	nonterminals.symbols.push_back("A");
-	nonterminals.symbols.push_back("B");
-	nonterminals.symbols.push_back("C");
+	nonterminals.insert("A");
+	nonterminals.insert("B");
+	nonterminals.insert("C");
 	
 	
 	{

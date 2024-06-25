@@ -7,23 +7,22 @@ bool TST_mod_from_http::compare_non_terminals(
 )
 {
 	bool same = true;
-	if (expected.symbols.size() != real.symbols.size())
+	if (expected.size() != real.size())
 	{
 		same = false;
 		std::cout << "DIFFERENT Non_terminals::size: expected: " 
-			<< expected.symbols.size() << ", real: " 
-			<< real.symbols.size() << std::endl;		
+			<< expected.size() << ", real: " 
+			<< real.size() << std::endl;		
 	}
 	else 
 	{
-		for (size_t i=0; i<expected.symbols.size(); i++)
+		for (auto i=expected.cbegin(); i!=expected.cend(); i++)
 		{
-			if (expected.symbols[i] != real.symbols[i])
+			if (real.find(*i) == real.end())
 			{
 				same = false;
-				std::cout << "DIFFERENT Non_terminals::symbols[" << i << "]: expected: " 
-					<< expected.symbols[i] << ", real: " 
-					<< real.symbols[i] << std::endl;
+				std::cout << "DIFFERENT Non_terminals: missing " 
+					<<  (*i)  << std::endl;
 			}
 		}
 	}

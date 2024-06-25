@@ -143,8 +143,8 @@ void Tester::show_word(const Word &w) const
 
 void Tester::show_non_terminals(const Non_terminals & nt) const
 {
-	for (size_t i=0; i<nt.symbols.size(); i++)
+	for (auto i=nt.cbegin(); i!=nt.cend(); i++)
 	{
-		std::cout << "<" << nt.symbols[i]<< ">" << std::endl;
+		std::cout << "<" << (*i) << ">" << std::endl;
 	}
 }

@@ -61,10 +61,10 @@ void TST_mod_from_http::test_non_terminal_from_http()
 	empty_terminals.push_back(error2);
 	
 	Non_terminals expected_non_terminals;
-	expected_non_terminals.symbols.push_back("a");
-	expected_non_terminals.symbols.push_back("b");
-	expected_non_terminals.symbols.push_back("c");
-	expected_non_terminals.symbols.push_back("d");
+	expected_non_terminals.insert("a");
+	expected_non_terminals.insert("b");
+	expected_non_terminals.insert("c");
+	expected_non_terminals.insert("d");
 	
 	Non_terminals empty_non_terminals;
 	
@@ -173,6 +173,27 @@ void TST_mod_from_http::test_non_terminal_from_http()
 			false, 
 			empty_non_terminals,
 			empty_terminals
+		);
+	}
+	
+	
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " check if repeating symbols in one set are caught" << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Errors expected_errors;
+		
+		Error error1;
+		error1.type = REPEATING_SYMBOL;
+		error1.source = "terminals: symbol <b>:";
+		expected_errors.push_back(error1);
+		
+		_test_non_terminals_from_http(
+			"a b c d b",
+			false, 
+			expected_non_terminals,
+			expected_errors
 		);
 	}
 }

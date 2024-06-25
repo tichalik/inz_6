@@ -15,7 +15,24 @@ Non_terminals Mod_from_http::non_terminals_from_http(
 	}
 	else 
 	{
-		nonterminals = Non_terminals(str_nonterminals);
+		for (size_t i=0; i<str_nonterminals.size(); i++)
+		{
+			Symbol s = str_nonterminals[i];
+			if (nonterminals.find(s) != nonterminals.end())
+			{
+				//double symbol 
+				Error error;
+				error.type = REPEATING_SYMBOL;
+				error.source = (is_nonterminals? "nonterminals: " : "terminals: ");
+				error.source += "symbol <"+s+">";
+				
+				this->errors.push_back(error);
+			}
+			else
+			{
+				nonterminals.insert(s);
+			}
+		}
 	}
 	return nonterminals;
 }

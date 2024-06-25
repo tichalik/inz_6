@@ -119,29 +119,12 @@ void Mod_check_errors::non_terminals_check_errors(
 	const Non_terminals & other
 )
 {
-	for (size_t i=0; i<input.symbols.size(); i++)
-	{
-		Symbol s = input.symbols[i];
-		//possible optimization?? 
-		// for (size_t j=i; j<symbols.size(); j++)
-			
-		for (size_t j=0; j<input.symbols.size(); j++)
-		{
-			//OPTIMIZE!! ADD ERROR TO BOTH SYMBOLS, SKIP OTHER FROM 
-			// ITERATION
-			if (i != j && s == input.symbols[j])
-			{
-				add_error(REPEATING_SYMBOL,
-					parent_source + " <" + s+ ">:");
-				break;
-			}
-		}
-		
-		
-		if (other.contains(s))
+	for ( auto s = input.cbegin(); s != input.cend(); s++)
+	{	
+		if (other.find(*s) != other.end())
 		{
 			add_error(IN_BOTH_TERMINALS_AND_NONTERMINALS, 
-				parent_source + " <" + s+ ">:");			
+				parent_source + " <" + (*s) + ">:");			
 		}
 	}
 }
