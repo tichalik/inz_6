@@ -40,6 +40,11 @@ class TST_mod_from_http: public Tester
 		const Head & expected,
 		const Errors & expected_errors
 	);
+	void _test_rule_from_http(
+		const std::string & str_input,
+		const Rule & expected,
+		const Errors & expected_errors
+	);
 	void _test_rules_from_http(
 		const std::string & str_input,
 		const Rules & expected,
@@ -55,6 +60,7 @@ public:
 	
 	void test_non_terminal_from_http();
 	void test_head_from_http();
+	void test_rule_from_http();
 	void test_rules_from_http();
 	void test_word_from_http();
 	

@@ -57,163 +57,155 @@ Head Mod_from_http::head_from_http(const std::string & param)
 	return head;
 }
 
-Rules Mod_from_http::rules_from_http(const std::string & param)
+Rule Mod_from_http::rule_from_http(const std::string & param)
 {
-	Rules _tules;
-	//whether the field is all whitechars 
-	bool all_empty = true;
+	//state variable -- true if on LHS of the rule
+	bool is_LHS = true;
+	//control variable -- true if line is empty
+	bool is_empty = true;
 	
-	std::stringstream ss;
-	ss << param;
-
-
-	std::string line;
-	while(std::getline(ss, line))
+	std::string str_LHS, str_RHS1, str_RHS2;
+	
+	Rule rule;
+	
+	std::string tmp;
+	
+	//add an artificial whitespace at the end of the line
+	// to trigger behavior for completing the string
+	std::string line = param + " ";
+	
+	//THE ARROW HAS TO BE SURROUNDED BY WHITESPACE!!!
+	for (size_t i=0; i<line.size(); i++)
 	{
-		//state variable -- true if on LHS of the rule
-		bool is_LHS = true;
-		//control variable -- true if line is empty
-		bool is_empty = true;
-		
-		std::string str_LHS, str_RHS1, str_RHS2;
-		
-		Rule rule;
-		
-		std::string tmp;
-		
-		//add an artificial whitespace at the end of the line
-		// to trigger behavior for completing the string
-		line += " ";
-		
-		//THE ARROW HAS TO BE SURROUNDED BY WHITESPACE!!!
-		for (size_t i=0; i<line.size(); i++)
-		{
-					// std::cout << "<<" << line[i]  << ">>" << std::endl;
+				// std::cout << "<<" << line[i]  << ">>" << std::endl;
 
-			switch(line[i])
+		switch(line[i])
+		{
+			case ' ':
+			case '\t':
 			{
-				case ' ':
-				case '\t':
+				//whitespace character
+				if (tmp != "")
 				{
-					//whitespace character
-					if (tmp != "")
+					//if there was some input 
+					if (tmp == "->")
 					{
-						//if there was some input 
-						if (tmp == "->")
+						//last parsed item was an arrow
+						if (is_LHS == false)
 						{
-							//last parsed item was an arrow
-							if (is_LHS == false)
+							//there already has been an arrow
+							this->add_error(MULTIPLE_ARROWS, 
+								"rule: <" + line + ">");
+						}
+						else
+						{
+							//we are on LHS and encounter the arrow -- 
+							//  -- we switch to RHS
+							is_LHS = false;
+						}
+					}
+					else // if (tmp != "->")
+					{
+						//last parsed item was a token of the rule
+						if (is_LHS == true)
+						{
+							//we are on the LHS
+							if (str_LHS != "")
 							{
-								//there already has been an arrow
-								this->add_error(MULTIPLE_ARROWS, 
-									"rule: <" + line + ">");
+								//the LHS was already filled! 
+								this->add_error(TOO_MANY_LHS, 
+									"rule: <" + line + ">");									
 							}
 							else
 							{
-								//we are on LHS and encounter the arrow -- 
-								//  -- we switch to RHS
-								is_LHS = false;
+								//it is the first LHS 
+								str_LHS = tmp;
 							}
 						}
-						else // if (tmp != "->")
+						else // if (is_LHS == false)
 						{
-							//last parsed item was a token of the rule
-							if (is_LHS == true)
+							//we are on RHS
+							if (str_RHS1 == "")
 							{
-								//we are on the LHS
-								if (str_LHS != "")
-								{
-									//the LHS was already filled! 
-									this->add_error(TOO_MANY_LHS, 
-										"rule: <" + line + ">");									
-								}
-								else
-								{
-									//it is the first LHS 
-									str_LHS = tmp;
-								}
+								//RHS1 is empty -- we fill it
+								str_RHS1 = tmp;
 							}
-							else // if (is_LHS == false)
+							else if (str_RHS2 == "")
 							{
-								//we are on RHS
-								if (str_RHS1 == "")
-								{
-									//RHS1 is empty -- we fill it
-									str_RHS1 = tmp;
-								}
-								else if (str_RHS2 == "")
-								{
-									//RHS2 is empty -- we fill it
-									str_RHS2 = tmp;
-								}
-								else 
-								{
-									//both RHS1 and RHS2 have been filled -- error
-									this->add_error(TOO_MANY_RHS, 
-										"rule: <" + line + ">");									
-								}
+								//RHS2 is empty -- we fill it
+								str_RHS2 = tmp;
+							}
+							else 
+							{
+								//both RHS1 and RHS2 have been filled -- error
+								this->add_error(TOO_MANY_RHS, 
+									"rule: <" + line + ">");									
 							}
 						}
-						
-						//clear tmp
-						tmp = "";
-					}// end if tmp!=""
-					else 
-					{
-						//it's a sequence of whitespaces OR a leading one on the line
 					}
-				
-					break;
-				}
-				default:
+					
+					//clear tmp
+					tmp = "";
+				}// end if tmp!=""
+				else 
 				{
-					//non-whitespace character
-					is_empty = false;
-					all_empty = false;
-					tmp += line[i];
-					break;
+					//it's a sequence of whitespaces OR a leading one on the line
 				}
-			} //end switch 
 			
-		// std::cout << "\tis_empty: " << is_empty << std::endl;
-		// std::cout << "\tis_LHS: " << is_LHS << std::endl;
-		// std::cout << "\tstr_LHS: <" << str_LHS << ">"<<  std::endl;
-		// std::cout << "\tstr_RHS1: <" << str_RHS1 << ">"<<  std::endl;
-		// std::cout << "\tstr_RHS2: <" << str_RHS2 << ">"<< std::endl;
+				break;
+			}
+			default:
+			{
+				//non-whitespace character
+				is_empty = false;
+				tmp += line[i];
+				break;
+			}
+		} //end switch 
 		
+	} //end for each character
+	
+	//skipping empty lines
+	if (!is_empty)
+	{
+		//check if rule misses any pieces 
 		
-		} //end for each character
-		
-		//skipping empty lines
-		if (!is_empty)
+		if (str_LHS == "")
 		{
-			//check if rule misses any pieces 
-			
-			if (str_LHS == "")
-			{
-				this->add_error(MISSING_LHS, "rule: <" + line + ">");		
-			}
-			
-			if (str_RHS1 == "" || str_RHS2 == "")
-			{
-				this->add_error(TOO_FEW_RHS, "rule: <" + line + ">");									
-			}
-			
-			rule.left = str_LHS;
-			rule.right1 = str_RHS1;
-			rule.right2 = str_RHS2;
-			_tules.push_back(rule);
+			this->add_error(MISSING_LHS, "rule: <" + line + ">");		
 		}
 		
+		if (str_RHS1 == "" || str_RHS2 == "")
+		{
+			this->add_error(TOO_FEW_RHS, "rule: <" + line + ">");									
+		}
+		
+		rule.left = str_LHS;
+		rule.right1 = str_RHS1;
+		rule.right2 = str_RHS2;
+	}
+	
+	return rule;
+}
+Rules Mod_from_http::rules_from_http(const std::string & param)
+{
+	Rules rules;
+	
+	std::stringstream ss;
+	ss << param;
+	std::string line;
+	while(std::getline(ss, line))
+	{
+		rules.push_back(rule_from_http(line));
 	}
 	
 	
-	if (all_empty)
+	if (rules.size() == 0)
 	{
 		this->add_error(EMPTY_RULES);
 	}
 	
-	return _tules;
+	return rules;
 }
 
 Word Mod_from_http::word_from_http(const std::string & param)
