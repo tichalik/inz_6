@@ -4,3 +4,5 @@
 	(EMPTY_, malformed rules, duplicates in set (once terminals are a set)) 
 	returned by From_http and semantic errors returned by Check_errors
 -> error ARROW_IN_NON_TERMINALS
+-> FIX ERROR REPORTING
+-> UPDATE RULE_FROM_HTTP TESTS 
