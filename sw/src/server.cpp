@@ -27,8 +27,6 @@ void Server::post_handler(const httplib::Request & req,
 	response.fill_response(RESP_FIELDS::RULES, http_rules);
 	response.fill_response(RESP_FIELDS::INPUT, http_word);
 	
-	std::cout << "http_rules: <" << http_rules << ">\n";
-	
 	Errors errors;
 	PTrees parsing_trees;
 
@@ -62,11 +60,8 @@ void Server::post_handler(const httplib::Request & req,
 		//parse if there are no errors
 		if (semantic_errors.size() == 0)
 		{
-			
-			Parsing_grammar_adapter parsing_grammar_adapter(grammar);
-			Parser parser;
-
-			parsing_trees = parser.parse(word, parsing_grammar_adapter);
+			Mod_parser mod_parser(grammar, word);
+			parsing_trees = mod_parser.get_parse_trees();
 		}
 	}
 	

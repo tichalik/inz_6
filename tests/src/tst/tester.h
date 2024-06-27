@@ -4,10 +4,8 @@
 #include <iostream>
 
 
-#include "parser.h"
-#include "grammar.h"
+#include "non_terminals.h"
 #include "word.h"
-#include "html_response.h"
 #include "error.h"
 
 

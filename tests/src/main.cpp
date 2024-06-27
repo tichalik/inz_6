@@ -1,6 +1,7 @@
 #include "tester.h"
 #include "tst_mod_check_errors.h"
 #include "tst_mod_from_http.h"
+#include "tst_mod_parser.h"
 
 int main()
 {

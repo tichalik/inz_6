@@ -150,7 +150,7 @@ Mod_to_http::Mod_to_http(
 )
 {
 	this->http_errors = errors_to_http(errors);
-	
+	this->http_parse_trees = ptrees_to_http(ptrees);
 }
 
 std::string Mod_to_http::get_http_errors() const

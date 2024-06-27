@@ -1,6 +1,6 @@
-#include "tst_parser.h"
+#include "tst_mod_parser.h"
 
-void TST_parser::test()
+void TST_mod_parser::test_parser()
 {
 
 	// Grammar infix_chomsky_grammar;
