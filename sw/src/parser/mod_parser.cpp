@@ -117,9 +117,9 @@ Mod_parser::Mod_parser(
 	parsing_table(input),
 	parsing_grammar_adapter(grammar)
 {
-	void propagate_parsing_table();
-	void extract_trees_from_parsing_table();
-	void translate_table_entry_trees_into_parse_trees();
+	propagate_parsing_table();
+	extract_trees_from_parsing_table();
+	translate_table_entry_trees_into_parse_trees();
 }
 
 PTrees Mod_parser::get_parse_trees() const

@@ -71,8 +71,8 @@ void TST_mod_parser::test_propagate_parsing_table()
 		grammar.rules.push_back(rule);
 		
 		Word word;
-		word.push_back("B");
 		word.push_back("A");
+		word.push_back("B");
 		
 		PTable expected_ptable(word);
 		
