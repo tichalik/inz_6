@@ -1,5 +1,9 @@
 #include "tester.h"
 
+std::string Tester::rule2str(const Rule & rule) const
+{
+	return rule.left + " -> " + rule.right1 + " " + rule.right2;
+}
 
 bool Tester::compare_error(
 	const Error & expected,

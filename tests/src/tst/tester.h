@@ -7,6 +7,7 @@
 #include "non_terminals.h"
 #include "word.h"
 #include "error.h"
+#include "grammar.h"
 
 
 class Tester
@@ -24,6 +25,7 @@ class Tester
 	void show_word(const Word &w) const ;
 	void show_non_terminals(const Non_terminals & nt) const;
 	
+	std::string rule2str(const Rule & rule) const;
 		
 	std::string error2str(const Error &error) const ;
 	std::string error_type2str(const EN_ERROR_TYPE &error) const;

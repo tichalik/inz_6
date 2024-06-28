@@ -16,7 +16,12 @@ struct PTable_reference
 struct PTable_entry
 {
 	Symbol tag;
+	bool visited;
 	std::vector<PTable_reference> children;
+	
+	PTable_entry():
+		visited(false)
+	{}
 };
 
 typedef std::vector<PTable_entry> PTable_entries;

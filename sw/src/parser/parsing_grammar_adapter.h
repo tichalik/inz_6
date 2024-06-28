@@ -30,10 +30,9 @@ class Parsing_grammar_adapter
 
 	/** \brief unique string used to form keys for the rule_map
 	 * 
-	 * there is a chance user inputs it as a symbol and then the program would
-	 * behave in undefined way, but such chance is very small
+	 * an arrow is not allowed in the symbol set, therefore it is used 
 	*/
-	const std::string RULE_MAP_SEPARATOR = "afqawe23t2tqevq34";
+	const std::string RULE_MAP_SEPARATOR = " -> ";
 	
 	public:
 	
