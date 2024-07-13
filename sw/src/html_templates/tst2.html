@@ -2,18 +2,6 @@
 <HTML>
 <HEAD>
 
-<STYLE>
- .expandable{
-	margin: 10px;
-	border: solid 2px black;
- }
- 
- .tree{
-	margin 10px;
-	border: solid 2px green;
- }
-</STYLE>
-
 <SCRIPT>
 	<!-- function for toggling children -->
 	<!-- obj is the object which was clicked on  -->
@@ -74,35 +62,36 @@
 
 </HEAD>
 
-<BODY onload="add_events()">
+<BODY>
 	<!-- action is the url that is put in the http message-box
 		 method is what kind of message it is -- by default GET-->
 	<form action="/done" method="post">
 		<fieldset>
 		<legend> grammar </legend>
 			<div> enter terminals separated by a whitespace </div>
-			<textarea id="terminals" name="terminals">{{TERMINALS}}</textarea>
+			<textarea id="terminals" name="terminals"> B C </textarea>
 			<label for="terminals"> terminals </label>
 			
 			
 			<div> enter nonterminals separated by a whitespace </div>
-			<textarea id="nonterminals" name="nonterminals">{{NONTERMINALS}}</textarea>
+			<textarea id="nonterminals" name="nonterminals">A</textarea>
 			<label for="nonterminals"> nonterminals </label>
 			
 			
 			<div> enter head</div>
-			<input type="text" name="head" id="head", value="{{HEAD}}">
+			<input type="text" name="head" id="head", value="A">
 			<label for="head"> head </label>
 			
 			<div> enter rules in form LHS -> RHS1 RHS2 separated by a newline</div>
-			<textarea id="rules" name="rules">{{RULES}}</textarea>
+			<textarea id="rules" name="rules">
+A -> B C</textarea>
 			<label for="rules"> rules </label>
 			
 		</fieldset>	
 		<fieldset>
 		<legend> input </legend>
 			<div> enter input</div>
-			<textarea id="input" name="input">{{INPUT}}</textarea>
+			<textarea id="input" name="input"> B C </textarea>
 			<label for="input"> input </label>
 		</fieldset>
 		

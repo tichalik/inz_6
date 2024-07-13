@@ -1,6 +1,7 @@
 #include "tester.h"
 #include "tst_mod_check_errors.h"
 #include "tst_mod_from_http.h"
+#include "tst_mod_to_http.h"
 #include "tst_mod_parser.h"
 
 int main()
@@ -19,9 +20,13 @@ int main()
 	// mce.test_rules_errors();
 	// mce.test_word_errors();
 	
-	TST_mod_parser mp;
-	// mp.test_propagate_parsing_table();
-	// mp.test_parsing_grammar_adapter();
-	mp.test_extract_trees_from_parsing_table();
+	// TST_mod_parser mp;
+	// // mp.test_propagate_parsing_table();
+	// // mp.test_parsing_grammar_adapter();
+	// mp.test_extract_trees_from_parsing_table();
+	
+	TST_mod_to_http m2h;
+	m2h.test_pnode_to_http();
+	m2h.test_ptree_to_http();
 	
 }

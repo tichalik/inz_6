@@ -1,0 +1,6 @@
+FILE				DESCRIPTION
+------------------------------------------------
+tst1				single node A
+tst2				A[B C]
+tst3 				A[B[C D] E]
+tst3 				A[B[C D] E], A[B C[D E]], 

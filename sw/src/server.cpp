@@ -94,12 +94,15 @@ void Server::run()
 }
 
 
-void Server::set_dummy_get(const std::string filename)
+void Server::set_dummy_get(
+	const std::string& filename,
+	const std::string& url
+)
 {
 	std::string file;
 	Utils::read_file(filename, file);
 	
-	server.Get("/tst", [=] (const httplib::Request & req,
+	server.Get("/" + url, [=] (const httplib::Request & req,
 	httplib::Response & resp)
 	{
 		resp.set_content(file, "text/html");

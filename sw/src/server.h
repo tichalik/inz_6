@@ -68,7 +68,10 @@ public:
 	 *
 	 * we can have pre-filled html forms thanks to that
 	 */
-    static void set_dummy_get(const std::string filename);
+    static void set_dummy_get(
+		const std::string& filename,
+		const std::string& url
+	);
 };
 
 #endif // SERVER_H_

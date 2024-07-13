@@ -8,8 +8,8 @@ std::string Mod_to_http::pnode_to_string(const PNode & pnode) const
 		return pnode.tag;
 	else
 		return pnode.tag + "[" 
-			+ pnode.children[0].to_string() + " " 
-			+ pnode.children[1].to_string() + "]";
+			+ pnode_to_string(pnode.children[0]) + " " 
+			+ pnode_to_string(pnode.children[1]) + "]";
 }
 
 std::string Mod_to_http::pnode_to_http(const PNode & pnode) const
@@ -19,18 +19,18 @@ std::string Mod_to_http::pnode_to_http(const PNode & pnode) const
 	else
 		return pnode.tag 
 			+ "<div class=\"expandable\">" 
-			+ pnode.children[0].to_http() + "<BR>" 
-			+ pnode.children[1].to_http() + "</div>";
+			+ pnode_to_http(pnode.children[0])+ "<BR>" 
+			+ pnode_to_http(pnode.children[1]) + "</div>";
 }
 
 std::string Mod_to_http::ptree_to_string(const PTree & ptree) const
 {
-	return ptree.root.to_string();
+	return pnode_to_string(ptree.root);
 }
 
 std::string Mod_to_http::ptree_to_http(const PTree & ptree) const
 {
-	return "<div class=\"tree\">" + ptree.root.to_http() + "</div>";
+	return "<div class=\"tree\">" + pnode_to_http(ptree.root) + "</div>";
 }
 
 
