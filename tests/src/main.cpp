@@ -20,7 +20,8 @@ int main()
 	// mce.test_word_errors();
 	
 	TST_mod_parser mp;
-	mp.test_propagate_parsing_table();
-	mp.test_parsing_grammar_adapter();
+	// mp.test_propagate_parsing_table();
+	// mp.test_parsing_grammar_adapter();
+	mp.test_extract_trees_from_parsing_table();
 	
 }

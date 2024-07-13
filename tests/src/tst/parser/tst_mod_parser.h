@@ -19,6 +19,19 @@ class TST_mod_parser: public Tester
 		const PTable_reference & real
 	) const;
 	
+	bool compare_ptrees(
+		const PTrees & expected,
+		const PTrees & real
+	) const;
+	bool compare_ptree(
+		const PTree & expected,
+		const PTree & real
+	) const;
+	bool compare_pnode(
+		const PNode & expected,
+		const PNode & real
+	) const;
+	
 	std::string ptable2string(
 		const PTable & input
 	);
@@ -39,12 +52,18 @@ class TST_mod_parser: public Tester
 	void _test_parsing_grammar_adapter(
 		const Grammar & grammar
 	);
+	
+	void _test_extract_trees_from_parsing_table(
+		const PTable & parsing_table,
+		const PTrees & expected_ptrees
+	);
+	
+	
 public:
 
 	void test_parsing_grammar_adapter();
 	void test_propagate_parsing_table();
 	void test_extract_trees_from_parsing_table();
-	void test_translate_table_entry_trees_into_parse_trees();
 	
 };
 #endif

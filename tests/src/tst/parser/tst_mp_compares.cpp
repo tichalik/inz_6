@@ -127,3 +127,73 @@ bool TST_mod_parser::compare_ptable_reference(
 		
 }
 
+
+bool TST_mod_parser::compare_ptrees(
+	const PTrees & expected,
+	const PTrees & real
+) const
+{
+	bool same = true;
+	if (expected.size() != real.size())
+	{
+		same = false;
+		std::cout << "different Pa::size(): "
+			<< " expected: " << expected.size() 
+			<< " real: " << real.size() 
+			<< std::endl;
+	}
+	else
+	{
+		for (size_t i = 0; i < expected.size(); i++)
+		{
+			bool local_same = compare_ptree(expected[i], real[i]);
+			same &= local_same;
+			if (!local_same)
+			{
+				std::cout << "different PTrees[" << i << "]" << std::endl;
+			}
+		}
+	}
+	
+	return same;
+}
+bool TST_mod_parser::compare_ptree(
+	const PTree & expected,
+	const PTree & real
+) const
+{
+	return compare_pnode(expected.root, real.root);
+}
+bool TST_mod_parser::compare_pnode(
+	const PNode & expected,
+	const PNode & real
+) const
+{
+	bool same = true;
+	if (expected.tag != real.tag)
+	{
+		same = false;
+		std::cout << "different PNode::tag: "
+			<< " expected: " << expected.tag 
+			<< " real: " << real.tag 
+			<< std::endl;
+	}
+	
+	if (expected.children.size() != real.children.size())
+	{
+		same = false;
+		std::cout << "different PNode::children.size(): "
+			<< " expected: " << expected.children.size() 
+			<< " real: " << real.children.size() 
+			<< std::endl;
+	}
+	else
+	{
+		for (size_t i = 0; i < expected.children.size(); i++)
+		{
+			same &= compare_pnode(expected.children[i], real.children[i]);	
+		}
+	}
+	
+	return same;
+}

@@ -17,14 +17,15 @@ class Mod_parser
 	PTable parsing_table;
 	/// object for easier look up of rules
 	Parsing_grammar_adapter parsing_grammar_adapter;
-	/// trees extracted from parsing_table
-	PTable_entries table_entry_trees;
 	/// result of the parsing module
 	PTrees parse_trees;
 	
 	void propagate_parsing_table();
 	void extract_trees_from_parsing_table();
-	void translate_table_entry_trees_into_parse_trees();
+	
+	PNode ptable_entry_to_pnode(
+		const PTable_reference & address
+	);
 	
     public:
 	

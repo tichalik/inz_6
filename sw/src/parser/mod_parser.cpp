@@ -92,20 +92,71 @@ void Mod_parser::propagate_parsing_table()
 
 void Mod_parser::extract_trees_from_parsing_table()
 {
-	
-    // PTrees result;
+			std::cout << __FILE__ << "::" << __LINE__ << std::endl;
 
-    // for (size_t i=0; i<matrix[N-1][0].size(); i++)
-    // {
-        // PTree t;
-        // t.root = matrix[N-1][0][i];
-        // result.push_back(t);
-    // }
+	//iterate the table top-to-bottom
+	for (size_t i=parsing_table.SIZE-1; i+1>0; i--) //stupid thing
+			//normally should be i>=0
+			// but i is of size_t 
+			// so it is ALWAYS > 0
+			// decrementing beyond 0 just switches it around
+			
+	{
+				std::cout << __FILE__ << "::" << __LINE__ << std::endl;
+
+		for (size_t j=0; j<parsing_table.SIZE-i; j++)
+		{
+					std::cout << __FILE__ << "::" << __LINE__ << std::endl;
+
+			//for each PTable_entry at given parsing_table index
+			for (size_t k=0; k<parsing_table.tab[i][j].size(); k++)
+			{
+						std::cout << __FILE__ << "::" << __LINE__ << std::endl;
+
+				//nodes not included in any other tree are taken as roots of their own trees
+				if (parsing_table.tab[i][j][k].visited == false)
+				{
+							std::cout << __FILE__ << "::" << __LINE__ << std::endl;
+
+					PTable_reference address;
+					address.x = j;
+					address.y = i;
+					address.list_index = k;
+					PTree ptree;
+					ptree.root = ptable_entry_to_pnode(address);
+					parse_trees.push_back(ptree);
+				}
+			}
+		}
+	}
 }
 
-void Mod_parser::translate_table_entry_trees_into_parse_trees()
+PNode Mod_parser::ptable_entry_to_pnode(
+	const PTable_reference & address
+)
 {
-	
+			std::cout << __FILE__ << "::" << __LINE__ << std::endl;
+
+	//mark the node as visited, so it won't be the root of a tree
+	parsing_table.tab[address.y][address.x][address.list_index].visited = true;
+			std::cout << __FILE__ << "::" << __LINE__ << std::endl;
+
+	//copy the tag
+	PTable_entry source = parsing_table.tab[address.y][address.x][address.list_index];
+	PNode res;
+	res.tag = source.tag;
+			std::cout << __FILE__ << "::" << __LINE__ << std::endl;
+
+	//extract children of the node
+	for (size_t i=0; i<source.children.size(); i++)
+	{
+				std::cout << __FILE__ << "::" << __LINE__ << std::endl;
+
+		res.children.push_back(ptable_entry_to_pnode(source.children[i]));
+	}
+			std::cout << __FILE__ << "::" << __LINE__ << std::endl;
+
+	return res;
 }
 
 
@@ -117,9 +168,11 @@ Mod_parser::Mod_parser(
 	parsing_table(input),
 	parsing_grammar_adapter(grammar)
 {
+			std::cout << __FILE__ << "::" << __LINE__ << std::endl;
 	propagate_parsing_table();
+			std::cout << __FILE__ << "::" << __LINE__ << std::endl;
+
 	extract_trees_from_parsing_table();
-	translate_table_entry_trees_into_parse_trees();
 }
 
 PTrees Mod_parser::get_parse_trees() const

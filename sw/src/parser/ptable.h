@@ -28,7 +28,7 @@ typedef std::vector<PTable_entry> PTable_entries;
 
 struct PTable
 {
-	const size_t SIZE;
+	size_t SIZE;
 	PTable_entries ** tab;
 	
 	PTable(const Word & word);

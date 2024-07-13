@@ -456,7 +456,7 @@ void TST_mod_parser::test_propagate_parsing_table()
 	
 	{
 		std::cout << "===============================================================" << std::endl;
-		std::cout << " 3 symbols, 2 rules + 1 that produces incomplete parse" << std::endl;
+		std::cout << " 3 symbols, 2 rules 2 complete parse trees as a result" << std::endl;
 		std::cout << "===============================================================" << std::endl;
 		
 		//only rules matter in parsing 
@@ -590,7 +590,5 @@ void TST_mod_parser::test_propagate_parsing_table()
 		);
 	}
 	
-	//symbol with list_index other than 0
-	//interlocking trees 
 }
 
