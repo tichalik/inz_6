@@ -1,7 +1,7 @@
 #include "tst_mod_parser.h"
 
 void TST_mod_parser::_test_extract_trees_from_parsing_table(
-	const PTable & parsing_table,
+	PTable & parsing_table,
 	const PTrees & expected_ptrees
 )
 {
@@ -10,11 +10,8 @@ void TST_mod_parser::_test_extract_trees_from_parsing_table(
 	Word word;
 	Mod_parser mod_parser(grammar, word);
 	
-	//replace module's parsing table with the one provided
-	mod_parser.parsing_table = parsing_table;
-	
 	//call the tested method
-	mod_parser.extract_trees_from_parsing_table();
+	mod_parser.extract_trees_from_parsing_table(parsing_table);
 	
 	//compare results
 	bool ok = compare_ptrees(expected_ptrees, mod_parser.parse_trees);

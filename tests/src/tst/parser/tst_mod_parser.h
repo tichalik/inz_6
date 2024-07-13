@@ -54,7 +54,7 @@ class TST_mod_parser: public Tester
 	);
 	
 	void _test_extract_trees_from_parsing_table(
-		const PTable & parsing_table,
+		PTable & parsing_table,
 		const PTrees & expected_ptrees
 	);
 	

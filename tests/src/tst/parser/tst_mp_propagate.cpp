@@ -7,14 +7,17 @@ void TST_mod_parser::_test_propagate_parsing_table(
 )
 {
 	//create the tested module 
-	// -- it will run all the necessary methods
 	Mod_parser mod_parser(
 		grammar, 
 		word
 	);
 	
+	//the tested method
+	PTable ptable(word);
+	mod_parser.propagate_parsing_table(ptable);
+	
 	//check whether the parsing table is identical to what is expected 
-	bool ok = compare_ptable(expected_ptable, mod_parser.parsing_table);
+	bool ok = compare_ptable(expected_ptable, ptable);
 	if (ok)
 	{
 		std::cout << "OK" << std::endl;
@@ -23,7 +26,7 @@ void TST_mod_parser::_test_propagate_parsing_table(
 	{
 		std::cout << __FILE__ << "\tFAIL" << std::endl;
 		std::cout << "real parsing_table: " << std::endl;
-		std::cout << ptable2string(mod_parser.parsing_table) << std::endl;
+		std::cout << ptable2string(ptable) << std::endl;
 	}
 }
 
