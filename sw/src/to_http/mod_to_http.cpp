@@ -14,13 +14,22 @@ std::string Mod_to_http::pnode_to_string(const PNode & pnode) const
 
 std::string Mod_to_http::pnode_to_http(const PNode & pnode) const
 {
-	if (pnode.children.size() == 0 )
-		return pnode.tag;
-	else
-		return pnode.tag 
-			+ "<div class=\"expandable\">" 
-			+ pnode_to_http(pnode.children[0])+ "<BR>" 
-			+ pnode_to_http(pnode.children[1]) + "</div>";
+	std::string res;
+	res += "<div class=\"node\">\n";
+	res += "<div class=\"node-expanded\">\n";
+	res += " "+pnode.tag+"\n";
+	if (pnode.children.size() != 0 )
+	{
+		res += pnode_to_http(pnode.children[0]);
+		res += pnode_to_http(pnode.children[1]);
+	}
+	res += "</div>\n";
+	res += "<span class=\"node-folded\">";
+	res += pnode_to_string(pnode);
+	res += "</span>\n";
+	res += "</div>\n";
+			
+	return res;
 }
 
 std::string Mod_to_http::ptree_to_string(const PTree & ptree) const

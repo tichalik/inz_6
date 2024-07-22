@@ -40,11 +40,11 @@ void Html_response::reset()
 
 
 const std::string Html_response::RESPONSE_FIELDS_DICT[Html_response::NO_RESPONSE_FIELDS] = {
-	"{{TERMINALS}}",
-	"{{NONTERMINALS}}",
-	"{{HEAD}}",
-	"{{RULES}}",
-	"{{ERRORS}}",
-	"{{INPUT}}",
-	"{{RESULTS}}"
+	"[[TERMINALS]]",
+	"[[NONTERMINALS]]",
+	"[[HEAD]]",
+	"[[RULES]]",
+	"[[ERRORS]]",
+	"[[INPUT]]",
+	"[[RESULTS]]"
 };
