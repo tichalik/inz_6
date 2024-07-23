@@ -7,7 +7,6 @@
 #include "mod_check_errors.h"
 #include "mod_parser.h"
 #include "parsing_grammar_adapter.h"
-#include "html_response.h"
 #include "utils.h"
 
 
@@ -27,10 +26,6 @@ class Server
 	 */
     static httplib::Server server;
    
-	/** 
-	 * \brief html to be sent as the responses
-	 */
-    static Html_response response;
    
 	// std::vector<Error> errors;
 

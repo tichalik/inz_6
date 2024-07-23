@@ -155,19 +155,38 @@ std::string Mod_to_http::errors_to_http(const Errors & _errors) const
 
 Mod_to_http::Mod_to_http(
 	const Errors & errors, 
-	const PTrees & ptrees
+	const PTrees & ptrees, 
+	const std::string & http_nonterminals,
+	const std::string & http_terminals,
+	const std::string & http_head,
+	const std::string & http_rules,
+	const std::string & http_word
 )
 {
-	this->http_errors = errors_to_http(errors);
-	this->http_parse_trees = ptrees_to_http(ptrees);
+	
+	//directly pass the http values into the result form 
+	response.fill_response(RESP_FIELDS::TERMINALS, http_terminals);
+	response.fill_response(RESP_FIELDS::NONTERMINALS, http_nonterminals);
+	response.fill_response(RESP_FIELDS::HEAD, http_head);
+	response.fill_response(RESP_FIELDS::RULES, http_rules);
+	response.fill_response(RESP_FIELDS::INPUT, http_word);
+	
+	//either errors or results are given and visible
+	if (errors.size() == 0)
+	{
+		std::string http_parse_trees = ptrees_to_http(ptrees);
+		response.fill_response(RESP_FIELDS::RESULTS, http_parse_trees);
+		response.fill_response(RESP_FIELDS::ERRORS_OR_RESULTS, "errors");
+	}
+	else
+	{
+		std::string http_errors = errors_to_http(errors);
+		response.fill_response(RESP_FIELDS::ERRORS, http_errors);
+		response.fill_response(RESP_FIELDS::ERRORS_OR_RESULTS, "results");
+	}
 }
 
-std::string Mod_to_http::get_http_errors() const
+std::string Mod_to_http::get_http()
 {
-	return this->http_errors;
-}
-
-std::string Mod_to_http::get_http_parse_trees() const
-{
-	return this->http_parse_trees;
+	return response.get_response();
 }

@@ -7,12 +7,10 @@
 
 #include "ptree.h"
 #include "error.h"
+#include "html_response.h"
 
 class Mod_to_http
 {
-	std::string http_errors;
-	std::string http_parse_trees;
-	
 	
 	std::string EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const;
 	std::string error_to_http(const Error & error) const;
@@ -26,15 +24,25 @@ class Mod_to_http
 	std::string ptrees_to_string(const PTrees & ptrees) const;
 	std::string ptrees_to_http(const PTrees & ptrees) const;
 	
+	
+	/** 
+	 * \brief html to be sent as the responses
+	 */
+    Html_response response;
+	
 	public:
 	
 	Mod_to_http(
 		const Errors & errors, 
-		const PTrees & ptrees
+		const PTrees & ptrees, 
+		const std::string & http_nonterminals,
+		const std::string & http_terminals,
+		const std::string & http_head,
+		const std::string & http_rules,
+		const std::string & http_word
 	);
 	
-	std::string get_http_errors() const;
-	std::string get_http_parse_trees() const;
+	std::string get_http();
 };
 
 #endif //TO_HTTP_H_

@@ -1,12 +1,12 @@
 #include "server.h"
 
 httplib::Server Server::server;
-Html_response Server::response;
 
 
 void Server::get_handler(const httplib::Request & req,
 	httplib::Response & resp)
 {
+	Html_response response;
 	resp.set_content(response.get_response(), "text/html");
 }
 
@@ -19,13 +19,6 @@ void Server::post_handler(const httplib::Request & req,
 	const std::string http_head = req.get_param_value("head");
 	const std::string http_rules = req.get_param_value("rules");
 	const std::string http_word = req.get_param_value("input");
-	
-	//directly pass the http values into the result form 
-	response.fill_response(RESP_FIELDS::TERMINALS, http_terminals);
-	response.fill_response(RESP_FIELDS::NONTERMINALS, http_nonterminals);
-	response.fill_response(RESP_FIELDS::HEAD, http_head);
-	response.fill_response(RESP_FIELDS::RULES, http_rules);
-	response.fill_response(RESP_FIELDS::INPUT, http_word);
 	
 	Errors errors;
 	PTrees parsing_trees;
@@ -68,14 +61,15 @@ void Server::post_handler(const httplib::Request & req,
 	//transform Errors and Ptrees into http
 	Mod_to_http mod_to_http(
 		errors,
-		parsing_trees
+		parsing_trees,
+		http_nonterminals,
+		http_terminals,
+		http_head,
+		http_rules,
+		http_word
 	);
 	
-	//fill out the rest of the form 
-	response.fill_response(RESP_FIELDS::ERRORS, mod_to_http.get_http_errors());
-	response.fill_response(RESP_FIELDS::RESULTS, mod_to_http.get_http_parse_trees());
-	
-	resp.set_content(response.get_response(), "text/html");
+	resp.set_content(mod_to_http.get_http(), "text/html");
 
 }
 
