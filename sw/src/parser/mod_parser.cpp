@@ -158,7 +158,8 @@ Mod_parser::Mod_parser(
 	const Grammar & grammar,
 	const Word & input
 ):
-	parsing_grammar_adapter(grammar)
+	chomskify(grammar),
+	parsing_grammar_adapter(chomskify.get_grammar())
 {
 	PTable parsing_table(input);
 	propagate_parsing_table(parsing_table);

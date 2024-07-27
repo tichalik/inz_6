@@ -6,6 +6,8 @@
 #include "grammar.h"
 #include "word.h"
 #include "ptree.h"
+#include "chomskify.h"
+#include "dechomskify.h"
 
 
 /** 
@@ -13,6 +15,8 @@
  */
 class Mod_parser
 {
+	Chomskify chomskify;
+	
 	/// object for easier look up of rules
 	Parsing_grammar_adapter parsing_grammar_adapter;
 	/// result of the parsing module

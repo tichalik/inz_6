@@ -4,8 +4,9 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <unordered_map>
 
-#include "grammar.h"
+#include "chomsky_grammar.h"
 #include "utils.h"
 
 
@@ -34,13 +35,16 @@ class Parsing_grammar_adapter
 	*/
 	const std::string RULE_MAP_SEPARATOR = " -> ";
 	
+	
+	void update_map(const Chomsky_rules & rules);
+
 	public:
 	
 	/** \brief constructor
 	 * 
 	 * \param grammar the grammar this object is supposed to be a representation of
 	*/
-	Parsing_grammar_adapter( const Grammar & grammar);
+	Parsing_grammar_adapter( const Chomsky_grammar & grammar);
 
 	/** \brief whether grammar has a rule with given RHS
 	 *
@@ -48,7 +52,7 @@ class Parsing_grammar_adapter
 	 * \param r1 1st symbol of rule's RHS
 	 * \param r2 2nd symbol of rule's RHS 
 	*/
-	bool has_rule(const std::string & r1, const std::string & r2) const;
+	bool has_rule(const Symbol & r1, const Symbol & r2) const;
 	
 	/** \brief get all LHS that turn into given LHS
 	 *
@@ -56,7 +60,8 @@ class Parsing_grammar_adapter
 	 * \param r1 1st symbol of rule's RHS
 	 * \param r2 2nd symbol of rule's RHS 
 	*/
-	std::vector<std::string> get_rule_head(const std::string & r1, const std::string & r2) const;
+	std::vector<std::string> get_rule_head(const Symbol & r1, const Symbol & r2) const;
+	
 
 };
 
