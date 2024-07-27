@@ -136,7 +136,9 @@ std::string Mod_to_http::EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const
 
 std::string Mod_to_http::error_to_http(const Error & error) const
 {
-	return error.source +":\t" + EN_ERROR_TYPE2str(error.type);
+	return "<div class=\"error\">\n" + 
+		error.source +" " + EN_ERROR_TYPE2str(error.type)
+		+ "</div>";
 }
 
 std::string Mod_to_http::errors_to_http(const Errors & _errors) const
@@ -145,7 +147,7 @@ std::string Mod_to_http::errors_to_http(const Errors & _errors) const
 	
 	for (size_t i=0; i< _errors.size(); i++)
 	{
-		res += error_to_http(_errors[i]) + "\n<BR>\n";
+		res += error_to_http(_errors[i]) + "\n";
 	}
 	
 	return res;

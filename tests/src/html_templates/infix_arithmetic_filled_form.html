@@ -54,7 +54,7 @@
 	border: solid 1px gray;
  }
  
- #[[ERRORS_OR_RESULTS]]{
+ #errors{
 	display: none;
  }
  
@@ -152,23 +152,21 @@
         <legend>Grammar</legend>
         
         <div>Enter terminals separated by a whitespace</div>
-        <textarea id="terminals" name="terminals" form="mf">C D E</textarea>
+        <textarea id="terminals" name="terminals" form="mf">A - </textarea>
         <label for="terminals">Terminals</label>
         
         <div>Enter nonterminals separated by a whitespace</div>
-        <textarea id="nonterminals" name="nonterminals" form="mf">A B</textarea>
+        <textarea id="nonterminals" name="nonterminals" form="mf">a</textarea>
         <label for="nonterminals">Nonterminals</label>
         
         <div>Enter head</div>
-        <input type="text" name="head" id="head" value="A" form="mf">
+        <input type="text" name="head" id="head" value="a" form="mf">
         <label for="head">Head</label>
         
         <div>Enter rules in form LHS -> RHS1 RHS2 separated by a newline</div>
-        <textarea id="rules" name="rules" form="mf">
-A -> B E
-B -> C D
-A -> C B 
-B -> D E </textarea>
+        <textarea id="rules" name="rules" form="mf">a -> A -
+a -> a A
+a -> a -</textarea>
         <label for="rules">Rules</label>
     </fieldset>	
 
@@ -187,14 +185,14 @@ B -> D E </textarea>
 				<legend>Input</legend>
 				
 				<div>Enter input</div>
-				<textarea id="input" name="input" form="mf">C D E</textarea>
+				<textarea id="input" name="input" form="mf">A - A - A - A - A</textarea>
 				<label for="input">Input</label>
 			</fieldset>
 			
 			<div id="errors">
 				Errors
 				<div id="error-list">
-					[[ERRORS]]
+					
 				</div>
 			</div>
 			
@@ -202,7 +200,6 @@ B -> D E </textarea>
 			<div id="results">
 			Results:
 				<div id="result-list">
-					[[RESULTS]]
 				</div>
 			</div>
 			

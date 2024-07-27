@@ -11,7 +11,7 @@ void Mod_check_errors::check_symbol_errors(
 {
 	if (!terminals.contains(s) && !nonterminals.contains(s) && s != "")
 	{
-		add_error(UNKNOWN_SYMBOL, parent_source + " <" + s+ ">:");
+		add_error(UNKNOWN_SYMBOL, parent_source + " " + s+ ":");
 	}
 }
 
@@ -29,13 +29,13 @@ void Mod_check_errors::word_check_errors(
 		if (!terminals.contains(s) && !nonterminals.contains(s))
 		{
 			add_error(UNKNOWN_SYMBOL, 
-				parent_source + " <" + s+ ">:");			
+				parent_source + " " + s+ ":");			
 		}
 		
 		if (nonterminals.contains(s))
 		{
 			add_error(SYMBOL_IN_NONTERMINALS, 
-				 parent_source + " <" + s+ ">:");			
+				 parent_source + " " + s+ ":");			
 		}
 		
 	}
@@ -47,13 +47,13 @@ void Mod_check_errors::grammar_check_errors(
 	const Grammar &input
 )
 {
-	non_terminals_check_errors(parent_source + "terminals:",
+	non_terminals_check_errors("terminals:",
 		input.terminals, input.nonterminals);	
-	non_terminals_check_errors(parent_source +"nonterminals:",
+	non_terminals_check_errors("nonterminals:",
 		input.nonterminals, input.terminals);	
-	head_check_errors(parent_source +"head:",
+	head_check_errors("head:",
 		input.head, input.terminals, input.nonterminals);
-	rules_check_errors(parent_source +"rules:",
+	rules_check_errors("rules:",
 		input.rules, input.terminals, input.nonterminals);
 }
 
@@ -85,8 +85,8 @@ void Mod_check_errors::rule_check_errors(
 	const Non_terminals& nonterminals
 )
 {
-	std::string error_source = parent_source + " rule < <" + input.left
-		+ "> -> <" + input.right1 + "> <" + input.right2 +"> >:";
+	std::string error_source = parent_source + " rule " + input.left
+		+ " -> " + input.right1 + " " + input.right2 +" :";
 	
 	check_symbol_errors(error_source, input.left, terminals, nonterminals);
 	check_symbol_errors(error_source, input.right1, terminals, nonterminals);
@@ -108,7 +108,7 @@ void Mod_check_errors::rules_check_errors(
 {
 	for (size_t i=0; i<input.size(); i++)
 	{
-		rule_check_errors(parent_source + " rules:", 
+		rule_check_errors(parent_source, 
 			input[i], terminals, nonterminals);
 	}
 }
@@ -124,7 +124,7 @@ void Mod_check_errors::non_terminals_check_errors(
 		if (other.find(*s) != other.end())
 		{
 			add_error(IN_BOTH_TERMINALS_AND_NONTERMINALS, 
-				parent_source + " <" + (*s) + ">:");			
+				parent_source + " " + (*s) + ":");			
 		}
 	}
 }

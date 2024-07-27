@@ -24,7 +24,7 @@ Non_terminals Mod_from_http::non_terminals_from_http(
 				Error error;
 				error.type = REPEATING_SYMBOL;
 				error.source = (is_nonterminals? "nonterminals: " : "terminals: ");
-				error.source += "symbol <"+s+">";
+				error.source += "symbol "+s+":";
 				
 				this->errors.push_back(error);
 			}
@@ -47,7 +47,7 @@ Head Mod_from_http::head_from_http(const std::string & param)
 	}
 	else if (vect_head.size() >1)
 	{
-		this->add_error(MULTIPLE_HEADS);
+		this->add_error(MULTIPLE_HEADS, "head:");
 	}
 	else 
 	{
@@ -100,7 +100,7 @@ Rule Mod_from_http::rule_from_http(const std::string & param, bool & ok)
 						{
 							//there already has been an arrow
 							this->add_error(MULTIPLE_ARROWS, 
-								"rule: <" + line + ">");
+								"rule " + line + ":");
 							ok = false;
 						}
 						else
@@ -120,7 +120,7 @@ Rule Mod_from_http::rule_from_http(const std::string & param, bool & ok)
 							{
 								//the LHS was already filled! 
 								this->add_error(TOO_MANY_LHS, 
-									"rule: <" + line + ">");									
+									"rule " + line + ":");									
 								ok = false;
 							}
 							else
@@ -146,7 +146,7 @@ Rule Mod_from_http::rule_from_http(const std::string & param, bool & ok)
 							{
 								//both RHS1 and RHS2 have been filled -- error
 								this->add_error(TOO_MANY_RHS, 
-									"rule: <" + line + ">");									
+									"rule " + line + ":");									
 								ok = false;
 							}
 						}
@@ -180,13 +180,13 @@ Rule Mod_from_http::rule_from_http(const std::string & param, bool & ok)
 		
 		if (str_LHS == "")
 		{
-			this->add_error(MISSING_LHS, "rule: <" + line + ">");		
+			this->add_error(MISSING_LHS, "rule " + line + ":");		
 			ok = false;
 		}
 		
 		if (str_RHS1 == "" || str_RHS2 == "")
 		{
-			this->add_error(TOO_FEW_RHS, "rule: <" + line + ">");									
+			this->add_error(TOO_FEW_RHS, "rule " + line + ":");									
 			ok = false;
 		}
 		
