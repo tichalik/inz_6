@@ -53,28 +53,32 @@ bool TST_mod_from_http::compare_rule(
 )
 {
 	bool same = true;
-	if (expected.left != real.left)
+	if (expected.LHS != real.LHS)
 	{
 		same = false;
-		std::cout << "DIFFERENT Rule::left: expected: " 
-			<< expected.left << ", real: " 
-			<< real.left << std::endl;
+		std::cout << "DIFFERENT Rule::LHS: expected: " 
+			<< expected.LHS << ", real: " 
+			<< real.LHS << std::endl;
 	}
-	
-	if (expected.right1 != real.right1)
+	if (expected.RHS.size() != real.RHS.size())
 	{
 		same = false;
-		std::cout << "DIFFERENT Rule::right1: expected: " 
-			<< expected.right1 << ", real: " 
-			<< real.right1 << std::endl;
+		std::cout << "DIFFERENT Rule.RHS::size: expected: " 
+			<< expected.RHS.size() << ", real: " 
+			<< real.RHS.size() << std::endl;		
 	}
-	
-	if (expected.right2 != real.right2)
+	else 
 	{
-		same = false;
-		std::cout << "DIFFERENT Rule::right2: expected: " 
-			<< expected.right2 << ", real: " 
-			<< real.right2 << std::endl;
+		for (size_t i=0; i<expected.RHS.size(); i++)
+		{
+			if (expected.RHS[i] != real.RHS[i])
+			{
+				same = false;
+				std::cout << "DIFFERENT Rule::RHS[" << i <<"]: expected: " 
+					<< expected.RHS[i] << ", real: " 
+					<< real.RHS[i] << std::endl;
+			}
+		}
 	}
 	return same;
 }

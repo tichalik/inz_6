@@ -10,7 +10,8 @@ void TST_mod_to_http::_test_pnode_to_http(
 	
 	Mod_to_http mod_to_http(
 		errors,
-		ptrees
+		ptrees,
+		"","","","",""
 	);
 	
 	std::string res = mod_to_http.pnode_to_http(pnode);
@@ -55,7 +56,8 @@ void TST_mod_to_http::_test_ptree_to_http(
 	
 	Mod_to_http mod_to_http(
 		errors,
-		ptrees
+		ptrees,
+		"","","","",""
 	);
 	
 	std::string res = mod_to_http.ptree_to_http(ptree);

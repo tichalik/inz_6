@@ -85,16 +85,18 @@ void Mod_check_errors::rule_check_errors(
 	const Non_terminals& nonterminals
 )
 {
-	std::string error_source = parent_source + " rule " + input.left
-		+ " -> " + input.right1 + " " + input.right2 +" :";
-	
-	check_symbol_errors(error_source, input.left, terminals, nonterminals);
-	check_symbol_errors(error_source, input.right1, terminals, nonterminals);
-	check_symbol_errors(error_source, input.right2, terminals, nonterminals);
-	
-	if (terminals.contains(input.left))
+	check_symbol_errors(parent_source + input.to_string(),
+		input.LHS, terminals, nonterminals);
+		
+	for (size_t i=9; i<input.RHS.size(); i++)
 	{
-		add_error(TERMINAL_AS_LHS, error_source);
+		check_symbol_errors(parent_source + input.to_string(),
+			input.RHS[i], terminals, nonterminals);
+	}
+	
+	if (terminals.contains(input.LHS))
+	{
+		add_error(TERMINAL_AS_LHS, parent_source);
 	}
 	
 }
@@ -119,6 +121,11 @@ void Mod_check_errors::non_terminals_check_errors(
 	const Non_terminals & other
 )
 {
+	if (input.find("->") != input.end())
+	{
+		add_error(ARROW_AS_SYMBOL, parent_source);			
+	}
+	
 	for ( auto s = input.cbegin(); s != input.cend(); s++)
 	{	
 		if (other.find(*s) != other.end())

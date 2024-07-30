@@ -6,10 +6,10 @@
 
 int main()
 {
-	// TST_mod_from_http mfh;
+	TST_mod_from_http mfh;
 	// mfh.test_non_terminal_from_http();
 	// mfh.test_head_from_http();
-	// mfh.test_rule_from_http();
+	mfh.test_rule_from_http();
 	// mfh.test_rules_from_http();
 	// mfh.test_word_from_http();
 	
@@ -25,8 +25,8 @@ int main()
 	// // mp.test_parsing_grammar_adapter();
 	// mp.test_extract_trees_from_parsing_table();
 	
-	TST_mod_to_http m2h;
-	m2h.test_pnode_to_http();
-	m2h.test_ptree_to_http();
+	// TST_mod_to_http m2h;
+	// m2h.test_pnode_to_http();
+	// m2h.test_ptree_to_http();
 	
 }

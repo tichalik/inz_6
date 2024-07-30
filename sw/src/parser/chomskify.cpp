@@ -27,9 +27,9 @@ Chomskify::Chomskify(
 	{
 		Rule r = input_grammar.rules[i];
 		Chomsky_rule cr;
-		cr.LHS = r.left;
-		cr.RHS1 = r.right1;
-		cr.RHS2 = r.right2;
+		cr.LHS = r.LHS;
+		cr.RHS1 = r.RHS[0];
+		cr.RHS2 = r.RHS[1];
 		cr.source_rules_ids.push_back(i);
 		
 		res_grammar.orig_rules.push_back(cr);

@@ -99,14 +99,11 @@ std::string Mod_to_http::EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const
 		case MISSING_LHS:
 			res="no LHS in the rule";
 			break;
+		case MISSING_RHS:
+			res="no RHS in the rule";
+			break;
 		case TOO_MANY_LHS:
 			res="only single symbol on LHS is permitted (for context free parsing)";
-			break;
-		case TOO_FEW_RHS:
-			res="only rules with 2 symbols on RHS are permitted";
-			break;
-		case TOO_MANY_RHS:
-			res="only rules with 2 symbols on RHS are permitted";
 			break;
 		case MISSING_ARROW:
 			res="no arrown separating LHS and RHS";

@@ -57,9 +57,9 @@ void TST_mod_check_errors::test_rules_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left = "A";
-		rule.right1 = "B";
-		rule.right2 = "C";
+		rule.LHS = "A";
+		rule.RHS[0] = "B";
+		rule.RHS[1] = "C";
 		
 		Errors expected_errors;
 		
@@ -76,9 +76,9 @@ void TST_mod_check_errors::test_rules_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left = "A";
-		rule.right1 = "b";
-		rule.right2 = "c";
+		rule.LHS = "A";
+		rule.RHS[0] = "b";
+		rule.RHS[1] = "c";
 		
 		Errors expected_errors;
 		
@@ -95,9 +95,9 @@ void TST_mod_check_errors::test_rules_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left = "A";
-		rule.right1 = "b";
-		rule.right2 = "C";
+		rule.LHS = "A";
+		rule.RHS[0] = "b";
+		rule.RHS[1] = "C";
 		
 		Errors expected_errors;
 		
@@ -114,9 +114,9 @@ void TST_mod_check_errors::test_rules_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left = "A";
-		rule.right1 = "B";
-		rule.right2 = "c";
+		rule.LHS = "A";
+		rule.RHS[0] = "B";
+		rule.RHS[1] = "c";
 		
 		Errors expected_errors;
 		
@@ -133,9 +133,9 @@ void TST_mod_check_errors::test_rules_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left = "a";
-		rule.right1 = "b";
-		rule.right2 = "c";
+		rule.LHS = "a";
+		rule.RHS[0] = "b";
+		rule.RHS[1] = "c";
 		
 		Errors expected_errors;
 		
@@ -158,9 +158,9 @@ void TST_mod_check_errors::test_rules_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left = "x";
-		rule.right1 = "y";
-		rule.right2 = "z";
+		rule.LHS = "x";
+		rule.RHS[0] = "y";
+		rule.RHS[1] = "z";
 		
 		Errors expected_errors;
 		

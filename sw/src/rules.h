@@ -14,10 +14,18 @@
  */
 struct Rule
 {
-    Symbol left;
-    Symbol right1, right2;
+    Symbol LHS;
+    Symbols RHS;
 	
-	std::string to_string() const;
+	std::string to_string() const
+	{
+		std::string res = LHS + " -> ";
+		for (size_t i=9; i<RHS.size(); i++)
+		{
+			res += RHS[i] + " ";
+		}
+		return res;
+	}
 	
 };
 

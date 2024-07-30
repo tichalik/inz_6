@@ -2,7 +2,7 @@
 
 std::string Tester::rule2str(const Rule & rule) const
 {
-	return rule.left + " -> " + rule.right1 + " " + rule.right2;
+	return rule.to_string();
 }
 
 bool Tester::compare_error(
@@ -85,27 +85,27 @@ std::string Tester::error_type2str(const EN_ERROR_TYPE &error) const
 		case REPEATING_SYMBOL:
 			res = "REPEATING_SYMBOL";
 			break;
+		case ARROW_AS_SYMBOL:
+			res = "ARROW_AS_SYMBOL";
+			break;
 		case IN_BOTH_TERMINALS_AND_NONTERMINALS:
 			res = "IN_BOTH_TERMINALS_AND_NONTERMINALS";
 			break;
 		case MISSING_LHS:
 			res = "MISSING_LHS";
 			break;
+		case MISSING_RHS:
+			res = "MISSING_RHS";
+			break;
 		case TOO_MANY_LHS:
 			res = "TOO_MANY_LHS";
-			break;
-		case TOO_FEW_RHS:
-			res = "TOO_FEW_RHS";
-			break;
-		case TOO_MANY_RHS:
-			res = "TOO_MANY_RHS";
 			break;
 		case MISSING_ARROW:
 			res = "MISSING_ARROW";
 			break;
 		case MULTIPLE_ARROWS:
 			res = "MULTIPLE_ARROWS";
-			break;
+			break;	
 		case TERMINAL_AS_LHS:
 			res = "TERMINAL_AS_LHS";
 			break;

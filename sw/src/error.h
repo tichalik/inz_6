@@ -18,14 +18,14 @@ enum EN_ERROR_TYPE
 	
 	//non/terminals related errors
 	REPEATING_SYMBOL,
+	ARROW_AS_SYMBOL,
 	IN_BOTH_TERMINALS_AND_NONTERMINALS,
 	
 	//rule related errors
 		//parsing related
 	MISSING_LHS,
+	MISSING_RHS,
 	TOO_MANY_LHS,
-	TOO_FEW_RHS,
-	TOO_MANY_RHS,
 	MISSING_ARROW,
 	MULTIPLE_ARROWS,
 		//semantic related
