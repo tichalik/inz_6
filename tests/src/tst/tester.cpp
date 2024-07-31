@@ -42,6 +42,12 @@ bool Tester::compare_errors(
 		std::cout << "DIFFERENT Errors::size: expected: " 
 			<< expected.size() << ", real: " 
 			<< real.size() << std::endl;		
+			
+		std::cout << "real errors:" << std::endl;
+		for (size_t i=0; i<real.size(); i++)
+		{
+			std::cout << "[" << i << "]\t" << error2str(real[i]) << std::endl;
+		}
 	}
 	else 
 	{
@@ -56,7 +62,7 @@ bool Tester::compare_errors(
 
 std::string Tester::error2str(const Error &error) const
 {
-	return error.source +":\t" + error_type2str(error.type);
+	return "source:<" + error.source +">, type:<" + error_type2str(error.type)+">";
 }
 
 std::string Tester::error_type2str(const EN_ERROR_TYPE &error) const

@@ -217,68 +217,151 @@ void TST_mod_from_http::test_rule_from_http()
 		
 	}
 	
+	Rule dummy_rule;
 
-	// //wrong structure
-	// if (1)
+	//wrong structure
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " no LHS " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		std::string str_rule = " -> a b";
+		
+		Error error;
+		error.type = MISSING_LHS;
+		error.source = "rule " + str_rule + ": ";
+		
+		Errors expected_errors;
+		expected_errors.push_back(error);
+		
+		
+		_test_rule_from_http(
+			str_rule,
+			false,
+			dummy_rule,
+			expected_errors
+		);
+	}
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " multiple LHS (2) " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		std::string str_rule = " AASDFA AASDFA -> asasfa asasfa";
+		
+		Error error;
+		error.type = TOO_MANY_LHS;
+		error.source = "rule " + str_rule + ": ";
+		
+		Errors expected_errors;
+		expected_errors.push_back(error);
+		
+		
+		_test_rule_from_http(
+			str_rule,
+			false,
+			dummy_rule,
+			expected_errors
+		);
+	}
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " no RHS " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		std::string str_rule = " AASDFA -> ";
+		
+		Error error;
+		error.type = MISSING_RHS;
+		error.source = "rule " + str_rule + ": ";
+		
+		Errors expected_errors;
+		expected_errors.push_back(error);
+		
+		
+		_test_rule_from_http(
+			str_rule,
+			false,
+			dummy_rule,
+			expected_errors
+		);
+	}
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " multiple arrows" << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		std::string str_rule = " AASDFA -> -> asasfa asasfa";
+		
+		Error error;
+		error.type = MULTIPLE_ARROWS;
+		error.source = "rule " + str_rule + ": ";
+		
+		Errors expected_errors;
+		expected_errors.push_back(error);
+		
+		
+		_test_rule_from_http(
+			str_rule,
+			false,
+			dummy_rule,
+			expected_errors
+		);
+	}
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " multiple arrows" << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		std::string str_rule = " AASDFA -> asasfa -> A asasfa";
+		
+		Error error;
+		error.type = MULTIPLE_ARROWS;
+		error.source = "rule " + str_rule + ": ";
+		
+		Errors expected_errors;
+		expected_errors.push_back(error);
+		
+		
+		_test_rule_from_http(
+			str_rule,
+			false,
+			dummy_rule,
+			expected_errors
+		);
+	}
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " no arrow" << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		std::string str_rule = " AASDFA AASDFA asasfa asasfa";
+		
+		Error error;
+		error.type = MISSING_ARROW;
+		error.source = "rule " + str_rule + ": ";
+		
+		Errors expected_errors;
+		expected_errors.push_back(error);
+		
+		
+		_test_rule_from_http(
+			str_rule,
+			false,
+			dummy_rule,
+			expected_errors
+		);
+	}
+	
 	// {
-		// std::cout << "===============================================================" << std::endl;
-		// std::cout << " no LHS " << std::endl;
-		// std::cout << "===============================================================" << std::endl;
-		
-		// _test_rule_from_http("asasfa" , "AASDFA", "AASDFA", " -> asasfa asasfa");
-	
-	
-	
-		// std::cout << "===============================================================" << std::endl;
-		// std::cout << " multiple LHS (2) " << std::endl;
-		// std::cout << "===============================================================" << std::endl;
-		
-		// _test_rule_from_http("asasfa" , "AASDFA", "AASDFA", " AASDFA AASDFA -> asasfa asasfa");
-	
-	
-		// std::cout << "===============================================================" << std::endl;
-		// std::cout << " multiple LHS (3) " << std::endl;
-		// std::cout << "===============================================================" << std::endl;
-		
-		// _test_rule_from_http("asasfa" , "AASDFA", "AASDFA", " AASDFA AASDFA AASDFA -> asasfa asasfa");
-	
-	
-	
-		// std::cout << "===============================================================" << std::endl;
-		// std::cout << " no RHS " << std::endl;
-		// std::cout << "===============================================================" << std::endl;
-		
-		// _test_rule_from_http("asasfa" , "AASDFA", "AASDFA", "AASDFA ->     ");
-			
-		// std::cout << "===============================================================" << std::endl;
-		// std::cout << " single RHS " << std::endl;
-		// std::cout << "===============================================================" << std::endl;
-		
-		// _test_rule_from_http("asasfa" , "AASDFA", "AASDFA", "AASDFA -> asasfa ");
-			
-			
-		// std::cout << "===============================================================" << std::endl;
-		// std::cout << " multiple RHS (3)" << std::endl;
-		// std::cout << "===============================================================" << std::endl;
-		
-		// _test_rule_from_http("asasfa" , "AASDFA", "AASDFA", "AASDFA -> asasfa asasfa asasfa");
-		
-			
-		// std::cout << "===============================================================" << std::endl;
-		// std::cout << " multiple RHS (4)" << std::endl;
-		// std::cout << "===============================================================" << std::endl;
-		
-		// _test_rule_from_http("asasfa" , "AASDFA", "AASDFA", "AASDFA -> asasfa asasfa asasfa asasfa");
-
-
 		
 		// std::cout << "===============================================================" << std::endl;
-		// std::cout << " multiple arrows" << std::endl;
 		// std::cout << "===============================================================" << std::endl;
 		
 		// _test_rule_from_http("asasfa" , "AASDFA", "AASDFA", "AASDFA -> -> asasfa asasfa");
 
-
+	// }
+	// {
 		
 		// std::cout << "===============================================================" << std::endl;
 		// std::cout << " multiple arrows" << std::endl;
@@ -286,6 +369,8 @@ void TST_mod_from_http::test_rule_from_http()
 		
 		// _test_rule_from_http("asasfa" , "AASDFA", "AASDFA", "AASDFA -> asasfa -> asasfa");
 
+	// }
+	// {
 
 		// std::cout << "===============================================================" << std::endl;
 		// std::cout << " multiple arrows" << std::endl;
@@ -293,8 +378,6 @@ void TST_mod_from_http::test_rule_from_http()
 		
 		// _test_rule_from_http("asasfa" , "AASDFA", "AASDFA", "AASDFA -> asasfa asasfa ->");
 
-
-	
 	// }	
 	
 }
