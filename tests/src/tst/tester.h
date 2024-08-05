@@ -21,6 +21,18 @@ class Tester
 		const Errors & expected,
 		const Errors & real
 	);
+	
+	bool compare_non_terminals(
+		const Non_terminals & expected,
+		const Non_terminals & real
+	) const;
+	
+	bool compare_head(
+		const Head & expected,
+		const Head & real
+	) const;
+	
+	
 		
 	void show_word(const Word &w) const ;
 	void show_non_terminals(const Non_terminals & nt) const;

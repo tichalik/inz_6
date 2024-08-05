@@ -12,7 +12,7 @@ class Chomskify
 {
 	int next_new_symbol;
 	Chomsky_grammar res_grammar;
-	Symbol get_new_symbol();
+	Symbol create_new_symbol();
 	
 	public:
 	Chomskify(

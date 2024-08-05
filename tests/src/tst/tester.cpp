@@ -1,5 +1,52 @@
 #include "tester.h"
 
+bool Tester::compare_head(
+	const Head & expected,
+	const Head & real
+) const
+{
+	bool same = true;
+	if (expected != real)
+	{
+		same = false;
+		std::cout << "DIFFERENT Head: expected: " 
+			<< expected << ", real: " 
+			<< real << std::endl;
+	}
+	
+	return same;
+}
+
+bool Tester::compare_non_terminals(
+	const Non_terminals & expected,
+	const Non_terminals & real
+) const
+{
+	bool same = true;
+	if (expected.size() != real.size())
+	{
+		same = false;
+		std::cout << "DIFFERENT Non_terminals::size: expected: " 
+			<< expected.size() << ", real: " 
+			<< real.size() << std::endl;		
+	}
+	else 
+	{
+		for (auto i=expected.cbegin(); i!=expected.cend(); i++)
+		{
+			if (real.find(*i) == real.end())
+			{
+				same = false;
+				std::cout << "DIFFERENT Non_terminals: missing " 
+					<<  (*i)  << std::endl;
+			}
+		}
+	}
+	
+	return same;
+}
+
+
 std::string Tester::rule2str(const Rule & rule) const
 {
 	return rule.to_string();

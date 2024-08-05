@@ -6,10 +6,10 @@
 
 int main()
 {
-	TST_mod_from_http mfh;
+	// TST_mod_from_http mfh;
 	// mfh.test_non_terminal_from_http();
 	// mfh.test_head_from_http();
-	mfh.test_rule_from_http();
+	// mfh.test_rule_from_http();
 	// mfh.test_rules_from_http();
 	// mfh.test_word_from_http();
 	
@@ -20,7 +20,9 @@ int main()
 	// mce.test_rules_errors();
 	// mce.test_word_errors();
 	
-	// TST_mod_parser mp;
+	TST_mod_parser mp;
+	mp.test_chomskify();
+	mp.test_create_new_symbol();
 	// // mp.test_propagate_parsing_table();
 	// // mp.test_parsing_grammar_adapter();
 	// mp.test_extract_trees_from_parsing_table();

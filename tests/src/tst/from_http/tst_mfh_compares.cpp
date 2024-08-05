@@ -1,52 +1,6 @@
 #include "tst_mod_from_http.h"
 
 
-bool TST_mod_from_http::compare_non_terminals(
-	const Non_terminals & expected,
-	const Non_terminals & real
-)
-{
-	bool same = true;
-	if (expected.size() != real.size())
-	{
-		same = false;
-		std::cout << "DIFFERENT Non_terminals::size: expected: " 
-			<< expected.size() << ", real: " 
-			<< real.size() << std::endl;		
-	}
-	else 
-	{
-		for (auto i=expected.cbegin(); i!=expected.cend(); i++)
-		{
-			if (real.find(*i) == real.end())
-			{
-				same = false;
-				std::cout << "DIFFERENT Non_terminals: missing " 
-					<<  (*i)  << std::endl;
-			}
-		}
-	}
-	
-	return same;
-}
-
-bool TST_mod_from_http::compare_head(
-	const Head & expected,
-	const Head & real
-)
-{
-	bool same = true;
-	if (expected != real)
-	{
-		same = false;
-		std::cout << "DIFFERENT Head: expected: " 
-			<< expected << ", real: " 
-			<< real << std::endl;
-	}
-	
-	return same;
-}
-
 bool TST_mod_from_http::compare_rule(
 	const Rule & expected,
 	const Rule & real

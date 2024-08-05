@@ -1,4 +1,4 @@
-// #include "tst_mod_parser.h"
+#include "tst_mod_parser.h"
 
 // void TST_mod_parser::_test_propagate_parsing_table(
 	// const Grammar & grammar, 

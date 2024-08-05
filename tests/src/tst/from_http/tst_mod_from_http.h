@@ -6,14 +6,6 @@
 
 class TST_mod_from_http: public Tester
 {
-	bool compare_non_terminals(
-		const Non_terminals & expected,
-		const Non_terminals & real
-	);
-	bool compare_head(
-		const Head & expected,
-		const Head & real
-	);
 	bool compare_rule(
 		const Rule & expected,
 		const Rule & real

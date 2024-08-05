@@ -1,4 +1,4 @@
-// #include "tst_mod_parser.h"
+#include "tst_mod_parser.h"
 
 
 // std::string TST_mod_parser::ptable2string(

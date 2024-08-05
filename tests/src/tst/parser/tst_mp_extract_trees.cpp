@@ -1,4 +1,4 @@
-// #include "tst_mod_parser.h"
+#include "tst_mod_parser.h"
 
 // void TST_mod_parser::_test_extract_trees_from_parsing_table(
 	// PTable & parsing_table,
