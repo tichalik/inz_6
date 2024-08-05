@@ -35,9 +35,6 @@ class Parsing_grammar_adapter
 	*/
 	const std::string RULE_MAP_SEPARATOR = " -> ";
 	
-	
-	void update_map(const Chomsky_rules & rules);
-
 	public:
 	
 	/** \brief constructor

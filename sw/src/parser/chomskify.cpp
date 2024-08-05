@@ -4,9 +4,9 @@ Symbol Chomskify::create_new_symbol()
 {
 	Symbol res = Utils::int_to_string(next_new_symbol);
 	next_new_symbol++;
-	while( res_grammar.orig_nonterminals.contains(res)
+	while( res_grammar.nonterminals.contains(res)
 		|| res_grammar.added_nonterminals.contains(res)
-		|| res_grammar.orig_terminals.contains(res))
+		|| res_grammar.terminals.contains(res))
 	{	
 		res = Utils::int_to_string(next_new_symbol);
 		next_new_symbol++;
@@ -17,28 +17,44 @@ Symbol Chomskify::create_new_symbol()
 	return res;
 }
 
-Chomskify::Chomskify(
+Chomsky_grammar Chomskify::init_res_grammar(
 	const Grammar& input_grammar
-):
-	next_new_symbol(0)
+) const
 {
-	res_grammar.orig_nonterminals = input_grammar.nonterminals;
-	res_grammar.orig_terminals = input_grammar.terminals;
-	res_grammar.head = input_grammar.head;
+	Chomsky_grammar res;
+	
+	res.nonterminals = input_grammar.nonterminals;
+	res.terminals = input_grammar.terminals;
+	res.head = input_grammar.head;
+	
 	
 	for (size_t i=0; i<input_grammar.rules.size(); i++)
 	{
 		Rule r = input_grammar.rules[i];
-		if (r.RHS.size() == 2)
+		
+		Chomsky_rule cr;
+		cr.LHS = r.LHS;
+		cr.RHS = r.RHS;
+		res.rules.push_back(cr);
+	}
+	
+	return res;
+}
+
+void Chomskify::break_rules()
+{
+	Chomsky_grammar res;
+	
+	for (size_t i=0; i<res_grammar.rules.size(); i++)
+	{
+		Chomsky_rule r = res_grammar.rules[i];
+		
+		//do nothing on rules which cannot be broken
+		if (r.RHS.size() <= 2)
 		{
-			Chomsky_rule cr;
-			cr.LHS = r.LHS;
-			cr.RHS1 = r.RHS[0];
-			cr.RHS2 = r.RHS[1];
-			cr.source_rules_ids.push_back(i);
-			
-			res_grammar.orig_rules.push_back(cr);
+			res.rules.push_back(r);
 		}
+		//break other rules
 		else 
 		{ 
 			Symbol new_symbol = create_new_symbol();
@@ -48,11 +64,10 @@ Chomskify::Chomskify(
 			{
 				Chomsky_rule cr;
 				cr.LHS = r.LHS;
-				cr.RHS1 = r.RHS[0];
-				cr.RHS2 = new_symbol;
-				cr.source_rules_ids.push_back(i);
+				cr.RHS.push_back(r.RHS[0]);
+				cr.RHS.push_back(new_symbol);
 				
-				res_grammar.added_rules.push_back(cr);
+				res.rules.push_back(cr);
 			}
 			
 			int pos = 1;
@@ -65,11 +80,10 @@ Chomskify::Chomskify(
 				
 				Chomsky_rule cr;
 				cr.LHS = old_symbol;
-				cr.RHS1 = r.RHS[pos];
-				cr.RHS2 = new_symbol;
-				cr.source_rules_ids.push_back(i);
+				cr.RHS.push_back(r.RHS[pos]);
+				cr.RHS.push_back(new_symbol);
 				
-				res_grammar.added_rules.push_back(cr);
+				res.rules.push_back(cr);
 				
 				pos++;
 			}
@@ -79,14 +93,31 @@ Chomskify::Chomskify(
 		
 				Chomsky_rule cr;
 				cr.LHS = new_symbol;
-				cr.RHS1 = r.RHS[pos];
-				cr.RHS2 = r.RHS[pos+1];
-				cr.source_rules_ids.push_back(i);
+				cr.RHS.push_back(r.RHS[pos]);
+				cr.RHS.push_back(r.RHS[pos+1]);
 				
-				res_grammar.added_rules.push_back(cr);
+				res.rules.push_back(cr);
 			}
 		}
 	}
+	
+	this->res_grammar = res;
+}
+
+void Chomskify::remove_chains()
+{
+	
+}
+
+
+Chomskify::Chomskify(
+	const Grammar& input_grammar
+):
+	next_new_symbol(0),
+	res_grammar(init_res_grammar(input_grammar))
+{
+	break_rules();
+	remove_chains();
 }
 
 Chomsky_grammar Chomskify::get_grammar()

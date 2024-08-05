@@ -14,6 +14,16 @@ class Chomskify
 	Chomsky_grammar res_grammar;
 	Symbol create_new_symbol();
 	
+	/**
+	 * \brief converts normal Grammar into Chomsky_grammar without changing anything
+	 */
+	Chomsky_grammar init_res_grammar(
+		const Grammar& input_grammar
+	) const;
+	
+	void break_rules();
+	void remove_chains();
+	
 	public:
 	Chomskify(
 		const Grammar& input_grammar

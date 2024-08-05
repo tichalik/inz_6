@@ -165,6 +165,9 @@ Mod_parser::Mod_parser(
 	propagate_parsing_table(parsing_table);
 
 	extract_trees_from_parsing_table(parsing_table);
+	
+	Dechomskify dechomskify(parse_trees);
+	parse_trees = dechomskify.get_result_trees();
 }
 
 PTrees Mod_parser::get_parse_trees() const

@@ -1,21 +1,13 @@
 #include "parsing_grammar_adapter.h"
 
-
-
-void Parsing_grammar_adapter::update_map(const Chomsky_rules & rules)
-{
-	for (size_t i=0; i<rules.size(); i++)
-	{
-		std::string key = rules[i].RHS1
-			+ RULE_MAP_SEPARATOR + rules[i].RHS2;
-		rule_map[key].push_back(rules[i].LHS);
-	}
-}
-
 Parsing_grammar_adapter::Parsing_grammar_adapter(const Chomsky_grammar & _grammar)
 {
-	update_map(_grammar.orig_rules);
-	update_map(_grammar.added_rules);
+	for (size_t i=0; i<_grammar.rules.size(); i++)
+	{
+		std::string key = _grammar.rules[i].RHS[0]
+			+ RULE_MAP_SEPARATOR + _grammar.rules[i].RHS[1];
+		rule_map[key].push_back(_grammar.rules[i].LHS);
+	}
 }
 
 bool Parsing_grammar_adapter::has_rule(
