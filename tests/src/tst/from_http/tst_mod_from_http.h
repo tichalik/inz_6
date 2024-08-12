@@ -5,22 +5,7 @@
 #include "mod_from_http.h"
 
 class TST_mod_from_http: public Tester
-{
-	bool compare_rule(
-		const Rule & expected,
-		const Rule & real
-	);
-	bool compare_rules(
-		const Rules & expected,
-		const Rules & real
-	);
-	bool compare_word(
-		const Word & expected,
-		const Word & real
-	);
-		
-	
-	
+{	
 	void _test_non_terminals_from_http(
 		const std::string & str_input,
 		const bool is_nonterminals,

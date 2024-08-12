@@ -1,9 +1,204 @@
-#include "tst_mod_parser.h"
+#include "compares.h"
 
-bool TST_mod_parser::compare_chomsky_grammar(
+
+bool compare_head(
+	const Head & expected,
+	const Head & real
+) 
+{
+	bool same = true;
+	if (expected != real)
+	{
+		same = false;
+		std::cout << "DIFFERENT Head: expected: " 
+			<< expected << ", real: " 
+			<< real << std::endl;
+	}
+	
+	return same;
+}
+
+bool compare_non_terminals(
+	const Non_terminals & expected,
+	const Non_terminals & real
+) 
+{
+	bool same = true;
+	if (expected.size() != real.size())
+	{
+		same = false;
+		std::cout << "DIFFERENT Non_terminals::size: expected: " 
+			<< expected.size() << ", real: " 
+			<< real.size() << std::endl;		
+	}
+	else 
+	{
+		for (auto i=expected.cbegin(); i!=expected.cend(); i++)
+		{
+			if (real.find(*i) == real.end())
+			{
+				same = false;
+				std::cout << "DIFFERENT Non_terminals: missing " 
+					<<  (*i)  << std::endl;
+			}
+		}
+	}
+	
+	return same;
+}
+
+
+bool compare_error(
+	const Error & expected,
+	const Error & real
+)
+{
+	bool same = true;
+	if (expected.type != real.type)
+	{
+		same = false;
+		std::cout << "DIFFERENT Error::type: expected: " 
+			<< error_type2str(expected.type) << ", real: " 
+			<< error_type2str(real.type) << std::endl;
+	}
+	
+	if (expected.source != real.source)
+	{
+		same = false;
+		std::cout << "DIFFERENT Error::source: expected: " 
+			<< expected.source << ", real: " 
+			<< real.source << std::endl;
+	}
+	
+	return same;
+}
+
+bool compare_errors(
+	const Errors & expected,
+	const Errors & real
+)
+{
+	bool same = true;
+	if (expected.size() != real.size())
+	{
+		same = false;
+		std::cout << "DIFFERENT Errors::size: expected: " 
+			<< expected.size() << ", real: " 
+			<< real.size() << std::endl;		
+			
+		std::cout << "real errors:" << std::endl;
+		for (size_t i=0; i<real.size(); i++)
+		{
+			std::cout << "[" << i << "]\t" << error2str(real[i]) << std::endl;
+		}
+	}
+	else 
+	{
+		for (size_t i=0; i<expected.size(); i++)
+		{
+			same &= compare_error(expected[i], real[i]);
+		}
+	}
+	
+	return same;
+}
+
+
+
+bool compare_rule(
+	const Rule & expected,
+	const Rule & real
+)
+{
+	bool same = true;
+	if (expected.LHS != real.LHS)
+	{
+		same = false;
+		std::cout << "DIFFERENT Rule::LHS: expected: " 
+			<< expected.LHS << ", real: " 
+			<< real.LHS << std::endl;
+	}
+	if (expected.RHS.size() != real.RHS.size())
+	{
+		same = false;
+		std::cout << "DIFFERENT Rule.RHS::size: expected: " 
+			<< expected.RHS.size() << ", real: " 
+			<< real.RHS.size() << std::endl;		
+	}
+	else 
+	{
+		for (size_t i=0; i<expected.RHS.size(); i++)
+		{
+			if (expected.RHS[i] != real.RHS[i])
+			{
+				same = false;
+				std::cout << "DIFFERENT Rule::RHS[" << i <<"]: expected: " 
+					<< expected.RHS[i] << ", real: " 
+					<< real.RHS[i] << std::endl;
+			}
+		}
+	}
+	return same;
+}
+
+bool compare_rules(
+	const Rules & expected,
+	const Rules & real
+)
+{
+	bool same = true;
+	if (expected.size() != real.size())
+	{
+		same = false;
+		std::cout << "DIFFERENT Rules::size: expected: " 
+			<< expected.size() << ", real: " 
+			<< real.size() << std::endl;		
+	}
+	else 
+	{
+		for (size_t i=0; i<expected.size(); i++)
+		{
+			same &= compare_rule(expected[i], real[i]);
+		}
+	}
+	
+	return same;
+}
+
+bool compare_word(
+	const Word & expected,
+	const Word & real
+)
+{
+	bool same = true;
+	if (expected.size() != real.size())
+	{
+		same = false;
+		std::cout << "DIFFERENT Word::size: expected: " 
+			<< expected.size() << ", real: " 
+			<< real.size() << std::endl;		
+	}
+	else 
+	{
+		for (size_t i=0; i<expected.size(); i++)
+		{
+			if (expected[i] != real[i])
+			{
+				same = false;
+				std::cout << "DIFFERENT Word[" << i << "]: expected: " 
+					<< expected[i] << ", real: " 
+					<< real[i] << std::endl;
+			}
+		}
+	}
+	
+	return same;
+}
+
+bool compare_chomsky_grammar(
 	const Chomsky_grammar & expected,
 	const Chomsky_grammar & real
-) const
+)
 {
 	
 	bool same = true;
@@ -42,10 +237,10 @@ bool TST_mod_parser::compare_chomsky_grammar(
 	return same;
 }
 
-bool TST_mod_parser::compare_chomsky_rule(
+bool compare_chomsky_rule(
 	const Chomsky_rule & expected,
 	const Chomsky_rule & real
-) const
+)
 {
 	
 	bool same = true;
@@ -126,10 +321,10 @@ bool TST_mod_parser::compare_chomsky_rule(
 	return same;
 }
 
-bool TST_mod_parser::compare_chomsky_rules(
+bool compare_chomsky_rules(
 	const Chomsky_rules & expected,
 	const Chomsky_rules & real
-) const
+)
 {
 	bool same = true;
 	if (expected.size() != real.size())
@@ -158,10 +353,10 @@ bool TST_mod_parser::compare_chomsky_rules(
 }
 
 
-bool TST_mod_parser::compare_ptable(
+bool compare_ptable(
 	const PTable & expected,
 	const PTable & real
-) const
+)
 {
 	bool same = true;
 	if (expected.SIZE != real.SIZE)
@@ -203,10 +398,10 @@ bool TST_mod_parser::compare_ptable(
 	return same;
 }
 
-bool TST_mod_parser::compare_ptable_entry(
+bool compare_ptable_entry(
 	const PTable_entry & expected,
 	const PTable_entry & real
-) const
+)
 {
 	bool same = true;
 	
@@ -246,10 +441,10 @@ bool TST_mod_parser::compare_ptable_entry(
 		
 }
 
-bool TST_mod_parser::compare_cycle_warnigs(
+bool compare_cycle_warnigs(
 	const Cycle_warning & expected,
 	const Cycle_warning & real
-) const
+)
 {
 	bool same = true;
 	
@@ -275,10 +470,10 @@ bool TST_mod_parser::compare_cycle_warnigs(
 		
 }
 
-bool TST_mod_parser::compare_ptable_reference(
+bool compare_ptable_reference(
 	const PTable_reference & expected,
 	const PTable_reference & real
-) const
+)
 {
 	bool same = true;
 	
@@ -314,10 +509,10 @@ bool TST_mod_parser::compare_ptable_reference(
 }
 
 
-bool TST_mod_parser::compare_ptrees(
+bool compare_ptrees(
 	const PTrees & expected,
 	const PTrees & real
-) const
+)
 {
 	bool same = true;
 	if (expected.size() != real.size())
@@ -343,17 +538,17 @@ bool TST_mod_parser::compare_ptrees(
 	
 	return same;
 }
-bool TST_mod_parser::compare_ptree(
+bool compare_ptree(
 	const PTree & expected,
 	const PTree & real
-) const
+)
 {
 	return compare_pnode(expected.root, real.root);
 }
-bool TST_mod_parser::compare_pnode(
+bool compare_pnode(
 	const PNode & expected,
 	const PNode & real
-) const
+)
 {
 	bool same = true;
 	if (expected.tag != real.tag)
