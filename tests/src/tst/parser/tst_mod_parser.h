@@ -46,6 +46,11 @@ class TST_mod_parser: public Tester
 		const Chomsky_rules & expected,
 		const Chomsky_rules & real
 	) const;
+
+	bool compare_cycle_warnigs(
+		const Cycle_warning & expected,
+		const Cycle_warning & real
+	) const;
 	
 	std::string ptable2string(
 		const PTable & input
@@ -73,7 +78,7 @@ class TST_mod_parser: public Tester
 		const PTrees & expected_ptrees
 	);
 	
-	void _test_chomskify(
+	void _test_break_rules(
 		const Grammar & input_grammar,
 		const Chomsky_grammar expected_grammar
 	);
@@ -92,7 +97,7 @@ public:
 	void test_propagate_parsing_table();
 	void test_extract_trees_from_parsing_table();
 	
-	void test_chomskify();
+	void test_break_rules();
 	void test_create_new_symbol();
 	
 };

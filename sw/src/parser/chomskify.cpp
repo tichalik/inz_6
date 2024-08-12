@@ -43,7 +43,7 @@ Chomsky_grammar Chomskify::init_res_grammar(
 
 void Chomskify::break_rules()
 {
-	Chomsky_grammar res;
+	Chomsky_rules res_rules;
 	
 	for (size_t i=0; i<res_grammar.rules.size(); i++)
 	{
@@ -52,7 +52,7 @@ void Chomskify::break_rules()
 		//do nothing on rules which cannot be broken
 		if (r.RHS.size() <= 2)
 		{
-			res.rules.push_back(r);
+			res_rules.push_back(r);
 		}
 		//break other rules
 		else 
@@ -67,7 +67,7 @@ void Chomskify::break_rules()
 				cr.RHS.push_back(r.RHS[0]);
 				cr.RHS.push_back(new_symbol);
 				
-				res.rules.push_back(cr);
+				res_rules.push_back(cr);
 			}
 			
 			int pos = 1;
@@ -83,7 +83,7 @@ void Chomskify::break_rules()
 				cr.RHS.push_back(r.RHS[pos]);
 				cr.RHS.push_back(new_symbol);
 				
-				res.rules.push_back(cr);
+				res_rules.push_back(cr);
 				
 				pos++;
 			}
@@ -96,12 +96,12 @@ void Chomskify::break_rules()
 				cr.RHS.push_back(r.RHS[pos]);
 				cr.RHS.push_back(r.RHS[pos+1]);
 				
-				res.rules.push_back(cr);
+				res_rules.push_back(cr);
 			}
 		}
 	}
 	
-	this->res_grammar = res;
+	this->res_grammar.rules = res_rules;
 }
 
 void Chomskify::remove_chains()

@@ -21,7 +21,7 @@ int main()
 	// mce.test_word_errors();
 	
 	TST_mod_parser mp;
-	mp.test_chomskify();
+	mp.test_break_rules();
 	mp.test_create_new_symbol();
 	// // mp.test_propagate_parsing_table();
 	// // mp.test_parsing_grammar_adapter();

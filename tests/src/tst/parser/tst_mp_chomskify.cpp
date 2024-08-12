@@ -1,12 +1,17 @@
 #include "tst_mod_parser.h"
 
 
-void TST_mod_parser::_test_chomskify(
+void TST_mod_parser::_test_break_rules(
 	const Grammar & input_grammar,
 	const Chomsky_grammar expected_grammar
 )
 {
-	Chomskify chomskify(input_grammar);
+	Grammar dummy;
+	Chomskify chomskify(dummy);
+	
+	chomskify.res_grammar = chomskify.init_res_grammar(input_grammar);
+	chomskify.break_rules();
+	
 	
 	bool ok = compare_chomsky_grammar(expected_grammar, chomskify.get_grammar());
 	if (ok)
@@ -20,7 +25,7 @@ void TST_mod_parser::_test_chomskify(
 }
 
 
-void TST_mod_parser::test_chomskify()
+void TST_mod_parser::test_break_rules()
 {
 	
 	{
@@ -42,20 +47,20 @@ void TST_mod_parser::test_chomskify()
 		input_grammar.rules.push_back(rule);
 		
 		Chomsky_grammar expected_grammar;
-		expected_grammar.orig_terminals.insert("b");
-		expected_grammar.orig_terminals.insert("c");
-		expected_grammar.orig_nonterminals.insert("A");
+		expected_grammar.terminals.insert("b");
+		expected_grammar.terminals.insert("c");
+		expected_grammar.nonterminals.insert("A");
 		expected_grammar.head = "A";
 		
 		Chomsky_rule crule;
 		crule.LHS = "A";
-		crule.RHS1 = "b";
-		crule.RHS2 = "c";
-		crule.source_rules_ids.push_back(0);
+		crule.RHS.push_back("b");
+		crule.RHS.push_back("c");
 		
-		expected_grammar.orig_rules.push_back(crule);
 		
-		_test_chomskify(
+		expected_grammar.rules.push_back(crule);
+		
+		_test_break_rules(
 			input_grammar,
 			expected_grammar
 		);
@@ -82,10 +87,10 @@ void TST_mod_parser::test_chomskify()
 		input_grammar.rules.push_back(rule);
 		
 		Chomsky_grammar expected_grammar;
-		expected_grammar.orig_terminals.insert("b");
-		expected_grammar.orig_terminals.insert("c");
-		expected_grammar.orig_terminals.insert("d");
-		expected_grammar.orig_nonterminals.insert("A");
+		expected_grammar.terminals.insert("b");
+		expected_grammar.terminals.insert("c");
+		expected_grammar.terminals.insert("d");
+		expected_grammar.nonterminals.insert("A");
 		expected_grammar.head = "A";
 		
 		expected_grammar.added_nonterminals.insert("0");
@@ -93,25 +98,25 @@ void TST_mod_parser::test_chomskify()
 		{
 			Chomsky_rule crule;
 			crule.LHS = "A";
-			crule.RHS1 = "b";
-			crule.RHS2 = "0";
-			crule.source_rules_ids.push_back(0);
+			crule.RHS.push_back("b");
+			crule.RHS.push_back("0");
 			
-			expected_grammar.added_rules.push_back(crule);
+			
+			expected_grammar.rules.push_back(crule);
 		}
 		
 		{
 			Chomsky_rule crule;
 			crule.LHS = "0";
-			crule.RHS1 = "c";
-			crule.RHS2 = "d";
-			crule.source_rules_ids.push_back(0);
+			crule.RHS.push_back("c");
+			crule.RHS.push_back("d");
 			
-			expected_grammar.added_rules.push_back(crule);
+			
+			expected_grammar.rules.push_back(crule);
 		}
 		
 		
-		_test_chomskify(
+		_test_break_rules(
 			input_grammar,
 			expected_grammar
 		);
@@ -140,11 +145,11 @@ void TST_mod_parser::test_chomskify()
 		input_grammar.rules.push_back(rule);
 		
 		Chomsky_grammar expected_grammar;
-		expected_grammar.orig_terminals.insert("b");
-		expected_grammar.orig_terminals.insert("c");
-		expected_grammar.orig_terminals.insert("d");
-		expected_grammar.orig_terminals.insert("e");
-		expected_grammar.orig_nonterminals.insert("A");
+		expected_grammar.terminals.insert("b");
+		expected_grammar.terminals.insert("c");
+		expected_grammar.terminals.insert("d");
+		expected_grammar.terminals.insert("e");
+		expected_grammar.nonterminals.insert("A");
 		expected_grammar.head = "A";
 		
 		expected_grammar.added_nonterminals.insert("0");
@@ -153,35 +158,35 @@ void TST_mod_parser::test_chomskify()
 		{
 			Chomsky_rule crule;
 			crule.LHS = "A";
-			crule.RHS1 = "b";
-			crule.RHS2 = "0";
-			crule.source_rules_ids.push_back(0);
+			crule.RHS.push_back("b");
+			crule.RHS.push_back("0");
 			
-			expected_grammar.added_rules.push_back(crule);
+			
+			expected_grammar.rules.push_back(crule);
 		}
 		
 		{
 			Chomsky_rule crule;
 			crule.LHS = "0";
-			crule.RHS1 = "c";
-			crule.RHS2 = "1";
-			crule.source_rules_ids.push_back(0);
+			crule.RHS.push_back("c");
+			crule.RHS.push_back("1");
 			
-			expected_grammar.added_rules.push_back(crule);
+			
+			expected_grammar.rules.push_back(crule);
 		}
 		
 		{
 			Chomsky_rule crule;
 			crule.LHS = "1";
-			crule.RHS1 = "d";
-			crule.RHS2 = "e";
-			crule.source_rules_ids.push_back(0);
+			crule.RHS.push_back("d");
+			crule.RHS.push_back("e");
 			
-			expected_grammar.added_rules.push_back(crule);
+			
+			expected_grammar.rules.push_back(crule);
 		}
 		
 		
-		_test_chomskify(
+		_test_break_rules(
 			input_grammar,
 			expected_grammar
 		);
@@ -247,8 +252,8 @@ void TST_mod_parser::test_create_new_symbol()
 		input_grammar.nonterminals.insert("3");
 		
 		Chomsky_grammar expected_grammar;
-		expected_grammar.orig_terminals.insert("1");
-		expected_grammar.orig_nonterminals.insert("3");
+		expected_grammar.terminals.insert("1");
+		expected_grammar.nonterminals.insert("3");
 		
 		expected_grammar.added_nonterminals.insert("0");
 		expected_grammar.added_nonterminals.insert("2");

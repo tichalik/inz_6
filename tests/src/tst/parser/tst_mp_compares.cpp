@@ -7,15 +7,15 @@ bool TST_mod_parser::compare_chomsky_grammar(
 {
 	
 	bool same = true;
-	if (compare_non_terminals(expected.orig_nonterminals, real.orig_nonterminals) == false)
+	if (compare_non_terminals(expected.nonterminals, real.nonterminals) == false)
 	{
 		same = false;
-		std::cout << "different orig_nonterminals: " << std::endl;
+		std::cout << "different nonterminals: " << std::endl;
 	}
-	if (compare_non_terminals(expected.orig_terminals, real.orig_terminals) == false)
+	if (compare_non_terminals(expected.terminals, real.terminals) == false)
 	{
 		same = false;
-		std::cout << "different orig_terminals: " << std::endl;
+		std::cout << "different terminals: " << std::endl;
 	}
 	if (compare_non_terminals(expected.added_nonterminals, real.added_nonterminals) == false)
 	{
@@ -28,15 +28,15 @@ bool TST_mod_parser::compare_chomsky_grammar(
 		std::cout << "different head: " << std::endl;
 	}
 	
-	if (compare_chomsky_rules(expected.orig_rules, real.orig_rules) == false)
+	if (compare_chomsky_rules(expected.rules, real.rules) == false)
 	{
 		same = false;
-		std::cout << "different orig_rules: " << std::endl;
+		std::cout << "different rules: " << std::endl;
 	}
-	if (compare_chomsky_rules(expected.added_rules, real.added_rules) == false)
+	if (compare_chomsky_rules(expected.rules, real.rules) == false)
 	{
 		same = false;
-		std::cout << "different added_rules: " << std::endl;
+		std::cout << "different rules: " << std::endl;
 	}
 	
 	return same;
@@ -60,44 +60,64 @@ bool TST_mod_parser::compare_chomsky_rule(
 	}
 	
 	
-	if (expected.RHS1 != real.RHS1)
+	if (expected.RHS[0] != real.RHS[0])
 	{
 		same = false;
-		std::cout << "different Chomsky_rule::RHS1: "
-			<< " expected: " << expected.RHS1 
-			<< " real: " << real.RHS1 
+		std::cout << "different Chomsky_rule::RHS[0]: "
+			<< " expected: " << expected.RHS[0] 
+			<< " real: " << real.RHS[0] 
 			<< std::endl;
 	}
 	
 	
-	if (expected.RHS2 != real.RHS2)
+	if (expected.RHS[1] != real.RHS[1])
 	{
 		same = false;
-		std::cout << "different Chomsky_rule::RHS2: "
-			<< " expected: " << expected.RHS2 
-			<< " real: " << real.RHS2 
+		std::cout << "different Chomsky_rule::RHS[1]: "
+			<< " expected: " << expected.RHS[1] 
+			<< " real: " << real.RHS[1] 
 			<< std::endl;
 	}
 	
-	
-	if (expected.source_rules_ids.size() != real.source_rules_ids.size())
+	if (expected.replaced_symbols.size() != real.replaced_symbols.size())
 	{
 		same = false;
 		std::cout << "different ::size(): "
-			<< " expected: " << expected.source_rules_ids.size() 
-			<< " real: " << real.source_rules_ids.size() 
+			<< " expected: " << expected.replaced_symbols.size() 
+			<< " real: " << real.replaced_symbols.size() 
 			<< std::endl;
 	}
 	else
 	{
-		for (size_t i = 0; i < expected.source_rules_ids.size(); i++)
+		for (size_t i = 0; i < expected.replaced_symbols.size(); i++)
 		{
-			if (expected.source_rules_ids[i] != real.source_rules_ids[i])
+			if (expected.replaced_symbols[i] != real.replaced_symbols[i])
 			{
 				same = false;
-				std::cout << "different Chomsky_rule::source_rules_ids [" << i << "]: " 
-					<< " expected: " << expected.source_rules_ids[i] 
-					<< " real: " << real.source_rules_ids[i] 
+				std::cout << "different Chomsky_rule::replaced_symbols [" << i << "]: " 
+					<< " expected: " << expected.replaced_symbols[i] 
+					<< " real: " << real.replaced_symbols[i] 
+					<< std::endl;
+			}
+		}
+	}
+	
+	if (expected.cycle_warnings.size() != real.cycle_warnings.size())
+	{
+		same = false;
+		std::cout << "different ::size(): "
+			<< " expected: " << expected.cycle_warnings.size() 
+			<< " real: " << real.cycle_warnings.size() 
+			<< std::endl;
+	}
+	else
+	{
+		for (size_t i = 0; i < expected.cycle_warnings.size(); i++)
+		{
+			if (! compare_cycle_warnigs(expected.cycle_warnings[i], real.cycle_warnings[i]))
+			{
+				same = false;
+				std::cout << "different Chomsky_rule::cycle_warnings [" << i << "]: " 
 					<< std::endl;
 			}
 		}
@@ -220,6 +240,35 @@ bool TST_mod_parser::compare_ptable_entry(
 	{
 		same &= compare_ptable_reference(expected.children[0], real.children[0]);
 		same &= compare_ptable_reference(expected.children[1], real.children[1]);
+	}
+	
+	return same;
+		
+}
+
+bool TST_mod_parser::compare_cycle_warnigs(
+	const Cycle_warning & expected,
+	const Cycle_warning & real
+) const
+{
+	bool same = true;
+	
+	if (expected.origin_pos != real.origin_pos)
+	{
+		same = false;
+		std::cout << "different Cycle_warning::origin_pos: "
+			<< " expected: " << expected.origin_pos 
+			<< " real: " << real.origin_pos 
+			<< std::endl;
+	}
+	
+	if (expected.target_pos != real.target_pos)
+	{
+		same = false;
+		std::cout << "different Cycle_warning::target_pos: "
+			<< " expected: " << expected.target_pos 
+			<< " real: " << real.target_pos 
+			<< std::endl;
 	}
 	
 	return same;
