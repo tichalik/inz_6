@@ -59,12 +59,13 @@ void Mod_parser::propagate_parsing_table(
 
                         if (parsing_grammar_adapter.has_rule(p1.tag, p2.tag))
                         {
-                            std::vector<std::string> heads = 
+                            std::vector<LHS_and_ID> heads = 
 								parsing_grammar_adapter.get_rule_head(p1.tag, p2.tag);
                             for (size_t k=0; k<heads.size(); k++)
                             {
                                 PTable_entry pnode;
-                                pnode.tag = heads[k];
+                                pnode.tag = heads[k].LHS;
+                                pnode.rule_id = heads[k].ID;
 								
 								PTable_reference child1;
 								child1.y = y1;
@@ -141,6 +142,7 @@ PNode Mod_parser::ptable_entry_to_pnode(
 	PTable_entry source = parsing_table.tab[address.y][address.x][address.list_index];
 	PNode res;
 	res.tag = source.tag;
+	res.rule_id = source.rule_id;
 
 	//extract children of the node
 	for (size_t i=0; i<source.children.size(); i++)

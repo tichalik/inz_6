@@ -16,6 +16,7 @@ struct PTable_reference
 struct PTable_entry
 {
 	Symbol tag;
+	size_t rule_id;
 	bool visited;
 	std::vector<PTable_reference> children;
 	

@@ -6,7 +6,12 @@ Parsing_grammar_adapter::Parsing_grammar_adapter(const Chomsky_grammar & _gramma
 	{
 		std::string key = _grammar.rules[i].RHS[0]
 			+ RULE_MAP_SEPARATOR + _grammar.rules[i].RHS[1];
-		rule_map[key].push_back(_grammar.rules[i].LHS);
+			
+		LHS_and_ID lhs_and_id;
+		lhs_and_id.LHS = _grammar.rules[i].LHS;
+		lhs_and_id.ID = i;
+		
+		rule_map[key].push_back(lhs_and_id);
 	}
 }
 
@@ -20,7 +25,7 @@ bool Parsing_grammar_adapter::has_rule(
 		return true;
 }
 
-std::vector<std::string> Parsing_grammar_adapter::get_rule_head(
+std::vector<LHS_and_ID> Parsing_grammar_adapter::get_rule_head(
 	const Symbol & r1, const Symbol & r2) const
 {
 	std::string key = r1+ RULE_MAP_SEPARATOR + r2;
