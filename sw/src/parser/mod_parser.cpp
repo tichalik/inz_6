@@ -168,7 +168,10 @@ Mod_parser::Mod_parser(
 
 	extract_trees_from_parsing_table(parsing_table);
 	
-	Dechomskify dechomskify(parse_trees);
+	Dechomskify dechomskify(
+		parse_trees,
+		chomskify.get_grammar()
+	);
 	parse_trees = dechomskify.get_result_trees();
 }
 

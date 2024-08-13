@@ -17,7 +17,7 @@ struct PNode
 	 */
 	std::string tag;
 	
-	size_t rule_id;
+	size_t rule_id = -1;
  
     /** 
 	 * \brief child nodes

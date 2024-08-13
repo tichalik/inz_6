@@ -32,6 +32,13 @@ class TST_mod_parser: public Tester
 		const int NO_NEW_SYMBOLS
 	);
 		
+	void _test_unbreak_rules(
+		const PTrees & input_trees,
+		const Chomsky_grammar& grammar,
+		const PTrees & expected_ptrees
+	);
+	
+	void _test_restore_chains();
 	
 	
 public:
@@ -42,6 +49,9 @@ public:
 	
 	void test_break_rules();
 	void test_create_new_symbol();
+	
+	void test_unbreak_rules();
+	void test_restore_chains();
 	
 };
 #endif
