@@ -113,21 +113,19 @@ std::vector<Symbols> Chomskify::get_path(
 	std::vector<Symbols> res;
 	current_path.push_back(head);
 	
-	if (chain_trees[head].symbols.size() == 0)
+	if (chain_trees[head].exit == true)
 	{
 		res.push_back(current_path);
 	}
-	else
+	
+	for (size_t i=0; i<chain_trees[head].symbols.size(); i++)
 	{
-		for (size_t i=0; i<chain_trees[head].symbols.size(); i++)
-		{
-			std::vector<Symbols> children = get_path(
-				chain_trees[head].symbols[i], 
-				current_path, 
-				chain_trees
-			);
-			res.insert(res.end(), children.begin(), children.end());
-		}
+		std::vector<Symbols> children = get_path(
+			chain_trees[head].symbols[i], 
+			current_path, 
+			chain_trees
+		);
+		res.insert(res.end(), children.begin(), children.end());
 	}
 	
 	return res;
@@ -198,27 +196,31 @@ void Chomskify::remove_chains()
 		const Chomsky_rule& rule = res_grammar.rules[i];
 		if (rule.RHS.size() == 1)
 		{
-			if (!chain_trees.contains(rule.LHS))
-			{
-				Chain_node chain_node;
-				chain_trees[rule.LHS] = chain_node;				
-			}
-			
+			//save the rule
 			chain_trees[rule.LHS].symbols.push_back(rule.RHS[0]);
-			
+			//also save the RHS
+			chain_trees[rule.RHS[0]].exit = false;
 		}
 	}
 	
-	//check which chain rules are removable
-	//a chain rule is removable if its LHS is not a head of a non-chain rule
+	//check which symbols are the exits
+	//an exit symbol is either terminal or a nonterminal which is a head of a rule
+	// with RHS.size() > 1
 	for (auto i = chain_trees.begin(); i!= chain_trees.end(); i++)
 	{
-		for (size_t j=0; j<res_grammar.rules.size(); j++)
+		if (res_grammar.terminals.contains(i->first))
 		{
-			const Chomsky_rule& rule = res_grammar.rules[j];
-			if (rule.RHS.size() != 1 && rule.LHS == i->first)
+			i->second.exit = true;			
+		}
+		else
+		{
+			for (size_t j=0; j<res_grammar.rules.size(); j++)
 			{
-				i->second.removable = false;
+				const Chomsky_rule& rule = res_grammar.rules[j];
+				if (rule.RHS.size() != 1 && rule.LHS == i->first)
+				{
+					i->second.exit = true;
+				}
 			}
 		}
 	}

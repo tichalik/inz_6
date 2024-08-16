@@ -11,7 +11,7 @@
 struct Chain_node
 {
 	Symbols symbols;
-	bool removable = true;
+	bool exit = false;
 };
 
 typedef std::unordered_map<Symbol, Chain_node> Chain_trees;
