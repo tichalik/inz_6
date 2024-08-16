@@ -1,6 +1,73 @@
 #include "compares.h"
 
 
+bool compare_symbol(
+	const Symbol & expected,
+	const Symbol & real
+) 
+{
+	bool same = true;
+	if (expected != real)
+	{
+		same = false;
+		std::cout << "DIFFERENT Symbol: expected: " 
+			<< expected << ", real: " 
+			<< real << std::endl;
+	}
+	
+	return same;
+}
+
+bool compare_symbols(
+	const Symbols & expected,
+	const Symbols & real
+) 
+{
+	bool same = true;
+	if (expected.size() != real.size())
+	{
+		same = false;
+		std::cout << "DIFFERENT Symbols::size: expected: " 
+			<< expected.size() << ", real: " 
+			<< real.size() << std::endl;		
+	}
+	else 
+	{
+		for (size_t i=0; i<expected.size(); i++)
+		{
+			same &= compare_symbol(expected[i], real[i]);
+		}
+	}
+	
+	return same;
+}
+
+bool compare_symbols_vector(
+	const std::vector<Symbols> & expected,
+	const std::vector<Symbols> & real
+) 
+{
+	bool same = true;
+	if (expected.size() != real.size())
+	{
+		same = false;
+		std::cout << "DIFFERENT std::vector<Symbols>::size: expected: " 
+			<< expected.size() << ", real: " 
+			<< real.size() << std::endl;		
+	}
+	else 
+	{
+		for (size_t i=0; i<expected.size(); i++)
+		{
+			same &= compare_symbols(expected[i], real[i]);
+		}
+	}
+	
+	return same;
+}
+
+
+
 bool compare_head(
 	const Head & expected,
 	const Head & real
@@ -274,49 +341,51 @@ bool compare_chomsky_rule(
 			<< std::endl;
 	}
 	
-	if (expected.replaced_symbols.size() != real.replaced_symbols.size())
-	{
-		same = false;
-		std::cout << "different ::size(): "
-			<< " expected: " << expected.replaced_symbols.size() 
-			<< " real: " << real.replaced_symbols.size() 
-			<< std::endl;
-	}
-	else
-	{
-		for (size_t i = 0; i < expected.replaced_symbols.size(); i++)
-		{
-			if (expected.replaced_symbols[i] != real.replaced_symbols[i])
-			{
-				same = false;
-				std::cout << "different Chomsky_rule::replaced_symbols [" << i << "]: " 
-					<< " expected: " << expected.replaced_symbols[i] 
-					<< " real: " << real.replaced_symbols[i] 
-					<< std::endl;
-			}
-		}
-	}
+	// if (expected.replaced_symbols.size() != real.replaced_symbols.size())
+	// {
+		// same = false;
+		// std::cout << "different ::size(): "
+			// << " expected: " << expected.replaced_symbols.size() 
+			// << " real: " << real.replaced_symbols.size() 
+			// << std::endl;
+	// }
+	// else
+	// {
+		// for (size_t i = 0; i < expected.replaced_symbols.size(); i++)
+		// {
+			// if (expected.replaced_symbols[i] != real.replaced_symbols[i])
+			// {
+				// same = false;
+				// std::cout << "different Chomsky_rule::replaced_symbols [" << i << "]: " 
+					// << " expected: " << expected.replaced_symbols[i] 
+					// << " real: " << real.replaced_symbols[i] 
+					// << std::endl;
+			// }
+		// }
+	// }
 	
-	if (expected.cycle_warnings.size() != real.cycle_warnings.size())
-	{
-		same = false;
-		std::cout << "different ::size(): "
-			<< " expected: " << expected.cycle_warnings.size() 
-			<< " real: " << real.cycle_warnings.size() 
-			<< std::endl;
-	}
-	else
-	{
-		for (size_t i = 0; i < expected.cycle_warnings.size(); i++)
-		{
-			if (! compare_cycle_warnigs(expected.cycle_warnings[i], real.cycle_warnings[i]))
-			{
-				same = false;
-				std::cout << "different Chomsky_rule::cycle_warnings [" << i << "]: " 
-					<< std::endl;
-			}
-		}
-	}
+		std::cout << __FILE__ << "::" << __LINE__  << "\t UPDATE COMPARES!!!"<< std::endl;
+	
+	// if (expected.cycle_warnings.size() != real.cycle_warnings.size())
+	// {
+		// same = false;
+		// std::cout << "different ::size(): "
+			// << " expected: " << expected.cycle_warnings.size() 
+			// << " real: " << real.cycle_warnings.size() 
+			// << std::endl;
+	// }
+	// else
+	// {
+		// for (size_t i = 0; i < expected.cycle_warnings.size(); i++)
+		// {
+			// if (! compare_cycle_warnigs(expected.cycle_warnings[i], real.cycle_warnings[i]))
+			// {
+				// same = false;
+				// std::cout << "different Chomsky_rule::cycle_warnings [" << i << "]: " 
+					// << std::endl;
+			// }
+		// }
+	// }
 	
 	return same;
 }

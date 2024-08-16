@@ -16,6 +16,25 @@
 #include "parsing_grammar_adapter.h"
 #include "ptable.h"
 
+
+
+bool compare_symbol(
+	const Symbol & expected,
+	const Symbol & real
+);
+
+bool compare_symbols(
+	const Symbols & expected,
+	const Symbols & real
+);
+
+bool compare_symbols_vector(
+	const std::vector<Symbols> & expected,
+	const std::vector<Symbols> & real
+);
+
+
+
 bool compare_error(
 	const Error & expected,
 	const Error & real

@@ -29,13 +29,42 @@ struct Cycle_warning
 };
 typedef std::vector<Cycle_warning> Cycle_warnings;
 
+//ok, we have 2 structures for linking extra data to a symbol
+//we could just make a separate data type with those
+//the problem is that it would create muhc memory overhead as most symbols probably wont have this extra data
+//	therefore we could use polymorphism to fix that!
+//	have a normal symbol and a replaced symbol inheriting from it 
+//	then symbol would have methods for accessing the fields of Replaced_symbol returning constant values
+//		the only problem is that it would require pointers and dynamic memory allocation 
+//		which is slower?
+//		and messier
+//		so for now lets stick to this i guess
+//			however std::vector also does a heckton of dynamic memory management??
+//		
+
+
+struct Cycle_warnings_index
+{
+	size_t RHS_pos;
+	Cycle_warnings cycle_warnings;
+};
+typedef std::vector<Cycle_warnings_index> Cycle_warnings_indexes;
+
+
+struct Replaced_symbols_index
+{
+	size_t RHS_pos;
+	Symbols symbols;
+};
+typedef std::vector<Replaced_symbols_index> Replaced_symbols_indexes;
+
 struct Chomsky_rule
 {
 	Symbol LHS;
 	Symbols RHS;
 	
-	Symbols replaced_symbols;
-	Cycle_warnings cycle_warnings;
+	Replaced_symbols_indexes replaced_symbols_indexes;
+	Cycle_warnings_indexes cycle_warnings_indexes;
 };
 typedef std::vector<Chomsky_rule> Chomsky_rules;
 

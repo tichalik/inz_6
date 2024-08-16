@@ -21,7 +21,8 @@ int main()
 	// mce.test_word_errors();
 	
 	TST_mod_parser mp;
-	mp.test_unbreak_rules();
+	mp.test_get_path();
+	// mp.test_unbreak_rules();
 	// mp.test_break_rules();
 	// mp.test_create_new_symbol();
 	// // mp.test_propagate_parsing_table();

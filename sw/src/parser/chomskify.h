@@ -5,7 +5,24 @@
 #include "chomsky_grammar.h"
 #include "symbol.h"
 #include "utils.h"
+#include <unordered_map>
 
+
+struct Chain_node
+{
+	Symbols symbols;
+	bool removable = true;
+};
+
+typedef std::unordered_map<Symbol, Chain_node> Chain_trees;
+
+struct Replaced_symbols
+{
+	Symbol result;
+	Symbols chain;
+	Cycle_warnings cycle_warnings;
+};
+typedef std::vector<Replaced_symbols> Replaced_symbolss;
 
 
 class Chomskify
@@ -23,6 +40,21 @@ class Chomskify
 	
 	void break_rules();
 	void remove_chains();
+	
+		
+
+	std::vector<Symbols> get_path(
+		Symbol head, 
+		Symbols current_path,
+		Chain_trees chain_trees
+	);
+
+	Chomsky_rules replace_chain_in_rule(
+		const Chomsky_rule& rule,
+		const size_t& RHS_pos,
+		Chain_trees chain_trees
+	);
+
 	
 	public:
 	Chomskify(

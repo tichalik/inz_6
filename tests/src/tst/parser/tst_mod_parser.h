@@ -31,6 +31,17 @@ class TST_mod_parser: public Tester
 		const Chomsky_grammar expected_grammar,
 		const int NO_NEW_SYMBOLS
 	);
+	
+	void _test_remove_chains(
+		const Chomsky_grammar & input_grammar,
+		const Chomsky_grammar & expected_grammar
+	);
+		
+	void _test_get_path(
+		const Symbol & head,
+		Chain_trees & chain_trees,
+		const std::vector<Symbols> & expected_symbols_vect
+	);
 		
 	void _test_unbreak_rules(
 		const PTrees & input_trees,
@@ -49,6 +60,8 @@ public:
 	
 	void test_break_rules();
 	void test_create_new_symbol();
+	void test_remove_chains();
+	void test_get_path();
 	
 	void test_unbreak_rules();
 	void test_restore_chains();
