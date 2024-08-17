@@ -4,6 +4,7 @@
 #include "parsing_grammar_adapter.h"
 #include "ptable.h"
 #include "grammar.h"
+#include "error.h"
 #include "word.h"
 #include "ptree.h"
 #include "chomskify.h"
@@ -16,6 +17,8 @@
 class Mod_parser
 {
 	Chomskify chomskify;
+	
+	Errors errors;
 	
 	/// object for easier look up of rules
 	Parsing_grammar_adapter parsing_grammar_adapter;
@@ -38,6 +41,8 @@ class Mod_parser
 	);
 	
 	PTrees get_parse_trees() const;
+	
+	Errors get_errors() const;
 };
 
 #endif // _MOD_PARSER_H_

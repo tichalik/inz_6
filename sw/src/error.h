@@ -36,7 +36,10 @@ enum EN_ERROR_TYPE
 	MULTIPLE_HEADS,
 	
 	//input (word) related errors
-	SYMBOL_IN_NONTERMINALS
+	SYMBOL_IN_NONTERMINALS,
+	
+	//chomskification
+	UNREMOVABLE_CHAIN
 };
 
 struct Error

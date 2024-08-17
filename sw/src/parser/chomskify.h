@@ -2,6 +2,7 @@
 #define CHOMSKIFY_H_
 
 #include "grammar.h"
+#include "error.h"
 #include "chomsky_grammar.h"
 #include "symbol.h"
 #include "utils.h"
@@ -27,6 +28,8 @@ typedef std::vector<Replaced_symbols> Replaced_symbolss;
 
 class Chomskify
 {
+	Errors errors;
+	
 	int next_new_symbol;
 	Chomsky_grammar res_grammar;
 	Symbol create_new_symbol();
@@ -61,7 +64,9 @@ class Chomskify
 		const Grammar& input_grammar
 	);
 	
-	Chomsky_grammar get_grammar();
+	Chomsky_grammar get_grammar() const;
+	
+	Errors get_errors() const;
 };
 
 #endif // CHOMSKIFY_H_

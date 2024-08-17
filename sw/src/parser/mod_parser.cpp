@@ -155,6 +155,10 @@ PNode Mod_parser::ptable_entry_to_pnode(
 }
 
 
+Errors Mod_parser::get_errors() const
+{
+	return this->errors;
+}
 
 Mod_parser::Mod_parser(
 	const Grammar & grammar,
@@ -163,16 +167,21 @@ Mod_parser::Mod_parser(
 	chomskify(grammar),
 	parsing_grammar_adapter(chomskify.get_grammar())
 {
-	PTable parsing_table(input);
-	propagate_parsing_table(parsing_table);
+	this->errors = chomskify.get_errors();
+	if (this->errors.size() == 0)
+	{
+		
+		PTable parsing_table(input);
+		propagate_parsing_table(parsing_table);
 
-	extract_trees_from_parsing_table(parsing_table);
-	
-	Dechomskify dechomskify(
-		parse_trees,
-		chomskify.get_grammar()
-	);
-	parse_trees = dechomskify.get_result_trees();
+		extract_trees_from_parsing_table(parsing_table);
+		
+		Dechomskify dechomskify(
+			parse_trees,
+			chomskify.get_grammar()
+		);
+		parse_trees = dechomskify.get_result_trees();
+	}
 }
 
 PTrees Mod_parser::get_parse_trees() const

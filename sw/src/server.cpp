@@ -53,7 +53,11 @@ void Server::post_handler(const httplib::Request & req,
 		//parse if there are no errors
 		if (semantic_errors.size() == 0)
 		{
-			Mod_parser mod_parser(grammar, word);
+			Mod_parser mod_parser(grammar, word); 
+			
+			const  Errors chomskificaiton_errors = mod_parser.get_errors();
+			errors.insert(errors.end(), chomskificaiton_errors.begin(), chomskificaiton_errors.end());
+			
 			parsing_trees = mod_parser.get_parse_trees();
 		}
 	}

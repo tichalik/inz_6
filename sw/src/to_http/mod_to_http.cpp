@@ -123,6 +123,10 @@ std::string Mod_to_http::EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const
 		case SYMBOL_IN_NONTERMINALS:
 			res="input must consist of terminals only";
 			break;
+		case UNREMOVABLE_CHAIN:
+			res="symbol is a head of chain of rules of nonterminals "
+				"turning into single nonterminals without ever turning into a terminal";
+			break;
 		default:
 			res = "UNKNOWN ERROR";
 			break;

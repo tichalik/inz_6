@@ -140,41 +140,51 @@ Chomsky_rules Chomskify::replace_chain_in_rule(
 )
 {
 	Chomsky_rules res;
+	Symbol symbol_to_replace = rule.RHS[RHS_pos];
 	
-	if (chain_trees.contains(rule.RHS[RHS_pos]))
+	if (chain_trees.contains(symbol_to_replace))
 	{
 		std::vector<Symbols> replaced_symbolss = get_path(
-			rule.RHS[RHS_pos], {}, chain_trees);
-		for (size_t i=0; i<replaced_symbolss.size(); i++)
+			symbol_to_replace, {}, chain_trees);
+		if (replaced_symbolss.size() == 0)
 		{
-			Chomsky_rule new_rule = rule;
-			Symbol last_symbol = replaced_symbolss[i][replaced_symbolss.size()-1];
-			new_rule.RHS[RHS_pos] = last_symbol;
-			
-			Replaced_symbols_index replaced_symbols_index;
-			replaced_symbols_index.RHS_pos = RHS_pos;
-			replaced_symbols_index.symbols = replaced_symbolss[i];
-			new_rule.replaced_symbols_indexes.push_back(replaced_symbols_index);
-			
-			// Cycle_warnings_index cycle_warnings_index;
-			// cycle_warnings_index.RHS_pos = RHS_pos;
-			// cycle_warnings_index.cycle_warnings = replaced_symbolss[i].cycle_warnings;
-			// new_rule.cycle_warnings_indexes.push_back(cycle_warnings_index);
-			
-			//if there are no more symbols to possibly replace
-			if (RHS_pos == rule.RHS.size()-1)
+			Error error;
+			error.type = UNREMOVABLE_CHAIN;
+			error.source = symbol_to_replace;
+		}
+		else 
+		{
+			for (size_t i=0; i<replaced_symbolss.size(); i++)
 			{
-				res.push_back(new_rule);
-			}
-			//if more symbols can be replaced
-			else
-			{
-				Chomsky_rules tmp = replace_chain_in_rule(
-					new_rule,
-					RHS_pos+1,
-					chain_trees
-				);
-				res.insert(res.end(), tmp.begin(), tmp.end()); 
+				Chomsky_rule new_rule = rule;
+				Symbol last_symbol = replaced_symbolss[i][replaced_symbolss.size()-1];
+				new_rule.RHS[RHS_pos] = last_symbol;
+				
+				Replaced_symbols_index replaced_symbols_index;
+				replaced_symbols_index.RHS_pos = RHS_pos;
+				replaced_symbols_index.symbols = replaced_symbolss[i];
+				new_rule.replaced_symbols_indexes.push_back(replaced_symbols_index);
+				
+				// Cycle_warnings_index cycle_warnings_index;
+				// cycle_warnings_index.RHS_pos = RHS_pos;
+				// cycle_warnings_index.cycle_warnings = replaced_symbolss[i].cycle_warnings;
+				// new_rule.cycle_warnings_indexes.push_back(cycle_warnings_index);
+				
+				//if there are no more symbols to possibly replace
+				if (RHS_pos == rule.RHS.size()-1)
+				{
+					res.push_back(new_rule);
+				}
+				//if more symbols can be replaced
+				else
+				{
+					Chomsky_rules tmp = replace_chain_in_rule(
+						new_rule,
+						RHS_pos+1,
+						chain_trees
+					);
+					res.insert(res.end(), tmp.begin(), tmp.end()); 
+				}
 			}
 		}
 	}
@@ -249,7 +259,12 @@ Chomskify::Chomskify(
 	remove_chains();
 }
 
-Chomsky_grammar Chomskify::get_grammar()
+Chomsky_grammar Chomskify::get_grammar() const
 {
 	return res_grammar;
+}
+
+Errors Chomskify::get_errors() const
+{
+	return errors; 
 }
