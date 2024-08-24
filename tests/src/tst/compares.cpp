@@ -1,93 +1,81 @@
 #include "compares.h"
 
 
-bool compare_symbol(
-	const Symbol & expected,
-	const Symbol & real
-) 
-{
-	bool same = true;
-	if (expected != real)
-	{
-		same = false;
-		std::cout << "DIFFERENT Symbol: expected: " 
-			<< expected << ", real: " 
-			<< real << std::endl;
+#define COMPARE_SIMPLE_TYPE(TYPE)\
+	bool compare(\
+		const TYPE & expected,\
+		const TYPE & real,\
+		const std::string & message\
+	)\
+	{\
+		bool same = true;\
+		if (expected != real)\
+		{\
+			same = false;\
+			std::cout << "DIFFERENT " << message << "(" #TYPE "): expected: " \
+				<< str(expected) << ", real: " \
+				<< str(real) << std::endl;\
+		}\
+		\
+		return same;\
 	}
-	
-	return same;
-}
-
-bool compare_symbols(
-	const Symbols & expected,
-	const Symbols & real
-) 
-{
-	bool same = true;
-	if (expected.size() != real.size())
-	{
-		same = false;
-		std::cout << "DIFFERENT Symbols::size: expected: " 
-			<< expected.size() << ", real: " 
-			<< real.size() << std::endl;		
-	}
-	else 
-	{
-		for (size_t i=0; i<expected.size(); i++)
-		{
-			same &= compare_symbol(expected[i], real[i]);
-		}
-	}
-	
-	return same;
-}
-
-bool compare_symbols_vector(
-	const std::vector<Symbols> & expected,
-	const std::vector<Symbols> & real
-) 
-{
-	bool same = true;
-	if (expected.size() != real.size())
-	{
-		same = false;
-		std::cout << "DIFFERENT std::vector<Symbols>::size: expected: " 
-			<< expected.size() << ", real: " 
-			<< real.size() << std::endl;		
-	}
-	else 
-	{
-		for (size_t i=0; i<expected.size(); i++)
-		{
-			same &= compare_symbols(expected[i], real[i]);
-		}
-	}
-	
-	return same;
-}
 
 
-
-bool compare_head(
-	const Head & expected,
-	const Head & real
-) 
-{
-	bool same = true;
-	if (expected != real)
-	{
-		same = false;
-		std::cout << "DIFFERENT Head: expected: " 
-			<< expected << ", real: " 
-			<< real << std::endl;
+#define COMPARE_VECTOR_TYPE(TYPE)\
+	bool compare(\
+		const TYPE & expected,\
+		const TYPE & real,\
+		const std::string & message\
+	) \
+	{\
+		bool same = true;\
+		if (expected.size() != real.size())\
+		{\
+			same = false;\
+			std::cout << "DIFFERENT " << message << "(" #TYPE ")::size: expected: " \
+				<< expected.size() << ", real: " \
+				<< real.size() << std::endl;		\
+		}\
+		else \
+		{\
+			for (size_t i=0; i<expected.size(); i++)\
+			{\
+				same &= compare(expected[i], real[i], message + " ");\
+			}\
+		}\
+		\
+		return same;\
 	}
-	
-	return same;
-}
 
-bool compare_non_terminals(
+COMPARE_SIMPLE_TYPE(std::string);
+COMPARE_SIMPLE_TYPE(EN_ERROR_TYPE);
+COMPARE_SIMPLE_TYPE(bool);
+COMPARE_SIMPLE_TYPE(size_t);
+
+COMPARE_VECTOR_TYPE(Symbols);
+COMPARE_VECTOR_TYPE(std::vector<Symbols>);
+COMPARE_VECTOR_TYPE(Errors);
+COMPARE_VECTOR_TYPE(Rules);
+COMPARE_VECTOR_TYPE(Chomsky_rules);
+COMPARE_VECTOR_TYPE(PTrees);
+
+
+COMPARE_VECTOR_TYPE(Replaced_symbolss);
+COMPARE_VECTOR_TYPE(Cycle_warnings);
+COMPARE_VECTOR_TYPE(Cycle_warnings_indexes);
+COMPARE_VECTOR_TYPE(Replaced_symbols_indexes);
+COMPARE_VECTOR_TYPE(PTable_entries);
+COMPARE_VECTOR_TYPE(PTable_references);
+COMPARE_VECTOR_TYPE(PNodes);
+
+#define COMPARE(FIELD)\
+	same &= compare(expected.FIELD, real.FIELD, message + " " # FIELD);
+
+
+bool compare(
 	const Non_terminals & expected,
-	const Non_terminals & real
+	const Non_terminals & real,
+	const std::string & message
 ) 
 {
 	bool same = true;
@@ -115,316 +103,103 @@ bool compare_non_terminals(
 }
 
 
-bool compare_error(
+bool compare(
+	const Replaced_symbols_index & expected,
+	const Replaced_symbols_index & real,
+	const std::string & message
+)
+{
+	bool same = true;
+	COMPARE(RHS_pos);
+	COMPARE(symbols);
+	return same;
+}
+
+bool compare(
+	const Cycle_warnings_index & expected,
+	const Cycle_warnings_index & real,
+	const std::string & message
+)
+{
+	bool same = true;
+	COMPARE(RHS_pos);
+	COMPARE(cycle_warnings);
+	return same;
+}
+
+
+bool compare(
+	const Replaced_symbols & expected,
+	const Replaced_symbols & real,
+	const std::string & message
+)
+{
+	bool same = true;
+	COMPARE(result);
+	COMPARE(chain);
+	COMPARE(cycle_warnings);
+	return same;
+}
+
+bool compare(
 	const Error & expected,
-	const Error & real
+	const Error & real,
+	const std::string & message
 )
 {
 	bool same = true;
-	if (expected.type != real.type)
-	{
-		same = false;
-		std::cout << "DIFFERENT Error::type: expected: " 
-			<< error_type2str(expected.type) << ", real: " 
-			<< error_type2str(real.type) << std::endl;
-	}
-	
-	if (expected.source != real.source)
-	{
-		same = false;
-		std::cout << "DIFFERENT Error::source: expected: " 
-			<< expected.source << ", real: " 
-			<< real.source << std::endl;
-	}
-	
-	return same;
-}
-
-bool compare_errors(
-	const Errors & expected,
-	const Errors & real
-)
-{
-	bool same = true;
-	if (expected.size() != real.size())
-	{
-		same = false;
-		std::cout << "DIFFERENT Errors::size: expected: " 
-			<< expected.size() << ", real: " 
-			<< real.size() << std::endl;		
-			
-		std::cout << "real errors:" << std::endl;
-		for (size_t i=0; i<real.size(); i++)
-		{
-			std::cout << "[" << i << "]\t" << error2str(real[i]) << std::endl;
-		}
-	}
-	else 
-	{
-		for (size_t i=0; i<expected.size(); i++)
-		{
-			same &= compare_error(expected[i], real[i]);
-		}
-	}
-	
+	COMPARE(type);
+	COMPARE(source);
 	return same;
 }
 
 
-
-bool compare_rule(
+bool compare(
 	const Rule & expected,
-	const Rule & real
+	const Rule & real,
+	const std::string & message
 )
 {
 	bool same = true;
-	if (expected.LHS != real.LHS)
-	{
-		same = false;
-		std::cout << "DIFFERENT Rule::LHS: expected: " 
-			<< expected.LHS << ", real: " 
-			<< real.LHS << std::endl;
-	}
-	if (expected.RHS.size() != real.RHS.size())
-	{
-		same = false;
-		std::cout << "DIFFERENT Rule.RHS::size: expected: " 
-			<< expected.RHS.size() << ", real: " 
-			<< real.RHS.size() << std::endl;		
-	}
-	else 
-	{
-		for (size_t i=0; i<expected.RHS.size(); i++)
-		{
-			if (expected.RHS[i] != real.RHS[i])
-			{
-				same = false;
-				std::cout << "DIFFERENT Rule::RHS[" << i <<"]: expected: " 
-					<< expected.RHS[i] << ", real: " 
-					<< real.RHS[i] << std::endl;
-			}
-		}
-	}
+	COMPARE(LHS);
+	COMPARE(RHS);
 	return same;
 }
 
-bool compare_rules(
-	const Rules & expected,
-	const Rules & real
-)
-{
-	bool same = true;
-	if (expected.size() != real.size())
-	{
-		same = false;
-		std::cout << "DIFFERENT Rules::size: expected: " 
-			<< expected.size() << ", real: " 
-			<< real.size() << std::endl;		
-	}
-	else 
-	{
-		for (size_t i=0; i<expected.size(); i++)
-		{
-			same &= compare_rule(expected[i], real[i]);
-		}
-	}
-	
-	return same;
-}
-
-bool compare_word(
-	const Word & expected,
-	const Word & real
-)
-{
-	bool same = true;
-	if (expected.size() != real.size())
-	{
-		same = false;
-		std::cout << "DIFFERENT Word::size: expected: " 
-			<< expected.size() << ", real: " 
-			<< real.size() << std::endl;		
-	}
-	else 
-	{
-		for (size_t i=0; i<expected.size(); i++)
-		{
-			if (expected[i] != real[i])
-			{
-				same = false;
-				std::cout << "DIFFERENT Word[" << i << "]: expected: " 
-					<< expected[i] << ", real: " 
-					<< real[i] << std::endl;
-			}
-		}
-	}
-	
-	return same;
-}
-
-bool compare_chomsky_grammar(
+bool compare(
 	const Chomsky_grammar & expected,
-	const Chomsky_grammar & real
+	const Chomsky_grammar & real,
+	const std::string & message
 )
 {
-	
 	bool same = true;
-	if (compare_non_terminals(expected.nonterminals, real.nonterminals) == false)
-	{
-		same = false;
-		std::cout << "different nonterminals: " << std::endl;
-	}
-	if (compare_non_terminals(expected.terminals, real.terminals) == false)
-	{
-		same = false;
-		std::cout << "different terminals: " << std::endl;
-	}
-	if (compare_non_terminals(expected.added_nonterminals, real.added_nonterminals) == false)
-	{
-		same = false;
-		std::cout << "different added_nonterminals: " << std::endl;
-	}
-	if (compare_head(expected.head, real.head) == false)
-	{
-		same = false;
-		std::cout << "different head: " << std::endl;
-	}
-	
-	if (compare_chomsky_rules(expected.rules, real.rules) == false)
-	{
-		same = false;
-		std::cout << "different rules: " << std::endl;
-	}
-	if (compare_chomsky_rules(expected.rules, real.rules) == false)
-	{
-		same = false;
-		std::cout << "different rules: " << std::endl;
-	}
-	
+	COMPARE(nonterminals);
+	COMPARE(terminals);
+	COMPARE(added_nonterminals);
+	COMPARE(head);
+	COMPARE(rules);
 	return same;
 }
 
-bool compare_chomsky_rule(
+bool compare(
 	const Chomsky_rule & expected,
-	const Chomsky_rule & real
+	const Chomsky_rule & real,
+	const std::string & message
 )
 {
 	
 	bool same = true;
-	
-	if (expected.LHS != real.LHS)
-	{
-		same = false;
-		std::cout << "different Chomsky_rule::LHS: "
-			<< " expected: " << expected.LHS 
-			<< " real: " << real.LHS 
-			<< std::endl;
-	}
-	
-	
-	if (expected.RHS[0] != real.RHS[0])
-	{
-		same = false;
-		std::cout << "different Chomsky_rule::RHS[0]: "
-			<< " expected: " << expected.RHS[0] 
-			<< " real: " << real.RHS[0] 
-			<< std::endl;
-	}
-	
-	
-	if (expected.RHS[1] != real.RHS[1])
-	{
-		same = false;
-		std::cout << "different Chomsky_rule::RHS[1]: "
-			<< " expected: " << expected.RHS[1] 
-			<< " real: " << real.RHS[1] 
-			<< std::endl;
-	}
-	
-	// if (expected.replaced_symbols.size() != real.replaced_symbols.size())
-	// {
-		// same = false;
-		// std::cout << "different ::size(): "
-			// << " expected: " << expected.replaced_symbols.size() 
-			// << " real: " << real.replaced_symbols.size() 
-			// << std::endl;
-	// }
-	// else
-	// {
-		// for (size_t i = 0; i < expected.replaced_symbols.size(); i++)
-		// {
-			// if (expected.replaced_symbols[i] != real.replaced_symbols[i])
-			// {
-				// same = false;
-				// std::cout << "different Chomsky_rule::replaced_symbols [" << i << "]: " 
-					// << " expected: " << expected.replaced_symbols[i] 
-					// << " real: " << real.replaced_symbols[i] 
-					// << std::endl;
-			// }
-		// }
-	// }
-	
-		std::cout << __FILE__ << "::" << __LINE__  << "\t UPDATE COMPARES!!!"<< std::endl;
-	
-	// if (expected.cycle_warnings.size() != real.cycle_warnings.size())
-	// {
-		// same = false;
-		// std::cout << "different ::size(): "
-			// << " expected: " << expected.cycle_warnings.size() 
-			// << " real: " << real.cycle_warnings.size() 
-			// << std::endl;
-	// }
-	// else
-	// {
-		// for (size_t i = 0; i < expected.cycle_warnings.size(); i++)
-		// {
-			// if (! compare_cycle_warnigs(expected.cycle_warnings[i], real.cycle_warnings[i]))
-			// {
-				// same = false;
-				// std::cout << "different Chomsky_rule::cycle_warnings [" << i << "]: " 
-					// << std::endl;
-			// }
-		// }
-	// }
-	
+	COMPARE(LHS);
+	COMPARE(RHS);
+	COMPARE(replaced_symbols_indexes);
+	COMPARE(cycle_warnings_indexes);
 	return same;
 }
 
-bool compare_chomsky_rules(
-	const Chomsky_rules & expected,
-	const Chomsky_rules & real
-)
-{
-	bool same = true;
-	if (expected.size() != real.size())
-	{
-		same = false;
-		std::cout << "different ::size(): "
-			<< " expected: " << expected.size() 
-			<< " real: " << real.size() 
-			<< std::endl;
-	}
-	else
-	{
-		for (size_t i = 0; i < expected.size(); i++)
-		{
-			bool local_same = compare_chomsky_rule(expected[i], real[i]);
-			same &= local_same;
-			if (!local_same)
-			{
-				std::cout << "different Chomsky_rule[" << i << "]" << std::endl;
-			}
-		}
-	}
-	
-	return same;
-	
-}
-
-
-bool compare_ptable(
+bool compare(
 	const PTable & expected,
-	const PTable & real
+	const PTable & real,
+	const std::string & message
 )
 {
 	bool same = true;
@@ -442,208 +217,78 @@ bool compare_ptable(
 		{
 			for (size_t j = 0; j < expected.SIZE - i; j++)
 			{
-				PTable_entries exp = expected.tab[i][j];
-				PTable_entries rel = real.tab[i][j];
-				
-				if (exp.size() != rel.size())
-				{
-					same = false;
-					std::cout << "different PTable::tab[" << i << "][" << j << "]::size "
-						<< " expected: " << exp.size()
-						<< " real: " << rel.size() 
-						<< std::endl;
-				}
-				else 
-				{
-					for (size_t k=0; k<exp.size(); k++)
-					{
-						same &= compare_ptable_entry(exp[k], rel[k]);
-					}
-				}
-			}	
-		}
-	}
-	
-	return same;
-}
-
-bool compare_ptable_entry(
-	const PTable_entry & expected,
-	const PTable_entry & real
-)
-{
-	bool same = true;
-	
-	if (expected.tag != real.tag)
-	{
-		same = false;
-		std::cout << "different PTable_entry::tag: "
-			<< " expected: " << expected.tag 
-			<< " real: " << real.tag 
-			<< std::endl;
-	}
-	
-	if (expected.visited != real.visited)
-	{
-		same = false;
-		std::cout << "different PTable_entry::visited: "
-			<< " expected: " << expected.visited 
-			<< " real: " << real.visited 
-			<< std::endl;
-	}
-	
-	if (expected.children.size() != real.children.size())
-	{
-		same = false;
-		std::cout << "different PTable_entry::children.size(): "
-			<< " expected: " << expected.children.size() 
-			<< " real: " << real.children.size() 
-			<< std::endl;
-	}
-	else if (expected.children.size() == 2 && real.children.size() == 2)
-	{
-		same &= compare_ptable_reference(expected.children[0], real.children[0]);
-		same &= compare_ptable_reference(expected.children[1], real.children[1]);
-	}
-	
-	return same;
-		
-}
-
-bool compare_cycle_warnigs(
-	const Cycle_warning & expected,
-	const Cycle_warning & real
-)
-{
-	bool same = true;
-	
-	if (expected.origin_pos != real.origin_pos)
-	{
-		same = false;
-		std::cout << "different Cycle_warning::origin_pos: "
-			<< " expected: " << expected.origin_pos 
-			<< " real: " << real.origin_pos 
-			<< std::endl;
-	}
-	
-	if (expected.target_pos != real.target_pos)
-	{
-		same = false;
-		std::cout << "different Cycle_warning::target_pos: "
-			<< " expected: " << expected.target_pos 
-			<< " real: " << real.target_pos 
-			<< std::endl;
-	}
-	
-	return same;
-		
-}
-
-bool compare_ptable_reference(
-	const PTable_reference & expected,
-	const PTable_reference & real
-)
-{
-	bool same = true;
-	
-	if (expected.x != real.x)
-	{
-		same = false;
-		std::cout << "different PTable_reference::x: "
-			<< " expected: " << expected.x 
-			<< " real: " << real.x 
-			<< std::endl;
-	}
-	
-	if (expected.y != real.y)
-	{
-		same = false;
-		std::cout << "different PTable_reference::x: "
-			<< " expected: " << expected.y 
-			<< " real: " << real.y 
-			<< std::endl;
-	}
-	
-	if (expected.list_index != real.list_index)
-	{
-		same = false;
-		std::cout << "different PTable_reference::x: "
-			<< " expected: " << expected.list_index 
-			<< " real: " << real.list_index 
-			<< std::endl;
-	}
-			
-	return same;
-		
-}
-
-
-bool compare_ptrees(
-	const PTrees & expected,
-	const PTrees & real
-)
-{
-	bool same = true;
-	if (expected.size() != real.size())
-	{
-		same = false;
-		std::cout << "different Pa::size(): "
-			<< " expected: " << expected.size() 
-			<< " real: " << real.size() 
-			<< std::endl;
-	}
-	else
-	{
-		for (size_t i = 0; i < expected.size(); i++)
-		{
-			bool local_same = compare_ptree(expected[i], real[i]);
-			same &= local_same;
-			if (!local_same)
-			{
-				std::cout << "different PTrees[" << i << "]" << std::endl;
+				COMPARE(tab[i][j]);
 			}
 		}
 	}
 	
 	return same;
 }
-bool compare_ptree(
-	const PTree & expected,
-	const PTree & real
-)
-{
-	return compare_pnode(expected.root, real.root);
-}
-bool compare_pnode(
-	const PNode & expected,
-	const PNode & real
+
+bool compare(
+	const PTable_entry & expected,
+	const PTable_entry & real,
+	const std::string & message
 )
 {
 	bool same = true;
-	if (expected.tag != real.tag)
-	{
-		same = false;
-		std::cout << "different PNode::tag: "
-			<< " expected: " << expected.tag 
-			<< " real: " << real.tag 
-			<< std::endl;
-	}
-	
-	if (expected.children.size() != real.children.size())
-	{
-		same = false;
-		std::cout << "different PNode::children.size(): "
-			<< " expected: " << expected.children.size() 
-			<< " real: " << real.children.size() 
-			<< std::endl;
-	}
-	else
-	{
-		for (size_t i = 0; i < expected.children.size(); i++)
-		{
-			same &= compare_pnode(expected.children[i], real.children[i]);	
-		}
-	}
-	
+	COMPARE(tag);
+	COMPARE(visited);
+	COMPARE(children);
+	return same;
+		
+}
+
+bool compare(
+	const Cycle_warning & expected,
+	const Cycle_warning & real,
+	const std::string & message
+)
+{
+	bool same = true;
+	COMPARE(origin_pos);
+	COMPARE(target_pos);
+	return same;
+		
+}
+
+bool compare(
+	const PTable_reference & expected,
+	const PTable_reference & real,
+	const std::string & message
+)
+{
+	bool same = true;
+	COMPARE(x);
+	COMPARE(y);
+	COMPARE(list_index);
+	return same;
+		
+}
+
+
+bool compare(
+	const PTree & expected,
+	const PTree & real,
+	const std::string & message
+)
+{
+	bool same = true;
+	COMPARE(root);
 	return same;
 }
+bool compare(
+	const PNode & expected,
+	const PNode & real,
+	const std::string & message
+)
+{
+	bool same = true;
+	COMPARE(tag);
+	COMPARE(children);
+	return same;
+}
+
+#undef COMPARE
+#undef COMPARE_SIMPLE_TYPE
+#undef COMPARE_VECTOR_TYPE

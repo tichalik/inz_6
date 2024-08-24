@@ -1,11 +1,31 @@
 #include "to_string.h"
 
-std::string error2str(const Error &error)
+
+std::string str(const bool &i)
 {
-	return "source:<" + error.source +">, type:<" + error_type2str(error.type)+">";
+	std::stringstream ss;
+	ss << i;
+	return ss.str();
 }
 
-std::string error_type2str(const EN_ERROR_TYPE &error)
+std::string str(const size_t &i)
+{
+	std::stringstream ss;
+	ss << i;
+	return ss.str();
+}
+
+std::string str(const std::string &i)
+{
+	return i;
+}
+
+std::string str(const Error &error)
+{
+	return "source:<" + error.source +">, type:<" + str(error.type)+">";
+}
+
+std::string str(const EN_ERROR_TYPE &error)
 {
 	std::string res;
 	switch (error)
@@ -72,15 +92,15 @@ std::string error_type2str(const EN_ERROR_TYPE &error)
 	return res;
 }
 
-std::string errors2str(const Errors &errors)
+std::string str(const Errors &errors)
 {
 	std::string res;
     for (size_t i=0; i<errors.size(); i++)
-        res += error2str(errors[i])+ " ";
+        res += str(errors[i])+ " ";
     return res;
 }
 
-std::string ptable2string(
+std::string str(
 	const PTable & input
 )
 {
@@ -95,7 +115,7 @@ std::string ptable2string(
 				res << "[" << i << "]"
 					<< "[" << j << "]"
 					<< "\t" << k << ".\t"
-					<< ptable_entry2string(input.tab[i][j][k]) << std::endl;
+					<< str(input.tab[i][j][k]) << std::endl;
 			}
 		}	
 	}
@@ -103,7 +123,7 @@ std::string ptable2string(
 	return res.str();
 }
 
-std::string ptable_entry2string(
+std::string str(
 	const PTable_entry & input
 )
 {
@@ -115,13 +135,13 @@ std::string ptable_entry2string(
 		
 	for (size_t i=0; i<input.children.size(); i++)
 	{
-		res << "\t" << ptable_reference2string(input.children[i]) <<std::endl;
+		res << "\t" << str(input.children[i]) <<std::endl;
 	}
 	
 	return res.str();
 }
 
-std::string ptable_reference2string(
+std::string str(
 	const PTable_reference & input
 )
 {

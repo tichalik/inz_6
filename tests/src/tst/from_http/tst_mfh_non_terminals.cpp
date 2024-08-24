@@ -26,10 +26,10 @@ void TST_mod_from_http::_test_non_terminals_from_http(
 	Non_terminals result = mod_from_http.non_terminals_from_http(str_input, is_nonterminals);
 	
 	//check if the result is identical to expected
-	bool ok_result = compare_non_terminals(expected, result);
+	bool ok_result = compare(expected, result, (is_nonterminals? "nonterminals" : "terminals"));
 	
 	//check if obtained errors are identical to expected 
-	bool ok_errors = compare_errors(expected_errors, mod_from_http.errors);
+	bool ok_errors = compare(expected_errors, mod_from_http.errors, "errors");
 	if (ok_errors && ok_result)
 	{
 		std::cout << "OK" << std::endl;

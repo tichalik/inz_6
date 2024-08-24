@@ -15,106 +15,54 @@
 #include "chomsky_grammar.h"
 #include "parsing_grammar_adapter.h"
 #include "ptable.h"
+#include "chomskify.h"
 
 
+#define COMPARE_DECLARATION(TYPE)\
+	bool compare(\
+		const TYPE & expected,\
+		const TYPE & real,\
+		const std::string & message\
+	);
 
-bool compare_symbol(
-	const Symbol & expected,
-	const Symbol & real
-);
+COMPARE_DECLARATION(std::string);
+COMPARE_DECLARATION(EN_ERROR_TYPE);
+COMPARE_DECLARATION(bool);
+COMPARE_DECLARATION(size_t);
 
-bool compare_symbols(
-	const Symbols & expected,
-	const Symbols & real
-);
-
-bool compare_symbols_vector(
-	const std::vector<Symbols> & expected,
-	const std::vector<Symbols> & real
-);
-
-
-
-bool compare_error(
-	const Error & expected,
-	const Error & real
-);
-
-bool compare_errors(
-	const Errors & expected,
-	const Errors & real
-);
-
-bool compare_non_terminals(
-	const Non_terminals & expected,
-	const Non_terminals & real
-);
-
-bool compare_head(
-	const Head & expected,
-	const Head & real
-);
+COMPARE_DECLARATION(Symbols);
+COMPARE_DECLARATION(std::vector<Symbols>);
+COMPARE_DECLARATION(Errors);
+COMPARE_DECLARATION(Rules);
+COMPARE_DECLARATION(Chomsky_rules);
+COMPARE_DECLARATION(PTrees);
 
 
-bool compare_rule(
-	const Rule & expected,
-	const Rule & real
-);
-bool compare_rules(
-	const Rules & expected,
-	const Rules & real
-);
-bool compare_word(
-	const Word & expected,
-	const Word & real
-);
-	
+COMPARE_DECLARATION(Error);
+COMPARE_DECLARATION(Non_terminals);
+COMPARE_DECLARATION(Rule);
+COMPARE_DECLARATION(PTable);
+COMPARE_DECLARATION(PTable_entry);
+COMPARE_DECLARATION(PTable_reference);
+COMPARE_DECLARATION(PTable_references);
+COMPARE_DECLARATION(PTree);
+COMPARE_DECLARATION(PNode);
+COMPARE_DECLARATION(Chomsky_grammar);
+COMPARE_DECLARATION(Chomsky_rule);
+COMPARE_DECLARATION(Cycle_warning);
 
-bool compare_ptable(
-	const PTable & expected,
-	const PTable & real
-) ;
-bool compare_ptable_entry(
-	const PTable_entry & expected,
-	const PTable_entry & real
-) ;
-bool compare_ptable_reference(
-	const PTable_reference & expected,
-	const PTable_reference & real
-) ;
 
-bool compare_ptrees(
-	const PTrees & expected,
-	const PTrees & real
-) ;
-bool compare_ptree(
-	const PTree & expected,
-	const PTree & real
-) ;
-bool compare_pnode(
-	const PNode & expected,
-	const PNode & real
-) ;
+COMPARE_DECLARATION(Chain_node);
+COMPARE_DECLARATION(Replaced_symbols);
+COMPARE_DECLARATION(Replaced_symbolss);
+COMPARE_DECLARATION(Cycle_warnings);
+COMPARE_DECLARATION(Cycle_warnings_index);
+COMPARE_DECLARATION(Cycle_warnings_indexes);
+COMPARE_DECLARATION(Replaced_symbols_index);
+COMPARE_DECLARATION(Replaced_symbols_indexes);
+COMPARE_DECLARATION(PTable_entries);
+COMPARE_DECLARATION(PNodes);	
 
-bool compare_chomsky_grammar(
-	const Chomsky_grammar & expected,
-	const Chomsky_grammar & real
-) ;
+#undef COMPARE_DECLARATION
 
-bool compare_chomsky_rule(
-	const Chomsky_rule & expected,
-	const Chomsky_rule & real
-) ;
-
-bool compare_chomsky_rules(
-	const Chomsky_rules & expected,
-	const Chomsky_rules & real
-) ;
-
-bool compare_cycle_warnigs(
-	const Cycle_warning & expected,
-	const Cycle_warning & real
-) ;
-
-	
 #endif

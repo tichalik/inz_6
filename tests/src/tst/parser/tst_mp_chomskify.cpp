@@ -13,7 +13,7 @@ void TST_mod_parser::_test_break_rules(
 	chomskify.break_rules();
 	
 	
-	bool ok = compare_chomsky_grammar(expected_grammar, chomskify.get_grammar());
+	bool ok = compare(expected_grammar, chomskify.get_grammar(), "grammar");
 	if (ok)
 	{
 		std::cout << "OK" << std::endl;
@@ -208,7 +208,7 @@ void TST_mod_parser::_test_create_new_symbol(
 		chomskify.create_new_symbol();
 	}
 	
-	bool ok = compare_chomsky_grammar(expected_grammar, chomskify.get_grammar());
+	bool ok = compare(expected_grammar, chomskify.get_grammar(), "grammar");
 	if (ok)
 	{
 		std::cout << "OK" << std::endl;
@@ -280,7 +280,7 @@ void TST_mod_parser::_test_remove_chains(
 	chomskify.remove_chains();
 	
 	
-	bool ok = compare_chomsky_grammar(expected_grammar, chomskify.get_grammar());
+	bool ok = compare(expected_grammar, chomskify.get_grammar(), "grammar");
 	if (ok)
 	{
 		std::cout << "OK" << std::endl;
@@ -352,7 +352,7 @@ void TST_mod_parser::_test_get_path(
 	std::vector<Symbols> real_symbols_vect = 
 		chomskify.get_path( head, current_path, chain_trees);
 	
-	bool ok = compare_symbols_vector(expected_symbols_vect, real_symbols_vect);
+	bool ok = compare(expected_symbols_vect, real_symbols_vect, "path");
 	if (ok)
 	{
 		std::cout << "OK" << std::endl;

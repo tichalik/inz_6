@@ -14,14 +14,14 @@ void test_compares()
 	Symbol a2 = "a";
 	Symbol b = "b";
 	
-	std::cout << "same symbols " << compare_symbol(a1,a2) << std::endl; 
-	std::cout << "different symbols " << compare_symbol(a1,b) << std::endl; 
+	std::cout << "same symbols " << compare(a1,a2, "symbol") << std::endl; 
+	std::cout << "different symbols " << compare(a1,b, "symbol") << std::endl; 
 	
 }
 
 int main()
 {
-	// test_compares();
+	test_compares();
 	
 	// TST_mod_from_http mfh;
 	// mfh.test_non_terminal_from_http();

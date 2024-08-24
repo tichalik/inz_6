@@ -16,7 +16,7 @@ void TST_mod_parser::_test_unbreak_rules(
 	dechomskify.unbreak_rules();
 	
 	
-	bool ok = compare_ptrees(expected_ptrees, dechomskify.get_result_trees());
+	bool ok = compare(expected_ptrees, dechomskify.get_result_trees(), "trees");
 	if (ok)
 	{
 		std::cout << "OK" << std::endl;

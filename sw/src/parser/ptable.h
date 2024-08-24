@@ -11,6 +11,7 @@ struct PTable_reference
 	size_t x; // position in the second dimension
 	size_t list_index; // position in the list
 };
+typedef std::vector<PTable_reference>  PTable_references;
 
 
 struct PTable_entry
@@ -18,7 +19,7 @@ struct PTable_entry
 	Symbol tag;
 	size_t rule_id;
 	bool visited;
-	std::vector<PTable_reference> children;
+	PTable_references children;
 	
 	PTable_entry():
 		visited(false)

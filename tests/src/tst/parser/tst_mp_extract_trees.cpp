@@ -14,7 +14,7 @@
 	// mod_parser.extract_trees_from_parsing_table(parsing_table);
 	
 	// //compare results
-	// bool ok = compare_ptrees(expected_ptrees, mod_parser.parse_trees);
+	// bool ok = compare(expected_ptrees, mod_parser.parse_trees);
 	// if (ok)
 	// {
 		// std::cout << "OK" << std::endl;

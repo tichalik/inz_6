@@ -17,7 +17,7 @@
 	// mod_parser.propagate_parsing_table(ptable);
 	
 	// //check whether the parsing table is identical to what is expected 
-	// bool ok = compare_ptable(expected_ptable, ptable);
+	// bool ok = compare(expected_ptable, ptable);
 	// if (ok)
 	// {
 		// std::cout << "OK" << std::endl;

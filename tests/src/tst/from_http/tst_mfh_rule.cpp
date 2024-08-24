@@ -37,11 +37,11 @@ void TST_mod_from_http::_test_rule_from_http(
 	// but when there are errors, the rule does not matter
 	if (expected_ok == true)
 	{
-		ok_result = compare_rule(expected, result);
+		ok_result = compare(expected, result, "rule");
 	}
 	
 	//check if obtained errors are identical to expected 
-	bool ok_errors = compare_errors(expected_errors, mod_from_http.errors);
+	bool ok_errors = compare(expected_errors, mod_from_http.errors, "errors");
 	if (ok_errors && ok_result && ok == expected_ok)
 	{
 		std::cout << "OK" << std::endl;

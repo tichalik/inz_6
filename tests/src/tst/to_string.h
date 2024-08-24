@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <sstream>
 
 
 #include "non_terminals.h"
@@ -16,18 +17,22 @@
 #include "ptable.h"
 
 	
-std::string error2str(const Error &error);
-std::string error_type2str(const EN_ERROR_TYPE &error);
-std::string errors2str(const Errors &errors);
+std::string str(const bool &i);
+std::string str(const std::string &i);	
+std::string str(const size_t &i);	
+	
+std::string str(const Error &error);
+std::string str(const EN_ERROR_TYPE &error);
+std::string str(const Errors &errors);
 
 
-std::string ptable2string(
+std::string str(
 	const PTable & input
 );
-std::string ptable_entry2string(
+std::string str(
 	const PTable_entry & input
 );
-std::string ptable_reference2string(
+std::string str(
 	const PTable_reference & input
 );
 
