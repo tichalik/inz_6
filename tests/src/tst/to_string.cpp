@@ -1,5 +1,201 @@
 #include "to_string.h"
 
+#define ADD_FIELD(NAME)\
+	res += #NAME ":\t" + str(i.NAME);
+
+#define VECTOR_STR(TYPE)\
+	std::string str(const TYPE & i)\
+	{\
+		std::stringstream res;\
+		for (size_t j=0; j<i.size(); j++)\
+		{\
+			res << j <<".\t" << str(i[j]) << std::endl;\
+		}\
+		return res.str();\
+	}
+	
+
+VECTOR_STR(Symbols);
+VECTOR_STR(std::vector<Symbols>);
+VECTOR_STR(Errors);
+VECTOR_STR(Rules);
+VECTOR_STR(Chomsky_rules);
+VECTOR_STR(PTrees);
+
+
+VECTOR_STR(Replaced_symbolss);
+VECTOR_STR(Cycle_warnings);
+VECTOR_STR(Cycle_warnings_indexes);
+VECTOR_STR(Replaced_symbols_indexes);
+VECTOR_STR(PTable_entries);
+VECTOR_STR(PTable_references);
+VECTOR_STR(PNodes);
+
+
+std::string str(
+	const Non_terminals & i
+) 
+{
+	std::string res;
+	for (auto j=i.cbegin(); j!=i.cend(); j++)
+	{
+		res += str(*j) + ", ";
+	}
+	return res;
+}
+
+
+std::string str(
+	const Replaced_symbols_index & i
+)
+{
+	std::string res;
+	ADD_FIELD(RHS_pos);
+	ADD_FIELD(symbols);
+	return res;
+}
+
+std::string str(
+	const Cycle_warnings_index & i
+)
+{
+	std::string res;
+	ADD_FIELD(RHS_pos);
+	ADD_FIELD(cycle_warnings);
+	return res;
+}
+
+
+std::string str(
+	const Replaced_symbols & i
+)
+{
+	std::string res;
+	ADD_FIELD(result);
+	ADD_FIELD(chain);
+	ADD_FIELD(cycle_warnings);
+	return res;
+}
+
+std::string str(
+	const Error & i
+)
+{
+	std::string res;
+	ADD_FIELD(type);
+	ADD_FIELD(source);
+	return res;
+}
+
+
+std::string str(
+	const Rule & i
+)
+{
+	std::string res;
+	ADD_FIELD(LHS);
+	ADD_FIELD(RHS);
+	return res;
+}
+
+std::string str(
+	const Chomsky_grammar & i
+)
+{
+	std::string res;
+	ADD_FIELD(nonterminals);
+	ADD_FIELD(terminals);
+	ADD_FIELD(added_nonterminals);
+	ADD_FIELD(head);
+	ADD_FIELD(rules);
+	return res;
+}
+
+std::string str(
+	const Chomsky_rule & i
+)
+{
+	
+	std::string res;
+	ADD_FIELD(LHS);
+	ADD_FIELD(RHS);
+	ADD_FIELD(replaced_symbols_indexes);
+	ADD_FIELD(cycle_warnings_indexes);
+	return res;
+}
+
+std::string str(
+	const PTable & i
+)
+{
+	std::string res;
+	for (size_t k = 0; k < i.SIZE; k++)
+	{
+		for (size_t j = 0; j < i.SIZE - k; j++)
+		{
+			ADD_FIELD(tab[k][j]);
+		}
+	}
+
+	
+	return res;
+}
+
+std::string str(
+	const PTable_entry & i
+)
+{
+	std::string res;
+	ADD_FIELD(tag);
+	ADD_FIELD(visited);
+	ADD_FIELD(children);
+	return res;
+		
+}
+
+std::string str(
+	const Cycle_warning & i
+)
+{
+	std::string res;
+	ADD_FIELD(origin_pos);
+	ADD_FIELD(target_pos);
+	return res;
+		
+}
+
+std::string str(
+	const PTable_reference & i
+)
+{
+	std::string res;
+	ADD_FIELD(x);
+	ADD_FIELD(y);
+	ADD_FIELD(list_index);
+	return res;
+		
+}
+
+
+std::string str(
+	const PTree & i
+)
+{
+	std::string res;
+	ADD_FIELD(root);
+	return res;
+}
+std::string str(
+	const PNode & i
+)
+{
+	std::string res;
+	ADD_FIELD(tag);
+	ADD_FIELD(children);
+	return res;
+}
+
+
 
 std::string str(const bool &i)
 {
@@ -18,11 +214,6 @@ std::string str(const size_t &i)
 std::string str(const std::string &i)
 {
 	return i;
-}
-
-std::string str(const Error &error)
-{
-	return "source:<" + error.source +">, type:<" + str(error.type)+">";
 }
 
 std::string str(const EN_ERROR_TYPE &error)
@@ -92,65 +283,6 @@ std::string str(const EN_ERROR_TYPE &error)
 	return res;
 }
 
-std::string str(const Errors &errors)
-{
-	std::string res;
-    for (size_t i=0; i<errors.size(); i++)
-        res += str(errors[i])+ " ";
-    return res;
-}
 
-std::string str(
-	const PTable & input
-)
-{
-	std::stringstream res;
-	
-	for (size_t i = 0; i < input.SIZE; i++)
-	{
-		for (size_t j = 0; j < input.SIZE - i; j++)
-		{
-			for (size_t k=0; k<input.tab[i][j].size(); k++)
-			{
-				res << "[" << i << "]"
-					<< "[" << j << "]"
-					<< "\t" << k << ".\t"
-					<< str(input.tab[i][j][k]) << std::endl;
-			}
-		}	
-	}
-	
-	return res.str();
-}
-
-std::string str(
-	const PTable_entry & input
-)
-{
-	std::stringstream res;
-	
-	res << "tag: " << input.tag << "\t"
-		<< "visited: " << input.visited 
-		<< "children: " << std::endl;
-		
-	for (size_t i=0; i<input.children.size(); i++)
-	{
-		res << "\t" << str(input.children[i]) <<std::endl;
-	}
-	
-	return res.str();
-}
-
-std::string str(
-	const PTable_reference & input
-)
-{
-	std::stringstream res;
-	
-	res << "x: " << input.x << "\t"
-		<< "y: " << input.y << "\t"
-		<< "list_index: " << input.list_index;
-	
-	return res.str();
-}
-
+#undef ADD_FIELD
+#undef VECTOR_STR

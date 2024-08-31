@@ -15,26 +15,52 @@
 #include "chomsky_grammar.h"
 #include "parsing_grammar_adapter.h"
 #include "ptable.h"
-
-	
-std::string str(const bool &i);
-std::string str(const std::string &i);	
-std::string str(const size_t &i);	
-	
-std::string str(const Error &error);
-std::string str(const EN_ERROR_TYPE &error);
-std::string str(const Errors &errors);
+#include "chomskify.h"
 
 
-std::string str(
-	const PTable & input
-);
-std::string str(
-	const PTable_entry & input
-);
-std::string str(
-	const PTable_reference & input
-);
+#define STR_DECLARATION(TYPE)\
+	std::string str(\
+		const TYPE & i\
+	);
 
-	
+STR_DECLARATION(std::string);
+STR_DECLARATION(EN_ERROR_TYPE);
+STR_DECLARATION(bool);
+STR_DECLARATION(size_t);
+
+STR_DECLARATION(Symbols);
+STR_DECLARATION(std::vector<Symbols>);
+STR_DECLARATION(Errors);
+STR_DECLARATION(Rules);
+STR_DECLARATION(Chomsky_rules);
+STR_DECLARATION(PTrees);
+
+
+STR_DECLARATION(Error);
+STR_DECLARATION(Non_terminals);
+STR_DECLARATION(Rule);
+STR_DECLARATION(PTable);
+STR_DECLARATION(PTable_entry);
+STR_DECLARATION(PTable_reference);
+STR_DECLARATION(PTable_references);
+STR_DECLARATION(PTree);
+STR_DECLARATION(PNode);
+STR_DECLARATION(Chomsky_grammar);
+STR_DECLARATION(Chomsky_rule);
+STR_DECLARATION(Cycle_warning);
+
+
+STR_DECLARATION(Chain_node);
+STR_DECLARATION(Replaced_symbols);
+STR_DECLARATION(Replaced_symbolss);
+STR_DECLARATION(Cycle_warnings);
+STR_DECLARATION(Cycle_warnings_index);
+STR_DECLARATION(Cycle_warnings_indexes);
+STR_DECLARATION(Replaced_symbols_index);
+STR_DECLARATION(Replaced_symbols_indexes);
+STR_DECLARATION(PTable_entries);
+STR_DECLARATION(PNodes);	
+
+#undef STR_DECLARATION
+
 #endif

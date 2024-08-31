@@ -1,0 +1,11 @@
+egrep "^(class|struct|typedef)" ./src/sw -r | grep -v httplib
+
+-> first grep searches for types 
+
+	grep EXPRESSION SOURCE FLAGS
+
+	^ binds closer than |, so "^a|b" is actually "(^a)|b"
+
+-> second grep filters out httplib types
+
+	-v means invert the match
