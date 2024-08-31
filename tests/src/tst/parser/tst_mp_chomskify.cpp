@@ -336,6 +336,179 @@ void TST_mod_parser::test_remove_chains()
 			expected_grammar
 		);
 	}
+	
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " (single rue chain):" << std::endl;
+	std::cout << " A-> b C" << std::endl;
+	std::cout << " C -> D" << std::endl;
+	std::cout << " D -> e" << std::endl;
+	std::cout << "===============================================================" << std::endl;
+	{
+		
+		Chomsky_grammar input_grammar;
+		input_grammar.terminals.insert("b");
+		input_grammar.terminals.insert("e");
+		input_grammar.nonterminals.insert("A");
+		input_grammar.nonterminals.insert("C");
+		input_grammar.nonterminals.insert("D");
+		input_grammar.head  = "A";
+		
+		{
+			Chomsky_rule rule;
+			rule.LHS = "A";
+			rule.RHS.push_back("b");
+			rule.RHS.push_back("C");
+			
+			input_grammar.rules.push_back(rule);
+		}
+		
+		{
+			Chomsky_rule rule;
+			rule.LHS = "C";
+			rule.RHS.push_back("D");
+			
+			input_grammar.rules.push_back(rule);
+		}
+		
+		{
+			Chomsky_rule rule;
+			rule.LHS = "D";
+			rule.RHS.push_back("e");
+			
+			input_grammar.rules.push_back(rule);
+		}
+		
+		Chomsky_grammar expected_grammar = input_grammar;
+		expected_grammar.rules.clear();
+		
+		{
+			Chomsky_rule rule;
+			rule.LHS = "A";
+			rule.RHS.push_back("b");
+			rule.RHS.push_back("c");
+			
+			{
+				Replaced_symbols_index replaced_symbol_index; 
+				replaced_symbol_index.RHS_pos = 1;
+				replaced_symbol_index.symbols.push_back("C");
+				replaced_symbol_index.symbols.push_back("D");
+				
+				rule.replaced_symbols_indexes.push_back(replaced_symbol_index);
+			}
+			
+			expected_grammar.rules.push_back(rule);
+		}
+		
+		_test_remove_chains(
+			input_grammar,
+			expected_grammar
+		);
+	}
+}
+
+
+void TST_mod_parser::_test_replace_chain_in_rule(
+	const Chomsky_rule & input_rule,
+	Chain_trees& chain_trees, 
+	const Chomsky_rules & expected_rule
+)
+{
+	Grammar dummy;
+	Chomskify chomskify(dummy);
+	
+	Chomsky_rules res_rule = chomskify.replace_chain_in_rule(
+		input_rule,
+		0,
+		chain_trees
+	);
+	
+	
+	bool ok = compare(expected_rule, res_rule, "rule");
+	if (ok)
+	{
+		std::cout << "OK" << std::endl;
+	}
+	else
+	{
+		std::cout << __FILE__ << "\tFAIL" << std::endl;
+	}
+
+}
+
+
+void TST_mod_parser::test_replace_chain_in_rule()
+{
+	
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " nothing to replace:" << std::endl;
+	std::cout << "===============================================================" << std::endl;
+	{
+		Chain_trees chain_trees;
+		
+		Chomsky_rule input_rule;
+		input_rule.LHS = "A";
+		input_rule.RHS.push_back("B");
+		input_rule.RHS.push_back("C");
+		
+		
+		Chomsky_rules expected_rules;
+		expected_rules.push_back(input_rule);
+		
+		_test_replace_chain_in_rule(
+			input_rule,
+			chain_trees,
+			expected_rules
+		);
+	}
+	
+	
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " first symbol to replace with a single symbol:" << std::endl;
+	std::cout << " rules:" << std::endl;
+	std::cout << " A -> B C" << std::endl;
+	std::cout << " B -> b" << std::endl;
+	std::cout << " terminals: b, C" << std::endl;
+	std::cout << "===============================================================" << std::endl;
+	{
+		Chain_trees chain_trees;
+		
+		chain_trees["B"].symbols.push_back("b");
+		chain_trees["B"].exit = false;
+		chain_trees["b"].exit = true;
+		
+		Chomsky_rule input_rule;
+		input_rule.LHS = "A";
+		input_rule.RHS.push_back("B");
+		input_rule.RHS.push_back("C");
+		
+		
+		
+		Chomsky_rules expected_rules;
+		
+		{
+			Chomsky_rule expected_rule;
+			expected_rule.LHS = "A";
+			expected_rule.RHS.push_back("b");
+			expected_rule.RHS.push_back("C");
+			
+			{
+				Replaced_symbols_index replaced_symbol_index; 
+				replaced_symbol_index.RHS_pos = 0;
+				replaced_symbol_index.symbols.push_back("B");
+				expected_rule.replaced_symbols_indexes.push_back(replaced_symbol_index);
+			}
+			
+			expected_rules.push_back(expected_rule);
+		}
+		
+		_test_replace_chain_in_rule(
+			input_rule,
+			chain_trees,
+			expected_rules
+		);
+	}
+	
+	
 }
 
 

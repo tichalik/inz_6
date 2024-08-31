@@ -49,6 +49,12 @@ class TST_mod_parser: public Tester
 		const PTrees & expected_ptrees
 	);
 	
+	void _test_replace_chain_in_rule(
+		const Chomsky_rule & input_rule,
+		Chain_trees& chain_trees, 
+		const Chomsky_rules & expected_rule
+	);
+	
 	void _test_restore_chains();
 	
 	
@@ -62,6 +68,7 @@ public:
 	void test_create_new_symbol();
 	void test_remove_chains();
 	void test_get_path();
+	void test_replace_chain_in_rule();
 	
 	void test_unbreak_rules();
 	void test_restore_chains();
