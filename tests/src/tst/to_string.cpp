@@ -1,15 +1,18 @@
 #include "to_string.h"
 
 #define ADD_FIELD(NAME)\
-	res += #NAME ":\t" + str(i.NAME);
+	res += tabs + ( #NAME ":\n") + str(i.NAME, tabs+"\t") + "\n";
 
 #define VECTOR_STR(TYPE)\
-	std::string str(const TYPE & i)\
+	std::string str(\
+		const TYPE & i,\
+		const std::string & tabs\
+		)\
 	{\
 		std::stringstream res;\
 		for (size_t j=0; j<i.size(); j++)\
 		{\
-			res << j <<".\t" << str(i[j]) << std::endl;\
+			res << tabs << j <<".\n" << str(i[j], tabs + "\t") << std::endl;\
 		}\
 		return res.str();\
 	}
@@ -33,20 +36,23 @@ VECTOR_STR(PNodes);
 
 
 std::string str(
-	const Non_terminals & i
+	const Non_terminals & i,
+	const std::string & tabs
 ) 
 {
 	std::string res;
 	for (auto j=i.cbegin(); j!=i.cend(); j++)
 	{
-		res += str(*j) + ", ";
+		res += str(*j, tabs+"\t") + ", ";
 	}
 	return res;
 }
 
 
 std::string str(
-	const Replaced_symbols_index & i
+	const Replaced_symbols_index & i,
+	const std::string & tabs
+
 )
 {
 	std::string res;
@@ -56,7 +62,9 @@ std::string str(
 }
 
 std::string str(
-	const Cycle_warnings_index & i
+	const Cycle_warnings_index & i,
+	const std::string & tabs
+
 )
 {
 	std::string res;
@@ -67,7 +75,9 @@ std::string str(
 
 
 std::string str(
-	const Replaced_symbols & i
+	const Replaced_symbols & i,
+	const std::string & tabs
+
 )
 {
 	std::string res;
@@ -78,7 +88,9 @@ std::string str(
 }
 
 std::string str(
-	const Error & i
+	const Error & i,
+	const std::string & tabs
+
 )
 {
 	std::string res;
@@ -89,7 +101,9 @@ std::string str(
 
 
 std::string str(
-	const Rule & i
+	const Rule & i,
+	const std::string & tabs
+
 )
 {
 	std::string res;
@@ -99,7 +113,9 @@ std::string str(
 }
 
 std::string str(
-	const Chomsky_grammar & i
+	const Chomsky_grammar & i,
+	const std::string & tabs
+
 )
 {
 	std::string res;
@@ -112,7 +128,9 @@ std::string str(
 }
 
 std::string str(
-	const Chomsky_rule & i
+	const Chomsky_rule & i,
+	const std::string & tabs
+
 )
 {
 	
@@ -125,7 +143,9 @@ std::string str(
 }
 
 std::string str(
-	const PTable & i
+	const PTable & i,
+	const std::string & tabs
+
 )
 {
 	std::string res;
@@ -142,7 +162,9 @@ std::string str(
 }
 
 std::string str(
-	const PTable_entry & i
+	const PTable_entry & i,
+	const std::string & tabs
+
 )
 {
 	std::string res;
@@ -154,7 +176,9 @@ std::string str(
 }
 
 std::string str(
-	const Cycle_warning & i
+	const Cycle_warning & i,
+	const std::string & tabs
+
 )
 {
 	std::string res;
@@ -165,7 +189,9 @@ std::string str(
 }
 
 std::string str(
-	const PTable_reference & i
+	const PTable_reference & i,
+	const std::string & tabs
+
 )
 {
 	std::string res;
@@ -178,7 +204,9 @@ std::string str(
 
 
 std::string str(
-	const PTree & i
+	const PTree & i,
+	const std::string & tabs
+
 )
 {
 	std::string res;
@@ -186,7 +214,9 @@ std::string str(
 	return res;
 }
 std::string str(
-	const PNode & i
+	const PNode & i,
+	const std::string & tabs
+
 )
 {
 	std::string res;
@@ -197,26 +227,42 @@ std::string str(
 
 
 
-std::string str(const bool &i)
+std::string str(
+	const bool &i,
+	const std::string & tabs
+
+)
 {
 	std::stringstream ss;
 	ss << i;
-	return ss.str();
+	return tabs + ss.str();
 }
 
-std::string str(const size_t &i)
+std::string str(
+	const size_t &i,
+	const std::string & tabs
+
+)
 {
 	std::stringstream ss;
 	ss << i;
-	return ss.str();
+	return tabs + ss.str();
 }
 
-std::string str(const std::string &i)
+std::string str(
+	const std::string &i,
+	const std::string & tabs
+
+)
 {
-	return i;
+	return tabs +  i;
 }
 
-std::string str(const EN_ERROR_TYPE &error)
+std::string str(
+	const EN_ERROR_TYPE &error,
+	const std::string & tabs
+
+)
 {
 	std::string res;
 	switch (error)
@@ -280,7 +326,7 @@ std::string str(const EN_ERROR_TYPE &error)
 			break;
 	}
 	
-	return res;
+	return tabs + res;
 }
 
 

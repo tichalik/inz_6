@@ -12,12 +12,21 @@
 		if (expected != real)\
 		{\
 			same = false;\
-			std::cout << "DIFFERENT " << message << "(" #TYPE "): expected: " \
-				<< str(expected) << ", real: " \
-				<< str(real) << std::endl;\
 		}\
 		\
 		return same;\
+	}
+
+
+#define COMPARE(FIELD)\
+	same &= compare(expected.FIELD, real.FIELD, message + " " # FIELD);
+
+#define END_COMPARE\
+	if (!same)\
+	{\
+		std::cout << "difference in " << message << std::endl\
+			<< "expected: " << std::endl << str(expected, "\t") << std::endl\
+			<< "real: " << std::endl << str(real, "\t") << std::endl;\
 	}
 
 
@@ -32,9 +41,6 @@
 		if (expected.size() != real.size())\
 		{\
 			same = false;\
-			std::cout << "DIFFERENT " << message << "(" #TYPE ")::size: expected: " \
-				<< expected.size() << ", real: " \
-				<< real.size() << std::endl;		\
 		}\
 		else \
 		{\
@@ -44,6 +50,7 @@
 			}\
 		}\
 		\
+		END_COMPARE;\
 		return same;\
 	}
 
@@ -67,10 +74,6 @@ COMPARE_VECTOR_TYPE(Replaced_symbols_indexes);
 COMPARE_VECTOR_TYPE(PTable_entries);
 COMPARE_VECTOR_TYPE(PTable_references);
 COMPARE_VECTOR_TYPE(PNodes);
-
-#define COMPARE(FIELD)\
-	same &= compare(expected.FIELD, real.FIELD, message + " " # FIELD);
-
 
 bool compare(
 	const Non_terminals & expected,
@@ -98,6 +101,7 @@ bool compare(
 			}
 		}
 	}
+	END_COMPARE;
 	
 	return same;
 }
@@ -112,6 +116,7 @@ bool compare(
 	bool same = true;
 	COMPARE(RHS_pos);
 	COMPARE(symbols);
+	END_COMPARE;
 	return same;
 }
 
@@ -124,6 +129,7 @@ bool compare(
 	bool same = true;
 	COMPARE(RHS_pos);
 	COMPARE(cycle_warnings);
+	END_COMPARE;
 	return same;
 }
 
@@ -138,6 +144,7 @@ bool compare(
 	COMPARE(result);
 	COMPARE(chain);
 	COMPARE(cycle_warnings);
+	END_COMPARE;
 	return same;
 }
 
@@ -150,6 +157,7 @@ bool compare(
 	bool same = true;
 	COMPARE(type);
 	COMPARE(source);
+	END_COMPARE;
 	return same;
 }
 
@@ -163,6 +171,7 @@ bool compare(
 	bool same = true;
 	COMPARE(LHS);
 	COMPARE(RHS);
+	END_COMPARE;
 	return same;
 }
 
@@ -178,6 +187,7 @@ bool compare(
 	COMPARE(added_nonterminals);
 	COMPARE(head);
 	COMPARE(rules);
+	END_COMPARE;
 	return same;
 }
 
@@ -193,6 +203,7 @@ bool compare(
 	COMPARE(RHS);
 	COMPARE(replaced_symbols_indexes);
 	COMPARE(cycle_warnings_indexes);
+	END_COMPARE;
 	return same;
 }
 
@@ -222,6 +233,7 @@ bool compare(
 		}
 	}
 	
+	END_COMPARE;
 	return same;
 }
 
@@ -235,6 +247,7 @@ bool compare(
 	COMPARE(tag);
 	COMPARE(visited);
 	COMPARE(children);
+	END_COMPARE;
 	return same;
 		
 }
@@ -248,6 +261,7 @@ bool compare(
 	bool same = true;
 	COMPARE(origin_pos);
 	COMPARE(target_pos);
+	END_COMPARE;
 	return same;
 		
 }
@@ -262,6 +276,7 @@ bool compare(
 	COMPARE(x);
 	COMPARE(y);
 	COMPARE(list_index);
+	END_COMPARE;
 	return same;
 		
 }
@@ -275,6 +290,7 @@ bool compare(
 {
 	bool same = true;
 	COMPARE(root);
+	END_COMPARE;
 	return same;
 }
 bool compare(
@@ -286,9 +302,11 @@ bool compare(
 	bool same = true;
 	COMPARE(tag);
 	COMPARE(children);
+	END_COMPARE;
 	return same;
 }
 
+#undef END_COMPARE
 #undef COMPARE
 #undef COMPARE_SIMPLE_TYPE
 #undef COMPARE_VECTOR_TYPE

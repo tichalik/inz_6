@@ -20,7 +20,8 @@
 
 #define STR_DECLARATION(TYPE)\
 	std::string str(\
-		const TYPE & i\
+		const TYPE & i,\
+		const std::string & tabs\
 	);
 
 STR_DECLARATION(std::string);
