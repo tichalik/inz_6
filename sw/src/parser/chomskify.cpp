@@ -141,11 +141,15 @@ Chomsky_rules Chomskify::replace_chain_in_rule(
 {
 	Chomsky_rules res;
 	Symbol symbol_to_replace = rule.RHS[RHS_pos];
+
 	
 	if (chain_trees.contains(symbol_to_replace))
 	{
+
 		std::vector<Symbols> replaced_symbolss = get_path(
 			symbol_to_replace, {}, chain_trees);
+
+
 		if (replaced_symbolss.size() == 0)
 		{
 			Error error;
@@ -157,12 +161,15 @@ Chomsky_rules Chomskify::replace_chain_in_rule(
 			for (size_t i=0; i<replaced_symbolss.size(); i++)
 			{
 				Chomsky_rule new_rule = rule;
-				Symbol last_symbol = replaced_symbolss[i][replaced_symbolss.size()-1];
+				Symbol last_symbol = replaced_symbolss[i][
+						replaced_symbolss[i].size()-1
+				];
 				new_rule.RHS[RHS_pos] = last_symbol;
 				
 				Replaced_symbols_index replaced_symbols_index;
 				replaced_symbols_index.RHS_pos = RHS_pos;
 				replaced_symbols_index.symbols = replaced_symbolss[i];
+				replaced_symbols_index.symbols.pop_back();
 				new_rule.replaced_symbols_indexes.push_back(replaced_symbols_index);
 				
 				// Cycle_warnings_index cycle_warnings_index;
@@ -186,6 +193,21 @@ Chomsky_rules Chomskify::replace_chain_in_rule(
 					res.insert(res.end(), tmp.begin(), tmp.end()); 
 				}
 			}
+		}
+	}
+	else
+	{
+		if (RHS_pos != rule.RHS.size() -1)
+		{
+			res = replace_chain_in_rule(
+				rule,
+				RHS_pos+1,
+				chain_trees
+			);
+		}
+		else
+		{
+			res.push_back(rule);
 		}
 	}
 	
