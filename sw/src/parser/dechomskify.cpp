@@ -61,22 +61,22 @@ PNode Dechomskify::stretch_tree(
 	const Symbols & symbols_to_add
 )
 {
-	PNode last_node;
-	last_node.tag = symbols_to_add[symbols_to_add.size()-1];
-	last_node.children = root.children;
+	PNode res;
+	res.tag = symbols_to_add[0];
+	PNode*  p_latest = &res;
 	
-	PNode& latest_node = last_node;
-
-	for (size_t i=symbols_to_add.size()-1; i>=0; i++)
+	for (size_t i=1; i<symbols_to_add.size(); i++)
 	{
 		PNode new_node;
 		new_node.tag = symbols_to_add[i];
-		new_node.children.push_back(latest_node);
+		p_latest->children.push_back(new_node);
 
-		latest_node = new_node;
+		p_latest = & p_latest->children[0];
 	}
-	
-	return latest_node;
+
+	p_latest->children.push_back(root);
+
+	return res;
 }
 
 PNodes Dechomskify::fix_tree_add_chains(

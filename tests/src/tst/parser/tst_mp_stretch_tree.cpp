@@ -75,26 +75,99 @@ void TST_mod_parser::test_stretch_tree()
 	}
 
 	Symbols single_symbol;
-	single_symbol.push_back("A");
+	single_symbol.push_back("1");
 
 	Symbols multiple_symbols;
-	multiple_symbols.push_back("A");
-	multiple_symbols.push_back("A");
-	multiple_symbols.push_back("A");
-	multiple_symbols.push_back("A");
-	
+	multiple_symbols.push_back("1");
+	multiple_symbols.push_back("2");
+	multiple_symbols.push_back("3");
+	multiple_symbols.push_back("4");
+		
 	std::cout << "===============================================================" << std::endl;
 	std::cout << " single tree, single symbol  " << std::endl;
 	std::cout << "===============================================================" << std::endl;
 	{
 		
 		PNode expected;
-		expected.tag = "A";
+		expected.tag = "1";
 		expected.children.push_back(single_tree);
 
 		_test_stretch_tree(
 			single_tree,
 			single_symbol,
+			expected
+		);
+	}
+	
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " multiple symbol tree, single symbol  " << std::endl;
+	std::cout << "===============================================================" << std::endl;
+	{
+		
+		PNode expected;
+		expected.tag = "1";
+		expected.children.push_back(symmetrical_tree);
+
+		_test_stretch_tree(
+			symmetrical_tree,
+			single_symbol,
+			expected
+		);
+	}
+				
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " single tree, multiple  symbol  " << std::endl;
+	std::cout << "===============================================================" << std::endl;
+	{
+		PNode n3;
+		n3.tag = "4";
+		n3.children.push_back(single_tree);
+				
+		PNode n2;
+		n2.tag = "3";
+		n2.children.push_back(n3);
+		
+		PNode n1;
+		n1.tag = "2";
+		n1.children.push_back(n2);
+	
+		PNode expected;
+		expected.tag = "1";
+		expected.children.push_back(n1);
+		
+
+		_test_stretch_tree(
+			single_tree,
+			multiple_symbols,
+			expected
+		);
+	}
+	
+
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " symmetrical tree, multiple  symbol  " << std::endl;
+	std::cout << "===============================================================" << std::endl;
+	{
+		PNode n3;
+		n3.tag = "4";
+		n3.children.push_back(symmetrical_tree);
+				
+		PNode n2;
+		n2.tag = "3";
+		n2.children.push_back(n3);
+		
+		PNode n1;
+		n1.tag = "2";
+		n1.children.push_back(n2);
+	
+		PNode expected;
+		expected.tag = "1";
+		expected.children.push_back(n1);
+		
+
+		_test_stretch_tree(
+			symmetrical_tree,
+			multiple_symbols,
 			expected
 		);
 	}
