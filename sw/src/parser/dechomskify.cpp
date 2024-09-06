@@ -26,7 +26,7 @@ PNodes Dechomskify::get_children(const PNode & parent)
 	return res;
 }
 
-PNode Dechomskify::fix_tree(const PNode & root)
+PNode Dechomskify::fix_tree_unbreak(const PNode & root)
 {
 	PNode res;
 	res.tag = root.tag;
@@ -50,9 +50,108 @@ PNode Dechomskify::fix_tree(const PNode & root)
 	
 	for (size_t i=0; i<tmp_children.size(); i++)
 	{
-		res.children.push_back(fix_tree(tmp_children[i]));
+		res.children.push_back(fix_tree_unbreak(tmp_children[i]));
 	}
 	
+	return res;
+}	
+
+PNode Dechomskify::stretch_tree(
+	const PNode & root,
+	const Symbols & symbols_to_add
+)
+{
+	PNode last_node;
+	last_node.tag = symbols_to_add[symbols_to_add.size()-1];
+	last_node.children = root.children;
+	
+	PNode& latest_node = last_node;
+
+	for (size_t i=symbols_to_add.size()-1; i>=0; i++)
+	{
+		PNode new_node;
+		new_node.tag = symbols_to_add[i];
+		new_node.children.push_back(latest_node);
+
+		latest_node = new_node;
+	}
+	
+	return latest_node;
+}
+
+PNodes Dechomskify::fix_tree_add_chains(
+	const PNode & root
+)
+{
+	PNodes res;
+
+	//if this is not a leaf
+	if (root.children.size() != 0)
+	{	
+		Chomsky_rule rule = grammar.rules[root.rule_id];
+		//if there is something to replace
+ 		if ( rule.replaced_symbols_indexes.size() != 0 )
+			{
+			//this number is ensured because the input comes from the parser
+			const size_t NO_CHILDREN = 2;
+
+			//fix the direct chilren 
+			PNodes new_children[NO_CHILDREN];
+			
+			for(size_t i=0; i<rule.replaced_symbols_indexes.size(); i++)
+			{
+				size_t rhs_pos = rule.replaced_symbols_indexes[i].RHS_pos;
+
+				new_children[rhs_pos].push_back(
+					stretch_tree( 
+						root.children[rhs_pos], 
+						rule.replaced_symbols_indexes[i].symbols));
+						
+			}
+
+			for (size_t i=0; i<NO_CHILDREN; i++)
+			{
+				//if this child needed no replacements, move it to the 
+				//  new children
+				if (new_children[i].size() == 0)
+				{
+					new_children[i].push_back(root.children[i]);
+				}
+				
+
+				//fix the further parts of the trees 
+				PNodes new_new_children;
+				for (size_t j=0; j<new_children[i].size(); j++)
+				{
+					PNodes tmp = fix_tree_add_chains(new_children[i][j]);
+					new_new_children.insert(
+						new_new_children.end(), tmp.begin(), tmp.end());
+				}
+				new_children[i] = new_new_children;
+
+
+			}
+
+			//generate combinations of new children 
+			for (size_t i=0; i < new_children[0].size(); i++)
+			{
+				for (size_t j=0; j < new_children[1].size(); j++)
+				{
+					PNode node;
+					node.tag = root.tag;
+					node.children.push_back(new_children[0][i]);
+					node.children.push_back(new_children[1][j]);
+					res.push_back(node);
+				}
+			}
+		}
+
+	}
+	else 
+	{
+		res.push_back(root);
+	}
+
 	return res;
 }	
 
@@ -62,7 +161,7 @@ void Dechomskify::unbreak_rules()
 	for (size_t i=0; i<result_trees.size(); i++)
 	{
 		PTree tmp;
-		tmp.root = fix_tree(result_trees[i].root);
+		tmp.root = fix_tree_unbreak(result_trees[i].root);
 		res.push_back(tmp);
 	}
 	this->result_trees = res;
@@ -70,7 +169,18 @@ void Dechomskify::unbreak_rules()
 
 void Dechomskify::restore_chains()
 {
-	
+	PTrees res;
+	for (size_t i=0; i<result_trees.size(); i++)
+	{
+		PNodes tmp = fix_tree_add_chains(result_trees[i].root);
+		for (size_t j=0; j<tmp.size(); j++)
+		{
+			PTree tree;
+			tree.root = tmp[j];
+			res.push_back(tree);
+		}
+	}
+	this->result_trees = res;
 }
 
 Dechomskify::Dechomskify(

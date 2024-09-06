@@ -13,8 +13,15 @@ class Dechomskify
 	void restore_chains();
 	
 	PNodes get_children(const PNode & parent);
-	PNode fix_tree(const PNode & root);
-	
+	PNode fix_tree_unbreak(const PNode & root);
+
+	PNodes fix_tree_add_chains(const PNode & root);
+			
+	PNode stretch_tree(
+		const PNode & root,
+		const Symbols & symbols_to_add
+	);
+
 	public:
 	Dechomskify(
 		const PTrees & input_trees,

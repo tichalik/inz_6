@@ -57,6 +57,18 @@ class TST_mod_parser: public Tester
 	
 	void _test_restore_chains();
 	
+	void _test_fix_tree_add_chains(
+		const PNode & input,
+		const PNodes & expected
+	);
+			
+	void _test_stretch_tree(
+		const PNode & root,
+		const Symbols & symbols_to_add,
+		const PNode & expected
+	);
+
+
 	
 public:
 
@@ -73,5 +85,7 @@ public:
 	void test_unbreak_rules();
 	void test_restore_chains();
 	
+	void test_fix_tree_add_chains();
+	void test_stretch_tree();
 };
 #endif

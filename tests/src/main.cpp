@@ -39,7 +39,8 @@ int main()
 	
 	TST_mod_parser mp;
 	// mp.test_remove_chains();
-	mp.test_replace_chain_in_rule();
+	// mp.test_replace_chain_in_rule();
+	mp.test_stretch_tree();
 	// // mp.test_get_path();
 	// mp.test_unbreak_rules();
 	// mp.test_break_rules();
