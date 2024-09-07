@@ -27,13 +27,6 @@ void TST_mod_parser::_test_unbreak_rules(
 	}
 }
 
-void TST_mod_parser::_test_restore_chains()
-{
-	
-}
-
-
-
 void TST_mod_parser::test_unbreak_rules()
 {
 	//we actually only care about the added nonterminals fields of a Chomsky_grammar

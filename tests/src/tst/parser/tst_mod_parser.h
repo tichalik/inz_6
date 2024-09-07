@@ -59,6 +59,7 @@ class TST_mod_parser: public Tester
 	
 	void _test_fix_tree_add_chains(
 		const PNode & input,
+		const Chomsky_grammar & grammar,
 		const PNodes & expected
 	);
 			

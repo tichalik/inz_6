@@ -118,7 +118,7 @@ void TST_mod_parser::test_remove_chains()
 			Chomsky_rule rule;
 			rule.LHS = "A";
 			rule.RHS.push_back("b");
-			rule.RHS.push_back("c");
+			rule.RHS.push_back("e");
 			
 			{
 				Replaced_symbols_index replaced_symbol_index; 
