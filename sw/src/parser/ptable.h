@@ -17,7 +17,7 @@ typedef std::vector<PTable_reference>  PTable_references;
 struct PTable_entry
 {
 	Symbol tag;
-	size_t rule_id;
+	size_t rule_id = -1;
 	bool visited;
 	PTable_references children;
 	

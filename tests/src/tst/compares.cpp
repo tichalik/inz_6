@@ -246,6 +246,7 @@ bool compare(
 	bool same = true;
 	COMPARE(tag);
 	COMPARE(visited);
+	COMPARE(rule_id);
 	COMPARE(children);
 	END_COMPARE;
 	return same;

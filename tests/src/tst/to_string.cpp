@@ -170,6 +170,7 @@ std::string str(
 	std::string res;
 	ADD_FIELD(tag);
 	ADD_FIELD(visited);
+	ADD_FIELD(rule_id);
 	ADD_FIELD(children);
 	return res;
 		
