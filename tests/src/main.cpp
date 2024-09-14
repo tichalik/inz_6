@@ -38,18 +38,19 @@ int main()
 	// mce.test_word_errors();
 	
 	TST_mod_parser mp;
-	mp.test_remove_chains();
-	mp.test_replace_chain_in_rule();
-	mp.test_stretch_tree();
-	mp.test_fix_tree_add_chains();
-	mp.test_get_path();
-	mp.test_unbreak_rules();
-	mp.test_break_rules();
-	mp.test_create_new_symbol();
-	mp.test_propagate_parsing_table();
-	mp.test_parsing_grammar_adapter();
-	mp.test_extract_trees_from_parsing_table();
-
+	// mp.test_remove_chains();
+	// mp.test_replace_chain_in_rule();
+	// mp.test_stretch_tree();
+	// mp.test_fix_tree_add_chains();
+	// mp.test_get_path();
+	// mp.test_unbreak_rules();
+	// mp.test_break_rules();
+	// mp.test_create_new_symbol();
+	// mp.test_propagate_parsing_table();
+	// mp.test_parsing_grammar_adapter();
+	// mp.test_extract_trees_from_parsing_table();
+	mp.complete_parser_tests();
+	
 	// TST_mod_to_http m2h;
 	// m2h.test_pnode_to_http();
 	// m2h.test_ptree_to_http();

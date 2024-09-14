@@ -69,6 +69,12 @@ class TST_mod_parser: public Tester
 		const PNode & expected
 	);
 
+	void _complete_parser_tests(
+		const Grammar & grammar,
+		const Word & word,
+		const Errors & expected_errors,
+		const PTrees & expected_ptrees
+	);
 
 	
 public:
@@ -88,5 +94,7 @@ public:
 	
 	void test_fix_tree_add_chains();
 	void test_stretch_tree();
+	
+	void complete_parser_tests();
 };
 #endif
