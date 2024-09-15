@@ -9,7 +9,7 @@ void TST_mod_parser::_test_parsing_grammar_adapter(
 	
 	for (size_t i=0; i<grammar.rules.size(); i++)
 	{
-		const Chomsky_rule r = grammar.rules[i];
+		const Rule r = grammar.rules[i];
 		
 		//test whether the rule is in the adapter
 		
@@ -66,7 +66,7 @@ void TST_mod_parser::test_parsing_grammar_adapter()
 		//only rules matter in parsing 
 		Chomsky_grammar grammar;
 		
-		Chomsky_rule rule;
+		Rule rule;
 		rule.LHS = "a";
 		rule.RHS.push_back("A");
 		rule.RHS.push_back("A");
@@ -85,7 +85,7 @@ void TST_mod_parser::test_parsing_grammar_adapter()
 		//only rules matter in parsing 
 		Chomsky_grammar grammar;
 		
-		Chomsky_rule rule;
+		Rule rule;
 		rule.LHS = "a";
 		rule.RHS.push_back("A");
 		rule.RHS.push_back("B");
@@ -105,14 +105,14 @@ void TST_mod_parser::test_parsing_grammar_adapter()
 		Chomsky_grammar grammar;
 		
 		{
-			Chomsky_rule rule;
+			Rule rule;
 			rule.LHS = "a";
 			rule.RHS.push_back("A");
 			rule.RHS.push_back("B");
 			grammar.rules.push_back(rule);
 		}
 		{
-			Chomsky_rule rule;
+			Rule rule;
 			rule.LHS = "a";
 			rule.RHS.push_back("B");
 			rule.RHS.push_back("A");
@@ -132,14 +132,14 @@ void TST_mod_parser::test_parsing_grammar_adapter()
 		Chomsky_grammar grammar;
 		
 		{
-			Chomsky_rule rule;
+			Rule rule;
 			rule.LHS = "a";
 			rule.RHS.push_back("A");
 			rule.RHS.push_back("B");
 			grammar.rules.push_back(rule);
 		}
 		{
-			Chomsky_rule rule;
+			Rule rule;
 			rule.LHS = "a";
 			rule.RHS.push_back("A");
 			rule.RHS.push_back("B");

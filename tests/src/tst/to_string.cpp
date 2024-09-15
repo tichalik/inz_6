@@ -22,14 +22,9 @@ VECTOR_STR(Symbols);
 VECTOR_STR(std::vector<Symbols>);
 VECTOR_STR(Errors);
 VECTOR_STR(Rules);
-VECTOR_STR(Chomsky_rules);
 VECTOR_STR(PTrees);
 
 
-VECTOR_STR(Replaced_symbolss);
-VECTOR_STR(Cycle_warnings);
-VECTOR_STR(Cycle_warnings_indexes);
-VECTOR_STR(Replaced_symbols_indexes);
 VECTOR_STR(PTable_entries);
 VECTOR_STR(PTable_references);
 VECTOR_STR(PNodes);
@@ -45,45 +40,6 @@ std::string str(
 	{
 		res += str(*j, tabs+"\t") + ", ";
 	}
-	return res;
-}
-
-
-std::string str(
-	const Replaced_symbols_index & i,
-	const std::string & tabs
-
-)
-{
-	std::string res;
-	ADD_FIELD(RHS_pos);
-	ADD_FIELD(symbols);
-	return res;
-}
-
-std::string str(
-	const Cycle_warnings_index & i,
-	const std::string & tabs
-
-)
-{
-	std::string res;
-	ADD_FIELD(RHS_pos);
-	ADD_FIELD(cycle_warnings);
-	return res;
-}
-
-
-std::string str(
-	const Replaced_symbols & i,
-	const std::string & tabs
-
-)
-{
-	std::string res;
-	ADD_FIELD(result);
-	ADD_FIELD(chain);
-	ADD_FIELD(cycle_warnings);
 	return res;
 }
 
@@ -128,21 +84,6 @@ std::string str(
 }
 
 std::string str(
-	const Chomsky_rule & i,
-	const std::string & tabs
-
-)
-{
-	
-	std::string res;
-	ADD_FIELD(LHS);
-	ADD_FIELD(RHS);
-	ADD_FIELD(replaced_symbols_indexes);
-	ADD_FIELD(cycle_warnings_indexes);
-	return res;
-}
-
-std::string str(
 	const PTable & i,
 	const std::string & tabs
 
@@ -172,19 +113,6 @@ std::string str(
 	ADD_FIELD(visited);
 	ADD_FIELD(rule_id);
 	ADD_FIELD(children);
-	return res;
-		
-}
-
-std::string str(
-	const Cycle_warning & i,
-	const std::string & tabs
-
-)
-{
-	std::string res;
-	ADD_FIELD(origin_pos);
-	ADD_FIELD(target_pos);
 	return res;
 		
 }

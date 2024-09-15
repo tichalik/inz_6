@@ -52,7 +52,7 @@ void TST_mod_parser::test_break_rules()
 		expected_grammar.nonterminals.insert("A");
 		expected_grammar.head = "A";
 		
-		Chomsky_rule crule;
+		Rule crule;
 		crule.LHS = "A";
 		crule.RHS.push_back("b");
 		crule.RHS.push_back("c");
@@ -96,7 +96,7 @@ void TST_mod_parser::test_break_rules()
 		expected_grammar.added_nonterminals.insert("0");
 		
 		{
-			Chomsky_rule crule;
+			Rule crule;
 			crule.LHS = "A";
 			crule.RHS.push_back("b");
 			crule.RHS.push_back("0");
@@ -106,7 +106,7 @@ void TST_mod_parser::test_break_rules()
 		}
 		
 		{
-			Chomsky_rule crule;
+			Rule crule;
 			crule.LHS = "0";
 			crule.RHS.push_back("c");
 			crule.RHS.push_back("d");
@@ -156,7 +156,7 @@ void TST_mod_parser::test_break_rules()
 		expected_grammar.added_nonterminals.insert("1");
 		
 		{
-			Chomsky_rule crule;
+			Rule crule;
 			crule.LHS = "A";
 			crule.RHS.push_back("b");
 			crule.RHS.push_back("0");
@@ -166,7 +166,7 @@ void TST_mod_parser::test_break_rules()
 		}
 		
 		{
-			Chomsky_rule crule;
+			Rule crule;
 			crule.LHS = "0";
 			crule.RHS.push_back("c");
 			crule.RHS.push_back("1");
@@ -176,7 +176,7 @@ void TST_mod_parser::test_break_rules()
 		}
 		
 		{
-			Chomsky_rule crule;
+			Rule crule;
 			crule.LHS = "1";
 			crule.RHS.push_back("d");
 			crule.RHS.push_back("e");

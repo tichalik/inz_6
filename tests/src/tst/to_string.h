@@ -33,7 +33,6 @@ STR_DECLARATION(Symbols);
 STR_DECLARATION(std::vector<Symbols>);
 STR_DECLARATION(Errors);
 STR_DECLARATION(Rules);
-STR_DECLARATION(Chomsky_rules);
 STR_DECLARATION(PTrees);
 
 
@@ -47,18 +46,8 @@ STR_DECLARATION(PTable_references);
 STR_DECLARATION(PTree);
 STR_DECLARATION(PNode);
 STR_DECLARATION(Chomsky_grammar);
-STR_DECLARATION(Chomsky_rule);
-STR_DECLARATION(Cycle_warning);
 
 
-STR_DECLARATION(Chain_node);
-STR_DECLARATION(Replaced_symbols);
-STR_DECLARATION(Replaced_symbolss);
-STR_DECLARATION(Cycle_warnings);
-STR_DECLARATION(Cycle_warnings_index);
-STR_DECLARATION(Cycle_warnings_indexes);
-STR_DECLARATION(Replaced_symbols_index);
-STR_DECLARATION(Replaced_symbols_indexes);
 STR_DECLARATION(PTable_entries);
 STR_DECLARATION(PNodes);	
 

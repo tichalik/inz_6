@@ -63,14 +63,8 @@ COMPARE_VECTOR_TYPE(Symbols);
 COMPARE_VECTOR_TYPE(std::vector<Symbols>);
 COMPARE_VECTOR_TYPE(Errors);
 COMPARE_VECTOR_TYPE(Rules);
-COMPARE_VECTOR_TYPE(Chomsky_rules);
 COMPARE_VECTOR_TYPE(PTrees);
 
-
-COMPARE_VECTOR_TYPE(Replaced_symbolss);
-COMPARE_VECTOR_TYPE(Cycle_warnings);
-COMPARE_VECTOR_TYPE(Cycle_warnings_indexes);
-COMPARE_VECTOR_TYPE(Replaced_symbols_indexes);
 COMPARE_VECTOR_TYPE(PTable_entries);
 COMPARE_VECTOR_TYPE(PTable_references);
 COMPARE_VECTOR_TYPE(PNodes);
@@ -106,47 +100,6 @@ bool compare(
 	return same;
 }
 
-
-bool compare(
-	const Replaced_symbols_index & expected,
-	const Replaced_symbols_index & real,
-	const std::string & message
-)
-{
-	bool same = true;
-	COMPARE(RHS_pos);
-	COMPARE(symbols);
-	END_COMPARE;
-	return same;
-}
-
-bool compare(
-	const Cycle_warnings_index & expected,
-	const Cycle_warnings_index & real,
-	const std::string & message
-)
-{
-	bool same = true;
-	COMPARE(RHS_pos);
-	COMPARE(cycle_warnings);
-	END_COMPARE;
-	return same;
-}
-
-
-bool compare(
-	const Replaced_symbols & expected,
-	const Replaced_symbols & real,
-	const std::string & message
-)
-{
-	bool same = true;
-	COMPARE(result);
-	COMPARE(chain);
-	COMPARE(cycle_warnings);
-	END_COMPARE;
-	return same;
-}
 
 bool compare(
 	const Error & expected,
@@ -192,22 +145,6 @@ bool compare(
 }
 
 bool compare(
-	const Chomsky_rule & expected,
-	const Chomsky_rule & real,
-	const std::string & message
-)
-{
-	
-	bool same = true;
-	COMPARE(LHS);
-	COMPARE(RHS);
-	COMPARE(replaced_symbols_indexes);
-	COMPARE(cycle_warnings_indexes);
-	END_COMPARE;
-	return same;
-}
-
-bool compare(
 	const PTable & expected,
 	const PTable & real,
 	const std::string & message
@@ -248,20 +185,6 @@ bool compare(
 	COMPARE(visited);
 	COMPARE(rule_id);
 	COMPARE(children);
-	END_COMPARE;
-	return same;
-		
-}
-
-bool compare(
-	const Cycle_warning & expected,
-	const Cycle_warning & real,
-	const std::string & message
-)
-{
-	bool same = true;
-	COMPARE(origin_pos);
-	COMPARE(target_pos);
 	END_COMPARE;
 	return same;
 		
