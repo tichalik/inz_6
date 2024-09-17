@@ -1,6 +1,6 @@
 
 
-FLAGS = -fno-access-control
+FLAGS = -fno-access-control -g
 
 run: ./debug/main
 	./debug/main > ./debug/results.txt

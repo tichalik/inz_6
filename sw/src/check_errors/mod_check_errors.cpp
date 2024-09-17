@@ -11,7 +11,7 @@ void Mod_check_errors::check_symbol_errors(
 {
 	if (!terminals.contains(s) && !nonterminals.contains(s) && s != "")
 	{
-		add_error(UNKNOWN_SYMBOL, parent_source + " " + s+ ":");
+		add_error(UNKNOWN_SYMBOL, parent_source + " symbol <" + s+ ">:");
 	}
 }
 
@@ -29,13 +29,13 @@ void Mod_check_errors::word_check_errors(
 		if (!terminals.contains(s) && !nonterminals.contains(s))
 		{
 			add_error(UNKNOWN_SYMBOL, 
-				parent_source + " " + s+ ":");			
+				parent_source + " symbol <" + s+ ">:");			
 		}
 		
 		if (nonterminals.contains(s))
 		{
 			add_error(SYMBOL_IN_NONTERMINALS, 
-				 parent_source + " " + s+ ":");			
+				 parent_source + " symbol <" + s+ ">:");			
 		}
 		
 	}
@@ -85,18 +85,24 @@ void Mod_check_errors::rule_check_errors(
 	const Non_terminals& nonterminals
 )
 {
-	check_symbol_errors(parent_source + input.to_string(),
+	std::string source = parent_source + " rule <" + input.to_string() + ">:";
+	
+	check_symbol_errors(source,
 		input.LHS, terminals, nonterminals);
-		
-	for (size_t i=9; i<input.RHS.size(); i++)
+			
+	if(input.RHS.size() == 1)
 	{
-		check_symbol_errors(parent_source + input.to_string(),
-			input.RHS[i], terminals, nonterminals);
+		add_error(SINGLE_RHS, source+ " symbol <" + input.RHS[0] + ">:");	
+	}
+		
+	for (size_t i=0; i<input.RHS.size(); i++)
+	{
+		check_symbol_errors(source, input.RHS[i], terminals, nonterminals);
 	}
 	
 	if (terminals.contains(input.LHS))
 	{
-		add_error(TERMINAL_AS_LHS, parent_source);
+		add_error(TERMINAL_AS_LHS, source + " symbol <" + input.LHS + ">:");
 	}
 	
 }
@@ -131,7 +137,7 @@ void Mod_check_errors::non_terminals_check_errors(
 		if (other.find(*s) != other.end())
 		{
 			add_error(IN_BOTH_TERMINALS_AND_NONTERMINALS, 
-				parent_source + " " + (*s) + ":");			
+				parent_source + " symbol <" + (*s) + ">:");			
 		}
 	}
 }

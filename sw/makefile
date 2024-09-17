@@ -1,6 +1,6 @@
 
 
-FLAGS = 
+FLAGS = -g
 
 main : ./debug/src/main.o ./debug/src/model.o ./debug/src/server.o ./debug/src/utils.o ./debug/src/mod_check_errors.o ./debug/src/mod_from_http.o ./debug/src/chomskify.o ./debug/src/dechomskify.o ./debug/src/mod_parser.o ./debug/src/parsing_grammar_adapter.o ./debug/src/ptable.o ./debug/src/html_response.o ./debug/src/mod_to_http.o 
 	g++ ./debug/src/main.o ./debug/src/model.o ./debug/src/server.o ./debug/src/utils.o ./debug/src/mod_check_errors.o ./debug/src/mod_from_http.o ./debug/src/chomskify.o ./debug/src/dechomskify.o ./debug/src/mod_parser.o ./debug/src/parsing_grammar_adapter.o ./debug/src/ptable.o ./debug/src/html_response.o ./debug/src/mod_to_http.o  -o ./debug/main

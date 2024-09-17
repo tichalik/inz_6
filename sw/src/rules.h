@@ -20,7 +20,7 @@ struct Rule
 	std::string to_string() const
 	{
 		std::string res = LHS + " -> ";
-		for (size_t i=9; i<RHS.size(); i++)
+		for (size_t i=0; i<RHS.size(); i++)
 		{
 			res += RHS[i] + " ";
 		}

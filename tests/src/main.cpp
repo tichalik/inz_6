@@ -31,20 +31,20 @@ int main()
 	// mfh.test_word_from_http();
 	
 	
-	// TST_mod_check_errors mce;
-	// mce.test_head_errors();
-	// mce.test_non_terminals_errors();
+	TST_mod_check_errors mce;
+	mce.test_head_errors();
+	mce.test_non_terminals_errors();
 	// mce.test_rules_errors();
-	// mce.test_word_errors();
+	mce.test_word_errors();
 	
-	TST_mod_parser mp;
+	// TST_mod_parser mp;
 	// mp.test_unbreak_rules();
 	// mp.test_break_rules();
 	// mp.test_create_new_symbol();
 	// mp.test_propagate_parsing_table();
 	// mp.test_parsing_grammar_adapter();
 	// mp.test_extract_trees_from_parsing_table();
-	mp.complete_parser_tests();
+	// mp.complete_parser_tests();
 	
 	// TST_mod_to_http m2h;
 	// m2h.test_pnode_to_http();
