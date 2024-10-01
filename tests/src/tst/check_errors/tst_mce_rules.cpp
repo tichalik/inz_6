@@ -211,4 +211,43 @@ void TST_mod_check_errors::test_rules_errors()
 			expected_errors
 		);
 	}
+	
+	
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " unknown symbols -- many char symbols " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Rule rule;
+		rule.LHS = "xxx";
+		rule.RHS.push_back("yyy");
+		rule.RHS.push_back("zzz");
+		
+		Errors expected_errors;
+		
+		Error error1;
+		error1.type = UNKNOWN_SYMBOL;
+		error1.source = " rule <xxx -> yyy zzz >: symbol <xxx>:";
+		expected_errors.push_back(error1);
+		
+		Error error2;
+		error2.type = UNKNOWN_SYMBOL;
+		error2.source = " rule <xxx -> yyy zzz >: symbol <yyy>:";
+		expected_errors.push_back(error2);
+		
+		Error error3;
+		error3.type = UNKNOWN_SYMBOL;
+		error3.source = " rule <xxx -> yyy zzz >: symbol <zzz>:";
+		expected_errors.push_back(error3);
+		
+		
+		_test_rules_errors(
+			rule, 
+			terminals,
+			nonterminals,
+			expected_errors
+		);
+	}
+	
+	
 }

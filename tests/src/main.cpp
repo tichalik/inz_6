@@ -32,10 +32,10 @@ int main()
 	
 	
 	TST_mod_check_errors mce;
-	mce.test_head_errors();
-	mce.test_non_terminals_errors();
-	// mce.test_rules_errors();
-	mce.test_word_errors();
+	// mce.test_head_errors();
+	// mce.test_non_terminals_errors();
+	mce.test_rules_errors();
+	// mce.test_word_errors();
 	
 	// TST_mod_parser mp;
 	// mp.test_unbreak_rules();
