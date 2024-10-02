@@ -16,6 +16,8 @@ struct PNode
 	 * \brief the terminal/nonterminal at the parsing tree
 	 */
 	std::string tag;
+	
+	size_t rule_id = -1;
  
     /** 
 	 * \brief child nodes

@@ -18,14 +18,15 @@ enum EN_ERROR_TYPE
 	
 	//non/terminals related errors
 	REPEATING_SYMBOL,
+	ARROW_AS_SYMBOL,
 	IN_BOTH_TERMINALS_AND_NONTERMINALS,
 	
 	//rule related errors
 		//parsing related
 	MISSING_LHS,
+	MISSING_RHS,
+	SINGLE_RHS,
 	TOO_MANY_LHS,
-	TOO_FEW_RHS,
-	TOO_MANY_RHS,
 	MISSING_ARROW,
 	MULTIPLE_ARROWS,
 		//semantic related
@@ -36,7 +37,10 @@ enum EN_ERROR_TYPE
 	MULTIPLE_HEADS,
 	
 	//input (word) related errors
-	SYMBOL_IN_NONTERMINALS
+	SYMBOL_IN_NONTERMINALS,
+	
+	//chomskification
+	UNREMOVABLE_CHAIN
 };
 
 struct Error

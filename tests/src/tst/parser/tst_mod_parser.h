@@ -5,44 +5,7 @@
 #include "mod_parser.h"
 
 class TST_mod_parser: public Tester
-{
-	bool compare_ptable(
-		const PTable & expected,
-		const PTable & real
-	) const;
-	bool compare_ptable_entry(
-		const PTable_entry & expected,
-		const PTable_entry & real
-	) const;
-	bool compare_ptable_reference(
-		const PTable_reference & expected,
-		const PTable_reference & real
-	) const;
-	
-	bool compare_ptrees(
-		const PTrees & expected,
-		const PTrees & real
-	) const;
-	bool compare_ptree(
-		const PTree & expected,
-		const PTree & real
-	) const;
-	bool compare_pnode(
-		const PNode & expected,
-		const PNode & real
-	) const;
-	
-	std::string ptable2string(
-		const PTable & input
-	);
-	std::string ptable_entry2string(
-		const PTable_entry & input
-	);
-	std::string ptable_reference2string(
-		const PTable_reference & input
-	);
-	
-	
+{	
 	void _test_propagate_parsing_table(
 		const Grammar & grammar, 
 		const Word & word, 
@@ -50,7 +13,7 @@ class TST_mod_parser: public Tester
 	);
 	
 	void _test_parsing_grammar_adapter(
-		const Grammar & grammar
+		const Chomsky_grammar& grammar
 	);
 	
 	void _test_extract_trees_from_parsing_table(
@@ -58,6 +21,30 @@ class TST_mod_parser: public Tester
 		const PTrees & expected_ptrees
 	);
 	
+	void _test_break_rules(
+		const Grammar & input_grammar,
+		const Chomsky_grammar expected_grammar
+	);
+	
+	void _test_create_new_symbol(
+		const Grammar & input_grammar,
+		const Chomsky_grammar expected_grammar,
+		const int NO_NEW_SYMBOLS
+	);
+			
+	void _test_unbreak_rules(
+		const PTrees & input_trees,
+		const Chomsky_grammar& grammar,
+		const PTrees & expected_ptrees
+	);
+	
+	void _complete_parser_tests(
+		const Grammar & grammar,
+		const Word & word,
+		const Errors & expected_errors,
+		const PTrees & expected_ptrees
+	);
+
 	
 public:
 
@@ -65,5 +52,11 @@ public:
 	void test_propagate_parsing_table();
 	void test_extract_trees_from_parsing_table();
 	
+	void test_break_rules();
+	void test_create_new_symbol();
+	
+	void test_unbreak_rules();
+	
+	void complete_parser_tests();
 };
 #endif

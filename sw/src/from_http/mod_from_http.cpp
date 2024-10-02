@@ -59,148 +59,105 @@ Head Mod_from_http::head_from_http(const std::string & param)
 
 Rule Mod_from_http::rule_from_http(const std::string & param, bool & ok)
 {
-	//auxiliary return value -- no errors occured
-	ok = true;
+	
 	
 	//state variable -- true if on LHS of the rule
 	bool is_LHS = true;
-	//control variable -- true if line is empty
-	bool is_empty = true;
 	
-	std::string str_LHS, str_RHS1, str_RHS2;
+	//error flags, for error reporting hierarchy
+	bool f_MISSING_LHS = false;
+	bool f_MISSING_RHS = true;
+	bool f_MISSING_ARROW = true;
+	bool f_MULTIPLE_ARROWS = false;
+	bool f_TOO_MANY_LHS = false;
 	
 	Rule rule;
 	
+	std::stringstream ss;
+	ss << param;
+	
 	std::string tmp;
-	
-	//add an artificial whitespace at the end of the line
-	// to trigger behavior for completing the string
-	std::string line = param + " ";
-	
-	//THE ARROW HAS TO BE SURROUNDED BY WHITESPACE!!!
-	for (size_t i=0; i<line.size(); i++)
-	{
-				// std::cout << "<<" << line[i]  << ">>" << std::endl;
-
-		switch(line[i])
+	while ( ss >> tmp )
+	{		
+		//if it is a normal symbol
+		if (tmp != "->")
 		{
-			case ' ':
-			case '\n':
-			case '\r':
-			case '\t':
-			{
-				//whitespace character
-				if (tmp != "")
-				{
-					//if there was some input 
-					if (tmp == "->")
-					{
-						//last parsed item was an arrow
-						if (is_LHS == false)
-						{
-							//there already has been an arrow
-							this->add_error(MULTIPLE_ARROWS, 
-								"rule " + line + ":");
-							ok = false;
-						}
-						else
-						{
-							//we are on LHS and encounter the arrow -- 
-							//  -- we switch to RHS
-							is_LHS = false;
-						}
-					}
-					else // if (tmp != "->")
-					{
-						//last parsed item was a token of the rule
-						if (is_LHS == true)
-						{
-							//we are on the LHS
-							if (str_LHS != "")
-							{
-								//the LHS was already filled! 
-								this->add_error(TOO_MANY_LHS, 
-									"rule " + line + ":");									
-								ok = false;
-							}
-							else
-							{
-								//it is the first LHS 
-								str_LHS = tmp;
-							}
-						}
-						else // if (is_LHS == false)
-						{
-							//we are on RHS
-							if (str_RHS1 == "")
-							{
-								//RHS1 is empty -- we fill it
-								str_RHS1 = tmp;
-							}
-							else if (str_RHS2 == "")
-							{
-								//RHS2 is empty -- we fill it
-								str_RHS2 = tmp;
-							}
-							else 
-							{
-								//both RHS1 and RHS2 have been filled -- error
-								this->add_error(TOO_MANY_RHS, 
-									"rule " + line + ":");									
-								ok = false;
-							}
-						}
-					}
 					
-					//clear tmp
-					tmp = "";
-				}// end if tmp!=""
-				else 
-				{
-					//it's a sequence of whitespaces OR a leading one on the line
-				}
-			
-				break;
-			}
-			default:
+			if (is_LHS == true)
 			{
-				//non-whitespace character
-				is_empty = false;
-				tmp += line[i];
-				break;
+						
+				if (rule.LHS == "")
+				{		
+							
+					rule.LHS = tmp;
+				}
+				else 
+				{		
+							
+					f_TOO_MANY_LHS = true;
+				}
 			}
-		} //end switch 
-		
-	} //end for each character
-	
-	//skipping empty lines
-	if (!is_empty)
-	{
-		//check if rule misses any pieces 
-		
-		if (str_LHS == "")
-		{
-			this->add_error(MISSING_LHS, "rule " + line + ":");		
-			ok = false;
+			else
+			{				
+				rule.RHS.push_back(tmp);
+				f_MISSING_RHS = false;
+			}
 		}
-		
-		if (str_RHS1 == "" || str_RHS2 == "")
-		{
-			this->add_error(TOO_FEW_RHS, "rule " + line + ":");									
-			ok = false;
+		else //it is the separator between LHS and RHS
+		{		
+			f_MISSING_ARROW = false;
+			
+			if (is_LHS == true)
+			{		
+				is_LHS = false;
+
+				if (rule.LHS == "")
+				{				
+					//the LHS has not been filled! 
+					f_MISSING_LHS = true;
+				}
+				
+			}
+			else
+			{				
+				f_MULTIPLE_ARROWS = true;
+			}
 		}
-		
-		rule.left = str_LHS;
-		rule.right1 = str_RHS1;
-		rule.right2 = str_RHS2;
+	}
+			
+	//if something's messed up with the arrow, there is no LHS and RHS
+	// so there's no use in reporting its errors
+	if (f_MISSING_ARROW == true)
+	{		
+		this->add_error(MISSING_ARROW, "rule "+param+": ");
+	}
+	else if (f_MULTIPLE_ARROWS == true)
+	{		
+		this->add_error(MULTIPLE_ARROWS, "rule "+param+": ");
 	}
 	else
-	{
-		ok = false;
+	{		
+		if (f_MISSING_LHS == true)
+		{		
+			this->add_error(MISSING_LHS, "rule "+param+": ");
+		}
+		if (f_MISSING_RHS == true)
+		{		
+			this->add_error(MISSING_RHS, "rule "+param+": ");
+		}
+		if (f_TOO_MANY_LHS == true)
+		{		
+			this->add_error(TOO_MANY_LHS, "rule "+param+": ");
+		}
 	}
+
+					
+	//auxiliary return value -- it will be true if there were no errors
+	ok = ! (f_MISSING_LHS || f_MISSING_RHS || f_MISSING_ARROW || f_TOO_MANY_LHS || f_MULTIPLE_ARROWS);
 	
 	return rule;
 }
+
 Rules Mod_from_http::rules_from_http(const std::string & param)
 {
 	Rules rules;

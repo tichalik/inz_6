@@ -25,10 +25,10 @@ void TST_mod_from_http::_test_word_from_http(
 	Word result = mod_from_http.word_from_http(str_input);
 	
 	//check if the result is identical to expected
-	bool ok_result = compare_word(expected, result);
+	bool ok_result = compare(expected, result, "word");
 	
 	//check if obtained errors are identical to expected 
-	bool ok_errors = compare_errors(expected_errors, mod_from_http.errors);
+	bool ok_errors = compare(expected_errors, mod_from_http.errors, "errors");
 	if (ok_errors && ok_result)
 	{
 		std::cout << "OK" << std::endl;

@@ -26,7 +26,7 @@ void TST_mod_check_errors::_test_rules_errors(
 	);
 	
 	//check if obtained errors are identical to expected 
-	bool ok = compare_errors(expected_errors, mod_check_errors.errors);
+	bool ok = compare(expected_errors, mod_check_errors.errors, "errors");
 	if (ok == true)
 	{
 		std::cout << "OK" << std::endl;
@@ -57,9 +57,9 @@ void TST_mod_check_errors::test_rules_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left = "A";
-		rule.right1 = "B";
-		rule.right2 = "C";
+		rule.LHS = "A";
+		rule.RHS.push_back("B");
+		rule.RHS.push_back("C");
 		
 		Errors expected_errors;
 		
@@ -76,9 +76,9 @@ void TST_mod_check_errors::test_rules_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left = "A";
-		rule.right1 = "b";
-		rule.right2 = "c";
+		rule.LHS = "A";
+		rule.RHS.push_back("b");
+		rule.RHS.push_back("c");
 		
 		Errors expected_errors;
 		
@@ -95,9 +95,9 @@ void TST_mod_check_errors::test_rules_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left = "A";
-		rule.right1 = "b";
-		rule.right2 = "C";
+		rule.LHS = "A";
+		rule.RHS.push_back("b");
+		rule.RHS.push_back("C");
 		
 		Errors expected_errors;
 		
@@ -114,9 +114,9 @@ void TST_mod_check_errors::test_rules_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left = "A";
-		rule.right1 = "B";
-		rule.right2 = "c";
+		rule.LHS = "A";
+		rule.RHS.push_back("B");
+		rule.RHS.push_back("c");
 		
 		Errors expected_errors;
 		
@@ -133,15 +133,39 @@ void TST_mod_check_errors::test_rules_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left = "a";
-		rule.right1 = "b";
-		rule.right2 = "c";
+		rule.LHS = "a";
+		rule.RHS.push_back("b");
+		rule.RHS.push_back("c");
 		
 		Errors expected_errors;
 		
 		Error error1;
 		error1.type = TERMINAL_AS_LHS;
-		error1.source = "symbol <a>:";
+		error1.source = " rule <a -> b c >: symbol <a>:";
+		expected_errors.push_back(error1);
+		
+		
+		_test_rules_errors(
+			rule, 
+			terminals,
+			nonterminals,
+			expected_errors
+		);
+	}
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " single RHS" << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Rule rule;
+		rule.LHS = "A";
+		rule.RHS.push_back("b");
+		
+		Errors expected_errors;
+		
+		Error error1;
+		error1.type = SINGLE_RHS;
+		error1.source = " rule <A -> b >: symbol <b>:";
 		expected_errors.push_back(error1);
 		
 		
@@ -158,25 +182,25 @@ void TST_mod_check_errors::test_rules_errors()
 		std::cout << "===============================================================" << std::endl;
 		
 		Rule rule;
-		rule.left = "x";
-		rule.right1 = "y";
-		rule.right2 = "z";
+		rule.LHS = "x";
+		rule.RHS.push_back("y");
+		rule.RHS.push_back("z");
 		
 		Errors expected_errors;
 		
 		Error error1;
 		error1.type = UNKNOWN_SYMBOL;
-		error1.source = "symbol <x>:";
+		error1.source = " rule <x -> y z >: symbol <x>:";
 		expected_errors.push_back(error1);
 		
 		Error error2;
 		error2.type = UNKNOWN_SYMBOL;
-		error2.source = "symbol <y>:";
+		error2.source = " rule <x -> y z >: symbol <y>:";
 		expected_errors.push_back(error2);
 		
 		Error error3;
 		error3.type = UNKNOWN_SYMBOL;
-		error3.source = "symbol <z>:";
+		error3.source = " rule <x -> y z >: symbol <z>:";
 		expected_errors.push_back(error3);
 		
 		
@@ -187,4 +211,43 @@ void TST_mod_check_errors::test_rules_errors()
 			expected_errors
 		);
 	}
+	
+	
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " unknown symbols -- many char symbols " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Rule rule;
+		rule.LHS = "xxx";
+		rule.RHS.push_back("yyy");
+		rule.RHS.push_back("zzz");
+		
+		Errors expected_errors;
+		
+		Error error1;
+		error1.type = UNKNOWN_SYMBOL;
+		error1.source = " rule <xxx -> yyy zzz >: symbol <xxx>:";
+		expected_errors.push_back(error1);
+		
+		Error error2;
+		error2.type = UNKNOWN_SYMBOL;
+		error2.source = " rule <xxx -> yyy zzz >: symbol <yyy>:";
+		expected_errors.push_back(error2);
+		
+		Error error3;
+		error3.type = UNKNOWN_SYMBOL;
+		error3.source = " rule <xxx -> yyy zzz >: symbol <zzz>:";
+		expected_errors.push_back(error3);
+		
+		
+		_test_rules_errors(
+			rule, 
+			terminals,
+			nonterminals,
+			expected_errors
+		);
+	}
+	
+	
 }

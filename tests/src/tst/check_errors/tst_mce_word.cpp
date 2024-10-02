@@ -26,7 +26,7 @@ void TST_mod_check_errors::_test_word_errors(
 	);
 	
 	//check if obtained errors are identical to expected 
-	bool ok = compare_errors(expected_errors, mod_check_errors.errors);
+	bool ok = compare(expected_errors, mod_check_errors.errors, "errors");
 	if (ok == true)
 	{
 		std::cout << "OK" << std::endl;
@@ -89,12 +89,12 @@ void TST_mod_check_errors::test_word_errors()
 		
 		Error error1;
 		error1.type = UNKNOWN_SYMBOL;
-		error1.source = "symbol <z>:";
+		error1.source = " symbol <z>:";
 		expected_errors.push_back(error1);
 		
 		Error error2;
 		error2.type = UNKNOWN_SYMBOL;
-		error2.source = "symbol <q>:";
+		error2.source = " symbol <q>:";
 		expected_errors.push_back(error2);
 		
 		_test_word_errors( 
@@ -120,12 +120,12 @@ void TST_mod_check_errors::test_word_errors()
 		
 		Error error1;
 		error1.type = SYMBOL_IN_NONTERMINALS;
-		error1.source = "symbol <A>:";
+		error1.source = " symbol <A>:";
 		expected_errors.push_back(error1);
 		
 		Error error2;
 		error2.type = SYMBOL_IN_NONTERMINALS;
-		error2.source = "symbol <B>:";
+		error2.source = " symbol <B>:";
 		expected_errors.push_back(error2);
 		
 		_test_word_errors( 

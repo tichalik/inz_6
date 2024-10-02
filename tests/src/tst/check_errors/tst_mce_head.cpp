@@ -26,7 +26,7 @@ void TST_mod_check_errors::_test_head_errors(
 	);
 	
 	//check if obtained errors are identical to expected 
-	bool ok = compare_errors(expected_errors, mod_check_errors.errors);
+	bool ok = compare(expected_errors, mod_check_errors.errors,"errors");
 	if (ok == true)
 	{
 		std::cout << "OK" << std::endl;

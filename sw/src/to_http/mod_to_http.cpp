@@ -1,5 +1,26 @@
 #include "mod_to_http.h"
 
+std::string Mod_to_http::str_to_http(const std::string & str) const
+{
+	std::string res;
+	
+	for (size_t i=0; i<str.size(); i++)
+	{
+		if (str[i] == '>')
+			res += "&gt;";
+		else if (str[i] == '<')
+			res += "&lt;";
+		else if (str[i] == '&')
+			res += "&amp;";
+		else if (str[i] == '\'')
+			res += "&apos;";
+		else if (str[i] == '"')
+			res += "&quot;";		
+		else 
+			res += str[i];
+	}
+	return res;
+}
 
 
 std::string Mod_to_http::pnode_to_string(const PNode & pnode) const
@@ -17,7 +38,7 @@ std::string Mod_to_http::pnode_to_http(const PNode & pnode) const
 	std::string res;
 	res += "<div class=\"node\">\n";
 	res += "<div class=\"node-expanded\">\n";
-	res += " "+pnode.tag+"\n";
+	res += " " + str_to_http(pnode.tag) + "\n";
 	if (pnode.children.size() != 0 )
 	{
 		res += pnode_to_http(pnode.children[0]);
@@ -25,7 +46,7 @@ std::string Mod_to_http::pnode_to_http(const PNode & pnode) const
 	}
 	res += "</div>\n";
 	res += "<span class=\"node-folded\">";
-	res += pnode_to_string(pnode);
+	res += str_to_http(pnode_to_string(pnode));
 	res += "</span>\n";
 	res += "</div>\n";
 			
@@ -99,14 +120,14 @@ std::string Mod_to_http::EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const
 		case MISSING_LHS:
 			res="no LHS in the rule";
 			break;
+		case MISSING_RHS:
+			res="no RHS in the rule";
+			break;
+		case SINGLE_RHS:
+			res="sorry, single RHS rules not supported yet";
+			break;
 		case TOO_MANY_LHS:
 			res="only single symbol on LHS is permitted (for context free parsing)";
-			break;
-		case TOO_FEW_RHS:
-			res="only rules with 2 symbols on RHS are permitted";
-			break;
-		case TOO_MANY_RHS:
-			res="only rules with 2 symbols on RHS are permitted";
 			break;
 		case MISSING_ARROW:
 			res="no arrown separating LHS and RHS";
@@ -126,6 +147,10 @@ std::string Mod_to_http::EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const
 		case SYMBOL_IN_NONTERMINALS:
 			res="input must consist of terminals only";
 			break;
+		case UNREMOVABLE_CHAIN:
+			res="symbol is a head of chain of rules of nonterminals "
+				"turning into single nonterminals without ever turning into a terminal";
+			break;
 		default:
 			res = "UNKNOWN ERROR";
 			break;
@@ -136,8 +161,9 @@ std::string Mod_to_http::EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const
 
 std::string Mod_to_http::error_to_http(const Error & error) const
 {
-	return "<div class=\"error\">\n" + 
-		error.source +" " + EN_ERROR_TYPE2str(error.type)
+	return "<div class=\"error\">\n" 
+		+ str_to_http(error.source) +" " 
+		+ str_to_http(EN_ERROR_TYPE2str(error.type))
 		+ "</div>";
 }
 

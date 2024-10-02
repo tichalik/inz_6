@@ -54,7 +54,7 @@ for root, dirs, files in os.walk(path):
     
 res = """
 
-FLAGS = -fno-access-control
+FLAGS = -fno-access-control -g
 
 run: ./debug/main
 	./debug/main > ./debug/results.txt

@@ -1,7 +1,7 @@
 #include "tst_mod_parser.h"
 
 void TST_mod_parser::_test_parsing_grammar_adapter(
-	const Grammar & grammar
+	const Chomsky_grammar & grammar
 )
 {
 	bool ok = true;
@@ -14,22 +14,22 @@ void TST_mod_parser::_test_parsing_grammar_adapter(
 		//test whether the rule is in the adapter
 		
 		bool has_rule = parsing_grammar_adapter.has_rule(
-			r.right1, r.right2
+			r.RHS[0], r.RHS[1]
 		);
 		
 		if (!has_rule)
 		{
 			std::cout << "Parsing_grammar_adapter::has_rule() returned false "
-				<< " for existing rule " << rule2str(r) << std::endl;
+				<< " for existing rule no." << i << std::endl;
 			ok = false;
 		}
 		
 		//test whether rule's LHS is returned correctly
-		std::vector<Symbol> LHSs = parsing_grammar_adapter.get_rule_head(r.right1, r.right2);
+		std::vector<LHS_and_ID> LHSs = parsing_grammar_adapter.get_rule_head(r.RHS[0], r.RHS[1]);
 		bool found = false;
 		for (size_t j=0; j<LHSs.size(); j++)
 		{
-			if (LHSs[j] == r.left)
+			if (LHSs[j].LHS == r.LHS && LHSs[j].ID == i)
 			{
 				found = true;
 			}
@@ -38,7 +38,7 @@ void TST_mod_parser::_test_parsing_grammar_adapter(
 		if (!found)
 		{
 			std::cout << "Parsing_grammar_adapter::get_rule_head() did not return  "
-				<< " head for existing rule " << rule2str(r) << std::endl;
+				<< " head for existing rule no. " << i << std::endl;
 			ok = false;
 		}
 		
@@ -64,12 +64,12 @@ void TST_mod_parser::test_parsing_grammar_adapter()
 		std::cout << "===============================================================" << std::endl;
 		
 		//only rules matter in parsing 
-		Grammar grammar;
+		Chomsky_grammar grammar;
 		
 		Rule rule;
-		rule.left = "a";
-		rule.right1 = "A";
-		rule.right2 = "A";
+		rule.LHS = "a";
+		rule.RHS.push_back("A");
+		rule.RHS.push_back("A");
 		grammar.rules.push_back(rule);
 		
 		_test_parsing_grammar_adapter(
@@ -83,12 +83,12 @@ void TST_mod_parser::test_parsing_grammar_adapter()
 		std::cout << "===============================================================" << std::endl;
 		
 		//only rules matter in parsing 
-		Grammar grammar;
+		Chomsky_grammar grammar;
 		
 		Rule rule;
-		rule.left = "a";
-		rule.right1 = "A";
-		rule.right2 = "B";
+		rule.LHS = "a";
+		rule.RHS.push_back("A");
+		rule.RHS.push_back("B");
 		grammar.rules.push_back(rule);
 		
 		_test_parsing_grammar_adapter(
@@ -102,20 +102,20 @@ void TST_mod_parser::test_parsing_grammar_adapter()
 		std::cout << "===============================================================" << std::endl;
 		
 		//only rules matter in parsing 
-		Grammar grammar;
+		Chomsky_grammar grammar;
 		
 		{
 			Rule rule;
-			rule.left = "a";
-			rule.right1 = "A";
-			rule.right2 = "B";
+			rule.LHS = "a";
+			rule.RHS.push_back("A");
+			rule.RHS.push_back("B");
 			grammar.rules.push_back(rule);
 		}
 		{
 			Rule rule;
-			rule.left = "a";
-			rule.right1 = "B";
-			rule.right2 = "A";
+			rule.LHS = "a";
+			rule.RHS.push_back("B");
+			rule.RHS.push_back("A");
 			grammar.rules.push_back(rule);
 		}
 		
@@ -129,20 +129,20 @@ void TST_mod_parser::test_parsing_grammar_adapter()
 		std::cout << "===============================================================" << std::endl;
 		
 		//only rules matter in parsing 
-		Grammar grammar;
+		Chomsky_grammar grammar;
 		
 		{
 			Rule rule;
-			rule.left = "a";
-			rule.right1 = "A";
-			rule.right2 = "B";
+			rule.LHS = "a";
+			rule.RHS.push_back("A");
+			rule.RHS.push_back("B");
 			grammar.rules.push_back(rule);
 		}
 		{
 			Rule rule;
-			rule.left = "a";
-			rule.right1 = "A";
-			rule.right2 = "B";
+			rule.LHS = "a";
+			rule.RHS.push_back("A");
+			rule.RHS.push_back("B");
 			grammar.rules.push_back(rule);
 		}
 		

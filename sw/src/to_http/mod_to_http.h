@@ -11,6 +11,7 @@
 
 class Mod_to_http
 {
+	std::string str_to_http(const std::string & str) const;
 	
 	std::string EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const;
 	std::string error_to_http(const Error & error) const;

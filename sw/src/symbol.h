@@ -3,7 +3,9 @@
 
 
 #include <string>
+#include <vector>
 
 typedef std::string Symbol;
+typedef std::vector<Symbol> Symbols;
 
 #endif //_SYMBOL_H_

@@ -4,9 +4,16 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <unordered_map>
 
-#include "grammar.h"
+#include "chomsky_grammar.h"
 #include "utils.h"
+
+struct LHS_and_ID
+{
+	std::string LHS;
+	size_t ID;
+};
 
 
 /** \brief represents how the grammar is seen during the parsing
@@ -18,15 +25,15 @@ class Parsing_grammar_adapter
 	/** \brief representation of rules in easy-to-access form 
 	 * 
 	 * rules are in form 
-	 *	LHS1 -> RSH1 RHS2 
-	 *	LHS2 -> RSH1 RHS2 
-	 *	LHS1 -> RSH3 RHS4
+	 *	0. LHS1 -> RSH1 RHS2 
+	 *	1. LHS2 -> RSH1 RHS2 
+	 *	2. LHS1 -> RSH3 RHS4
 	 *
 	 * the map is in form 
-	 *	rule_map[RHS1 RULE_MAP_SEPARATOR RHS2] = { LHS1, LHS2}
-	 *	rule_map[RHS3 RULE_MAP_SEPARATOR RHS4] = { LHS1}
+	 *	rule_map[RHS1 RULE_MAP_SEPARATOR RHS2] = { [LHS1,0], [LHS2,1]}
+	 *	rule_map[RHS3 RULE_MAP_SEPARATOR RHS4] = { [LHS1,0]}
 	*/
-	std::unordered_map<std::string, std::vector<std::string>> rule_map;
+	std::unordered_map<std::string, std::vector<LHS_and_ID>> rule_map;
 
 	/** \brief unique string used to form keys for the rule_map
 	 * 
@@ -40,7 +47,7 @@ class Parsing_grammar_adapter
 	 * 
 	 * \param grammar the grammar this object is supposed to be a representation of
 	*/
-	Parsing_grammar_adapter( const Grammar & grammar);
+	Parsing_grammar_adapter( const Chomsky_grammar & grammar);
 
 	/** \brief whether grammar has a rule with given RHS
 	 *
@@ -48,7 +55,7 @@ class Parsing_grammar_adapter
 	 * \param r1 1st symbol of rule's RHS
 	 * \param r2 2nd symbol of rule's RHS 
 	*/
-	bool has_rule(const std::string & r1, const std::string & r2) const;
+	bool has_rule(const Symbol & r1, const Symbol & r2) const;
 	
 	/** \brief get all LHS that turn into given LHS
 	 *
@@ -56,7 +63,8 @@ class Parsing_grammar_adapter
 	 * \param r1 1st symbol of rule's RHS
 	 * \param r2 2nd symbol of rule's RHS 
 	*/
-	std::vector<std::string> get_rule_head(const std::string & r1, const std::string & r2) const;
+	std::vector<LHS_and_ID> get_rule_head(const Symbol & r1, const Symbol & r2) const;
+	
 
 };
 

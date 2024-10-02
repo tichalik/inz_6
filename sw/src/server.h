@@ -2,12 +2,9 @@
 #define SERVER_H_
 
 #include "httplib.h"
-#include "mod_from_http.h"
 #include "mod_to_http.h"
-#include "mod_check_errors.h"
-#include "mod_parser.h"
-#include "parsing_grammar_adapter.h"
-#include "utils.h"
+#include "html_response.h"
+#include "model.h"
 
 
 //handlers cannot be non-static

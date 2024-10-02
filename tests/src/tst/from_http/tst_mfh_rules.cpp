@@ -25,10 +25,10 @@ void TST_mod_from_http::_test_rules_from_http(
 	Rules result = mod_from_http.rules_from_http(str_input);
 	
 	//check if the result is identical to expected
-	bool ok_result = compare_rules(expected, result);
+	bool ok_result = compare(expected, result, "rules");
 	
 	//check if obtained errors are identical to expected 
-	bool ok_errors = compare_errors(expected_errors, mod_from_http.errors);
+	bool ok_errors = compare(expected_errors, mod_from_http.errors, "errors");
 	if (ok_errors && ok_result)
 	{
 		std::cout << "OK" << std::endl;
@@ -47,24 +47,24 @@ void TST_mod_from_http::test_rules_from_http()
 	Rules expected_rules;
 	
 	Rule expected_rule1;
-	expected_rule1.left = "a";
-	expected_rule1.right1 = "a";
-	expected_rule1.right2 = "a";
+	expected_rule1.LHS = "a";
+	expected_rule1.RHS[0] = "a";
+	expected_rule1.RHS[1] = "a";
 	
 	Rule expected_rule2;
-	expected_rule2.left = "b";
-	expected_rule2.right1 = "b";
-	expected_rule2.right2 = "b";
+	expected_rule2.LHS = "b";
+	expected_rule2.RHS[0] = "b";
+	expected_rule2.RHS[1] = "b";
 	
 	Rule expected_rule3;
-	expected_rule3.left = "c";
-	expected_rule3.right1 = "c";
-	expected_rule3.right2 = "c";
+	expected_rule3.LHS = "c";
+	expected_rule3.RHS[0] = "c";
+	expected_rule3.RHS[1] = "c";
 	
 	Rule expected_rule4;
-	expected_rule4.left = "d";
-	expected_rule4.right1 = "d";
-	expected_rule4.right2 = "d";
+	expected_rule4.LHS = "d";
+	expected_rule4.RHS[0] = "d";
+	expected_rule4.RHS[1] = "d";
 	
 	
 	expected_rules.push_back(expected_rule1);
@@ -184,51 +184,51 @@ void TST_mod_from_http::test_rules_from_http()
 		Rules rules;
 		
 		Rule r1;
-		r1.left = "exp";
-		r1.right1 = "exp1";
-		r1.right2 = "exp";
+		r1.LHS = "exp";
+		r1.RHS[0] = "exp1";
+		r1.RHS[1] = "exp";
 		rules.push_back(r1);
 		
 		Rule r2;
-		r2.left = "exp";
-		r2.right1 = "exp2";
-		r2.right2 = ")";
+		r2.LHS = "exp";
+		r2.RHS[0] = "exp2";
+		r2.RHS[1] = ")";
 		rules.push_back(r2);
 		
 		Rule r3;
-		r3.left = "exp";
-		r3.right1 = "exp2";
-		r3.right2 = ")";
+		r3.LHS = "exp";
+		r3.RHS[0] = "exp2";
+		r3.RHS[1] = ")";
 		rules.push_back(r3);
 		
 		Rule r4;
-		r4.left = "exp1";
-		r4.right1 = "exp";
-		r4.right2 = "+";
+		r4.LHS = "exp1";
+		r4.RHS[0] = "exp";
+		r4.RHS[1] = "+";
 		rules.push_back(r4);
 		
 		Rule r5;
-		r5.left = "exp1";
-		r5.right1 = "exp";
-		r5.right2 = "-";
+		r5.LHS = "exp1";
+		r5.RHS[0] = "exp";
+		r5.RHS[1] = "-";
 		rules.push_back(r5);
 		
 		Rule r6;
-		r6.left = "exp1";
-		r6.right1 = "exp";
-		r6.right2 = "/";
+		r6.LHS = "exp1";
+		r6.RHS[0] = "exp";
+		r6.RHS[1] = "/";
 		rules.push_back(r6);
 		
 		Rule r7;
-		r7.left = "exp1";
-		r7.right1 = "exp";
-		r7.right2 = "*";
+		r7.LHS = "exp1";
+		r7.RHS[0] = "exp";
+		r7.RHS[1] = "*";
 		rules.push_back(r7);
 		
 		Rule r8;
-		r8.left = "exp2";
-		r8.right1 = "(";
-		r8.right2 = "exp";
+		r8.LHS = "exp2";
+		r8.RHS[0] = "(";
+		r8.RHS[1] = "exp";
 		rules.push_back(r8);
 		
 		
