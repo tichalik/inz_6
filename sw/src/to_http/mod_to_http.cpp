@@ -15,7 +15,7 @@ std::string Mod_to_http::str_to_http(const std::string & str) const
 		else if (str[i] == '\'')
 			res += "&apos;";
 		else if (str[i] == '"')
-			res += "quot;";		
+			res += "&quot;";		
 		else 
 			res += str[i];
 	}

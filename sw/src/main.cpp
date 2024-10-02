@@ -11,6 +11,7 @@ int main()
 	Server::set_dummy_get("./src/html_templates/tst2.html", "tst2");
 	Server::set_dummy_get("./src/html_templates/tst3.html", "tst3");
 	Server::set_dummy_get("./src/html_templates/tst4.html", "tst4");
+	Server::set_dummy_get("./src/html_templates/tst_html_entities_errors.html", "tst_html_entities_errors");
 	Server::run();
 
 }
