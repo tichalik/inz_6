@@ -17,7 +17,6 @@
 class Mod_parser
 {
 	Chomskify chomskify;
-	
 	Errors errors;
 	
 	/// object for easier look up of rules

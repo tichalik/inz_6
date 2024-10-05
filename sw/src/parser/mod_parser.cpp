@@ -96,6 +96,9 @@ void Mod_parser::extract_trees_from_parsing_table(
 )
 {
 
+	const Non_terminals & added_nonterminals = 
+		chomskify.get_grammar().added_nonterminals;
+
 	//iterate the table top-to-bottom
 	for (size_t i=parsing_table.SIZE-1; i+1>0; i--) //stupid thing
 			//normally should be i>=0
@@ -113,7 +116,10 @@ void Mod_parser::extract_trees_from_parsing_table(
 			{
 
 				//nodes not included in any other tree are taken as roots of their own trees
-				if (parsing_table.tab[i][j][k].visited == false)
+				if (parsing_table.tab[i][j][k].visited == false
+				//but only if they are a complete rule 
+				&& !added_nonterminals.contains(parsing_table.tab[i][j][k].tag)
+				)
 				{
 
 					PTable_reference address;

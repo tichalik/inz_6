@@ -36,14 +36,16 @@ std::string Mod_to_http::pnode_to_string(const PNode & pnode) const
 std::string Mod_to_http::pnode_to_http(const PNode & pnode) const
 {
 	std::string res;
+	
 	res += "<div class=\"node\">\n";
 	res += "<div class=\"node-expanded\">\n";
 	res += " " + str_to_http(pnode.tag) + "\n";
-	if (pnode.children.size() != 0 )
+	
+	for (size_t i=0; i<pnode.children.size(); i++)
 	{
-		res += pnode_to_http(pnode.children[0]);
-		res += pnode_to_http(pnode.children[1]);
+		res += pnode_to_http(pnode.children[i]);
 	}
+	
 	res += "</div>\n";
 	res += "<span class=\"node-folded\">";
 	res += str_to_http(pnode_to_string(pnode));
