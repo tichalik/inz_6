@@ -3,6 +3,7 @@
 #include "tst_mod_from_http.h"
 #include "tst_mod_to_http.h"
 #include "tst_mod_parser.h"
+#include "tst_mod_postprocess_trees.h"
 
 void test_compares()
 {
@@ -37,9 +38,9 @@ int main()
 	// mce.test_rules_errors();
 	// mce.test_word_errors();
 	
-	TST_mod_parser mp;
-	// mp.test_unbreak_rules();
-	mp.test_break_rules();
+//	TST_mod_parser mp;
+//	// mp.test_unbreak_rules();
+//	mp.test_break_rules();
 	// mp.test_create_new_symbol();
 	// mp.test_propagate_parsing_table();
 	// mp.test_parsing_grammar_adapter();
@@ -50,4 +51,7 @@ int main()
 	// m2h.test_pnode_to_http();
 	// m2h.test_ptree_to_http();
 	
+	TST_mod_postprocess_trees mpt;
+	mpt.test_get_leaf_size();
+	mpt.test_postprocess_trees();
 }

@@ -4,7 +4,7 @@ size_t Mod_postprocess_trees::get_leaf_size(
 	const PNode& node
 )
 {
-	size_t res;
+	size_t res = 0;
 	if (node.children.size() == 0)
 	{
 		res = 1;
