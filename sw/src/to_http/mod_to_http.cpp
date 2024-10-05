@@ -62,7 +62,27 @@ std::string Mod_to_http::ptree_to_string(const PTree & ptree) const
 
 std::string Mod_to_http::ptree_to_http(const PTree & ptree) const
 {
-	return "<div class=\"tree\">" + pnode_to_http(ptree.root) + "</div>";
+	std::string info;
+	std::string parse_type;
+
+	if (ptree.is_complete)
+	{
+		info += "complete ";
+		parse_type = "Parsing";
+	}
+	else
+	{
+		parse_type = "Incomplete parsing";
+	}
+
+	if (ptree.is_head_ok)
+	{
+		info += "head_ok";
+	}
+	
+	return "<div class=\"tree " + info + "  \">" + parse_type
+		+ pnode_to_http(ptree.root) 
+		+ "</div>";
 }
 
 

@@ -38,6 +38,8 @@ struct PTree
 	 * \brief root of the parsing tree
 	 */
     PNode root;
+	bool is_complete;
+	bool is_head_ok;
 };
 
 typedef std::vector<PTree> PTrees;

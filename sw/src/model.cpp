@@ -44,6 +44,11 @@ Model::Model(
 			errors.insert(errors.end(), chomskificaiton_errors.begin(), chomskificaiton_errors.end());
 			
 			ptrees = mod_parser.get_parse_trees();
+			Mod_postprocess_trees mod_postprocess_trees(
+				ptrees, 
+				grammar.head,
+				word
+			);
 		}
 	}
 	
