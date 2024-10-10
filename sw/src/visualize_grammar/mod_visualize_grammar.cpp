@@ -14,25 +14,29 @@ void Mod_visualize_grammar::append_children(
 				root.tag[i] == rules[j].LHS)
 			{
 				
-				VNode child;
+				root.children.emplace_back();
+				VNode & child = root.children.back();
+				
 				//copy all items before the i'th
-				//this shoudl be done by insert
-				for (size_t k=0; k<i; k++)
-				{
-					child.tag.push_back(root.tag[k]);
-				}
+				child.tag.insert(
+					child.tag.end(),
+					root.tag.begin(), 
+					root.tag.begin() + i
+				);
 
 				//copy RHS of the matched rule
-				for (size_t k=0; k<rules[j].RHS.size(); k++)
-				{
-					child.tag.push_back(rules[j].RHS[k]);
-				}
+				child.tag.insert(
+					child.tag.end(),
+					rules[j].RHS.begin(), 
+					rules[j].RHS.end()
+				);
 
 				//copy rest of parent's tag
-				for (size_t k=i+1; k<root.tag.size(); k++)
-				{
-					child.tag.push_back(root.tag[k]);
-				}
+				child.tag.insert(
+					child.tag.end(),
+					root.tag.begin() + i + 1,
+					root.tag.end()
+				);
 
 				child.parent_symbol_pos = i;
 
@@ -44,8 +48,6 @@ void Mod_visualize_grammar::append_children(
 					rules,
 					was_used_copy
 				);
-
-				root.children.push_back(child);
 			}
 		}
 	}
