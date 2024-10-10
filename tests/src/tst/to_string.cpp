@@ -23,6 +23,7 @@ VECTOR_STR(std::vector<Symbols>);
 VECTOR_STR(Errors);
 VECTOR_STR(Rules);
 VECTOR_STR(PTrees);
+VECTOR_STR(VNodes);
 
 
 VECTOR_STR(PTable_entries);
@@ -52,6 +53,20 @@ std::string str(
 	std::string res;
 	ADD_FIELD(type);
 	ADD_FIELD(source);
+	return res;
+}
+
+
+std::string str(
+	const VNode & i,
+	const std::string & tabs
+
+)
+{
+	std::string res;
+	ADD_FIELD(tag);
+	ADD_FIELD(parent_symbol_pos);
+	ADD_FIELD(children);
 	return res;
 }
 

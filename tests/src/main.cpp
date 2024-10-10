@@ -5,6 +5,10 @@
 #include "tst_mod_parser.h"
 #include "tst_mod_postprocess_trees.h"
 
+
+#include "tst_visualize_grammar.h"
+
+
 void test_compares()
 {
 	std::cout << "===============================================================" << std::endl;
@@ -21,7 +25,7 @@ void test_compares()
 }
 
 int main()
-{
+ {
 	// test_compares();
 	
 	// TST_mod_from_http mfh;
@@ -50,8 +54,10 @@ int main()
 	// TST_mod_to_http m2h;
 	// m2h.test_pnode_to_http();
 	// m2h.test_ptree_to_http();
-	
-	TST_mod_postprocess_trees mpt;
-	mpt.test_get_leaf_size();
-	mpt.test_postprocess_trees();
+
+	test_visualize();
+
+//	TST_mod_postprocess_trees mpt;
+//	mpt.test_get_leaf_size();
+//	mpt.test_postprocess_trees();
 }

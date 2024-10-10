@@ -80,10 +80,6 @@
 	border: dashed 2px black;
  }
  
- #results-header{
-	display: flex;
-	justify-content: space-between;
- }
 
 </style>
 
@@ -116,22 +112,6 @@
 		event.stopPropagation();
 	}
 	
-	function filter_trees(){
-		complete_only = document.getElementById("complete_only").checked;
-		head_ok_only = document.getElementById("head_ok_only").checked;
-		for (tree of document.getElementsByClassName("tree")){
-			if(
-			complete_only && !tree.classList.contains("complete")
-			|| head_ok_only && !tree.classList.contains("head_ok")
-			){
-				tree.style.display = "none";
-			}
-			else {
-				tree.style.display = "block";
-			}
-		}
-	}
-
 	<!-- packing the script for adding the onclick events -->
 	<!-- so that is can be called upon loading the page -->
 	function add_events(){
@@ -216,17 +196,7 @@
 			
 			
 			<div id="results">
-				<div id="results-header">
-					Results:
-					<form>
-						<input type="checkbox" id="head_ok_only" onclick="filter_trees()">
-						<label for="head_ok_only"> only correct head </label>
-						only correct head
-						<input type="checkbox" id="complete_only" onclick="filter_trees()">
-						<label for="complete_only"> only complete parses </label>
-						only complete parses
-					</form>
-				</div>
+			Results:
 				<div id="result-list">
 					[[RESULTS]]
 				</div>

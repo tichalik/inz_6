@@ -17,6 +17,7 @@
 #include "ptable.h"
 #include "chomskify.h"
 
+#include "vnode.h"
 
 #define STR_DECLARATION(TYPE)\
 	std::string str(\
@@ -49,7 +50,10 @@ STR_DECLARATION(Chomsky_grammar);
 
 
 STR_DECLARATION(PTable_entries);
-STR_DECLARATION(PNodes);	
+STR_DECLARATION(PNodes);
+
+STR_DECLARATION(VNodes);	
+STR_DECLARATION(VNode);	
 
 #undef STR_DECLARATION
 
