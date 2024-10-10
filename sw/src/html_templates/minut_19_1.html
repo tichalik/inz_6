@@ -46,9 +46,7 @@
  }
  
  #error-list,
- #visualization-list,
  #result-list,
- #visualization,
  #results,
  #errors{
 	margin: 2px;
@@ -56,12 +54,11 @@
 	border: solid 1px gray;
  }
  
- #[[ERRORS_OR_RESULTS]]{
+ #{
 	display: none;
  }
  
  #error-list,
- #visualization-list,
  #result-list{
 	height: 60vh;
 	overflow: auto;
@@ -155,19 +152,26 @@
         <legend>Grammar</legend>
         
         <div>Enter terminals separated by a whitespace</div>
-        <textarea id="terminals" name="terminals" form="mf">[[TERMINALS]]</textarea>
+        <textarea id="terminals" name="terminals" form="mf">a b c</textarea>
         <label for="terminals">Terminals</label>
         
         <div>Enter nonterminals separated by a whitespace</div>
-        <textarea id="nonterminals" name="nonterminals" form="mf">[[NONTERMINALS]]</textarea>
+        <textarea id="nonterminals" name="nonterminals" form="mf">A B C ABC</textarea>
         <label for="nonterminals">Nonterminals</label>
         
         <div>Enter head</div>
-        <input type="text" name="head" id="head" value="[[HEAD]]" form="mf">
+        <input type="text" name="head" id="head" value="ABC" form="mf">
         <label for="head">Head</label>
         
-        <div>Enter rules in form LHS -> RHS1 RHS2 separated by a newline</div>
-        <textarea id="rules" name="rules" form="mf">[[RULES]]</textarea>
+        <div>Enter rules in form LHS -&gt; RHS1 RHS2 separated by a newline</div>
+        <textarea id="rules" name="rules" form="mf">A -&gt; a a 
+A -&gt; A a
+B -&gt; b b
+B -&gt; B b
+C -&gt; C c 
+C -&gt; C C
+ABC -&gt; A B C
+</textarea>
         <label for="rules">Rules</label>
     </fieldset>	
 
@@ -186,21 +190,14 @@
 				<legend>Input</legend>
 				
 				<div>Enter input</div>
-				<textarea id="input" name="input" form="mf">[[INPUT]]</textarea>
+				<textarea id="input" name="input" form="mf">a a a b b b c </textarea>
 				<label for="input">Input</label>
 			</fieldset>
 			
 			<div id="errors">
 				Errors
 				<div id="error-list">
-					[[ERRORS]]
-				</div>
-			</div>
-			
-			<div id="visualization">
-				Visualization
-				<div id="visualization-list">
-					[[VISUALIZATION]]
+					
 				</div>
 			</div>
 			
@@ -208,13 +205,14 @@
 			<div id="results">
 			Results:
 				<div id="result-list">
-					[[RESULTS]]
+					
 				</div>
 			</div>
 			
 		</div>
 	</div>
 	
+
 
 
 </body></html>

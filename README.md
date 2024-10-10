@@ -32,5 +32,4 @@ To run the sofware call `debug/main` from the `sw` directory. The server opens o
 	./debug/main
 
 # notice
-
 The HTTP server in file `httplib.cpp` comes from here https://github.com/yhirose/cpp-httplib and is licensed by MIT license.

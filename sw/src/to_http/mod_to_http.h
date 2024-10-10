@@ -8,6 +8,9 @@
 #include "ptree.h"
 #include "error.h"
 #include "html_response.h"
+#include "vnode.h"
+
+#include "utils.h"
 
 class Mod_to_http
 {
@@ -17,6 +20,8 @@ class Mod_to_http
 	std::string error_to_http(const Error & error) const;
 	std::string errors_to_http(const Errors & error) const;
 	
+	std::string vnode_to_http(const VNode & vnode) const;
+	std::string vtree_to_http(const VNode & vtree) const;
 
 	std::string pnode_to_string(const PNode & pnode) const;
 	std::string pnode_to_http(const PNode & pnode) const;
@@ -36,6 +41,7 @@ class Mod_to_http
 	Mod_to_http(
 		const Errors & errors, 
 		const PTrees & ptrees, 
+		const VNode & vnode,
 		const std::string & http_nonterminals,
 		const std::string & http_terminals,
 		const std::string & http_head,

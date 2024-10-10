@@ -38,6 +38,9 @@ Model::Model(
 		//parse if there are no errors
 		if (semantic_errors.size() == 0)
 		{
+			Mod_visualize_grammar mod_visualize;
+			visualization = mod_visualize.visualize_grammar(grammar);
+			
 			Mod_parser mod_parser(grammar, word); 
 			
 			const  Errors chomskificaiton_errors = mod_parser.get_errors();
@@ -62,4 +65,9 @@ Errors Model::get_errors() const
 PTrees Model::get_ptrees() const
 {
 	return ptrees;
+}
+
+VNode Model::get_vnode() const
+{
+	return visualization;
 }

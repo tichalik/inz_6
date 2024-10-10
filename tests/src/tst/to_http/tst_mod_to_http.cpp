@@ -7,10 +7,12 @@ void TST_mod_to_http::_test_pnode_to_http(
 {
 	Errors errors;
 	PTrees ptrees;
+	VNode vnode;
 	
 	Mod_to_http mod_to_http(
 		errors,
 		ptrees,
+		vnode,
 		"","","","",""
 	);
 	
@@ -53,10 +55,12 @@ void TST_mod_to_http::_test_ptree_to_http(
 {
 	Errors errors;
 	PTrees ptrees;
+	VNode vnode;
 	
 	Mod_to_http mod_to_http(
 		errors,
 		ptrees,
+		vnode,
 		"","","","",""
 	);
 	

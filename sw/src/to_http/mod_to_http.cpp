@@ -39,7 +39,7 @@ std::string Mod_to_http::pnode_to_http(const PNode & pnode) const
 	
 	res += "<div class=\"node\">\n";
 	res += "<div class=\"node-expanded\">\n";
-	res += " " + str_to_http(pnode.tag) + "\n";
+	res += " " + str_to_http(str_to_http(pnode.tag)) + "\n";
 	
 	for (size_t i=0; i<pnode.children.size(); i++)
 	{
@@ -202,10 +202,42 @@ std::string Mod_to_http::errors_to_http(const Errors & _errors) const
 	
 }
 
+std::string Mod_to_http::vnode_to_http(const VNode & vnode) const
+{
+	std::string res;
+	std::string tag = Utils::vector2str(vnode.tag, " ");
+	
+	res += "<div class=\"node\">\n";
+	res += "<div class=\"node-expanded\">\n";
+	res += " " + tag + "\n";
+	
+	for (size_t i=0; i<vnode.children.size(); i++)
+	{
+		res += vnode_to_http(vnode.children[i]);
+	}
+	
+	res += "</div>\n";
+	res += "<span class=\"node-folded\">";
+	res += tag;
+	res += "</span>\n";
+	res += "</div>\n";
+			
+	return res;
+}
+
+
+std::string Mod_to_http::vtree_to_http(const VNode & vtree) const
+{
+	return "<div class=\"tree\">\n"
+		+ vnode_to_http(vtree) 
+		+ "</div>";
+}
+
 
 Mod_to_http::Mod_to_http(
 	const Errors & errors, 
 	const PTrees & ptrees, 
+	const VNode & vnode,
 	const std::string & http_nonterminals,
 	const std::string & http_terminals,
 	const std::string & http_head,
@@ -224,8 +256,14 @@ Mod_to_http::Mod_to_http(
 	//either errors or results are given and visible
 	if (errors.size() == 0)
 	{
+		//fill visualizatino
+		std::string http_visualization = vtree_to_http(vnode);
+		response.fill_response(RESP_FIELDS::VISUALIZATION, http_visualization);
+		
+		//fill results
 		std::string http_parse_trees = ptrees_to_http(ptrees);
 		response.fill_response(RESP_FIELDS::RESULTS, http_parse_trees);
+		
 		response.fill_response(RESP_FIELDS::ERRORS_OR_RESULTS, "errors");
 	}
 	else

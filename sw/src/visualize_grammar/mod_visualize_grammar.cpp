@@ -1,6 +1,6 @@
 #include "mod_visualize_grammar.h"
 
-void append_children(
+void Mod_visualize_grammar::append_children(
 	VNode & root,
 	const Rules & rules,
 	const std::vector<bool> & was_used
@@ -51,7 +51,7 @@ void append_children(
 	}
 }
 
-VNode Visualize_grammar(
+VNode Mod_visualize_grammar::visualize_grammar(
 	const Grammar & grammar
 )
 {

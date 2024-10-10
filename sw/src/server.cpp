@@ -32,6 +32,7 @@ void Server::post_handler(const httplib::Request & req,
 	Mod_to_http mod_to_http(
 		model.get_errors(),
 		model.get_ptrees(),
+		model.get_vnode(),
 		http_nonterminals,
 		http_terminals,
 		http_head,

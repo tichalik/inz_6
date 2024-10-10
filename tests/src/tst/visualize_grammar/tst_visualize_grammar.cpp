@@ -4,7 +4,9 @@ void _test_visualize(
 	const Grammar & grammar
 )
 {
-	std::cout << str(Visualize_grammar(grammar), "") << std::endl;
+	Mod_visualize_grammar mvg;
+	
+	std::cout << str(mvg.visualize_grammar(grammar), "") << std::endl;
 }
 
 void test_visualize()

@@ -4,14 +4,20 @@
 #include "vnode.h"
 #include "grammar.h"
 
-void append_children(
-	VNode & root,
-	const Rules & rules,
-	const std::vector<bool> & was_used
-);
+class Mod_visualize_grammar
+{
+	
+	void append_children(
+		VNode & root,
+		const Rules & rules,
+		const std::vector<bool> & was_used
+	);
+	
+public:
 
-VNode Visualize_grammar(
-	const Grammar & grammar
-);
+	VNode visualize_grammar(
+		const Grammar & grammar
+	);
 
+};
 #endif 

@@ -47,5 +47,6 @@ const std::string Html_response::RESPONSE_FIELDS_DICT[Html_response::NO_RESPONSE
 	"[[ERRORS]]",
 	"[[INPUT]]",
 	"[[RESULTS]]",
-	"[[ERRORS_OR_RESULTS]]"
+	"[[ERRORS_OR_RESULTS]]",
+	"[[VISUALIZATION]]",
 };
