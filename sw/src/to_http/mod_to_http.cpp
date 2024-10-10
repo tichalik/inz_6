@@ -80,7 +80,7 @@ std::string Mod_to_http::ptree_to_http(const PTree & ptree) const
 		info += "head_ok";
 	}
 	
-	return "<div class=\"tree " + info + "  \">" + parse_type
+	return "<div class=\"ptree " + info + "  \">" + parse_type
 		+ pnode_to_http(ptree.root) 
 		+ "</div>";
 }
@@ -228,7 +228,7 @@ std::string Mod_to_http::vnode_to_http(const VNode & vnode) const
 
 std::string Mod_to_http::vtree_to_http(const VNode & vtree) const
 {
-	return "<div class=\"tree\">\n"
+	return "<div class=\"vtree\">\n"
 		+ vnode_to_http(vtree) 
 		+ "</div>";
 }

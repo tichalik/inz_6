@@ -46,7 +46,9 @@
  }
  
  #error-list,
+ #visualization-list,
  #result-list,
+ #visualization,
  #results,
  #errors{
 	margin: 2px;
@@ -54,11 +56,12 @@
 	border: solid 1px gray;
  }
  
- #[[ERRORS_OR_RESULTS]]{
+ #errors{
 	display: none;
  }
  
  #error-list,
+ #visualization-list,
  #result-list{
 	height: 60vh;
 	overflow: auto;
@@ -112,6 +115,22 @@
 		event.stopPropagation();
 	}
 	
+	function filter_trees(){
+		complete_only = document.getElementById("complete_only").checked;
+		head_ok_only = document.getElementById("head_ok_only").checked;
+		for (tree of document.getElementsByClassName("tree")){
+			if(
+			complete_only && !tree.classList.contains("complete")
+			|| head_ok_only && !tree.classList.contains("head_ok")
+			){
+				tree.style.display = "none";
+			}
+			else {
+				tree.style.display = "block";
+			}
+		}
+	}
+
 	<!-- packing the script for adding the onclick events -->
 	<!-- so that is can be called upon loading the page -->
 	function add_events(){
@@ -156,17 +175,20 @@
         <label for="terminals">Terminals</label>
         
         <div>Enter nonterminals separated by a whitespace</div>
-        <textarea id="nonterminals" name="nonterminals" form="mf">a</textarea>
+        <textarea id="nonterminals" name="nonterminals" form="mf">a b</textarea>
         <label for="nonterminals">Nonterminals</label>
         
         <div>Enter head</div>
         <input type="text" name="head" id="head" value="a" form="mf">
         <label for="head">Head</label>
         
-        <div>Enter rules in form LHS -> RHS1 RHS2 separated by a newline</div>
-        <textarea id="rules" name="rules" form="mf">a -> A -
-a -> a A
-a -> a -</textarea>
+        <div>Enter rules in form LHS -&gt; RHS1 RHS2 separated by a newline</div>
+        <textarea id="rules" name="rules" form="mf">a -&gt; A -
+a -&gt; a A
+a -&gt; a -
+b -&gt; A -
+b -&gt; b A
+b -&gt; b -</textarea>
         <label for="rules">Rules</label>
     </fieldset>	
 
@@ -192,21 +214,644 @@ a -> a -</textarea>
 			<div id="errors">
 				Errors
 				<div id="error-list">
-					[[ERRORS]]
+					
+				</div>
+			</div>
+			
+			<div id="visualization">
+				Visualization
+				<div id="visualization-list">
+					<div class="tree" style="display: none;">
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ A -
+</div>
+<span class="node-folded" style="display: none;">A -</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ a A
+<div class="node">
+<div class="node-expanded">
+ A - A
+</div>
+<span class="node-folded" style="display: none;">A - A</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ a - A
+<div class="node">
+<div class="node-expanded">
+ A - - A
+</div>
+<span class="node-folded" style="display: none;">A - - A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a - A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a A</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ a -
+<div class="node">
+<div class="node-expanded">
+ A - -
+</div>
+<span class="node-folded" style="display: none;">A - -</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ a A -
+<div class="node">
+<div class="node-expanded">
+ A - A -
+</div>
+<span class="node-folded" style="display: none;">A - A -</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a A -</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a -</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a</span>
+</div>
+</div>
 				</div>
 			</div>
 			
 			
 			<div id="results">
-			Results:
+				<div id="results-header">
+					Results:
+					<form>
+						<input type="checkbox" id="head_ok_only" onclick="filter_trees()">
+						<label for="head_ok_only"> only correct head </label>
+						only correct head
+						<input type="checkbox" id="complete_only" onclick="filter_trees()" checked="checked">
+						<label for="complete_only"> only complete parses </label>
+						only complete parses
+					</form>
+				</div>
 				<div id="result-list">
-					[[RESULTS]]
+					<div class="tree complete head_ok  " style="display: block;">Parsing<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[A -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[a[A -] A]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[a[a[A -] A] -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[a[a[a[A -] A] -] A]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[a[a[a[a[A -] A] -] A] -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[a[a[a[a[a[A -] A] -] A] -] A]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[a[a[a[a[a[a[A -] A] -] A] -] A] -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[a[a[a[a[a[a[a[A -] A] -] A] -] A] -] A]</span>
+</div>
+</div>
+<br>
+<div class="tree complete   " style="display: block;">Parsing<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[A -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[b[A -] A]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[b[b[A -] A] -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[b[b[b[A -] A] -] A]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[b[b[b[b[A -] A] -] A] -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[b[b[b[b[b[A -] A] -] A] -] A]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[b[b[b[b[b[b[A -] A] -] A] -] A] -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[b[b[b[b[b[b[b[A -] A] -] A] -] A] -] A]</span>
+</div>
+</div>
+<br>
+<div class="tree head_ok  " style="display: none;">Incomplete parsing<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[A -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[a[A -] A]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[a[a[A -] A] -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[a[a[a[A -] A] -] A]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[a[a[a[a[A -] A] -] A] -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[a[a[a[a[a[A -] A] -] A] -] A]</span>
+</div>
+</div>
+<br>
+<div class="tree   " style="display: none;">Incomplete parsing<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[A -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[b[A -] A]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[b[b[A -] A] -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[b[b[b[A -] A] -] A]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[b[b[b[b[A -] A] -] A] -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[b[b[b[b[b[A -] A] -] A] -] A]</span>
+</div>
+</div>
+<br>
+<div class="tree head_ok  " style="display: none;">Incomplete parsing<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[A -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[a[A -] A]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[a[a[A -] A] -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[a[a[a[A -] A] -] A]</span>
+</div>
+</div>
+<br>
+<div class="tree   " style="display: none;">Incomplete parsing<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[A -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[b[A -] A]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[b[b[A -] A] -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[b[b[b[A -] A] -] A]</span>
+</div>
+</div>
+<br>
+<div class="tree head_ok  " style="display: none;">Incomplete parsing<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ a
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[A -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">a[a[A -] A]</span>
+</div>
+</div>
+<br>
+<div class="tree   " style="display: none;">Incomplete parsing<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ b
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ -
+</div>
+<span class="node-folded" style="display: none;">-</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[A -]</span>
+</div>
+<div class="node">
+<div class="node-expanded">
+ A
+</div>
+<span class="node-folded" style="display: none;">A</span>
+</div>
+</div>
+<span class="node-folded" style="display: none;">b[b[A -] A]</span>
+</div>
+</div>
+<br>
+
 				</div>
 			</div>
 			
 		</div>
 	</div>
 	
+
 
 
 </body></html>
