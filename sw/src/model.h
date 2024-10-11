@@ -19,7 +19,8 @@ public:
 		const std::string & http_nonterminals ,
 		const std::string & http_head ,
 		const std::string & http_rules ,
-		const std::string & http_word 
+		const std::string & http_word,
+		const bool simple_visualization
 	);
 	
 	Errors get_errors() const;

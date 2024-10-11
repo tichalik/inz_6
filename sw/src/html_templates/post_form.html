@@ -127,6 +127,14 @@
 
 #load-examples:hover #example-list {display: block;}
 
+#visualization{
+	display: block;
+}
+
+#visualization label{
+	display: inline;
+}
+
 </style>
 
 <script>
@@ -359,6 +367,12 @@
 				
 				<div id="visualization">
 					Visualization
+					<fieldset id="visualization">
+					    <input type="radio" id="visualization-simple" name="visualization" value="simple" form="mf" checked=true>
+					    <label for="visualization-simple"> Simple </label>
+					    <input type="radio" id="visualization-complex" name="visualization" value="complex" form="mf">
+					    <label for="visualization-complex"> Complex </label>
+					</fieldset>
 					<div id="visualization-list">
 						[[VISUALIZATION]]
 					</div>

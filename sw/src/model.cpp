@@ -5,7 +5,8 @@ Model::Model(
 	const std::string & str_nonterminals ,
 	const std::string & str_head ,
 	const std::string & str_rules ,
-	const std::string & str_word 
+	const std::string & str_word ,
+	const bool simple_visualization
 )
 {
 	
@@ -39,7 +40,10 @@ Model::Model(
 		if (semantic_errors.size() == 0)
 		{
 			Mod_visualize_grammar mod_visualize;
-			visualization = mod_visualize.visualize_grammar(grammar, true);
+			visualization = mod_visualize.visualize_grammar(
+				grammar,
+				simple_visualization
+			);
 			
 			Mod_parser mod_parser(grammar, word); 
 			

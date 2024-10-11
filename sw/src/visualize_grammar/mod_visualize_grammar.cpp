@@ -42,7 +42,7 @@ void Mod_visualize_grammar::simple_append_children(
 
 				was_used[j] = true;
 
-				append_children(
+				simple_append_children(
 					child,
 					rules,
 					was_used

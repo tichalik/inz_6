@@ -19,13 +19,15 @@ void Server::post_handler(const httplib::Request & req,
 	const std::string http_head = req.get_param_value("head");
 	const std::string http_rules = req.get_param_value("rules");
 	const std::string http_word = req.get_param_value("input");
+	const bool simple_visualization = req.get_param_value("visualization") == "simple";
 	
 	Model model(
 		 http_terminals ,
 		 http_nonterminals ,
 		 http_head ,
 		 http_rules ,
-		 http_word 
+		 http_word ,
+		 simple_visualization
 	);
 	
 	//transform Errors and Ptrees into http
