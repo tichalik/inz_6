@@ -104,6 +104,29 @@
 	padding: 5px;
   }
 
+  #example-list{
+	display: none;
+  }
+  #load-examples:hower #example-list{
+	display: block;
+  }
+  
+  
+
+#example-list {
+  display: none;
+  position: absolute;
+  background-color: white;
+  
+}
+
+#example-list div {
+  padding: 12px 16px;
+}
+
+
+#load-examples:hover #example-list {display: block;}
+
 </style>
 
 <script>
@@ -186,9 +209,29 @@
 		<div id="header">
 			<div id="help"> Help </div>
 			<div id="about-grammars"> About grammars </div>
-			<div id="load-examples"> Load example </div>
+			<div id="load-examples">
+				Load examples
+				<div id="example-list">
+
+					<div id="ex-abc-1">
+						a<sup>k</sup>b<sup>l</sup>c<sup>m</sup>,
+						&nbsp;&nbsp;    k,l,m = 1, 2 ...,
+						&nbsp;&nbsp;    version 1
+					</div>
+					<div id="ex-abc-2">
+						a<sup>k</sup>b<sup>l</sup>c<sup>m</sup>,
+						&nbsp;&nbsp;    k,l,m = 1, 2 ...,
+						&nbsp;&nbsp;    version 2
+					</div>
+					<div id="ex-abc-3">
+						a<sup>k</sup>b<sup>l</sup>c<sup>m</sup>,
+						&nbsp;&nbsp;    k,l,m = 1, 2 ...,
+						&nbsp;&nbsp;    version 3
+					</div>
+				</div><!-- example-list -->
+			</div><!-- load-examples -->
 			<div id="credits"> Credits </div>
-		</div>
+		</div><!-- header -->
 		
 		<div id="col-container">
 			<div id="col1"> 
