@@ -39,7 +39,7 @@ Model::Model(
 		if (semantic_errors.size() == 0)
 		{
 			Mod_visualize_grammar mod_visualize;
-			visualization = mod_visualize.visualize_grammar(grammar);
+			visualization = mod_visualize.visualize_grammar(grammar, true);
 			
 			Mod_parser mod_parser(grammar, word); 
 			

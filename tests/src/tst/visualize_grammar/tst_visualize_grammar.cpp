@@ -6,7 +6,7 @@ void _test_visualize(
 {
 	Mod_visualize_grammar mvg;
 	
-	std::cout << str(mvg.visualize_grammar(grammar), "") << std::endl;
+	std::cout << str(mvg.visualize_grammar(grammar, true), "") << std::endl;
 }
 
 void test_visualize()
