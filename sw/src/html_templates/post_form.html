@@ -6,16 +6,18 @@
  body{
 	padding: 5vh;
  }
+  
+ #main{
+ }
  
- #container{
+ #col-container{
 	display: flex;
-	height: 90vh;
  }
  
  #col1{
 	display: flex;
 	flex-direction: column;
-	flex-basis: 33%;
+	flex-basis: 34%;
  }
 
  #col2{
@@ -83,7 +85,24 @@
 	margin 10px;
 	border: dashed 2px black;
  }
- 
+
+  #header{
+	display: flex;
+	padding: 10px;
+	margin: 20px 0px;
+	border: black solid 1px;
+  }
+
+  #help,
+  #about-grammars,
+  #load-examples,
+  #credits{
+	flex: 1;
+	text-align: center;
+	margin: 5px;
+	border: black solid 1px;
+	padding: 5px;
+  }
 
 </style>
 
@@ -162,86 +181,94 @@
 		 
 	<form action="/done" method="post" id="mf"></form>
 	
-	
-	<div id="container">
-		<div id="col1"> 
+	<div id="main">
 		
-		
-    <!-- Grammar fieldset associated with the main form -->
-    <fieldset id="grammar" form="mf">
-        <legend>Grammar</legend>
-        
-        <div>Enter terminals separated by a whitespace</div>
-        <textarea id="terminals" name="terminals" form="mf">[[TERMINALS]]</textarea>
-        <label for="terminals">Terminals</label>
-        
-        <div>Enter nonterminals separated by a whitespace</div>
-        <textarea id="nonterminals" name="nonterminals" form="mf">[[NONTERMINALS]]</textarea>
-        <label for="nonterminals">Nonterminals</label>
-        
-        <div>Enter head</div>
-        <input type="text" name="head" id="head" value="[[HEAD]]" form="mf">
-        <label for="head">Head</label>
-        
-        <div>Enter rules in form LHS -> RHS1 RHS2 separated by a newline</div>
-        <textarea id="rules" name="rules" form="mf">[[RULES]]</textarea>
-        <label for="rules">Rules</label>
-    </fieldset>	
-
-    
-	
-	<fieldset id="submit" form="mf">	
-		<legend>Submit</legend>
-		<input type="submit" value="submit" form="mf">
-	</fieldset>	
-	
-		
+		<div id="header">
+			<div id="help"> Help </div>
+			<div id="about-grammars"> About grammars </div>
+			<div id="load-examples"> Load example </div>
+			<div id="credits"> Credits </div>
 		</div>
-		<div id="col2">
-			<!-- Word fieldset associated with the main form -->
-			<fieldset id="word" form="mf">
-				<legend>Input</legend>
+		
+		<div id="col-container">
+			<div id="col1"> 
+			
+					
+				<!-- Grammar fieldset associated with the main form -->
+				<fieldset id="grammar" form="mf">
+					<legend>Grammar</legend>
+					
+					<div>Enter terminals separated by a whitespace</div>
+					<textarea id="terminals" name="terminals" form="mf">[[TERMINALS]]</textarea>
+					<label for="terminals">Terminals</label>
+					
+					<div>Enter nonterminals separated by a whitespace</div>
+					<textarea id="nonterminals" name="nonterminals" form="mf">[[NONTERMINALS]]</textarea>
+					<label for="nonterminals">Nonterminals</label>
+					
+					<div>Enter head</div>
+					<input type="text" name="head" id="head" value="[[HEAD]]" form="mf">
+					<label for="head">Head</label>
+					
+					<div>Enter rules in form LHS -&gt; RHS1 RHS2 separated by a newline</div>
+					<textarea id="rules" name="rules" form="mf">[[RULES]]</textarea>
+					<label for="rules">Rules</label>
+				</fieldset>	
+
 				
-				<div>Enter input</div>
-				<textarea id="input" name="input" form="mf">[[INPUT]]</textarea>
-				<label for="input">Input</label>
-			</fieldset>
+				
+				<fieldset id="submit" form="mf">	
+					<legend>Submit</legend>
+					<input type="submit" value="submit" form="mf">
+				</fieldset>	
+				
 			
-			<div id="errors">
-				Errors
-				<div id="error-list">
-					[[ERRORS]]
-				</div>
 			</div>
-			
-			<div id="visualization">
-				Visualization
-				<div id="visualization-list">
-					[[VISUALIZATION]]
+			<div id="col2">
+				<!-- Word fieldset associated with the main form -->
+				<fieldset id="word" form="mf">
+					<legend>Input</legend>
+					
+					<div>Enter input</div>
+					<textarea id="input" name="input" form="mf">[[INPUT]]</textarea>
+					<label for="input">Input</label>
+				</fieldset>
+				
+				<div id="errors">
+					Errors
+					<div id="error-list">
+						[[ERRORS]]
+					</div>
 				</div>
+				
+				<div id="visualization">
+					Visualization
+					<div id="visualization-list">
+						[[VISUALIZATION]]
+					</div>
+				</div>
+				
+				
+				<div id="results">
+					<div id="results-header">
+						Results:
+						<form>
+							<input type="checkbox" id="head_ok_only" onclick="filter_trees()">
+							<label for="head_ok_only"> only correct head </label>
+							only correct head
+							<input type="checkbox" id="complete_only" onclick="filter_trees()">
+							<label for="complete_only"> only complete parses </label>
+							only complete parses
+						</form>
+					</div>
+					<div id="result-list">
+						[[RESULTS]]
+					</div>
+				</div>
+				
 			</div>
-			
-			
-			<div id="results">
-				<div id="results-header">
-					Results:
-					<form>
-						<input type="checkbox" id="head_ok_only" onclick="filter_trees()">
-						<label for="head_ok_only"> only correct head </label>
-						only correct head
-						<input type="checkbox" id="complete_only" onclick="filter_trees()">
-						<label for="complete_only"> only complete parses </label>
-						only complete parses
-					</form>
-				</div>
-				<div id="result-list">
-					[[RESULTS]]
-				</div>
-			</div>
-			
 		</div>
+		
 	</div>
-	
-
 
 </body></html>
