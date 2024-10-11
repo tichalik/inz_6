@@ -196,7 +196,7 @@
 
 	example_tab = {  
 		"ex-abc-1":{
-			"input": "a a b b b c",
+			"input": "a a b b b c c",
 			"terminals": "a b c",
 			"nonterminals": "A B C ABC",
 			"head": "ABC",
@@ -206,13 +206,12 @@
 				+"B -> b b\n"
 				+"B -> B b\n"
 				+"C -> C c\n"
-				+"C -> C C\n"
+				+"C -> c c\n"
 				+"ABC -> A B C\n"
 		},
 			
 		"ex-abc-2":{
-			"input": "a a b b b c",
-			"terminals": "a b c",
+			"input": "a a b b b c c",
 			"terminals": "a b c",
 			"nonterminals": "A  AB ABC",
 			"head": "ABC",
@@ -222,12 +221,11 @@
 				+"AB -> A b\n"
 				+"AB -> AB b\n"
 				+"ABC -> AB c \n"
-				+"ABC -> ABC C\n"
+				+"ABC -> ABC c\n"
 		},
 			
 		"ex-abc-3":{
-			"input": "a a b b b c",
-			"terminals": "a b c",
+			"input": "a a b b b c c",
 			"terminals": "a b c",
 			"nonterminals": "C BC ABC",
 			"head": "ABC",
@@ -238,6 +236,19 @@
 				+"BC -> b BC\n"
 				+"ABC -> a BC \n"
 				+"ABC -> a ABC\n"
+		},
+			
+			
+		"ex-a-amb":{
+			"input": "a a a a a",
+			"terminals": "a",
+			"nonterminals": "A B",
+			"head": "A",
+			"rules": 
+				"A -> a A \n"
+				+"A -> a a\n"
+				+"B -> B a\n"
+				+"B -> a a\n"
 		},
 			
 	}
@@ -284,6 +295,11 @@
 						a<sup>k</sup>b<sup>l</sup>c<sup>m</sup>,
 						&nbsp;&nbsp;    k,l,m = 1, 2 ...,
 						&nbsp;&nbsp;    version 3
+					</div>
+					<div id="ex-a-amb" onclick="load_example('ex-a-amb')">
+						a<sup>k,
+						&nbsp;&nbsp;    k = 1, 2 ...,
+						&nbsp;&nbsp;    ambiguous
 					</div>
 				</div><!-- example-list -->
 			</div><!-- load-examples -->
