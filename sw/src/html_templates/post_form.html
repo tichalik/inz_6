@@ -192,6 +192,63 @@
 			node.style.display = "none";
 		}
 	}
+
+
+	example_tab = {  
+		"ex-abc-1":{
+			"input": "a a b b b c",
+			"terminals": "a b c",
+			"nonterminals": "A B C ABC",
+			"head": "ABC",
+			"rules": 
+				"A -> a a\n"
+				+"A -> A a\n"
+				+"B -> b b\n"
+				+"B -> B b\n"
+				+"C -> C c\n"
+				+"C -> C C\n"
+				+"ABC -> A B C\n"
+		},
+			
+		"ex-abc-2":{
+			"input": "a a b b b c",
+			"terminals": "a b c",
+			"terminals": "a b c",
+			"nonterminals": "A  AB ABC",
+			"head": "ABC",
+			"rules": 
+				"A -> a a \n"
+				+"A -> A a\n"
+				+"AB -> A b\n"
+				+"AB -> AB b\n"
+				+"ABC -> AB c \n"
+				+"ABC -> ABC C\n"
+		},
+			
+		"ex-abc-3":{
+			"input": "a a b b b c",
+			"terminals": "a b c",
+			"terminals": "a b c",
+			"nonterminals": "C BC ABC",
+			"head": "ABC",
+			"rules": 
+				"C -> c c \n"
+				+"C -> c C\n"
+				+"BC -> b C\n"
+				+"BC -> b BC\n"
+				+"ABC -> a BC \n"
+				+"ABC -> a ABC\n"
+		},
+			
+	}
+
+	function load_example(ex_id){
+		ex = example_tab[ex_id];
+		for (x in ex){
+			document.getElementById(x).value = ex[x];
+		}
+	}
+
 </script>
 
 
@@ -213,17 +270,17 @@
 				Load examples
 				<div id="example-list">
 
-					<div id="ex-abc-1">
+					<div id="ex-abc-1" onclick="load_example('ex-abc-1')">
 						a<sup>k</sup>b<sup>l</sup>c<sup>m</sup>,
 						&nbsp;&nbsp;    k,l,m = 1, 2 ...,
 						&nbsp;&nbsp;    version 1
 					</div>
-					<div id="ex-abc-2">
+					<div id="ex-abc-2" onclick="load_example('ex-abc-2')">
 						a<sup>k</sup>b<sup>l</sup>c<sup>m</sup>,
 						&nbsp;&nbsp;    k,l,m = 1, 2 ...,
 						&nbsp;&nbsp;    version 2
 					</div>
-					<div id="ex-abc-3">
+					<div id="ex-abc-3" onclick="load_example('ex-abc-3')">
 						a<sup>k</sup>b<sup>l</sup>c<sup>m</sup>,
 						&nbsp;&nbsp;    k,l,m = 1, 2 ...,
 						&nbsp;&nbsp;    version 3
