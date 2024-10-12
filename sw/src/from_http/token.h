@@ -6,6 +6,8 @@
 
 enum EN_TOKEN_TYPE
 {
+	TOKEN_ERROR,
+
 	TERM,
 	NTERM,
 	SEP,
