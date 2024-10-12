@@ -24,6 +24,7 @@ VECTOR_STR(Errors);
 VECTOR_STR(Rules);
 VECTOR_STR(PTrees);
 VECTOR_STR(VNodes);
+VECTOR_STR(Tokens);
 
 
 VECTOR_STR(PTable_entries);
@@ -54,7 +55,21 @@ std::string str(
 	ADD_FIELD(type);
 	ADD_FIELD(source);
 	return res;
-}
+} 
+
+
+std::string str(
+	const Token & i,
+	const std::string & tabs
+
+)
+{
+	std::string res;
+	ADD_FIELD(type);
+	ADD_FIELD(str);
+	ADD_FIELD(start_pos);
+	return res;
+} 
 
 
 std::string str(
@@ -257,6 +272,7 @@ std::string str(
 			res = "MULTIPLE_ARROWS";
 			break;	
 		case TERMINAL_AS_LHS:
+
 			res = "TERMINAL_AS_LHS";
 			break;
 		case HEAD_NOT_IN_NONTERMINALS:
@@ -270,6 +286,40 @@ std::string str(
 			break;
 		default:
 			res = "UNKNOWN ERROR";
+			break;
+	}
+	
+	return tabs + res;
+}
+
+std::string str(
+	const EN_TOKEN_TYPE &token,
+	const std::string & tabs
+
+)
+{
+	std::string res;
+	switch (token)
+	{
+			
+		case TERM:
+			res = "TERM";
+			break;
+		case NTERM:
+			res = "NTERM";
+			break;
+		case SEP:
+			res = "SEP";
+			break;
+		case OR:
+			res = "OR";
+			break;
+		case LB:
+			res = "LB";
+			break;
+	
+		default:
+			res = "UNKNOWN TOKEN TYPE";
 			break;
 	}
 	

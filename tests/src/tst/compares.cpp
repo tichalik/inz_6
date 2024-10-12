@@ -56,6 +56,7 @@
 
 COMPARE_SIMPLE_TYPE(std::string);
 COMPARE_SIMPLE_TYPE(EN_ERROR_TYPE);
+COMPARE_SIMPLE_TYPE(EN_TOKEN_TYPE);
 COMPARE_SIMPLE_TYPE(bool);
 COMPARE_SIMPLE_TYPE(size_t);
 
@@ -64,6 +65,7 @@ COMPARE_VECTOR_TYPE(std::vector<Symbols>);
 COMPARE_VECTOR_TYPE(Errors);
 COMPARE_VECTOR_TYPE(Rules);
 COMPARE_VECTOR_TYPE(PTrees);
+COMPARE_VECTOR_TYPE(Tokens);
 
 COMPARE_VECTOR_TYPE(PTable_entries);
 COMPARE_VECTOR_TYPE(PTable_references);
@@ -106,10 +108,25 @@ bool compare(
 	const Error & real,
 	const std::string & message
 )
-{
+{ 
 	bool same = true;
 	COMPARE(type);
 	COMPARE(source);
+	END_COMPARE;
+	return same;
+}
+
+
+bool compare(
+	const Token & expected,
+	const Token & real,
+	const std::string & message
+)
+{ 
+	bool same = true;
+	COMPARE(type);
+	COMPARE(str);
+	COMPARE(start_pos);
 	END_COMPARE;
 	return same;
 }

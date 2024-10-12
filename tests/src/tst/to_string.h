@@ -18,6 +18,8 @@
 #include "chomskify.h"
 
 #include "vnode.h"
+#include "token.h"
+
 
 #define STR_DECLARATION(TYPE)\
 	std::string str(\
@@ -27,6 +29,7 @@
 
 STR_DECLARATION(std::string);
 STR_DECLARATION(EN_ERROR_TYPE);
+STR_DECLARATION(EN_TOKEN_TYPE);
 STR_DECLARATION(bool);
 STR_DECLARATION(size_t);
 
@@ -36,6 +39,8 @@ STR_DECLARATION(Errors);
 STR_DECLARATION(Rules);
 STR_DECLARATION(PTrees);
 
+STR_DECLARATION(Token);
+STR_DECLARATION(Tokens);
 
 STR_DECLARATION(Error);
 STR_DECLARATION(Non_terminals);

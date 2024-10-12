@@ -33,6 +33,10 @@ class TST_mod_from_http: public Tester
 		const Word & expected,
 		const Errors & expected_errors
 	);
+	void _test_tokenize(
+		const std::string & str_input,
+		const Tokens & expected
+	);
 	
 public:
 	
@@ -41,6 +45,7 @@ public:
 	void test_rule_from_http();
 	void test_rules_from_http();
 	void test_word_from_http();
+	void test_tokenize();
 	
 };
 #endif

@@ -16,7 +16,7 @@
 #include "parsing_grammar_adapter.h"
 #include "ptable.h"
 #include "chomskify.h"
-
+#include "chomskify.h"
 
 #define COMPARE_DECLARATION(TYPE)\
 	bool compare(\
@@ -35,6 +35,10 @@ COMPARE_DECLARATION(std::vector<Symbols>);
 COMPARE_DECLARATION(Errors);
 COMPARE_DECLARATION(Rules);
 COMPARE_DECLARATION(PTrees);
+
+COMPARE_DECLARATION(Token);
+COMPARE_DECLARATION(Tokens);
+COMPARE_DECLARATION(EN_TOKEN_TYPE);
 
 
 COMPARE_DECLARATION(Error);

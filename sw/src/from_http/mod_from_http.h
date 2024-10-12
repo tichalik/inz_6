@@ -8,6 +8,9 @@
 #include "grammar.h"
 #include "word.h"
 #include "error.h"
+#include "token.h"
+
+Tokens tokenize(const std::string & str);
 
 class Mod_from_http
 {
