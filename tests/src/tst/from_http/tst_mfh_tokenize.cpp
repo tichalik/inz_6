@@ -80,14 +80,12 @@ void TST_mod_from_http::test_tokenize()
 		);
 	}
 	
-
-	
-	{
+	{ 
 		std::cout << "=============================================================" << std::endl;
 		std::cout << " correct input with spaces and tabs: <aaa>aaa::=|\\n  " << std::endl;
 		std::cout << "=============================================================" << std::endl;
 		
-		std::string input = "  <aaa>  \taaa ::=    |     \n";
+		std::string input = "  <aaa>  \taaa ::=    |     \n         ";
 
 		Tokens expected;
 
@@ -95,7 +93,7 @@ void TST_mod_from_http::test_tokenize()
 			Token token;
 			token.type = NTERM;
 			token.str = "<aaa>";
-			token.start_pos = 0;
+			token.start_pos = 2;
 
 			expected.push_back(token);
 		}
@@ -104,7 +102,7 @@ void TST_mod_from_http::test_tokenize()
 			Token token;
 			token.type = TERM;
 			token.str = "aaa";
-			token.start_pos = 5;
+			token.start_pos = 10;
 
 			expected.push_back(token);
 		}
@@ -113,16 +111,16 @@ void TST_mod_from_http::test_tokenize()
 			Token token;
 			token.type = SEP;
 			token.str = "::=";
-			token.start_pos = 8;
+			token.start_pos = 14;
 
 			expected.push_back(token);
-		}
+		} 
 
 		{
 			Token token;
 			token.type = OR;
 			token.str = "|";
-			token.start_pos = 11;
+			token.start_pos = 21;
 
 			expected.push_back(token);
 		}
@@ -131,7 +129,128 @@ void TST_mod_from_http::test_tokenize()
 			Token token;
 			token.type = LB;
 			token.str = "\n";
-			token.start_pos = 12;
+			token.start_pos = 27;
+
+			expected.push_back(token);
+		}
+
+		_test_tokenize(
+			input,
+			expected
+		);
+	}
+		
+	{
+		std::cout << "=============================================================" << std::endl;
+		std::cout << " correct input with spaces and tabs and escaped line breaks: <aaa>aaa::=|\\n  " << std::endl;
+		std::cout << "=============================================================" << std::endl;
+		
+		std::string input = "\\\n  <aaa>\\  \n  \taaa ::=  \\  \n\\\n  |    \\\n\n\\\n\\\n";
+
+		Tokens expected;
+
+		{
+			Token token;
+			token.type = NTERM;
+			token.str = "<aaa>";
+			token.start_pos = 4;
+
+			expected.push_back(token);
+		}
+
+		{
+			Token token;
+			token.type = TERM;
+			token.str = "aaa";
+			token.start_pos = 16;
+
+			expected.push_back(token);
+		}
+
+		{
+			Token token;
+			token.type = SEP;
+			token.str = "::=";
+			token.start_pos = 20;
+
+			expected.push_back(token);
+		} 
+
+		{
+			Token token;
+			token.type = OR;
+			token.str = "|";
+			token.start_pos = 33;
+
+			expected.push_back(token);
+		}
+
+		{
+			Token token;
+			token.type = LB;
+			token.str = "\n";
+			token.start_pos = 40;
+
+			expected.push_back(token);
+		}
+
+		_test_tokenize(
+			input,
+			expected
+		);
+	}
+	
+
+	{
+		std::cout << "=============================================================" << std::endl;
+		std::cout << " correct input with spaces and tabs and escaped line breaks + \\r <aaa>aaa::=|\\n  " << std::endl;
+		std::cout << "=============================================================" << std::endl;
+		
+		std::string input = "\\\r\n  <aaa>\\  \r\n  \taaa ::=  \\  \r\n\\\r\n  |    \\\r\n\r\n\\\r\n\\\r\n";
+
+		Tokens expected;
+
+		{
+			Token token;
+			token.type = NTERM;
+			token.str = "<aaa>";
+			token.start_pos = 5;
+
+			expected.push_back(token);
+		}
+
+		{
+			Token token;
+			token.type = TERM;
+			token.str = "aaa";
+			token.start_pos = 18;
+
+			expected.push_back(token);
+		}
+
+		{
+			Token token;
+			token.type = SEP;
+			token.str = "::=";
+			token.start_pos = 22;
+
+			expected.push_back(token);
+		} 
+
+		{
+			Token token;
+			token.type = OR;
+			token.str = "|";
+			token.start_pos = 37;
+
+			expected.push_back(token);
+		}
+
+		{
+			Token token;
+			token.type = LB;
+			token.str = "\r\n";
+			token.start_pos = 45;
 
 			expected.push_back(token);
 		}

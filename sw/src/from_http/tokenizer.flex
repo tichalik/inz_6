@@ -25,17 +25,17 @@ TXT		[A-Za-z0-9_]+
 
 %%
 
-{WC}{TXT}{WC}				PUSH_TOKEN(TERM)
+{TXT}					PUSH_TOKEN(TERM)
 
-{WC}\<{TXT}\>{WC}			PUSH_TOKEN(NTERM)
+\<{TXT}\>				PUSH_TOKEN(NTERM)
 
-{WC}\|{WC}				PUSH_TOKEN(OR)
+\|						PUSH_TOKEN(OR)
 
-{WC}::={WC}				PUSH_TOKEN(SEP)
+::=						PUSH_TOKEN(SEP)
 
-{WC}\n{WC}				PUSH_TOKEN(LB)
+\r?\n						PUSH_TOKEN(LB)
 
-({WC}\\{WC}\n{WC})+		|
+({WC}\\{WC}\r?\n{WC})+		|
 {WC}					{
 							pos += yyleng;
 						}
