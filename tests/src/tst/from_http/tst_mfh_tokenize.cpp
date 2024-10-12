@@ -200,7 +200,6 @@ void TST_mod_from_http::test_tokenize()
 		);
 	}
 	
-
 	{
 		std::cout << "=============================================================" << std::endl;
 		std::cout << " correct input with spaces and tabs and escaped line breaks + \\r <aaa>aaa::=|\\n  " << std::endl;
@@ -254,6 +253,179 @@ void TST_mod_from_http::test_tokenize()
 
 			expected.push_back(token);
 		}
+
+		_test_tokenize(
+			input,
+			expected
+		);
+	}
+	
+	{
+		std::cout << "=============================================================" << std::endl;
+		std::cout << " token errors  " << std::endl;
+		std::cout << "=============================================================" << std::endl;
+		
+		std::string input = "<aa<a> <> . aa|aa \\ : :: :::= :=";
+
+		Tokens expected;
+
+		{
+			Token token;
+			token.type = TOKEN_ERROR;
+			token.str = "<";
+			token.start_pos = 0;
+
+			expected.push_back(token);
+		}
+
+		{
+			Token token;
+			token.type = TERM;
+			token.str = "aa";
+			token.start_pos = 1;
+
+			expected.push_back(token);
+		}
+
+		{
+			Token token;
+			token.type = NTERM;
+			token.str = "<a>";
+			token.start_pos = 3;
+
+			expected.push_back(token);
+		}
+
+		{
+			Token token;
+			token.type = TOKEN_ERROR;
+			token.str = "<";
+			token.start_pos = 7;
+
+			expected.push_back(token);
+		}
+
+		{
+			Token token;
+			token.type = TOKEN_ERROR;
+			token.str = ">";
+			token.start_pos = 8;
+
+			expected.push_back(token);
+		}
+
+		{
+			Token token;
+			token.type = TOKEN_ERROR;
+			token.str = ".";
+			token.start_pos = 10;
+
+			expected.push_back(token);
+		}
+
+		{
+			Token token;
+			token.type = TERM;
+			token.str = "aa";
+			token.start_pos = 12;
+
+			expected.push_back(token);
+		}
+
+		{
+			Token token;
+			token.type = OR;
+			token.str = "|";
+			token.start_pos = 14;
+
+			expected.push_back(token);
+		}
+
+		{
+			Token token;
+			token.type = TERM;
+			token.str = "aa";
+			token.start_pos = 15;
+
+			expected.push_back(token);
+		}
+
+		{
+			Token token;
+			token.type = TOKEN_ERROR;
+			token.str = "\\";
+			token.start_pos = 18;
+
+			expected.push_back(token);
+		}
+
+		{
+			Token token;
+			token.type = TOKEN_ERROR;
+			token.str = ":";
+			token.start_pos = 20;
+
+			expected.push_back(token);
+		}
+
+
+		{
+			Token token;
+			token.type = TOKEN_ERROR;
+			token.str = ":";
+			token.start_pos = 22;
+
+			expected.push_back(token);
+		} 
+
+
+		{
+			Token token;
+			token.type = TOKEN_ERROR;
+			token.str = ":";
+			token.start_pos = 23;
+
+			expected.push_back(token);
+		}
+
+
+		{
+			Token token;
+			token.type = TOKEN_ERROR;
+			token.str = ":";
+			token.start_pos = 25;
+
+			expected.push_back(token);
+		}
+
+
+		{
+			Token token;
+			token.type = SEP;
+			token.str = "::=";
+			token.start_pos = 26;
+
+			expected.push_back(token);
+		}
+
+
+		{
+			Token token;
+			token.type = TOKEN_ERROR;
+			token.str = ":";
+			token.start_pos = 30;
+
+			expected.push_back(token);
+		}
+		{
+			Token token;
+			token.type = TOKEN_ERROR;
+			token.str = "=";
+			token.start_pos = 31;
+
+			expected.push_back(token);
+		}
+
 
 		_test_tokenize(
 			input,
