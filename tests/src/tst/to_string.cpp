@@ -247,12 +247,6 @@ std::string str(
 		case REPEATING_SYMBOL:
 			res = "REPEATING_SYMBOL";
 			break;
-		case ARROW_AS_SYMBOL:
-			res = "ARROW_AS_SYMBOL";
-			break;
-		case IN_BOTH_TERMINALS_AND_NONTERMINALS:
-			res = "IN_BOTH_TERMINALS_AND_NONTERMINALS";
-			break;
 		case MISSING_LHS:
 			res = "MISSING_LHS";
 			break;

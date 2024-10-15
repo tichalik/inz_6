@@ -18,9 +18,9 @@ enum EN_ERROR_TYPE
 	
 	//non/terminals related errors
 	REPEATING_SYMBOL,
-	ARROW_AS_SYMBOL,
-	IN_BOTH_TERMINALS_AND_NONTERMINALS,
-	
+	TERM_IN_NTERMS,
+	NTERM_IN_TERMS,
+
 	//rule related errors
 		//parsing related
 	MISSING_LHS,

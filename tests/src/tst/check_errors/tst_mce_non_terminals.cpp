@@ -64,28 +64,4 @@ void TST_mod_check_errors::test_non_terminals_errors()
 			expected_errors
 		);
 	}
-	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " check if intersecting symbols are caught" << std::endl;
-		std::cout << "===============================================================" << std::endl;
-		
-		Non_terminals input;
-		input.insert("a");
-		input.insert("B");
-		input.insert("C");
-		input.insert("D");
-		
-		Errors expected_errors;
-		
-		Error error1;
-		error1.type = IN_BOTH_TERMINALS_AND_NONTERMINALS;
-		error1.source = " symbol <a>:";
-		expected_errors.push_back(error1);
-		
-		_test_non_terminals_errors(
-			input, 
-			other,
-			expected_errors
-		);
-	}
 }

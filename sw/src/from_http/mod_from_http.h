@@ -34,9 +34,11 @@ class Mod_from_http
 	 * assume the string is already processed (htpp entities are translated to 
 	 * normal string)
 	 */
-	Non_terminals non_terminals_from_http(
-		const std::string & param,
-		const bool is_nonterminals
+	Non_terminals nonterminals_from_http(
+		const std::string & param
+	);
+	Non_terminals terminals_from_http(
+		const std::string & param
 	);
 	
     /** 

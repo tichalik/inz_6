@@ -127,19 +127,6 @@ void Mod_check_errors::non_terminals_check_errors(
 	const Non_terminals & other
 )
 {
-	if (input.find("->") != input.end())
-	{
-		add_error(ARROW_AS_SYMBOL, parent_source);			
-	}
-	
-	for ( auto s = input.cbegin(); s != input.cend(); s++)
-	{	
-		if (other.find(*s) != other.end())
-		{
-			add_error(IN_BOTH_TERMINALS_AND_NONTERMINALS, 
-				parent_source + " symbol <" + (*s) + ">:");			
-		}
-	}
 }
 
 

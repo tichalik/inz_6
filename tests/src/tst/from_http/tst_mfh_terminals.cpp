@@ -1,8 +1,7 @@
 #include "tst_mod_from_http.h"
 
-void TST_mod_from_http::_test_non_terminals_from_http(
+void TST_mod_from_http::_test_terminals_from_http(
 	const std::string & str_input,
-	const bool is_nonterminals,
 	const Non_terminals & expected,
 	const Errors & expected_errors
 )
@@ -23,10 +22,10 @@ void TST_mod_from_http::_test_non_terminals_from_http(
 	mod_from_http.errors.clear();
 	
 	//perform the conversion
-	Non_terminals result = mod_from_http.non_terminals_from_http(str_input, is_nonterminals);
+	Non_terminals result = mod_from_http.nonterminals_from_http(str_input);
 	
 	//check if the result is identical to expected
-	bool ok_result = compare(expected, result, (is_nonterminals? "nonterminals" : "terminals"));
+	bool ok_result = compare(expected, result, "nonterminals") ;
 	
 	//check if obtained errors are identical to expected 
 	bool ok_errors = compare(expected_errors, mod_from_http.errors, "errors");
@@ -42,7 +41,7 @@ void TST_mod_from_http::_test_non_terminals_from_http(
 }
 
 
-void TST_mod_from_http::test_non_terminal_from_http()
+void TST_mod_from_http::test_terminals_from_http()
 {
 	Errors no_errors;
 	
@@ -74,9 +73,8 @@ void TST_mod_from_http::test_non_terminal_from_http()
 		std::cout << "normal non_terminals -- single space separation " << std::endl;
 		std::cout << "===============================================================" << std::endl;
 		
-		_test_non_terminals_from_http(
+		_test_terminals_from_http(
 			"a b c d",
-			false, 
 			expected_non_terminals,
 			no_errors
 		);
@@ -87,9 +85,8 @@ void TST_mod_from_http::test_non_terminal_from_http()
 		std::cout << "normal non_terminals -- leading whitespace " << std::endl;
 		std::cout << "===============================================================" << std::endl;
 		
-		_test_non_terminals_from_http(
+		_test_terminals_from_http(
 			"         \t \n\na b c d",
-			false, 
 			expected_non_terminals,
 			no_errors
 		);
@@ -99,9 +96,8 @@ void TST_mod_from_http::test_non_terminal_from_http()
 		std::cout << "normal non_terminals -- trailing whitespace " << std::endl;
 		std::cout << "===============================================================" << std::endl;
 		
-		_test_non_terminals_from_http(
+		_test_terminals_from_http(
 			"a b c d\n\n\t      \t\n",
-			false, 
 			expected_non_terminals,
 			no_errors
 		);
@@ -111,9 +107,8 @@ void TST_mod_from_http::test_non_terminal_from_http()
 		std::cout << "normal non_terminals -- whitespace in between" << std::endl;
 		std::cout << "===============================================================" << std::endl;
 		
-		_test_non_terminals_from_http(
+		_test_terminals_from_http(
 			"a\nb\tc \n\n     \t\t d           \n\n ", 
-			false, 
 			expected_non_terminals,
 			no_errors
 		);
@@ -126,11 +121,10 @@ void TST_mod_from_http::test_non_terminal_from_http()
 		std::cout << " empty nonterminals -- completely empty " << std::endl;
 		std::cout << "===============================================================" << std::endl;
 		
-		_test_non_terminals_from_http(
+		_test_terminals_from_http(
 			"",
-			true, 
 			empty_non_terminals,
-			empty_nonterminals
+			empty_terminals
 		);
 	}
 	
@@ -140,11 +134,10 @@ void TST_mod_from_http::test_non_terminal_from_http()
 		std::cout << " empty nonterminals -- whitespace " << std::endl;
 		std::cout << "===============================================================" << std::endl;
 		
-		_test_non_terminals_from_http(
+		_test_terminals_from_http(
 			"\n\n            \t\t \n\n\t\n     \n",
-			true, 
 			empty_non_terminals,
-			empty_nonterminals
+			empty_terminals
 		);
 	}
 	
@@ -154,28 +147,12 @@ void TST_mod_from_http::test_non_terminal_from_http()
 		std::cout << " empty terminals -- completely empty " << std::endl;
 		std::cout << "===============================================================" << std::endl;
 		
-		_test_non_terminals_from_http(
+		_test_terminals_from_http(
 			"",
-			false, 
 			empty_non_terminals,
 			empty_terminals
 		);
 	}
-	
-	{
-		
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " empty terminals -- whitespace " << std::endl;
-		std::cout << "===============================================================" << std::endl;
-		
-		_test_non_terminals_from_http(
-			"\n\n            \t\t \n\n\t\n     \n",
-			false, 
-			empty_non_terminals,
-			empty_terminals
-		);
-	}
-	
 	
 	{
 		std::cout << "===============================================================" << std::endl;
@@ -189,9 +166,8 @@ void TST_mod_from_http::test_non_terminal_from_http()
 		error1.source = "terminals: symbol <b>:";
 		expected_errors.push_back(error1);
 		
-		_test_non_terminals_from_http(
+		_test_terminals_from_http(
 			"a b c d b",
-			false, 
 			expected_non_terminals,
 			expected_errors
 		);
@@ -236,9 +212,8 @@ void TST_mod_from_http::test_non_terminal_from_http()
 		special_non_terminals.insert("+");
 		special_non_terminals.insert("=");
 		
-		_test_non_terminals_from_http(
+		_test_terminals_from_http(
 			"! @ # $ % ^ & * ( ) [ ] { } . , : ; \" \\ ' < > / ? | _ - + =",
-			false, 
 			special_non_terminals,
 			no_errors
 		);

@@ -29,12 +29,12 @@ int main()
 	// test_compares();
 	
     TST_mod_from_http mfh;
-	// mfh.test_non_terminal_from_http();
+	mfh.test_nonterminals_from_http();
 	// mfh.test_head_from_http();
 	// mfh.test_rule_from_http();
 	// mfh.test_rules_from_http();
 	// mfh.test_word_from_http();
-	mfh.test_tokenize();
+	// mfh.test_tokenize();
 	
 	// TST_mod_check_errors mce;
 	// mce.test_head_errors();

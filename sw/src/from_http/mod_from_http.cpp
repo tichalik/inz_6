@@ -1,37 +1,56 @@
 #include "mod_from_http.h"
 
-Non_terminals Mod_from_http::non_terminals_from_http(
-	const std::string & param, 
-	const bool is_nonterminals
+Non_terminals Mod_from_http::nonterminals_from_http(
+	const std::string & param 
 )
 {	
 	Non_terminals nonterminals;
-	std::vector<std::string> str_nonterminals = Utils::vector_from_str(param);
-	if (str_nonterminals.size() == 0)
+	Tokens tokens = tokenize(param);
+
+	if (tokens.size() == 0)
 	{
-		this->add_error( 
-			(is_nonterminals? EMPTY_NONTERMINALS: EMPTY_TERMINALS )
-		);
+		this->add_error(EMPTY_NONTERMINALS);
 	}
-	else 
+	
+	for (size_t i=0; i<tokens.size(); i++)
 	{
-		for (size_t i=0; i<str_nonterminals.size(); i++)
+		switch(tokens[i].type)
 		{
-			Symbol s = str_nonterminals[i];
-			if (nonterminals.find(s) != nonterminals.end())
+			case TOKEN_ERROR:
+			case SEP:
+			case OR:
 			{
-				//double symbol 
-				Error error;
-				error.type = REPEATING_SYMBOL;
-				error.source = (is_nonterminals? "nonterminals: " : "terminals: ");
-				error.source += "symbol "+s+":";
-				
-				this->errors.push_back(error);
+				this->add_error(UNKNOWN_SYMBOL, "nonterminals: symbol " + 
+					tokens[i].str + ": ");
+				break;
 			}
-			else
+			case NTERM:
 			{
-				nonterminals.insert(s);
+				if (nonterminals.find(tokens[i].str) != nonterminals.end())
+				{
+					//double symbol 
+					this->add_error(REPEATING_SYMBOL, "nonterminals: symbol " + 
+						tokens[i].str + ": ");
+				}
+				else
+				{
+					nonterminals.insert(tokens[i].str);
+				}
+				break;
 			}
+			case TERM:
+			{
+				this->add_error(TERM_IN_NTERMS, "nonterminals: symbol " + 
+					tokens[i].str + ": ");
+					
+				break;
+			}
+			case LB:
+			{
+				// do nothing
+				break;
+			}
+			
 		}
 	}
 	return nonterminals;
@@ -213,8 +232,8 @@ Mod_from_http::Mod_from_http(
 	const std::string & http_word
 )
 {
-	this->grammar.terminals = non_terminals_from_http(http_terminals, false);
-	this->grammar.nonterminals = non_terminals_from_http(http_nonterminals, true);
+//	this->grammar.terminals = terminals_from_http(http_terminals);
+	this->grammar.nonterminals = nonterminals_from_http(http_nonterminals);
 	this->grammar.head = head_from_http(http_head);
 	this->grammar.rules = rules_from_http(http_rules);
 	

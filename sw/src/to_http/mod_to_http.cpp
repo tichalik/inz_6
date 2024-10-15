@@ -136,8 +136,11 @@ std::string Mod_to_http::EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const
 		case REPEATING_SYMBOL:
 			res="symbol repeating within a set";
 			break;
-		case IN_BOTH_TERMINALS_AND_NONTERMINALS:
-			res="symbol cannot be in both terminals and nonterminals";
+		case TERM_IN_NTERMS:
+			res="a terminal-like symbol in nonterminals. Please write your nonterminals <like_this>";
+			break;
+		case NTERM_IN_TERMS:
+			res="a nonterminal-like symbol in terminals. Please write your terminals without the braces";
 			break;
 		case MISSING_LHS:
 			res="no LHS in the rule";
