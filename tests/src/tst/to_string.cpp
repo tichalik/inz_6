@@ -287,7 +287,7 @@ std::string str(
 }
 
 std::string str(
-	const EN_TOKEN_TYPE &token,
+	const rule_tokentype &token,
 	const std::string & tabs
 
 )

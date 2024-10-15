@@ -7,50 +7,50 @@ void TST_mod_from_http::_test_rule_from_http(
 	const Errors & expected_errors
 )
 {
-	//create the class whose method will be tested
-	//initialize it with all empty strings
-	Mod_from_http mod_from_http(
-		"",
-		"",
-		"",
-		"",
-		""
-	);
-
-	
-	//mod_from_http extracted Grammar and Word from empty strings 
-	//leaving errors in mod_from_http.errors. Thes results are ignored
-	mod_from_http.errors.clear();
-	
-	bool ok;
-	
-	//perform the conversion
-	Rule result = mod_from_http.rule_from_http(str_input, ok);
-	
-	if (ok != expected_ok)
-	{
-		std::cout << "wrong ok " << std::endl;
-	}
-	
-	bool ok_result = true;
-	//check if the result is identical to expected
-	// but when there are errors, the rule does not matter
-	if (expected_ok == true)
-	{
-		ok_result = compare(expected, result, "rule");
-	}
-	
-	//check if obtained errors are identical to expected 
-	bool ok_errors = compare(expected_errors, mod_from_http.errors, "errors");
-	if (ok_errors && ok_result && ok == expected_ok)
-	{
-		std::cout << "OK" << std::endl;
-	}
-	else
-	{
-		std::cout << __FILE__ << "\tFAIL" << std::endl;
-	}
-	
+//	//create the class whose method will be tested
+//	//initialize it with all empty strings
+//	Mod_from_http mod_from_http(
+//		"",
+//		"",
+//		"",
+//		"",
+//		""
+//	);
+//
+//	
+//	//mod_from_http extracted Grammar and Word from empty strings 
+//	//leaving errors in mod_from_http.errors. Thes results are ignored
+//	mod_from_http.errors.clear();
+//	
+//	bool ok;
+//	
+//	//perform the conversion
+//	Rule result = mod_from_http.rule_from_http(str_input, ok);
+//	
+//	if (ok != expected_ok)
+//	{
+//		std::cout << "wrong ok " << std::endl;
+//	}
+//	
+//	bool ok_result = true;
+//	//check if the result is identical to expected
+//	// but when there are errors, the rule does not matter
+//	if (expected_ok == true)
+//	{
+//		ok_result = compare(expected, result, "rule");
+//	}
+//	
+//	//check if obtained errors are identical to expected 
+//	bool ok_errors = compare(expected_errors, mod_from_http.errors, "errors");
+//	if (ok_errors && ok_result && ok == expected_ok)
+//	{
+//		std::cout << "OK" << std::endl;
+//	}
+//	else
+//	{
+//		std::cout << __FILE__ << "\tFAIL" << std::endl;
+//	}
+//	
 }
 
 

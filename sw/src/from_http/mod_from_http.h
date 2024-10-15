@@ -10,7 +10,10 @@
 #include "error.h"
 #include "token.h"
 
+#include "rule_parser.tab.h"
+
 Tokens tokenize(const std::string & str);
+Rules parse_rules(const Tokens & tokens);
 
 class Mod_from_http
 {
@@ -49,20 +52,6 @@ class Mod_from_http
 	 */
 	Head head_from_http(const std::string & param);
 	
-    /** 
-	 * \brief extract grammar information from a string obtained from http request
-	 *
-	 * assume the string is already processed (htpp entities are translated to 
-	 * normal string)
-	 */
-	Rule rule_from_http(const std::string & param, bool & ok);
-	
-    /** 
-	 * \brief extract grammar information from a string obtained from http request
-	 *
-	 * assume the string is already processed (htpp entities are translated to 
-	 * normal string)
-	 */
 	Rules rules_from_http(const std::string & param);
 	
 	

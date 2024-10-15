@@ -3,25 +3,13 @@
 
 #include <vector>
 #include <string>
-
-enum EN_TOKEN_TYPE
-{
-	TOKEN_ERROR,
-
-	TERM,
-	NTERM,
-	SEP,
-	OR,
-	LB
-
-
-};
+#include "rule_parser.tab.h" //for token types enum 
 
 struct Token
-{
+{ 
 	size_t start_pos;
 	std::string str;
-	EN_TOKEN_TYPE type;
+	rule_tokentype type;
 };
 
 typedef std::vector<Token> Tokens;

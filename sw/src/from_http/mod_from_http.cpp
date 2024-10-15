@@ -137,125 +137,21 @@ Head Mod_from_http::head_from_http(const std::string & param)
 	return head;
 }
 
-Rule Mod_from_http::rule_from_http(const std::string & param, bool & ok)
-{
-	
-	
-	//state variable -- true if on LHS of the rule
-	bool is_LHS = true;
-	
-	//error flags, for error reporting hierarchy
-	bool f_MISSING_LHS = false;
-	bool f_MISSING_RHS = true;
-	bool f_MISSING_ARROW = true;
-	bool f_MULTIPLE_ARROWS = false;
-	bool f_TOO_MANY_LHS = false;
-	
-	Rule rule;
-	
-	std::stringstream ss;
-	ss << param;
-	
-	std::string tmp;
-	while ( ss >> tmp )
-	{		
-		//if it is a normal symbol
-		if (tmp != "->")
-		{
-					
-			if (is_LHS == true)
-			{
-						
-				if (rule.LHS == "")
-				{		
-							
-					rule.LHS = tmp;
-				}
-				else 
-				{		
-							
-					f_TOO_MANY_LHS = true;
-				}
-			}
-			else
-			{				
-				rule.RHS.push_back(tmp);
-				f_MISSING_RHS = false;
-			}
-		}
-		else //it is the separator between LHS and RHS
-		{		
-			f_MISSING_ARROW = false;
-			
-			if (is_LHS == true)
-			{		
-				is_LHS = false;
-
-				if (rule.LHS == "")
-				{				
-					//the LHS has not been filled! 
-					f_MISSING_LHS = true;
-				}
-				
-			}
-			else
-			{				
-				f_MULTIPLE_ARROWS = true;
-			}
-		}
-	}
-			
-	//if something's messed up with the arrow, there is no LHS and RHS
-	// so there's no use in reporting its errors
-	if (f_MISSING_ARROW == true)
-	{		
-		this->add_error(MISSING_ARROW, "rule "+param+": ");
-	}
-	else if (f_MULTIPLE_ARROWS == true)
-	{		
-		this->add_error(MULTIPLE_ARROWS, "rule "+param+": ");
-	}
-	else
-	{		
-		if (f_MISSING_LHS == true)
-		{		
-			this->add_error(MISSING_LHS, "rule "+param+": ");
-		}
-		if (f_MISSING_RHS == true)
-		{		
-			this->add_error(MISSING_RHS, "rule "+param+": ");
-		}
-		if (f_TOO_MANY_LHS == true)
-		{		
-			this->add_error(TOO_MANY_LHS, "rule "+param+": ");
-		}
-	}
-
-					
-	//auxiliary return value -- it will be true if there were no errors
-	ok = ! (f_MISSING_LHS || f_MISSING_RHS || f_MISSING_ARROW || f_TOO_MANY_LHS || f_MULTIPLE_ARROWS);
-	
-	return rule;
-}
-
 Rules Mod_from_http::rules_from_http(const std::string & param)
-{
-	Rules rules;
-	
-	std::stringstream ss;
-	ss << param;
-	std::string line;
-	while(std::getline(ss, line))
+ {
+		
+	Tokens tokens = tokenize(param);
+
+	//the trailing LB cannot be removed in the tokenizer
+	//and introduced shift-reduce confilct in the parser
+	// which i'm not going to solve because this is easier
+	if (tokens.back().type = LB)
 	{
-		bool ok;
-		Rule rule = rule_from_http(line, ok);
-		if (ok)
-		{
-			rules.push_back(rule);
-		}
-	}
-	
-	
+		tokens.pop_back();
+	} 
+		
+	Rules rules = parse_rules(tokens);
+
 	if (rules.size() == 0)
 	{
 		this->add_error(EMPTY_RULES);
