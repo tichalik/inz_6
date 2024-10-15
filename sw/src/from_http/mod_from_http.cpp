@@ -1,5 +1,64 @@
 #include "mod_from_http.h"
 
+Non_terminals Mod_from_http::terminals_from_http(
+	const std::string & param 
+)
+{	
+	Non_terminals terminals;
+	Tokens tokens = tokenize(param);
+
+	for (size_t i=0; i<tokens.size(); i++)
+	{
+		switch(tokens[i].type)
+		{
+			case TOKEN_ERROR:
+			case SEP:
+			case OR:
+			{
+				this->add_error(UNKNOWN_SYMBOL, "terminals: symbol " + 
+					tokens[i].str + ": ");
+				break;
+			}
+			case TERM:
+			{
+				if (terminals.find(tokens[i].str) != terminals.end())
+				{
+					//double symbol 
+					this->add_error(REPEATING_SYMBOL, "terminals: symbol " + 
+						tokens[i].str + ": ");
+				}
+				else
+				{
+					terminals.insert(tokens[i].str);
+				}
+				break;
+			}
+			case NTERM:
+			{
+				this->add_error(NTERM_IN_TERMS, "terminals: symbol " + 
+					tokens[i].str + ": ");
+					
+				break;
+			}
+			case LB:
+			{
+				// do nothing
+				break;
+			}
+			
+		}
+	}
+
+	if (terminals.size() == 0)
+	{
+		this->add_error(EMPTY_TERMINALS);
+	}
+	
+
+	return terminals;
+}
+
+
 Non_terminals Mod_from_http::nonterminals_from_http(
 	const std::string & param 
 )
@@ -234,7 +293,7 @@ Mod_from_http::Mod_from_http(
 	const std::string & http_word
 )
 {
-//	this->grammar.terminals = terminals_from_http(http_terminals);
+	this->grammar.terminals = terminals_from_http(http_terminals);
 	this->grammar.nonterminals = nonterminals_from_http(http_nonterminals);
 	this->grammar.head = head_from_http(http_head);
 	this->grammar.rules = rules_from_http(http_rules);

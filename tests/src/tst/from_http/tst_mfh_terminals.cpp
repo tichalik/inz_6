@@ -22,10 +22,10 @@ void TST_mod_from_http::_test_terminals_from_http(
 	mod_from_http.errors.clear();
 	
 	//perform the conversion
-	Non_terminals result = mod_from_http.nonterminals_from_http(str_input);
+	Non_terminals result = mod_from_http.terminals_from_http(str_input);
 	
 	//check if the result is identical to expected
-	bool ok_result = compare(expected, result, "nonterminals") ;
+	bool ok_result = compare(expected, result, "terminals") ;
 	
 	//check if obtained errors are identical to expected 
 	bool ok_errors = compare(expected_errors, mod_from_http.errors, "errors");
@@ -43,74 +43,51 @@ void TST_mod_from_http::_test_terminals_from_http(
 
 void TST_mod_from_http::test_terminals_from_http()
 {
-	Errors no_errors;
-	
-	Errors empty_nonterminals;
+	{
+		
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " check everything" << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Non_terminals expected_terminals;
+		expected_terminals.insert("ok");
+		expected_terminals.insert("ok2");
 
-	Error error1;
-	error1.type = EMPTY_NONTERMINALS;
-	error1.source = "";
-	empty_nonterminals.push_back(error1);
-	
-	Errors empty_terminals;
+		Errors expected_errors;
 
-	Error error2;
-	error2.type = EMPTY_TERMINALS;
-	error2.source = "";
-	empty_terminals.push_back(error2);
-	
-	Non_terminals expected_non_terminals;
-	expected_non_terminals.insert("a");
-	expected_non_terminals.insert("b");
-	expected_non_terminals.insert("c");
-	expected_non_terminals.insert("d");
-	
-	Non_terminals empty_non_terminals;
-	
-	
-	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << "normal non_terminals -- single space separation " << std::endl;
-		std::cout << "===============================================================" << std::endl;
+		{
+			Error error;
+			error.type = NTERM_IN_TERMS;
+			error.source = "terminals: symbol <bad>: ";
+
+			expected_errors.push_back(error);
+		}
+		{
+			Error error;
+			error.type = UNKNOWN_SYMBOL;
+			error.source = "terminals: symbol !: ";
+
+			expected_errors.push_back(error);
+		}
+		{
+			Error error;
+			error.type = UNKNOWN_SYMBOL;
+			error.source = "terminals: symbol ::=: ";
+
+			expected_errors.push_back(error);
+		}
+		{
+			Error error;
+			error.type = UNKNOWN_SYMBOL;
+			error.source = "terminals: symbol |: ";
+
+			expected_errors.push_back(error);
+		}
 		
 		_test_terminals_from_http(
-			"a b c d",
-			expected_non_terminals,
-			no_errors
-		);
-	}
-	
-	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << "normal non_terminals -- leading whitespace " << std::endl;
-		std::cout << "===============================================================" << std::endl;
-		
-		_test_terminals_from_http(
-			"         \t \n\na b c d",
-			expected_non_terminals,
-			no_errors
-		);
-	}
-	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << "normal non_terminals -- trailing whitespace " << std::endl;
-		std::cout << "===============================================================" << std::endl;
-		
-		_test_terminals_from_http(
-			"a b c d\n\n\t      \t\n",
-			expected_non_terminals,
-			no_errors
-		);
-	}
-	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << "normal non_terminals -- whitespace in between" << std::endl;
-		std::cout << "===============================================================" << std::endl;
-		
-		_test_terminals_from_http(
-			"a\nb\tc \n\n     \t\t d           \n\n ", 
-			expected_non_terminals,
-			no_errors
+			"ok <bad> ! ::= |  \n ok2",
+			expected_terminals,
+			expected_errors
 		);
 	}
 	
@@ -118,104 +95,51 @@ void TST_mod_from_http::test_terminals_from_http()
 	{
 		
 		std::cout << "===============================================================" << std::endl;
-		std::cout << " empty nonterminals -- completely empty " << std::endl;
+		std::cout << " empty terminals -- whitespace " << std::endl;
 		std::cout << "===============================================================" << std::endl;
-		
-		_test_terminals_from_http(
-			"",
-			empty_non_terminals,
-			empty_terminals
-		);
-	}
 	
-	{
+		Non_terminals expected_terminals;
+		Errors expected_errors;
 		
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " empty nonterminals -- whitespace " << std::endl;
-		std::cout << "===============================================================" << std::endl;
-		
+		{
+			Error error;
+			error.type = EMPTY_TERMINALS;
+			error.source = "";
+
+			expected_errors.push_back(error);
+
+		}
 		_test_terminals_from_http(
 			"\n\n            \t\t \n\n\t\n     \n",
-			empty_non_terminals,
-			empty_terminals
+			expected_terminals,
+			expected_errors	
 		);
 	}
 	
-	{
-		
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " empty terminals -- completely empty " << std::endl;
-		std::cout << "===============================================================" << std::endl;
-		
-		_test_terminals_from_http(
-			"",
-			empty_non_terminals,
-			empty_terminals
-		);
-	}
 	
 	{
 		std::cout << "===============================================================" << std::endl;
 		std::cout << " check if repeating symbols in one set are caught" << std::endl;
 		std::cout << "===============================================================" << std::endl;
 		
+		Non_terminals expected_terminals;
+		expected_terminals.insert("ok");
+
 		Errors expected_errors;
-		
-		Error error1;
-		error1.type = REPEATING_SYMBOL;
-		error1.source = "terminals: symbol <b>:";
-		expected_errors.push_back(error1);
-		
+
+		{
+			Error error;
+			error.type = REPEATING_SYMBOL;
+			error.source = "terminals: symbol ok: ";
+
+			expected_errors.push_back(error);
+		}
+
 		_test_terminals_from_http(
-			"a b c d b",
-			expected_non_terminals,
+			"ok ok",
+			expected_terminals,
 			expected_errors
 		);
 	}
 	
-	
-	
-	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << "special character non_terminals " << std::endl;
-		std::cout << "===============================================================" << std::endl;
-		
-		Non_terminals special_non_terminals;
-		special_non_terminals.insert("!");
-		special_non_terminals.insert("@");
-		special_non_terminals.insert("#");
-		special_non_terminals.insert("$");
-		special_non_terminals.insert("%");
-		special_non_terminals.insert("^");
-		special_non_terminals.insert("&");
-		special_non_terminals.insert("*");
-		special_non_terminals.insert("(");
-		special_non_terminals.insert(")");
-		special_non_terminals.insert("[");
-		special_non_terminals.insert("]");
-		special_non_terminals.insert("{");
-		special_non_terminals.insert("}");
-		special_non_terminals.insert(".");
-		special_non_terminals.insert(",");
-		special_non_terminals.insert(":");
-		special_non_terminals.insert(";");
-		special_non_terminals.insert("\"");
-		special_non_terminals.insert("\\");
-		special_non_terminals.insert("'");
-		special_non_terminals.insert("<");
-		special_non_terminals.insert(">");
-		special_non_terminals.insert("/");
-		special_non_terminals.insert("?");
-		special_non_terminals.insert("|");
-		special_non_terminals.insert("_");
-		special_non_terminals.insert("-");
-		special_non_terminals.insert("+");
-		special_non_terminals.insert("=");
-		
-		_test_terminals_from_http(
-			"! @ # $ % ^ & * ( ) [ ] { } . , : ; \" \\ ' < > / ? | _ - + =",
-			special_non_terminals,
-			no_errors
-		);
-	}
 }
