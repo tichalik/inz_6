@@ -7,11 +7,6 @@ Non_terminals Mod_from_http::nonterminals_from_http(
 	Non_terminals nonterminals;
 	Tokens tokens = tokenize(param);
 
-	if (tokens.size() == 0)
-	{
-		this->add_error(EMPTY_NONTERMINALS);
-	}
-	
 	for (size_t i=0; i<tokens.size(); i++)
 	{
 		switch(tokens[i].type)
@@ -53,6 +48,13 @@ Non_terminals Mod_from_http::nonterminals_from_http(
 			
 		}
 	}
+
+	if (nonterminals.size() == 0)
+	{
+		this->add_error(EMPTY_NONTERMINALS);
+	}
+	
+
 	return nonterminals;
 }
 
