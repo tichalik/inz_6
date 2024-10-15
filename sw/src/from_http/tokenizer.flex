@@ -47,6 +47,9 @@ TXT		[A-Za-z0-9_]+
 
 Tokens tokenize(const std::string & str)
 {
+	tokens.clear();
+	pos = 0;
+
 	// prepare input for the parser
 	YY_BUFFER_STATE buffer = yy_scan_string(str.c_str());
 
@@ -54,10 +57,7 @@ Tokens tokenize(const std::string & str)
 	yylex();
 
 	//cleanup
-	Tokens tmp(tokens);
-	tokens.clear();
-	pos = 0;
 	yy_delete_buffer(buffer);
 
-	return tmp;
+	return tokens;
 }
