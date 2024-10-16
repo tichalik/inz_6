@@ -100,11 +100,6 @@ void Mod_check_errors::rule_check_errors(
 		check_symbol_errors(source, input.RHS[i], terminals, nonterminals);
 	}
 	
-	if (terminals.contains(input.LHS))
-	{
-		add_error(TERMINAL_AS_LHS, source + " symbol <" + input.LHS + ">:");
-	}
-	
 }
 
 void Mod_check_errors::rules_check_errors(

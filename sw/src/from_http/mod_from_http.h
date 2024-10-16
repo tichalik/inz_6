@@ -12,15 +12,6 @@
 
 Tokens tokenize(const std::string & str);
 
-enum EN_PARSER_STATE
-{
-	INIT, 
-	HEAD_FOUND,
-	SEP_FOUND,
-	SYMBOL_FOUND,
-	ALT_STARTED
-};
-
 class Mod_from_http
 {
 	

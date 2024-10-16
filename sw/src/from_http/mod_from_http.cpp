@@ -65,7 +65,6 @@ Non_terminals Mod_from_http::nonterminals_from_http(
 {	 
 	Non_terminals nonterminals;
 	Tokens tokens = tokenize(param);
-
 	for (size_t i=0; i<tokens.size(); i++)
 	{
 		switch(tokens[i].type)
@@ -141,9 +140,22 @@ Head Mod_from_http::head_from_http(const std::string & param)
 Rules Mod_from_http::rules_from_http(const std::string & param)
 {
 	Rules rules;
-	EN_PARSER_STATE state = INIT;
+	
+	enum EN_PARSER_STATE
+	{
+		INIT, 
+		HEAD_FOUND,
+		SEP_FOUND,
+		SYMBOL_FOUND,
+		ALT_STARTED
+	} state = INIT;
+	
 	bool ok = true;
 	Tokens tokens = tokenize(param);
+	// push LB to mark end of rules
+	tokens.emplace_back();
+	tokens.back().type = LB;
+
 	size_t rule_start = 0;
 
 	#define RAISE_ERROR(X)\
