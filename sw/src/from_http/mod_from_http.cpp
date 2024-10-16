@@ -159,8 +159,9 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 	size_t rule_start = 0;
 
 	#define RAISE_ERROR(X)\
-		this->add_error(TERMINAL_AS_LHS, "rules: rule start" + \
-			param.substr(rule_start, tokens[i].start_pos-rule_start)\
+		this->add_error(X, "rules: rule start " + \
+			param.substr(rule_start, \
+				tokens[i].start_pos - rule_start + tokens[i].str.size())\
 			+ ": symbol: " + tokens[i].str + ": ");\
 		ok = false;\
 		break;
@@ -193,6 +194,7 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 						break;
 					}
 				}
+				break;
 			}
 			case OR:
 			{ 
@@ -215,6 +217,7 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 						break;
 					}
 				}
+				break;
 			}
 			case NTERM:
 			case TERM:
@@ -225,7 +228,7 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 					{
 						if (tokens[i].type == TERM)
 						{ 
-							RAISE_ERROR(TERMINAL_AS_HEAD);
+							RAISE_ERROR(TERMINAL_AS_LHS);
 						}
 						else
 						{
@@ -244,11 +247,13 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 					case ALT_STARTED:
 					case SYMBOL_FOUND:
 					{
+						state = SYMBOL_FOUND;
 						//a member of a rule's RHS 
 						rules.back().RHS.push_back(tokens[i].str);
 						break;
 					}
 				}
+				break;
 			}
 			case LB:
 			{ 
@@ -268,10 +273,11 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 					{
 						state = INIT;
 						//a rule is finished and already stored in rules
-						rule_start = tokens[i].start_pos;
+						rule_start = tokens[i].start_pos + tokens[i].str.size();
 						break;
 					}
 				}
+				break;
 			}
 		}
 	} 

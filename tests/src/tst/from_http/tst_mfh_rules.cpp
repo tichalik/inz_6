@@ -43,109 +43,35 @@ void TST_mod_from_http::_test_rules_from_http(
 
 void TST_mod_from_http::test_rules_from_http()
 {
-	
-	Rules expected_rules;
-	
-	Rule expected_rule1;
-	expected_rule1.LHS = "a";
-	expected_rule1.RHS[0] = "a";
-	expected_rule1.RHS[1] = "a";
-	
-	Rule expected_rule2;
-	expected_rule2.LHS = "b";
-	expected_rule2.RHS[0] = "b";
-	expected_rule2.RHS[1] = "b";
-	
-	Rule expected_rule3;
-	expected_rule3.LHS = "c";
-	expected_rule3.RHS[0] = "c";
-	expected_rule3.RHS[1] = "c";
-	
-	Rule expected_rule4;
-	expected_rule4.LHS = "d";
-	expected_rule4.RHS[0] = "d";
-	expected_rule4.RHS[1] = "d";
-	
-	
-	expected_rules.push_back(expected_rule1);
-	expected_rules.push_back(expected_rule2);
-	expected_rules.push_back(expected_rule3);
-	expected_rules.push_back(expected_rule4);
-	
-	Errors no_errors;
-	
-	Errors empty_rules_errors;
-	Error empty_rules_error;
-	empty_rules_error.type = EMPTY_RULES;
-	empty_rules_error.source = "";
-	empty_rules_errors.push_back(empty_rules_error);
-	
-	Rules empty_rules;
-	
-	
-	
+		
 	{
 		std::cout << "===============================================================" << std::endl;
-		std::cout << " normal rules " << std::endl;
+		std::cout << " unknown symbol" << std::endl;
 		std::cout << "===============================================================" << std::endl;
+		
+		Errors errors;
+			
+		{
+			Error error;
+			error.type = UNKNOWN_SYMBOL;
+			error.source = "rules: rule start  !: symbol: !: ";
+			errors.push_back(error);
+		}
+
+
+		{
+			Error error;
+			error.type = EMPTY_RULES;
+			error.source = "";
+			errors.push_back(error);
+		}
+
+		Rules rules;
 		
 		_test_rules_from_http(
-			"a -> a a\n"
-			"b -> b b\n"
-			"c -> c c\n"
-			"d -> d d",
-			expected_rules,
-			no_errors
-		);
-		
-	}
-	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " normal rules -- leading whitespace before rules" << std::endl;
-		std::cout << "===============================================================" << std::endl;
-		
-		_test_rules_from_http(
-			"\n\n        \n\t  \n"
-			"a -> a a\n"
-			"b -> b b\n"
-			"c -> c c\n"
-			"d -> d d",
-			expected_rules,
-			no_errors
-		);
-		
-	}
-	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " normal rules -- trailing whitespace after rules" << std::endl;
-		std::cout << "===============================================================" << std::endl;
-		
-		_test_rules_from_http(
-			"a -> a a\n"
-			"b -> b b\n"
-			"c -> c c\n"
-			"d -> d d\n"
-			"\n\n\n\t     \t\n ",
-			expected_rules,
-			no_errors
-		);
-		
-	}
-	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " normal rules -- whitespace between rules" << std::endl;
-		std::cout << "===============================================================" << std::endl;
-		
-		_test_rules_from_http(
-			"\n\n        \n\t  \n"
-			"a -> a a\n"
-			"\n\n        \n\t  \n"
-			"b -> b b\n"
-			"\n\n        \n\t  \n"
-			"c -> c c\n"
-			"d -> d d",
-			expected_rules,
-			no_errors
+			"\n !",
+			rules,
+			errors
 		);
 		
 	}
@@ -154,6 +80,14 @@ void TST_mod_from_http::test_rules_from_http()
 		std::cout << "===============================================================" << std::endl;
 		std::cout << " empty rules -- completely empty" << std::endl;
 		std::cout << "===============================================================" << std::endl;
+		
+		Errors empty_rules_errors;
+		Error empty_rules_error;
+		empty_rules_error.type = EMPTY_RULES;
+		empty_rules_error.source = "";
+		empty_rules_errors.push_back(empty_rules_error);
+		
+		Rules empty_rules;
 		
 		_test_rules_from_http(
 			"",
@@ -167,6 +101,15 @@ void TST_mod_from_http::test_rules_from_http()
 		std::cout << "===============================================================" << std::endl;
 		std::cout << " empty rules -- whitespaces " << std::endl;
 		std::cout << "===============================================================" << std::endl;
+	
+		Errors empty_rules_errors;
+		Error empty_rules_error;
+		empty_rules_error.type = EMPTY_RULES;
+		empty_rules_error.source = "";
+		empty_rules_errors.push_back(empty_rules_error);
+		
+		Rules empty_rules;
+	
 		
 		_test_rules_from_http(
 			"\n\n        \n\t  \n",
@@ -176,78 +119,470 @@ void TST_mod_from_http::test_rules_from_http()
 		
 	}
 	
+
+		
+	Rule rule1;
+	{
+		rule1.LHS = "<a>";
+		rule1.RHS.push_back("b");
+	}
+
+	Rule rule2;
+	{
+		rule2.LHS = "<a>";
+		rule2.RHS.push_back("c");
+		rule2.RHS.push_back("d");
+		rule2.RHS.push_back("e");
+	}
+
+	Rule rule3;
+	{
+		rule3.LHS = "<e>";
+		rule3.RHS.push_back("<f>");
+		rule3.RHS.push_back("<g>");
+		rule3.RHS.push_back("<h>");
+	}
+
+
+	Rule rule4;
+	{
+		rule4.LHS = "<e>";
+		rule4.RHS.push_back("<i>");
+	}
+
 	{
 		std::cout << "===============================================================" << std::endl;
-		std::cout << " apparently problematic rules" << std::endl;
+		std::cout << " normal rules, no initial LB, no final LB" << std::endl;
 		std::cout << "===============================================================" << std::endl;
 		
+		Errors errors;
+
 		Rules rules;
-		
-		Rule r1;
-		r1.LHS = "exp";
-		r1.RHS[0] = "exp1";
-		r1.RHS[1] = "exp";
-		rules.push_back(r1);
-		
-		Rule r2;
-		r2.LHS = "exp";
-		r2.RHS[0] = "exp2";
-		r2.RHS[1] = ")";
-		rules.push_back(r2);
-		
-		Rule r3;
-		r3.LHS = "exp";
-		r3.RHS[0] = "exp2";
-		r3.RHS[1] = ")";
-		rules.push_back(r3);
-		
-		Rule r4;
-		r4.LHS = "exp1";
-		r4.RHS[0] = "exp";
-		r4.RHS[1] = "+";
-		rules.push_back(r4);
-		
-		Rule r5;
-		r5.LHS = "exp1";
-		r5.RHS[0] = "exp";
-		r5.RHS[1] = "-";
-		rules.push_back(r5);
-		
-		Rule r6;
-		r6.LHS = "exp1";
-		r6.RHS[0] = "exp";
-		r6.RHS[1] = "/";
-		rules.push_back(r6);
-		
-		Rule r7;
-		r7.LHS = "exp1";
-		r7.RHS[0] = "exp";
-		r7.RHS[1] = "*";
-		rules.push_back(r7);
-		
-		Rule r8;
-		r8.LHS = "exp2";
-		r8.RHS[0] = "(";
-		r8.RHS[1] = "exp";
-		rules.push_back(r8);
-		
-		
+		rules.push_back(rule1);
+		rules.push_back(rule2);
+		rules.push_back(rule3);
+		rules.push_back(rule4);
 		
 		_test_rules_from_http(
-			"exp -> exp1 exp \n"
-			"exp -> exp2 )\n"
-			"exp -> exp2 )\n"
-			"exp1 -> exp  +\n"
-			"exp1 -> exp  -\n"
-			"exp1 -> exp  /\n"
-			"exp1 -> exp  *\n"
-			"exp2 -> ( exp\n",
+			" <a> ::= b | c d e\n"
+			" <e> ::= <f> <g> <h> | <i>",
 			rules,
-			no_errors
+			errors
 		);
 		
 	}
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " normal rules, initial LB, final LB" << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Errors errors;
+
+		Rules rules;
+		rules.push_back(rule1);
+		rules.push_back(rule2);
+		rules.push_back(rule3);
+		rules.push_back(rule4);
+		
+		_test_rules_from_http(
+			"\n\n\n <a> ::= b | c d e\n"
+			" <e> ::= <f> <g> <h> | <i> \n\n\n",
+			rules,
+			errors
+		);
+		
+	}
+
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " TERMINAL_AS_LHS" << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Errors errors;
 	
-	
-	
+		{
+			Error error;
+			error.type = TERMINAL_AS_LHS;
+			error.source = "rules: rule start  e: symbol: e: ";
+			errors.push_back(error);
+		}
+
+
+		Rules rules;
+		rules.push_back(rule1);
+		rules.push_back(rule2);
+		
+		_test_rules_from_http(
+			"\n\n\n <a> ::= b | c d e\n"
+			" e ::= <f> <g> <h> | <i> \n\n\n",
+			rules,
+			errors
+		);
+		
+	}
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " STRAY OR in INIT " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Errors errors;
+		
+		{
+			Error error;
+			error.type = STRAY_OR;
+			error.source = "rules: rule start  |: symbol: |: ";
+			errors.push_back(error);
+		}
+
+
+
+		Rules rules;
+		rules.push_back(rule1);
+		rules.push_back(rule2);
+		
+		_test_rules_from_http(
+			" <a> ::= b | c d e\n"
+			" |<e> ::= <f> <g> <h> | <i> ",
+			rules,
+			errors
+		);
+		
+	}
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " STRAY SEP in INIT " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Errors errors;
+		
+		{
+			Error error;
+			error.type = MISSING_LHS;
+			error.source = "rules: rule start  ::=: symbol: ::=: ";
+			errors.push_back(error);
+		}
+
+
+
+		Rules rules;
+		rules.push_back(rule1);
+		rules.push_back(rule2);
+		
+		_test_rules_from_http(
+			" <a> ::= b | c d e\n"
+			" ::=<e> ::= <f> <g> <h> | <i> ",
+			rules,
+			errors
+		);
+		
+	}
+
+	{ 
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " TOO_MANY_LHS " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Errors errors;
+		
+		{
+			Error error;
+			error.type = TOO_MANY_LHS;
+			error.source = "rules: rule start  <e><A>: symbol: <A>: ";
+			errors.push_back(error);
+		}
+
+
+
+		Rules rules;
+		rules.push_back(rule1);
+		rules.push_back(rule2);
+		rules.push_back(rule3);
+		rules.back().RHS.clear();
+		
+		_test_rules_from_http(
+			" <a> ::= b | c d e\n"
+			" <e><A> ::= <f> <g> <h> | <i> ",
+			rules,
+			errors
+		);
+		
+	}
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " STRAY OR in HEAD_FOUND " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Errors errors;
+		
+		{
+			Error error;
+			error.type = STRAY_OR;
+			error.source = "rules: rule start  <e>|: symbol: |: ";
+			errors.push_back(error);
+		}
+
+
+
+		Rules rules;
+		rules.push_back(rule1);
+		rules.push_back(rule2);
+		rules.push_back(rule3);
+		rules.back().RHS.clear();
+		
+		_test_rules_from_http(
+			" <a> ::= b | c d e\n"
+			" <e>| ::= <f> <g> <h> | <i> ",
+			rules,
+			errors
+		);
+		
+	}
+		{ 
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " TOO_MANY_LHS " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Errors errors;
+		
+		{
+			Error error;
+			error.type = TOO_MANY_LHS;
+			error.source = "rules: rule start  <e><A>: symbol: <A>: ";
+			errors.push_back(error);
+		}
+
+
+
+		Rules rules;
+		rules.push_back(rule1);
+		rules.push_back(rule2);
+		rules.push_back(rule3);
+		rules.back().RHS.clear();
+		
+		_test_rules_from_http(
+			" <a> ::= b | c d e\n"
+			" <e><A> ::= <f> <g> <h> | <i> ",
+			rules,
+			errors
+		);
+		
+	}
+
+	 {
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " STRAY OR in SEP_FOUND " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Errors errors;
+		
+		{ 
+			Error error;
+			error.type = STRAY_OR;
+			error.source = "rules: rule start  <e> ::= |: symbol: |: ";
+			errors.push_back(error);
+		}
+
+
+
+		Rules rules;
+		rules.push_back(rule1);
+		rules.push_back(rule2);
+		rules.push_back(rule3);
+		rules.back().RHS.clear();
+		
+		_test_rules_from_http(
+			" <a> ::= b | c d e\n"
+			" <e> ::= |<f> <g> <h> | <i> ",
+			rules,
+			errors
+		);
+		
+	}
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " STRAY LB in SEP_FOUND " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Errors errors;
+		
+		{
+			Error error;
+			error.type = MISSING_RHS;
+			error.source = "rules: rule start  <e> ::=\n: symbol: \n: ";
+			errors.push_back(error);
+		} 
+
+
+
+		Rules rules;
+		rules.push_back(rule1);
+		rules.push_back(rule2);
+		rules.push_back(rule3);
+		rules.back().RHS.clear();
+		
+		_test_rules_from_http(
+			" <a> ::= b | c d e\n"
+			" <e> ::=\n <f> <g> <h> | <i> ",
+			rules,
+			errors
+		);
+		
+	} 
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " STRAY SEP in SEPD_FOUND " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Errors errors;
+		
+		{
+			Error error;
+			error.type = STRAY_SEP;
+			error.source = "rules: rule start  <e> ::=::=: symbol: ::=: ";
+			errors.push_back(error);
+		} 
+
+
+
+		Rules rules;
+		rules.push_back(rule1);
+		rules.push_back(rule2);
+		rules.push_back(rule3);
+		rules.back().RHS.clear();
+		
+		_test_rules_from_http(
+			" <a> ::= b | c d e\n"
+			" <e> ::=::= <f> <g> <h> | <i> ",
+			rules,
+			errors
+		);
+		
+	} 
+
+		 {
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " STRAY OR in SEP_FOUND " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Errors errors;
+		
+		{ 
+			Error error;
+			error.type = STRAY_OR;
+			error.source = "rules: rule start  <e> ::= |: symbol: |: ";
+			errors.push_back(error);
+		}
+
+
+
+		Rules rules;
+		rules.push_back(rule1);
+		rules.push_back(rule2);
+		rules.push_back(rule3);
+		rules.back().RHS.clear();
+		
+		_test_rules_from_http(
+			" <a> ::= b | c d e\n"
+			" <e> ::= |<f> <g> <h> | <i> ",
+			rules,
+			errors
+		);
+		
+	}
+
+	 {
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " STRAY LB in ALT_FOUND " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Errors errors;
+		
+		{
+			Error error;
+			error.type = STRAY_LB;
+			error.source = "rules: rule start  <e> ::= <f> <g> <h> |\n: symbol: \n: ";
+			errors.push_back(error);
+		}  
+
+
+
+		Rules rules;
+		rules.push_back(rule1);
+		rules.push_back(rule2);
+		rules.push_back(rule3);
+		rules.push_back(rule4);
+		rules.back().RHS.clear();
+
+		_test_rules_from_http(
+			" <a> ::= b | c d e\n"
+			" <e> ::= <f> <g> <h> |\n <i> ",
+			rules,
+			errors
+		);
+		
+	} 
+	 {
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " STRAY SEP in ALT_FOUND " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Errors errors;
+		
+		{
+			Error error;
+			error.type = STRAY_SEP;
+			error.source = "rules: rule start  <e> ::= <f> <g> <h> |::=: symbol: ::=: ";
+			errors.push_back(error);
+		}  
+
+
+
+		Rules rules;
+		rules.push_back(rule1);
+		rules.push_back(rule2);
+		rules.push_back(rule3);
+		rules.push_back(rule4);
+		rules.back().RHS.clear();
+
+
+		_test_rules_from_http(
+			" <a> ::= b | c d e\n"
+			" <e> ::= <f> <g> <h> |::= <i> ",
+			rules,
+			errors
+		);
+		
+	} 
+	 { 
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " STRAY OR in ALT_FOUND " << std::endl;
+		std::cout << "===============================================================" << std::endl;
+		
+		Errors errors;
+		 
+		{ 
+			Error error;
+			error.type = STRAY_OR;
+			error.source = "rules: rule start  <e> ::= <f> <g> <h> ||: symbol: |: ";
+			errors.push_back(error);
+		}  
+
+
+
+		Rules rules;
+		rules.push_back(rule1);
+		rules.push_back(rule2);
+		rules.push_back(rule3);
+		rules.push_back(rule4);
+		rules.back().RHS.clear();
+
+
+		_test_rules_from_http(
+			" <a> ::= b | c d e\n"
+			" <e> ::= <f> <g> <h> || <i> ",
+			rules,
+			errors
+		);
+		
+	} 
 }
