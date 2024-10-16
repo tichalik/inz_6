@@ -74,19 +74,7 @@ extern int rule_debug;
 
 /* Value type.  */
 #if ! defined RULE_STYPE && ! defined RULE_STYPE_IS_DECLARED
-union RULE_STYPE
-{
-#line 15 "rule_parser.y"
-
-    int INT;
-    //char * STR;
-    //void VOID; -- impossible!!!
-    std::string* STR; //this is ok, however we cannot use std::string as an union member, because it contains constructors
-
-#line 87 "rule_parser.tab.h"
-
-};
-typedef union RULE_STYPE RULE_STYPE;
+typedef char const* RULE_STYPE;
 # define RULE_STYPE_IS_TRIVIAL 1
 # define RULE_STYPE_IS_DECLARED 1
 #endif

@@ -5,31 +5,17 @@
   #include "token.h"
   #include "mod_from_http.h"
 
-  int yylex (void);
-  void yyerror (char const *);
+  int rule_lex (void);
+  void rule_error (char const *);
      
 %}
 
 %define api.prefix {rule_}
+%define api.value.type {char const*}
 
-%union {
-    int INT;
-    //char * STR;
-    //void VOID; -- impossible!!!
-    std::string* STR; //this is ok, however we cannot use std::string as an union member, because it contains constructors
-}
-
-%token <STR> NTERM
-%token <STR> TERM 
-%token <INT> SEP 
-%token <INT> OR 
-%token <INT> LB 
-%token <INT> TOKEN_ERROR // this is not used in the parser but has to be included in the enum 
-%nterm <INT> rules
-%nterm <STR> rule
-%nterm <STR> alts
-%nterm <STR> symbols
-%nterm <STR> symbol
+%token NTERM TERM SEP OR LB
+// this is not used in the parser but has to be included in the enum 
+%token TOKEN_ERROR
 
 %%
 
@@ -64,15 +50,15 @@ rule_tokentype TOKENS[] = {
 	NTERM, SEP, NTERM, TERM, TERM, OR, NTERM, NTERM, OR, TERM, LB, RULE_EOF
 }; 
 
-size_t yylex_pos = 0;
+size_t rule_lex_pos = 0;
 
-int yylex (void)
+int rule_lex (void)
 {
-  return TOKENS[yylex_pos++]; 
+  return TOKENS[rule_lex_pos++]; 
 }
 
 
-void yyerror (char const *s)
+void rule_error (char const *s)
 {
   fprintf (stderr, "%s\n", s);
 }

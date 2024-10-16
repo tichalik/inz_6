@@ -82,8 +82,8 @@
   #include "token.h"
   #include "mod_from_http.h"
 
-  int yylex (void);
-  void yyerror (char const *);
+  int rule_lex (void);
+  void rule_error (char const *);
      
 
 #line 90 "rule_parser.tab.c"
@@ -515,8 +515,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    37,    37,    38,    42,    46,    47,    51,    52,    56,
-      57
+       0,    23,    23,    24,    28,    32,    33,    37,    38,    42,
+      43
 };
 #endif
 
@@ -1081,55 +1081,55 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* rules: rule  */
-#line 37 "rule_parser.y"
+#line 23 "rule_parser.y"
                         { std::cout << "rules -> rule " << std::endl;}
 #line 1087 "rule_parser.tab.c"
     break;
 
   case 3: /* rules: rules LB rule  */
-#line 38 "rule_parser.y"
+#line 24 "rule_parser.y"
                         { std::cout << "rules -> rule LB RULE" << std::endl;}
 #line 1093 "rule_parser.tab.c"
     break;
 
   case 4: /* rule: NTERM SEP alts  */
-#line 42 "rule_parser.y"
-                        { std::cout << "rule -> NTERM SEP alts " <<  sizeof((yyvsp[-2].STR)) << " " <<  sizeof((yyvsp[-1].INT)) << std::endl;}
+#line 28 "rule_parser.y"
+                        { std::cout << "rule -> NTERM SEP alts " <<  sizeof(yyvsp[-2]) << " " <<  sizeof(yyvsp[-1]) << std::endl;}
 #line 1099 "rule_parser.tab.c"
     break;
 
   case 5: /* alts: symbols  */
-#line 46 "rule_parser.y"
+#line 32 "rule_parser.y"
                         { std::cout << "alts -> symbols " << std::endl;}
 #line 1105 "rule_parser.tab.c"
     break;
 
   case 6: /* alts: alts OR symbols  */
-#line 47 "rule_parser.y"
-                        { std::cout << "alts -> alts OR symbols " <<  sizeof((yyvsp[-1].INT)) << std::endl;}
+#line 33 "rule_parser.y"
+                        { std::cout << "alts -> alts OR symbols " <<  sizeof(yyvsp[-1]) << std::endl;}
 #line 1111 "rule_parser.tab.c"
     break;
 
   case 7: /* symbols: symbol  */
-#line 51 "rule_parser.y"
+#line 37 "rule_parser.y"
                         { std::cout << "symbols -> symbol " << std::endl;}
 #line 1117 "rule_parser.tab.c"
     break;
 
   case 8: /* symbols: symbols symbol  */
-#line 52 "rule_parser.y"
+#line 38 "rule_parser.y"
                         { std::cout << "symbols -> symbols symbol " << std::endl;}
 #line 1123 "rule_parser.tab.c"
     break;
 
   case 9: /* symbol: NTERM  */
-#line 56 "rule_parser.y"
+#line 42 "rule_parser.y"
                         { std::cout << "symbol -> NTERM " << std::endl;}
 #line 1129 "rule_parser.tab.c"
     break;
 
   case 10: /* symbol: TERM  */
-#line 57 "rule_parser.y"
+#line 43 "rule_parser.y"
                         { std::cout << "symbol -> TERM " << std::endl;}
 #line 1135 "rule_parser.tab.c"
     break;
@@ -1328,7 +1328,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 60 "rule_parser.y"
+#line 46 "rule_parser.y"
 
 
 
@@ -1336,15 +1336,15 @@ rule_tokentype TOKENS[] = {
 	NTERM, SEP, NTERM, TERM, TERM, OR, NTERM, NTERM, OR, TERM, LB, RULE_EOF
 }; 
 
-size_t yylex_pos = 0;
+size_t rule_lex_pos = 0;
 
-int yylex (void)
+int rule_lex (void)
 {
-  return TOKENS[yylex_pos++]; 
+  return TOKENS[rule_lex_pos++]; 
 }
 
 
-void yyerror (char const *s)
+void rule_error (char const *s)
 {
   fprintf (stderr, "%s\n", s);
 }
