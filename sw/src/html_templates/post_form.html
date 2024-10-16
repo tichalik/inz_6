@@ -201,65 +201,65 @@
 		}
 	}
 
-
 	example_tab = {  
 		"ex-abc-1":{
 			"input": "a a b b b c c",
 			"terminals": "a b c",
-			"nonterminals": "A B C ABC",
-			"head": "ABC",
+			"nonterminals": "<a> <b> <c> <abc>",
+			"head": "<abc>",
 			"rules": 
-				"A -> a a\n"
-				+"A -> A a\n"
-				+"B -> b b\n"
-				+"B -> B b\n"
-				+"C -> C c\n"
-				+"C -> c c\n"
-				+"ABC -> A B C\n"
+				"<a> ::= a a\n"
+				+"<a> ::= <a> a\n"
+				+"<b> ::= b b\n"
+				+"<b> ::= <b> b\n"
+				+"<c> ::= <c> c\n"
+				+"<c> ::= c c\n"
+				+"<abc> ::= <a> <b> <c>\n"
 		},
 			
 		"ex-abc-2":{
 			"input": "a a b b b c c",
 			"terminals": "a b c",
-			"nonterminals": "A  AB ABC",
-			"head": "ABC",
+			"nonterminals": "<a>  <ab> <abc>",
+			"head": "<abc>",
 			"rules": 
-				"A -> a a \n"
-				+"A -> A a\n"
-				+"AB -> A b\n"
-				+"AB -> AB b\n"
-				+"ABC -> AB c \n"
-				+"ABC -> ABC c\n"
+				"<a> ::= a a \n"
+				+"<a> ::= <a> a\n"
+				+"<ab> ::= <a> b\n"
+				+"<ab> ::= <ab> b\n"
+				+"<abc> ::= <ab> c \n"
+				+"<abc> ::= <abc> c\n"
 		},
 			
 		"ex-abc-3":{
 			"input": "a a b b b c c",
 			"terminals": "a b c",
-			"nonterminals": "C BC ABC",
-			"head": "ABC",
+			"nonterminals": "<c> <bc> <abc>",
+			"head": "<abc>",
 			"rules": 
-				"C -> c c \n"
-				+"C -> c C\n"
-				+"BC -> b C\n"
-				+"BC -> b BC\n"
-				+"ABC -> a BC \n"
-				+"ABC -> a ABC\n"
+				"<c> ::= c c \n"
+				+"<c> ::= c <c>\n"
+				+"<bc> ::= b <c>\n"
+				+"<bc> ::= b <bc>\n"
+				+"<abc> ::= a <bc> \n"
+				+"<abc> ::= a <abc>\n"
 		},
 			
 			
 		"ex-a-amb":{
 			"input": "a a a a a",
 			"terminals": "a",
-			"nonterminals": "A B",
-			"head": "A",
+			"nonterminals": "<a> <b>",
+			"head": "<a>",
 			"rules": 
-				"A -> a A \n"
-				+"A -> a a\n"
-				+"B -> B a\n"
-				+"B -> a a\n"
+				"<a> ::= a <a> \n"
+				+"<a> ::= a a\n"
+				+"<b> ::= <b> a\n"
+				+"<b> ::= a a\n"
 		},
 			
 	}
+
 
 	function load_example(ex_id){
 		ex = example_tab[ex_id];
