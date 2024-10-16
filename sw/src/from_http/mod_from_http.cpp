@@ -62,7 +62,7 @@ Non_terminals Mod_from_http::terminals_from_http(
 Non_terminals Mod_from_http::nonterminals_from_http(
 	const std::string & param 
 )
-{	
+{	 
 	Non_terminals nonterminals;
 	Tokens tokens = tokenize(param);
 
@@ -77,7 +77,7 @@ Non_terminals Mod_from_http::nonterminals_from_http(
 				this->add_error(UNKNOWN_SYMBOL, "nonterminals: symbol " + 
 					tokens[i].str + ": ");
 				break;
-			}
+	 		}
 			case NTERM:
 			{
 				if (nonterminals.find(tokens[i].str) != nonterminals.end())
@@ -105,8 +105,8 @@ Non_terminals Mod_from_http::nonterminals_from_http(
 				break;
 			}
 			
-		}
-	}
+	 	}
+	} 
 
 	if (nonterminals.size() == 0)
 	{
@@ -137,125 +137,135 @@ Head Mod_from_http::head_from_http(const std::string & param)
 	return head;
 }
 
-Rule Mod_from_http::rule_from_http(const std::string & param, bool & ok)
-{
-	
-	
-	//state variable -- true if on LHS of the rule
-	bool is_LHS = true;
-	
-	//error flags, for error reporting hierarchy
-	bool f_MISSING_LHS = false;
-	bool f_MISSING_RHS = true;
-	bool f_MISSING_ARROW = true;
-	bool f_MULTIPLE_ARROWS = false;
-	bool f_TOO_MANY_LHS = false;
-	
-	Rule rule;
-	
-	std::stringstream ss;
-	ss << param;
-	
-	std::string tmp;
-	while ( ss >> tmp )
-	{		
-		//if it is a normal symbol
-		if (tmp != "->")
-		{
-					
-			if (is_LHS == true)
-			{
-						
-				if (rule.LHS == "")
-				{		
-							
-					rule.LHS = tmp;
-				}
-				else 
-				{		
-							
-					f_TOO_MANY_LHS = true;
-				}
-			}
-			else
-			{				
-				rule.RHS.push_back(tmp);
-				f_MISSING_RHS = false;
-			}
-		}
-		else //it is the separator between LHS and RHS
-		{		
-			f_MISSING_ARROW = false;
-			
-			if (is_LHS == true)
-			{		
-				is_LHS = false;
-
-				if (rule.LHS == "")
-				{				
-					//the LHS has not been filled! 
-					f_MISSING_LHS = true;
-				}
-				
-			}
-			else
-			{				
-				f_MULTIPLE_ARROWS = true;
-			}
-		}
-	}
-			
-	//if something's messed up with the arrow, there is no LHS and RHS
-	// so there's no use in reporting its errors
-	if (f_MISSING_ARROW == true)
-	{		
-		this->add_error(MISSING_ARROW, "rule "+param+": ");
-	}
-	else if (f_MULTIPLE_ARROWS == true)
-	{		
-		this->add_error(MULTIPLE_ARROWS, "rule "+param+": ");
-	}
-	else
-	{		
-		if (f_MISSING_LHS == true)
-		{		
-			this->add_error(MISSING_LHS, "rule "+param+": ");
-		}
-		if (f_MISSING_RHS == true)
-		{		
-			this->add_error(MISSING_RHS, "rule "+param+": ");
-		}
-		if (f_TOO_MANY_LHS == true)
-		{		
-			this->add_error(TOO_MANY_LHS, "rule "+param+": ");
-		}
-	}
-
-					
-	//auxiliary return value -- it will be true if there were no errors
-	ok = ! (f_MISSING_LHS || f_MISSING_RHS || f_MISSING_ARROW || f_TOO_MANY_LHS || f_MULTIPLE_ARROWS);
-	
-	return rule;
-}
 
 Rules Mod_from_http::rules_from_http(const std::string & param)
 {
 	Rules rules;
-	
-	std::stringstream ss;
-	ss << param;
-	std::string line;
-	while(std::getline(ss, line))
+	EN_PARSER_STATE state = INIT;
+	bool ok = true;
+	Tokens tokens = tokenize(param);
+	size_t rule_start = 0;
+
+	#define RAISE_ERROR(X)\
+		this->add_error(TERMINAL_AS_LHS, "rules: rule start" + \
+			param.substr(rule_start, tokens[i].start_pos-rule_start)\
+			+ ": symbol: " + tokens[i].str + ": ");\
+		ok = false;\
+		break;
+
+	for (size_t i=0; i<tokens.size() && ok; i++)
 	{
-		bool ok;
-		Rule rule = rule_from_http(line, ok);
-		if (ok)
+		switch(tokens[i].type)
 		{
-			rules.push_back(rule);
+			case TOKEN_ERROR:
+	 		{
+				RAISE_ERROR(UNKNOWN_SYMBOL);
+	 		} 
+			case SEP:
+			{ 
+				switch(state)
+			 	{
+					case INIT:
+					{
+						RAISE_ERROR(MISSING_LHS);
+					}
+					case SEP_FOUND:
+					case SYMBOL_FOUND:
+					case ALT_STARTED:
+					{
+						RAISE_ERROR(STRAY_SEP);
+			 		}
+					case HEAD_FOUND:
+					{
+						state = SEP_FOUND;
+						break;
+					}
+				}
+			}
+			case OR:
+			{ 
+				switch(state)
+			 	{
+					case INIT:
+					case HEAD_FOUND:
+					case SEP_FOUND:
+					case ALT_STARTED:
+					{
+						RAISE_ERROR(STRAY_OR);
+					}
+					case SYMBOL_FOUND:
+					{
+						state = ALT_STARTED;
+						//an alternative -- efectively create a new rule
+						rules.emplace_back();
+						//the rule has the same LHS as the previous rule
+						rules.back().LHS = rules[rules.size()-2].LHS;
+						break;
+					}
+				}
+			}
+			case NTERM:
+			case TERM:
+			{
+				switch(state)
+				{
+					case INIT:
+					{
+						if (tokens[i].type == TERM)
+						{ 
+							RAISE_ERROR(TERMINAL_AS_HEAD);
+						}
+						else
+						{
+							state = HEAD_FOUND;
+							//a new rule started
+							rules.emplace_back();
+							rules.back().LHS = tokens[i].str; 
+						}
+						break;
+					}
+					case HEAD_FOUND:
+					{  
+						RAISE_ERROR(TOO_MANY_LHS);
+					}
+					case SEP_FOUND:
+					case ALT_STARTED:
+					case SYMBOL_FOUND:
+					{
+						//a member of a rule's RHS 
+						rules.back().RHS.push_back(tokens[i].str);
+						break;
+					}
+				}
+			}
+			case LB:
+			{ 
+				switch(state)
+			 	{
+					case SEP_FOUND:
+					{
+						RAISE_ERROR(MISSING_RHS);
+					}
+					case ALT_STARTED:
+					case HEAD_FOUND:
+					{
+						RAISE_ERROR(STRAY_LB);
+					}
+					case SYMBOL_FOUND:
+					case INIT:
+					{
+						state = INIT;
+						//a rule is finished and already stored in rules
+						rule_start = tokens[i].start_pos;
+						break;
+					}
+				}
+			}
 		}
-	}
-	
-	
+	} 
+
+	#undef RAISE_ERROR
+
 	if (rules.size() == 0)
 	{
 		this->add_error(EMPTY_RULES);

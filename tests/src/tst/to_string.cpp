@@ -241,6 +241,15 @@ std::string str(
 		case EMPTY_WORD:
 			res = "EMPTY_WORD";
 			break;
+		case STRAY_SEP:
+			res = "STRAY_SEP";
+			break;
+		case STRAY_OR:
+			res = "STRAY_OR";
+			break;
+		case STRAY_LB:
+			res = "STRAY_LB";
+			break;
 		case UNKNOWN_SYMBOL:
 			res = "UNKNOWN_SYMBOL";
 			break;
@@ -259,14 +268,7 @@ std::string str(
 		case TOO_MANY_LHS:
 			res = "TOO_MANY_LHS";
 			break;
-		case MISSING_ARROW:
-			res = "MISSING_ARROW";
-			break;
-		case MULTIPLE_ARROWS:
-			res = "MULTIPLE_ARROWS";
-			break;	
 		case TERMINAL_AS_LHS:
-
 			res = "TERMINAL_AS_LHS";
 			break;
 		case HEAD_NOT_IN_NONTERMINALS:

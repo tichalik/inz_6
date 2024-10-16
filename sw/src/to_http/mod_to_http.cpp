@@ -136,6 +136,15 @@ std::string Mod_to_http::EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const
 		case REPEATING_SYMBOL:
 			res="symbol repeating within a set";
 			break;
+		case STRAY_LB:
+			res="stray line break";
+			break;
+		case STRAY_SEP:
+			res="stray definition operator";
+			break;
+		case STRAY_OR:
+			res="stray alternative operator";
+			break;
 		case TERM_IN_NTERMS:
 			res="a terminal-like symbol in nonterminals. Please write your nonterminals <like_this>";
 			break;
@@ -153,12 +162,6 @@ std::string Mod_to_http::EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const
 			break;
 		case TOO_MANY_LHS:
 			res="only single symbol on LHS is permitted (for context free parsing)";
-			break;
-		case MISSING_ARROW:
-			res="no arrown separating LHS and RHS";
-			break;
-		case MULTIPLE_ARROWS:
-			res="only one arrow (between LHS and RHS) is permitted";
 			break;
 		case TERMINAL_AS_LHS:
 			res="terminal symbol not permitted on rule LHS";

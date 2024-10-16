@@ -23,12 +23,14 @@ enum EN_ERROR_TYPE
 
 	//rule related errors
 		//parsing related
+	STRAY_OR,
+	STRAY_SEP,
+	STRAY_LB,
+
 	MISSING_LHS,
 	MISSING_RHS,
 	SINGLE_RHS,
 	TOO_MANY_LHS,
-	MISSING_ARROW,
-	MULTIPLE_ARROWS,
 		//semantic related
 	TERMINAL_AS_LHS,
 	
