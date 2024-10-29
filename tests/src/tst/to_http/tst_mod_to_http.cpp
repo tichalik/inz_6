@@ -16,7 +16,7 @@ void TST_mod_to_http::_test_pnode_to_http(
 		"","","","",""
 	);
 	
-	std::string res = mod_to_http.pnode_to_http(pnode);
+	std::string res = mod_to_http.node_to_http(pnode);
 	std::cout << res << std::endl;
 }
 void TST_mod_to_http::test_pnode_to_http()
@@ -64,7 +64,7 @@ void TST_mod_to_http::_test_ptree_to_http(
 		"","","","",""
 	);
 	
-	std::string res = mod_to_http.ptree_to_http(ptree);
+	std::string res = mod_to_http.tree_to_http(ptree);
 	std::cout << res << std::endl;
 }
 void TST_mod_to_http::test_ptree_to_http()

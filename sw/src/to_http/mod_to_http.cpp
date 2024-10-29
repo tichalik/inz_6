@@ -23,37 +23,37 @@ std::string Mod_to_http::str_to_http(const std::string & str) const
 }
 
 
-std::string Mod_to_http::pnode_to_string(const PNode & pnode) const
+std::string Mod_to_http::node_to_string(const PNode & node) const
 {
-	if (pnode.children.size() == 0 )
-		return pnode.tag;
+	if (node.children.size() == 0 )
+		return node.tag;
 	else
-		return pnode.tag + "[" 
-			+ pnode_to_string(pnode.children[0]) + " " 
-			+ pnode_to_string(pnode.children[1]) + "]";
+		return node.tag + "[" 
+			+ node_to_string(node.children[0]) + " " 
+			+ node_to_string(node.children[1]) + "]";
 }
 
-std::string Mod_to_http::pnode_to_http(const PNode & pnode) const
+std::string Mod_to_http::node_to_http(const PNode & node) const
 {
 	std::string res;
-	if (pnode.children.size()!= 0)
+	if (node.children.size()!= 0)
 	{
 		res += "<div class=\"node\">\n";
 		res += "  <div class=\"node-head\">\n";
 		res += "    <button class=\"expand\" type=\"button\" onclick=\"fold_expand(this)\"> - </button>\n";
 		
 		res += "    <span class=\"node-head-expanded\">"
-			+ str_to_http(pnode.tag) + "\n" + "</span>";
+			+ str_to_http(node.tag) + "\n" + "</span>";
 		
 		res += "    <span class=\"node-folded\">"
-			+ str_to_http(pnode_to_string(pnode)) +  "</span>\n";
+			+ str_to_http(node_to_string(node)) +  "</span>\n";
 
 		res += "  </div>\n";
 
 		res += "  <div class=\"node-body\">\n";
-		for (size_t i=0; i<pnode.children.size(); i++)
+		for (size_t i=0; i<node.children.size(); i++)
 		{
-			res += pnode_to_http(pnode.children[i]);
+			res += node_to_http(node.children[i]);
 		}
 		
 		res += "  </div>\n";
@@ -62,24 +62,24 @@ std::string Mod_to_http::pnode_to_http(const PNode & pnode) const
 	else
 	{
 		res += "<div class=\"leaf-node\">\n";
-		res += str_to_http(pnode.tag) + "\n";
+		res += str_to_http(node.tag) + "\n";
 		res += "</div>\n";
 
 	}
 	return res;
 }
 
-std::string Mod_to_http::ptree_to_string(const PTree & ptree) const
+std::string Mod_to_http::tree_to_string(const PTree & tree) const
 {
-	return pnode_to_string(ptree.root);
+	return node_to_string(tree.root);
 }
 
-std::string Mod_to_http::ptree_to_http(const PTree & ptree) const
+std::string Mod_to_http::tree_to_http(const PTree & tree) const
 {
 	std::string info;
 	std::string parse_type;
 
-	if (ptree.is_complete)
+	if (tree.is_complete)
 	{
 		info += "complete ";
 		parse_type = "Parsing";
@@ -89,35 +89,35 @@ std::string Mod_to_http::ptree_to_http(const PTree & ptree) const
 		parse_type = "Incomplete parsing";
 	}
 
-	if (ptree.is_head_ok)
+	if (tree.is_head_ok)
 	{
 		info += "head_ok";
 	}
 	
-	return "<div class=\"ptree " + info + "  \">" 
+	return "<div class=\"tree " + info + "  \">" 
 		+ "<div class=\"tree-head\">" + parse_type + "</div>\n"
-		+ "<div class=\"tree-body\">" + pnode_to_http(ptree.root) + "</div>\n"
+		+ "<div class=\"tree-body\">" + node_to_http(tree.root) + "</div>\n"
 		+ "</div>";
 }
 
 
-std::string Mod_to_http::ptrees_to_string(const PTrees & ptrees) const
+std::string Mod_to_http::trees_to_string(const PTrees & trees) const
 {
 	std::string res;
-	for (size_t i=0; i<ptrees.size(); i++)
+	for (size_t i=0; i<trees.size(); i++)
 	{
-		res += ptree_to_string(ptrees[i]) + "\n";
+		res += tree_to_string(trees[i]) + "\n";
 	}
 	res = res.substr(0, res.size()-1);
 	return res;
 }
 
-std::string Mod_to_http::ptrees_to_http(const PTrees & ptrees) const
+std::string Mod_to_http::trees_to_http(const PTrees & trees) const
 {
 	std::string res;
-	for (size_t i=0; i<ptrees.size(); i++)
+	for (size_t i=0; i<trees.size(); i++)
 	{
-		res += ptree_to_http(ptrees[i]) + "\n<BR>\n";
+		res += tree_to_http(trees[i]) + "\n<BR>\n";
 	}
 	return res;
 }
@@ -223,42 +223,73 @@ std::string Mod_to_http::errors_to_http(const Errors & _errors) const
 	
 }
 
-std::string Mod_to_http::vnode_to_http(const VNode & vnode) const
+
+
+std::string Mod_to_http::node_to_string(const VNode & node) const
 {
-	std::string res;
-	std::string tag = str_to_http(Utils::vector2str(vnode.tag, " "));
-	
-	res += "<div class=\"node\">\n";
-	res += "<div class=\"node-expanded\">\n";
-	res += " " + tag + "\n";
-	
-	for (size_t i=0; i<vnode.children.size(); i++)
+	std::string tag = str_to_http(Utils::vector2str(node.tag, " "));
+	if (node.children.size() == 0 )
+		return tag;
+	else
 	{
-		res += vnode_to_http(vnode.children[i]);
+		std::string body;
+		for (size_t i=0; i<node.children.size(); i++)
+		{
+			body += node_to_string(node.children[i]) + " ";
+		}
+		return tag + "[" + body +"]";
 	}
-	
-	res += "</div>\n";
-	res += "<span class=\"node-folded\">";
-	res += tag;
-	res += "</span>\n";
-	res += "</div>\n";
-			
-	return res;
 }
 
 
-std::string Mod_to_http::vtree_to_http(const VNode & vtree) const
+std::string Mod_to_http::node_to_http(const VNode & node) const
 {
-	return "<div class=\"vtree\">\n"
-		+ vnode_to_http(vtree) 
-		+ "</div>";
+	std::string res;
+	std::string tag = str_to_http(Utils::vector2str(node.tag, " "));
+	if (node.children.size()!= 0)
+	{
+		res += "<div class=\"node\">\n";
+		res += "  <div class=\"node-head\">\n";
+		res += "    <button class=\"expand\" type=\"button\" onclick=\"fold_expand(this)\"> - </button>\n";
+		
+		res += "    <span class=\"node-head-expanded\">"
+			+ tag + "\n" + "</span>";
+		
+		res += "    <span class=\"node-folded\">"
+			+ node_to_string(node) +  "</span>\n";
+
+		res += "  </div>\n";
+
+		res += "  <div class=\"node-body\">\n";
+		for (size_t i=0; i<node.children.size(); i++)
+		{
+			res += node_to_http(node.children[i]);
+		}
+		
+		res += "  </div>\n";
+		res += "</div>\n";
+	}
+	else
+	{
+		res += "<div class=\"leaf-node\">\n";
+		res += tag + "\n";
+		res += "</div>\n";
+
+	}
+	return res;
+} 
+
+
+std::string Mod_to_http::tree_to_http(const VNode & tree) const
+{
+	return node_to_http(tree);
 }
 
 
 Mod_to_http::Mod_to_http(
 	const Errors & errors, 
-	const PTrees & ptrees, 
-	const VNode & vnode,
+	const PTrees & trees, 
+	const VNode & node,
 	const std::string & http_nonterminals,
 	const std::string & http_terminals,
 	const std::string & http_head,
@@ -278,11 +309,11 @@ Mod_to_http::Mod_to_http(
 	if (errors.size() == 0)
 	{
 		//fill visualizatino
-		std::string http_visualization = vtree_to_http(vnode);
+		std::string http_visualization = tree_to_http(node);
 		response.fill_response(RESP_FIELDS::VISUALIZATION, http_visualization);
 		
 		//fill results
-		std::string http_parse_trees = ptrees_to_http(ptrees);
+		std::string http_parse_trees = trees_to_http(trees);
 		response.fill_response(RESP_FIELDS::RESULTS, http_parse_trees);
 		
 		response.fill_response(RESP_FIELDS::ERRORS_OR_RESULTS, "errors");

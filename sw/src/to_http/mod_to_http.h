@@ -20,15 +20,16 @@ class Mod_to_http
 	std::string error_to_http(const Error & error) const;
 	std::string errors_to_http(const Errors & error) const;
 	
-	std::string vnode_to_http(const VNode & vnode) const;
-	std::string vtree_to_http(const VNode & vtree) const;
+	std::string node_to_string(const VNode & node) const;
+	std::string node_to_http(const VNode & node) const;
+	std::string tree_to_http(const VNode & tree) const;
 
-	std::string pnode_to_string(const PNode & pnode) const;
-	std::string pnode_to_http(const PNode & pnode) const;
-	std::string ptree_to_string(const PTree & ptree) const;
-	std::string ptree_to_http(const PTree & ptree) const;
-	std::string ptrees_to_string(const PTrees & ptrees) const;
-	std::string ptrees_to_http(const PTrees & ptrees) const;
+	std::string node_to_string(const PNode & node) const;
+	std::string node_to_http(const PNode & node) const;
+	std::string tree_to_string(const PTree & tree) const;
+	std::string tree_to_http(const PTree & tree) const;
+	std::string trees_to_string(const PTrees & trees) const;
+	std::string trees_to_http(const PTrees & trees) const;
 	
 	
 	/** 
@@ -40,8 +41,8 @@ class Mod_to_http
 	
 	Mod_to_http(
 		const Errors & errors, 
-		const PTrees & ptrees, 
-		const VNode & vnode,
+		const PTrees & trees, 
+		const VNode & node,
 		const std::string & http_nonterminals,
 		const std::string & http_terminals,
 		const std::string & http_head,

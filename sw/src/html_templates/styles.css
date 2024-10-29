@@ -106,9 +106,6 @@
 	border: solid 2px black;
 	border-top: 0px
 }
- .vtree,
- .ptree{
- }
 
   #header{
 	display: flex;
