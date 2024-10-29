@@ -1,0 +1,133 @@
+ body{
+	padding: 5vh;
+ }
+  
+ #main{
+ }
+ 
+ #col-container{
+	display: flex;
+ }
+ 
+ #col1{
+	display: flex;
+	flex-direction: column;
+	flex-basis: 34%;
+ }
+
+ #col2{
+	display: flex;
+	flex-direction: column;
+	flex-basis: 66%;
+ }
+ 
+ label{
+	display: none;
+ }
+ 
+ fieldset{
+	flex-direction: column;
+	display: flex;
+ }
+ 
+ #submit,
+ #grammar{
+ }
+ 
+ textarea{
+	resize: none;
+ }
+ 
+ #rules{
+	height: 15em;
+ }
+ 
+ #error-list,
+ #visualization-list,
+ #result-list,
+ #visualization,
+ #results,
+ #errors{
+	margin: 2px;
+	padding: 10px;
+	border: solid 1px gray;
+ }
+ 
+ #[[ERRORS_OR_RESULTS]]{
+	display: none;
+ }
+ 
+ #error-list,
+ #visualization-list,
+ #result-list{
+	height: 60vh;
+	overflow: auto;
+ }
+ 
+ .error{
+	margin: 5px;
+	border: solid gray 1px;
+ }
+ 
+ 
+ .node{
+	margin: 10px;
+	border: solid 2px black;
+ }
+ 
+ .vtree,
+ .ptree{
+	margin 10px;
+	border: dashed 2px black;
+ }
+
+  #header{
+	display: flex;
+	padding: 10px;
+	margin: 20px 0px;
+	border: black solid 1px;
+  }
+
+  #help,
+  #about-grammars,
+  #load-examples,
+  #credits{
+	flex: 1;
+	text-align: center;
+	margin: 5px;
+	border: black solid 1px;
+	padding: 5px;
+  }
+
+  #example-list{
+	display: none;
+  }
+  #load-examples:hower #example-list{
+	display: block;
+  }
+  
+  
+
+#example-list {
+  display: none;
+  position: absolute;
+  background-color: white;
+  
+}
+
+#example-list div {
+  padding: 12px 16px;
+}
+
+
+#load-examples:hover #example-list {display: block;}
+
+#visualization{
+	display: block;
+}
+
+#visualization label{
+	display: inline;
+}
+
+

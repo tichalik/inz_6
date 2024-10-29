@@ -1,13 +1,30 @@
 #include "server.h"
 
 httplib::Server Server::server;
+std::string Server::css_file;
+std::string Server::js_file;
 
-
-void Server::get_handler(const httplib::Request & req,
+void Server::main_get_handler(const httplib::Request & req,
 	httplib::Response & resp)
 {
 	Html_response response;
 	resp.set_content(response.get_response(), "text/html");
+}
+
+
+void Server::js_get_handler(const httplib::Request & req,
+	httplib::Response & resp)
+{ 
+	Html_response response;
+	resp.set_content(Server::js_file, "text/javascript");
+}
+
+
+void Server::css_get_handler(const httplib::Request & req,
+	httplib::Response & resp)
+{
+	Html_response response;
+	resp.set_content(Server::css_file, "text/css");
 }
 
 void Server::post_handler(const httplib::Request & req,
@@ -49,8 +66,15 @@ void Server::post_handler(const httplib::Request & req,
 
 void Server::init()
 {	
+	//load reused documents
+	Utils::read_file("./src/html_templates/styles.css", Server::css_file);
+	Utils::read_file("./src/html_templates/scripts.js", Server::js_file);
+
 	//set handlers for the server
-	server.Get("/", get_handler);
+	server.Get("/", main_get_handler);
+	server.Get("/styles.css", css_get_handler);
+	server.Get("/scripts.js", js_get_handler);
+	
 	// THE POST HAS THE PATH SPECIFIED IN THE ACTION ATTRIBUTE
 	server.Post("/done", post_handler);
 }

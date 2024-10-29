@@ -22,7 +22,9 @@ class Server
 	 * \brief the underlying server object
 	 */
     static httplib::Server server;
-   
+  
+  	static std::string css_file;
+	static std::string js_file;
    
 	// std::vector<Error> errors;
 
@@ -30,8 +32,22 @@ public:
 
 	/** 
 	 * \brief method handling the GET requests
-	 */
-    static void get_handler(const httplib::Request & req,
+	 */ 
+    static void main_get_handler(const httplib::Request & req,
+		httplib::Response & resp);
+		
+	
+	/** 
+	 * \brief method handling the GET requests
+	 */ 
+    static void css_get_handler(const httplib::Request & req,
+		httplib::Response & resp);
+		
+	
+	/** 
+	 * \brief method handling the GET requests
+	 */ 
+    static void js_get_handler(const httplib::Request & req,
 		httplib::Response & resp);
 		
 	
