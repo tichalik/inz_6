@@ -40,7 +40,7 @@ std::string Mod_to_http::pnode_to_http(const PNode & pnode) const
 	{
 		res += "<div class=\"node\">\n";
 		res += "  <div class=\"node-head\">\n";
-		res += "    <button class=\"expand\" type=\"button\"> - </button>\n";
+		res += "    <button class=\"expand\" type=\"button\" onclick=\"fold_expand(this)\"> - </button>\n";
 		
 		res += "    <span class=\"node-head-expanded\">"
 			+ str_to_http(pnode.tag) + "\n" + "</span>";

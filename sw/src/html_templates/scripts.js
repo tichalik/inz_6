@@ -1,29 +1,32 @@
-function on_click_expanded(event){
-	<!-- get the object which was clicked on -->
-	let caller = event.caller || event.srcElement
+function fold_expand(button){
 
-	<!-- hide this object -->
-	caller.style.display="none";
-	<!-- show the folded node which is the next sibling -->
-	caller.nextElementSibling.style.display="block";
+	if (button.innerText == "+"){
+		//expand the node
 
-	<!-- withouth this all the parent elements of the element  -->
-	<!-- which was clicked on will also reveive the evevnt -->
-	event.stopPropagation();
-}
+		button.innerText = "-";
+		
+		//the expanded node header
+		button.parentElement.children[1].style.display = "inline";
+		//the folded node header
+		button.parentElement.children[2].style.display = "none"; 
+		
+		//the node body
+		button.parentElement.parentElement.children[1].style.display = "block";
+	}
+	else {
+		//collapse the node
 
-function on_click_folded(event){
-	<!-- get the object which was clicked on -->
-	let caller = event.caller || event.srcElement
-	
-	<!-- hide this object -->
-	caller.style.display="none";
-	<!-- show the expanded node which is the previous sibling -->
-	caller.previousElementSibling.style.display="block";
-	
-	<!-- withouth this all the parent elements of the element  -->
-	<!-- which was clicked on will also reveive the evevnt -->
-	event.stopPropagation();
+		button.innerText = "+";
+		
+		//the expanded node header
+		button.parentElement.children[1].style.display = "none";
+		//the folded node header
+		button.parentElement.children[2].style.display = "inline"; 
+		
+		//the node body
+		button.parentElement.parentElement.children[1].style.display = "none";
+	}
+
 }
 
 function filter_trees(){
@@ -39,25 +42,6 @@ function filter_trees(){
 		else {
 			tree.style.display = "block";
 		}
-	}
-}
-
-<!-- packing the script for adding the onclick events -->
-<!-- so that is can be called upon loading the page -->
-function add_events(){
-
-	<!-- get all the elements of this class -->
-	for (node of document.getElementsByClassName("node-expanded")){
-		<!-- add the event to be called on click -->
-		node.addEventListener("click", on_click_expanded);
-	}
-	
-	<!-- get all the elements of this class -->
-	for (node of document.getElementsByClassName("node-folded")){
-		<!-- add the event to be called on click -->
-		node.addEventListener("click", on_click_folded);
-		<!-- hide the element -->
-		node.style.display = "none";
 	}
 }
 
