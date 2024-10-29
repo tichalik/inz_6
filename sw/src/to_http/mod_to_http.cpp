@@ -39,7 +39,7 @@ std::string Mod_to_http::pnode_to_http(const PNode & pnode) const
 	
 	res += "<div class=\"node\">\n";
 	res += "<div class=\"node-expanded\">\n";
-	res += " " + str_to_http(str_to_http(pnode.tag)) + "\n";
+	res += " " + str_to_http(pnode.tag) + "\n";
 	
 	for (size_t i=0; i<pnode.children.size(); i++)
 	{
