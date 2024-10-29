@@ -211,7 +211,7 @@ std::string Mod_to_http::errors_to_http(const Errors & _errors) const
 std::string Mod_to_http::vnode_to_http(const VNode & vnode) const
 {
 	std::string res;
-	std::string tag = Utils::vector2str(vnode.tag, " ");
+	std::string tag = str_to_http(Utils::vector2str(vnode.tag, " "));
 	
 	res += "<div class=\"node\">\n";
 	res += "<div class=\"node-expanded\">\n";
