@@ -69,16 +69,42 @@
 	border: solid gray 1px;
  }
  
- 
- .node{
-	margin: 10px;
+.node-body{
+	padding: 20px;
 	border: solid 2px black;
- }
- 
+	border-top: 0px;
+	
+}
+.expand{
+	background-color: lightgreen;
+	width: 2em;
+	height: 2em;
+	margin-right:10px;
+	border: solid black 2px;
+}
+.leaf-node,
+.node-head{
+  padding:  5px;
+	margin-top: 20px;
+	background-color: lightyellow;
+	border: solid black 2px;
+}
+.leaf-node{
+	padding-left: 10px;
+}
+.tree-head{
+	background-color: lightgreen;
+	padding: 10px;
+	padding-left: 20px;
+	border: solid black 2px;
+}
+.tree-body{
+	padding: 20px;
+	border: solid 2px black;
+	border-top: 0px
+}
  .vtree,
  .ptree{
-	margin 10px;
-	border: dashed 2px black;
  }
 
   #header{
@@ -129,5 +155,6 @@
 #visualization label{
 	display: inline;
 }
+
 
 
