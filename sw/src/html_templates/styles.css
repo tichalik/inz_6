@@ -5,6 +5,7 @@
  #main{
  }
  
+
  #col-container{
 	display: flex;
  }
@@ -25,6 +26,10 @@
 	display: none;
  }
  
+fieldset fieldset{
+	margin: 10px;
+}
+
  fieldset{
 	flex-direction: column;
 	display: flex;
@@ -33,13 +38,23 @@
  #submit,
  #grammar{
  }
- 
+
+#submit input{
+	background-color: lightgreen;
+	border: solid black 1px;
+	height: 3em;
+	font-size: 20px;
+}
+#head,
  textarea{
 	resize: none;
+	 background-color: lightyellow;
+	 border: black solid 1px;
+	 font-size: 18px;
  }
  
  #rules{
-	height: 15em;
+	height: 10em;
  }
  
  #error-list,
@@ -151,6 +166,7 @@
 #visualization label{
 	display: inline;
 }
+
 
 
 

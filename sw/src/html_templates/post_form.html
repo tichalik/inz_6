@@ -55,21 +55,29 @@
 				<fieldset id="grammar" form="mf">
 					<legend>Grammar</legend>
 					
-					<div>Enter terminals separated by a whitespace</div>
-					<textarea id="terminals" name="terminals" form="mf">[[TERMINALS]]</textarea>
-					<label for="terminals">Terminals</label>
+					<fieldset id="terminals_fs" form="mf">
+						<legend>Terminals</legend>
+						<textarea id="terminals" name="terminals" form="mf">[[TERMINALS]]</textarea>
+						<label for="terminals">Terminals</label>
+					</fieldset>
+
+					<fieldset id="nonterminals_fs" form="mf">
+						<legend>Nonterminals</legend>
+						<textarea id="nonterminals" name="nonterminals" form="mf">[[NONTERMINALS]]</textarea>
+						<label for="nonterminals">Nonterminals</label>
+					</fieldset>
 					
-					<div>Enter nonterminals separated by a whitespace</div>
-					<textarea id="nonterminals" name="nonterminals" form="mf">[[NONTERMINALS]]</textarea>
-					<label for="nonterminals">Nonterminals</label>
+					<fieldset id="head_fs" form="mf">
+						<legend>Head</legend>
+						<input type="text" name="head" id="head" value="[[HEAD]]" form="mf">
+						<label for="head">Head</label>
+					</fieldset>
 					
-					<div>Enter head</div>
-					<input type="text" name="head" id="head" value="[[HEAD]]" form="mf">
-					<label for="head">Head</label>
-					
-					<div>Enter rules in form LHS -&gt; RHS1 RHS2 separated by a newline</div>
-					<textarea id="rules" name="rules" form="mf">[[RULES]]</textarea>
-					<label for="rules">Rules</label>
+					<fieldset id="rules_fs" form="mf">
+						<legend>Rules</legend>
+						<textarea id="rules" name="rules" form="mf">[[RULES]]</textarea>
+						<label for="rules">Rules</label>
+					</fieldset>
 				</fieldset>	
 
 				<!-- Word fieldset associated with the main form -->
