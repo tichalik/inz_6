@@ -57,25 +57,33 @@
 					
 					<fieldset id="terminals_fs" form="mf">
 						<legend>Terminals</legend>
-						<textarea id="terminals" name="terminals" form="mf">[[TERMINALS]]</textarea>
+						<textarea id="terminals" name="terminals" form="mf"
+							placeholder="Enter terminals separated by a whitespace, like this: a b c"
+							>[[TERMINALS]]</textarea>
 						<label for="terminals">Terminals</label>
 					</fieldset>
 
 					<fieldset id="nonterminals_fs" form="mf">
 						<legend>Nonterminals</legend>
-						<textarea id="nonterminals" name="nonterminals" form="mf">[[NONTERMINALS]]</textarea>
+						<textarea id="nonterminals" name="nonterminals" form="mf"
+							placeholder="Enter nonterminals in diamond braces, like this: <a> <b> <c>"
+						>[[NONTERMINALS]]</textarea>
 						<label for="nonterminals">Nonterminals</label>
 					</fieldset>
 					
 					<fieldset id="head_fs" form="mf">
 						<legend>Head</legend>
-						<input type="text" name="head" id="head" value="[[HEAD]]" form="mf">
+						<input type="text" name="head" id="head" value="[[HEAD]]" form="mf" placeholder="Enter head, like this: <a>">
 						<label for="head">Head</label>
 					</fieldset>
 					
 					<fieldset id="rules_fs" form="mf">
 						<legend>Rules</legend>
-						<textarea id="rules" name="rules" form="mf">[[RULES]]</textarea>
+						<textarea id="rules" name="rules" form="mf"
+							placeholder="Enter rules in BNF form, like this:
+<first_rule_head> ::= <a> a | a a
+<second_rule_head> ::= b <b> <b> "
+						>[[RULES]]</textarea>
 						<label for="rules">Rules</label>
 					</fieldset>
 				</fieldset>	
@@ -85,7 +93,9 @@
 					<legend>Input</legend>
 					
 					<div>Enter input</div>
-					<textarea id="input" name="input" form="mf">[[INPUT]]</textarea>
+					<textarea id="input" name="input" form="mf"
+							placeholder="Enter text to be parsed, like this: a b a b b c"
+					>[[INPUT]]</textarea>
 					<label for="input">Input</label>
 				</fieldset>
 				
