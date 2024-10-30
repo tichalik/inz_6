@@ -72,6 +72,14 @@
 					<label for="rules">Rules</label>
 				</fieldset>	
 
+				<!-- Word fieldset associated with the main form -->
+				<fieldset id="word" form="mf">
+					<legend>Input</legend>
+					
+					<div>Enter input</div>
+					<textarea id="input" name="input" form="mf">[[INPUT]]</textarea>
+					<label for="input">Input</label>
+				</fieldset>
 				
 				
 				<fieldset id="submit" form="mf">	
@@ -82,23 +90,15 @@
 			
 			</div>
 			<div id="col2">
-				<!-- Word fieldset associated with the main form -->
-				<fieldset id="word" form="mf">
-					<legend>Input</legend>
-					
-					<div>Enter input</div>
-					<textarea id="input" name="input" form="mf">[[INPUT]]</textarea>
-					<label for="input">Input</label>
-				</fieldset>
-				
-				<div id="errors">
+			
+				<div id="errors" style="display: [[ERRORS_DISPLAY]];">
 					Errors
 					<div id="error-list">
 						[[ERRORS]]
 					</div>
 				</div>
 				
-				<div id="visualization">
+				<div id="visualization" style="display: [[VISUALIZATION_AND_RESULTS_DISPLAY]];">
 					Visualization
 					<fieldset id="visualization">
 					    <input type="radio" id="visualization-simple" name="visualization" value="simple" form="mf" checked=true>
@@ -112,7 +112,7 @@
 				</div>
 				
 				
-				<div id="results">
+				<div id="results" style="display: [[VISUALIZATION_AND_RESULTS_DISPLAY]];">
 					<div id="results-header">
 						Results:
 						<form>

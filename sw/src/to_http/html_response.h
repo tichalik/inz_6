@@ -23,20 +23,21 @@ enum EN_RESPONSE_FIELDS
 	ERRORS, 
 	INPUT, 
 	RESULTS,
-	ERRORS_OR_RESULTS,
+	VISUALIZATION_AND_RESULTS_DISPLAY,
+	ERRORS_DISPLAY,
 	VISUALIZATION
 } ;
 }; //namespace RESP_FIELDS
 
-/**
+/** 
  * \brief configurable HTML text
  */
 class Html_response
-{
+{ 
 	/**
 	 * \brief number of configurable fields in the response
 	 */
-	const static int NO_RESPONSE_FIELDS = 9;
+	const static int NO_RESPONSE_FIELDS = 10;
 
 	/**
 	 * \brief translation from EN_RESPONSE_FIELDS to string present in the template form 

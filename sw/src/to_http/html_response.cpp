@@ -22,6 +22,12 @@ void Html_response::fill_response(
 
 std::string Html_response::get_response()
 {
+	//fill the default values 
+	//twice, the call only fills one field
+	fill_response(RESP_FIELDS::VISUALIZATION_AND_RESULTS_DISPLAY, "block");
+	fill_response(RESP_FIELDS::VISUALIZATION_AND_RESULTS_DISPLAY, "block");
+	fill_response(RESP_FIELDS::ERRORS_DISPLAY, "none");
+
 	//fill all unfilled fields with empty strings
 	for (int i=0; i<NO_RESPONSE_FIELDS; i++)
 	{
@@ -47,6 +53,7 @@ const std::string Html_response::RESPONSE_FIELDS_DICT[Html_response::NO_RESPONSE
 	"[[ERRORS]]",
 	"[[INPUT]]",
 	"[[RESULTS]]",
-	"[[ERRORS_OR_RESULTS]]",
+	"[[VISUALIZATION_AND_RESULTS_DISPLAY]]",
+	"[[ERRORS_DISPLAY]]",
 	"[[VISUALIZATION]]",
 };

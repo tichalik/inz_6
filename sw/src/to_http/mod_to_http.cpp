@@ -316,13 +316,20 @@ Mod_to_http::Mod_to_http(
 		std::string http_parse_trees = trees_to_http(trees);
 		response.fill_response(RESP_FIELDS::RESULTS, http_parse_trees);
 		
-		response.fill_response(RESP_FIELDS::ERRORS_OR_RESULTS, "errors");
+		//twice, the call only fills one field
+		response.fill_response(RESP_FIELDS::VISUALIZATION_AND_RESULTS_DISPLAY, "block");
+		response.fill_response(RESP_FIELDS::VISUALIZATION_AND_RESULTS_DISPLAY, "block");
+		response.fill_response(RESP_FIELDS::ERRORS_DISPLAY, "none");
+		
 	}
 	else
 	{
 		std::string http_errors = errors_to_http(errors);
 		response.fill_response(RESP_FIELDS::ERRORS, http_errors);
-		response.fill_response(RESP_FIELDS::ERRORS_OR_RESULTS, "results");
+		//twice, the call only fills one field
+		response.fill_response(RESP_FIELDS::VISUALIZATION_AND_RESULTS_DISPLAY, "none");
+		response.fill_response(RESP_FIELDS::VISUALIZATION_AND_RESULTS_DISPLAY, "none");
+		response.fill_response(RESP_FIELDS::ERRORS_DISPLAY, "block");
 	}
 }
 

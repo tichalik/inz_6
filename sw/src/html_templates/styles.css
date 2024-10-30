@@ -52,12 +52,8 @@
 	padding: 10px;
 	border: solid 1px gray;
  }
- 
- #[[ERRORS_OR_RESULTS]]{
-	display: none;
- }
- 
- #error-list,
+
+#error-list,
  #visualization-list,
  #result-list{
 	height: 60vh;
