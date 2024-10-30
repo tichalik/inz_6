@@ -25,15 +25,33 @@ class Server
   
   	static std::string css_file;
 	static std::string js_file;
+	static std::string help_file;
+	static std::string grammars_file;
+	static std::string credits_file;
    
 	// std::vector<Error> errors;
 
 public:
 
-	/** 
+				/** 
 	 * \brief method handling the GET requests
 	 */ 
     static void main_get_handler(const httplib::Request & req,
+		httplib::Response & resp);
+	/** 
+	 * \brief method handling the GET requests
+	 */ 
+    static void help_get_handler(const httplib::Request & req,
+		httplib::Response & resp);
+	/** 
+	 * \brief method handling the GET requests
+	 */ 
+    static void grammars_get_handler(const httplib::Request & req,
+		httplib::Response & resp);
+	/** 
+	 * \brief method handling the GET requests
+	 */ 
+    static void credits_get_handler(const httplib::Request & req,
 		httplib::Response & resp);
 		
 	

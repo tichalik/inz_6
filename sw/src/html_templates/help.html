@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="styles.css">
+	<script src="scripts.js"></script>
+	<title> ContextFreeParsing </title>
+</head>
+
+<body>
+	<!-- action is the url that is put in the http message-box
+		 method is what kind of message it is -- by default GET-->
+		 
+		 
+	<form action="/done" method="post" id="mf"></form>
+	
+	<div id="main">
+		<div id="title"> 
+			<span id="title-context">
+				Context
+			</span>
+			<span id="title-free">
+				Free
+			</span>
+			<span id="title-parsing">
+				Parsing
+			</span>
+			<span id="title-101">
+				(101)
+			</span>
+			
+		</div> 
+
+		<div id="header">
+			<a href="help"> <div id="help"> Help </div> </a>
+			<a href="help"> <div id="about-grammars"> About grammars </div> </a>
+			<div id="load-examples">
+				Load examples
+				<div id="example-list">
+
+					<div id="ex-abc-1" onclick="load_example('ex-abc-1')">
+						a<sup>k</sup>b<sup>l</sup>c<sup>m</sup>,
+						&nbsp;&nbsp;    k,l,m = 1, 2 ...,
+						&nbsp;&nbsp;    version 1
+					</div>
+					<div id="ex-abc-2" onclick="load_example('ex-abc-2')">
+						a<sup>k</sup>b<sup>l</sup>c<sup>m</sup>,
+						&nbsp;&nbsp;    k,l,m = 1, 2 ...,
+						&nbsp;&nbsp;    version 2
+					</div>
+					<div id="ex-abc-3" onclick="load_example('ex-abc-3')">
+						a<sup>k</sup>b<sup>l</sup>c<sup>m</sup>,
+						&nbsp;&nbsp;    k,l,m = 1, 2 ...,
+						&nbsp;&nbsp;    version 3
+					</div>
+					<div id="ex-a-amb" onclick="load_example('ex-a-amb')">
+						a<sup>k,
+						&nbsp;&nbsp;    k = 1, 2 ...,
+						&nbsp;&nbsp;    ambiguous
+					</div>
+				</div><!-- example-list -->
+			</div><!-- load-examples -->
+			<a href="help"> <div id="credits"> Credits </div> </a>
+		</div><!-- header -->
+		
+	
+	</div>
+
+</body>
+</html>

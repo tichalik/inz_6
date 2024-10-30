@@ -3,6 +3,9 @@
 httplib::Server Server::server;
 std::string Server::css_file;
 std::string Server::js_file;
+std::string Server::help_file;
+std::string Server::grammars_file;
+std::string Server::credits_file;
 
 void Server::main_get_handler(const httplib::Request & req,
 	httplib::Response & resp)
@@ -12,10 +15,33 @@ void Server::main_get_handler(const httplib::Request & req,
 }
 
 
+
+void Server::help_get_handler(const httplib::Request & req,
+	httplib::Response & resp)
+{ 
+	resp.set_content(Server::help_file, "text/html");
+}
+
+
+
+void Server::grammars_get_handler(const httplib::Request & req,
+	httplib::Response & resp)
+{ 
+	resp.set_content(Server::grammars_file, "text/html");
+}
+
+
+
+void Server::credits_get_handler(const httplib::Request & req,
+	httplib::Response & resp)
+{
+	resp.set_content(Server::credits_file, "text/html");
+}
+
+
 void Server::js_get_handler(const httplib::Request & req,
 	httplib::Response & resp)
 { 
-	Html_response response;
 	resp.set_content(Server::js_file, "text/javascript");
 }
 
@@ -23,7 +49,6 @@ void Server::js_get_handler(const httplib::Request & req,
 void Server::css_get_handler(const httplib::Request & req,
 	httplib::Response & resp)
 {
-	Html_response response;
 	resp.set_content(Server::css_file, "text/css");
 }
 
@@ -69,11 +94,17 @@ void Server::init()
 	//load reused documents
 	Utils::read_file("./src/html_templates/styles.css", Server::css_file);
 	Utils::read_file("./src/html_templates/scripts.js", Server::js_file);
+	Utils::read_file("./src/html_templates/help.html", Server::help_file);
+	Utils::read_file("./src/html_templates/gramars.html", Server::grammars_file);
+	Utils::read_file("./src/html_templates/credits.html", Server::credits_file);
 
 	//set handlers for the server
 	server.Get("/", main_get_handler);
 	server.Get("/styles.css", css_get_handler);
 	server.Get("/scripts.js", js_get_handler);
+	server.Get("/help", help_get_handler);
+	server.Get("/grammars", grammars_get_handler);
+	server.Get("/credits", credits_get_handler);
 	
 	// THE POST HAS THE PATH SPECIFIED IN THE ACTION ATTRIBUTE
 	server.Post("/done", post_handler);
