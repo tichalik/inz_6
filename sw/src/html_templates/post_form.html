@@ -130,16 +130,16 @@
 				
 				<fieldset id="results" style="display: [[VISUALIZATION_AND_RESULTS_DISPLAY]];">
 					<legend>Results</legend>
-					<div id="results-header">
 						<form>
-							<input type="checkbox" id="head_ok_only" onclick="filter_trees()">
-							<label for="head_ok_only"> only correct head </label>
-							only correct head
-							<input type="checkbox" id="complete_only" onclick="filter_trees()">
-							<label for="complete_only"> only complete parses </label>
-							only complete parses
+							<fieldset id="results-header">
+								<input type="checkbox" id="head_ok_only" onclick="filter_trees()">
+								<label for="head_ok_only"> only correct head </label>
+								only correct head
+								<input type="checkbox" id="complete_only" onclick="filter_trees()">
+								<label for="complete_only"> only complete parses </label>
+								only complete parses
+							</fieldset>
 						</form>
-					</div>
 					<div id="result-list">
 						[[RESULTS]]
 					</div>

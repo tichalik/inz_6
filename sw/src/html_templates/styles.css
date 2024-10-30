@@ -33,10 +33,6 @@
 	 border: solid 1px black;
  }
  
- #submit,
- #grammar{
- }
-
  #submit input{
 	background-color: lightgreen;
 	border: solid black 1px;
@@ -55,18 +51,16 @@
  #rules{
 	height: 10em;
  }
- 
+#results-header
+{
+	display: block;
+}
  #error-list,
  #visualization-list,
  #result-list{
 	margin: 10px;
 	padding: 20px;
 	border: solid 1px gray;
- }
-
- #error-list,
- #visualization-list,
- #result-list{
 	max-height: 60vh;
 	overflow: auto;
  }
@@ -169,6 +163,7 @@
 #visualization label{
 	display: inline;
 }
+
 
 
 
