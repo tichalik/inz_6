@@ -1,7 +1,19 @@
  body{
 	padding: 5vh;
  }
-  
+#title{
+	font-size: 80px;
+	text-align: center;
+	font-weight: bold;
+  color: lightgreen;
+	background-color: lightyellow;
+}
+#title-101
+{
+	font-size: 40px;
+}
+
+
  #main{
  }
  
@@ -126,11 +138,13 @@
   #about-grammars,
   #load-examples,
   #credits{
-	flex: 1;
-	text-align: center;
-	margin: 5px;
-	border: black solid 1px;
-	padding: 5px;
+		flex: 1;
+		text-align: center;
+		margin: 5px;
+		background-color: lightgreen;
+		padding: 15px;
+		font-size: 20px;
+		color: green;
   }
 
   #example-list{
@@ -163,6 +177,7 @@
 #visualization label{
 	display: inline;
 }
+
 
 
 
