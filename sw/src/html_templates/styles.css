@@ -26,26 +26,25 @@
 	display: none;
  }
  
-fieldset fieldset{
-	margin: 10px;
-}
-
  fieldset{
+	margin: 10px;
 	flex-direction: column;
 	display: flex;
+	 border: solid 1px black;
  }
  
  #submit,
  #grammar{
  }
 
-#submit input{
+ #submit input{
 	background-color: lightgreen;
 	border: solid black 1px;
 	height: 3em;
 	font-size: 20px;
-}
-#head,
+ }
+ 
+ #head,
  textarea{
 	resize: none;
 	 background-color: lightyellow;
@@ -59,33 +58,36 @@ fieldset fieldset{
  
  #error-list,
  #visualization-list,
- #result-list,
- #visualization,
- #results,
- #errors{
-	margin: 2px;
-	padding: 10px;
+ #result-list{
+	margin: 10px;
+	padding: 20px;
 	border: solid 1px gray;
  }
 
-#error-list,
+ #error-list,
  #visualization-list,
  #result-list{
-	height: 60vh;
+	max-height: 60vh;
 	overflow: auto;
- }
- 
- .error{
-	margin: 5px;
-	border: solid gray 1px;
  }
  
  .node-folded{
  	display: none;
  }
+
+.node-body,
+.expand,
+.error,
+.leaf-node,
+.node-head,
+.tree-head,
+.tree-body{
+	border: solid 3px green;
+}
+
+ 
 .node-body{
 	padding: 20px;
-	border: solid 2px black;
 	border-top: 0px;
 	
 }
@@ -94,15 +96,19 @@ fieldset fieldset{
 	width: 2em;
 	height: 2em;
 	margin-right:10px;
-	border: solid black 2px;
 }
+.error,
 .leaf-node,
 .node-head{
-  padding:  5px;
+  	padding:  5px;
 	margin-top: 20px;
 	background-color: lightyellow;
-	border: solid black 2px;
 }
+
+.error{
+	background-color: tomato;
+}
+
 .leaf-node{
 	padding-left: 10px;
 }
@@ -110,11 +116,9 @@ fieldset fieldset{
 	background-color: lightgreen;
 	padding: 10px;
 	padding-left: 20px;
-	border: solid black 2px;
 }
 .tree-body{
 	padding: 20px;
-	border: solid 2px black;
 	border-top: 0px
 }
 
@@ -122,7 +126,6 @@ fieldset fieldset{
 	display: flex;
 	padding: 10px;
 	margin: 20px 0px;
-	border: black solid 1px;
   }
 
   #help,
@@ -166,6 +169,9 @@ fieldset fieldset{
 #visualization label{
 	display: inline;
 }
+
+
+
 
 
 

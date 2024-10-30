@@ -91,8 +91,6 @@
 				<!-- Word fieldset associated with the main form -->
 				<fieldset id="word" form="mf">
 					<legend>Input</legend>
-					
-					<div>Enter input</div>
 					<textarea id="input" name="input" form="mf"
 							placeholder="Enter text to be parsed, like this: a b a b b c"
 					>[[INPUT]]</textarea>
@@ -116,8 +114,8 @@
 					</div>
 				</div>
 				
-				<div id="visualization" style="display: [[VISUALIZATION_AND_RESULTS_DISPLAY]];">
-					Visualization
+				<fieldset id="visualization" style="display: [[VISUALIZATION_AND_RESULTS_DISPLAY]];">
+					<legend>Visualization</legend>
 					<fieldset id="visualization">
 					    <input type="radio" id="visualization-simple" name="visualization" value="simple" form="mf" checked=true>
 					    <label for="visualization-simple"> Simple </label>
@@ -127,12 +125,12 @@
 					<div id="visualization-list">
 						[[VISUALIZATION]]
 					</div>
-				</div>
+				</fieldset>
 				
 				
-				<div id="results" style="display: [[VISUALIZATION_AND_RESULTS_DISPLAY]];">
+				<fieldset id="results" style="display: [[VISUALIZATION_AND_RESULTS_DISPLAY]];">
+					<legend>Results</legend>
 					<div id="results-header">
-						Results:
 						<form>
 							<input type="checkbox" id="head_ok_only" onclick="filter_trees()">
 							<label for="head_ok_only"> only correct head </label>
@@ -145,7 +143,7 @@
 					<div id="result-list">
 						[[RESULTS]]
 					</div>
-				</div>
+				</fieldset>
 				
 			</div>
 		</div>
