@@ -2,7 +2,9 @@
 	padding: 5vh;
  }
 
-#help-div{
+#help-div,
+#grammars-div,
+#credits-div{
 	margin-left: 10%;
 	margin-right:10%;
 }
