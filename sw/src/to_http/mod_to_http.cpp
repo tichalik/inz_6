@@ -256,7 +256,7 @@ std::string Mod_to_http::node_to_http(const VNode & node) const
 			+ tag + "\n" + "</span>";
 		
 		res += "    <span class=\"node-folded\">"
-			+ node_to_string(node) +  "</span>\n";
+			+ tag +  "</span>\n";
 
 		res += "  </div>\n";
 
