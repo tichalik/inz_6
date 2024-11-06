@@ -32,38 +32,86 @@
 
 		<div id="header">
 			<a href="help"> <div id="help"> Help </div> </a>
-			<a href="help"> <div id="about-grammars"> About grammars </div> </a>
-			<div id="load-examples">
-				Load examples
-				<div id="example-list">
-
-					<div id="ex-abc-1" onclick="load_example('ex-abc-1')">
-						a<sup>k</sup>b<sup>l</sup>c<sup>m</sup>,
-						&nbsp;&nbsp;    k,l,m = 1, 2 ...,
-						&nbsp;&nbsp;    version 1
-					</div>
-					<div id="ex-abc-2" onclick="load_example('ex-abc-2')">
-						a<sup>k</sup>b<sup>l</sup>c<sup>m</sup>,
-						&nbsp;&nbsp;    k,l,m = 1, 2 ...,
-						&nbsp;&nbsp;    version 2
-					</div>
-					<div id="ex-abc-3" onclick="load_example('ex-abc-3')">
-						a<sup>k</sup>b<sup>l</sup>c<sup>m</sup>,
-						&nbsp;&nbsp;    k,l,m = 1, 2 ...,
-						&nbsp;&nbsp;    version 3
-					</div>
-					<div id="ex-a-amb" onclick="load_example('ex-a-amb')">
-						a<sup>k,
-						&nbsp;&nbsp;    k = 1, 2 ...,
-						&nbsp;&nbsp;    ambiguous
-					</div>
-				</div><!-- example-list -->
-			</div><!-- load-examples -->
-			<a href="help"> <div id="credits"> Credits </div> </a>
+			<a href="grammars"> <div id="about-grammars"> About grammars </div> </a>
+			<a href="/"> <div id="load-examples"> Load examples </div></a>
+			<a href="credits"> <div id="credits"> Credits </div> </a>
 		</div><!-- header -->
 		
+	<div id="help-div">
 	
+	<h2> What is this? </h2>
+	<div>
+		ContextFreeParsing(101) is a tool to help you learn about Context Free Grammars -- if you don't know what's that, please refer to the <a href="grammars"> Grammars </a> tab, or to the <a href="https://en.wikipedia.org/wiki/Formal_grammar"> Wikipedia page </a>. The app is inspired by <a href="regex101.com"> Regex101.com </a> (if you're not familiar with that site, I can't recommend it enough), but is focused on context free grammars, instead of regexes. Of course it's not half as good as the other one, that's why the 101 is in the braces.
 	</div>
+
+	<h2> What can it do? </h2>
+	<div> The app allows you to enter a grammar in the Backus-Naur Form, checks whether it is formally correct (no common symbols in terminals and nonterminals etc.) and produces a visualization of its rules and a parsing of given input string. </div>
+	
+	<h3> Entering the grammar </h3> 
+	<div> Just fill in the form! A terminal is considered as any combination of the alphanumeric characters and _. Terminals are separated by whitespaces and are case-sensitive: </div>
+
+					<fieldset id="terminals_fs" form="mf">
+						<legend>Terminals</legend>
+						<textarea readonly id="terminals" name="terminals">
+_ 1234 this_is_one_terminal
+these are separate terminals 
+youCanMixNumbers123and_andLetters
+						</textarea>
+						<label for="terminals">Terminals</label>
+					</fieldset>
+
+	<div> Nonterminals are exactly the same, except they must be surrounded with diamond braces: </div> 
+					<fieldset id="nonterminals_fs" form="mf">
+						<legend>Nonterminals</legend>
+						<textarea readonly id="nonterminals" name="nonterminals">
+&lt;_&gt; &lt;1234&gt; &lt;this_is_one_nonterminal&gt;
+&lt;these&gt; &lt;are&gt; &lt;separate&gt; &lt;nonterminals&gt; 
+&lt;youCanMixNumbers123and_andLetters&gt;
+&lt;now&gt;&lt;you&gt;&lt;dont&gt;&lt;even&gt;&lt;need&gt;&lt;whitespaces&gt;
+						</textarea>
+						<label for="nonterminals">Nonterminals</label>
+					</fieldset>
+	
+	<div> Head is just a nonterminal: </div>
+					<fieldset id="head_fs" form="mf">
+						<legend>Head</legend>
+						<input readonly type="text" name="head" id="head" value="<some_nonterminal>">
+						<label for="head">Head</label>
+					</fieldset>
+	
+	<div> The rules are entered in the Backus-Naur form. A new rule starts with a new line, but if you want to break a single rule over multiple lines (perhaps to increase clarity) use the backslash (\):</div>
+
+					<fieldset id="rules_fs" form="mf">
+						<legend>Rules</legend>
+						<textarea readonly id="rules" name="rules">
+<1st_rule> ::= <1st_symbol> 2nd_symbol | alternative_RHS
+<2nd_rule> ::= 1st_symbol 2nd_symbol \
+				3rd_symbol | \
+				alternative_RHS \
+				| <another_alternative_RHS>
+						</textarea>
+						<label for="rules">Rules</label>
+					</fieldset>
+				</fieldset>	
+
+	<h3> Visualization </h3>
+	<div> The app attempts to help you visualize the grammar by producing a tree of derrivable strings (of both terminals and nonterminals). There are 2 modes of visualization: simple, where each rule is used once in the tree, and complex, where each rule is matched once in each path from the root to the leaves. </div>
+
+	<h3> Parsing </h3>
+	<div>Enter the input string in the Input field and it will be parsed </div>
+			<fieldset id="word" form="mf">
+					<legend>Input</legend>
+					<textarea readonly id="input" name="input" form="mf">
+the input should be a sequence of terminals 
+separated by whitespaces</textarea>
+					<label for="input">Input</label>
+				</fieldset>
+		
+
+
+
+	</div> <!--help-div-->
+	</div> <!--main-->
 
 </body>
 </html>

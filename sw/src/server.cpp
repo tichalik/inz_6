@@ -95,7 +95,7 @@ void Server::init()
 	Utils::read_file("./src/html_templates/styles.css", Server::css_file);
 	Utils::read_file("./src/html_templates/scripts.js", Server::js_file);
 	Utils::read_file("./src/html_templates/help.html", Server::help_file);
-	Utils::read_file("./src/html_templates/gramars.html", Server::grammars_file);
+	Utils::read_file("./src/html_templates/grammars.html", Server::grammars_file);
 	Utils::read_file("./src/html_templates/credits.html", Server::credits_file);
 
 	//set handlers for the server

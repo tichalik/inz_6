@@ -1,6 +1,17 @@
  body{
 	padding: 5vh;
  }
+
+#help-div{
+	margin-left: 10%;
+	margin-right:10%;
+}
+
+#help-div #nonterminals,
+#help-div #terminals{
+	height: 6em;
+}
+
 #title{
 	font-size: 80px;
 	text-align: center;
@@ -63,6 +74,7 @@
 	 background-color: lightyellow;
 	 border: black solid 1px;
 	 font-size: 18px;
+	/*! height: 6em; */
  }
  
  #rules{
@@ -181,6 +193,11 @@
 
 #visualization label{
 	display: inline;
+}
+
+h2, h3{
+	color: green;
+	background-color: lightyellow
 }
 
 
