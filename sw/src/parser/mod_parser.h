@@ -41,7 +41,7 @@ class Mod_parser
 	void scan(const State & state, size_t i);	
 	void complete(State & state, size_t i);	
 
-	size_t find_in_set(const State & state, size_t i);
+	size_t find_in_set(const State & state, size_t i) const;
 
     public:
 	

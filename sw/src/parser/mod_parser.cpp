@@ -133,9 +133,9 @@ void Mod_parser::scan(const State & state, size_t i)
 
 void Mod_parser::complete(State & state, size_t i)
 {
-	for (size_t i=0; i<this->states[state.origin].size(); i++)
+	for (size_t j=0; j<this->states[state.origin].size(); j++)
 	{
-		State & source = this->states[state.origin][i];
+		State & source = this->states[state.origin][j];
 
 		if (source.pos < source.rule.RHS.size() 
 			&& source.rule.RHS[source.pos] == state.rule.LHS)
@@ -149,9 +149,9 @@ void Mod_parser::complete(State & state, size_t i)
 			}
 			else
 			{
-				for (size_t i=0; i<_state.sppf.alts.size(); i++)
+				for (size_t k=0; k<_state.sppf.alts.size(); k++)
 				{
-					_state.sppf.alts[i].push_back(&state.sppf);
+					_state.sppf.alts[k].push_back(&state.sppf);
 				}
 			}
 			
@@ -173,7 +173,7 @@ void Mod_parser::complete(State & state, size_t i)
 	}
 }
 
-size_t Mod_parser::find_in_set(const State & state, size_t i)
+size_t Mod_parser::find_in_set(const State & state, size_t i) const
 {
 	size_t res = -1;
 	for( size_t j = 0; j<this->states[i].size() && res == -1; j++)
