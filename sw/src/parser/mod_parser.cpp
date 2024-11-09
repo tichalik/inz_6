@@ -1,194 +1,196 @@
 #include "mod_parser.h"
 
-void Mod_parser::propagate_parsing_table(
-	PTable& parsing_table
-)
-{
-	
-    //iterating the matrix from top to bottom
-    for (int y=1; y<parsing_table.SIZE; y++)
-    {
-        //iterating the matrix from left to right
-        //the ith row has SIZE-i cells
-        for (int x=0; x<parsing_table.SIZE-y; x++)
-        {
-            //we are at matrix[i][j]
-
-            // a tree with root at matrix[y][x] covers all nodes in range
-            // < matrix[0][x], matrix[0][x+y] >
-            // we want to decompose  it into 2 trees that cover
-            // 1st:  < matrix[0][x], matrix[0][x+_x] >
-            // 2nd:  < matrix[0][x+_x+1], matrix[0][x+y]>
-            // we want to have the second tree in the form
-            // 		< matrix[0][A], matrix[0][A+B]>
-            // therefore
-            //		A = x+_x+1
-            //		A+B = x+y
-            //		B = A+B-A = x+y -(x+_x+1) = y-_x-1
-            // 2nd': 	< matrix[0][x+_x+1], matrix[0][(x+_x+1)+(y-_x-1)]>
-            // the trees have roots at:
-            // 1st:
-            //	matrix[_x][x]
-            // 2nd:
-            //	matrix[y-_x-1][x+_x+1]
-
-            //we iterate for _x in range <0, y-1>
-            for (int _x=0; _x<y; _x++)
-            {
-
-                // matrix[y][x] -> matrix[_x][x] matrix[y-_x-1][x+_x+1]
-                // matrix[y][x] -> matrix[y1][x1] matrix[y2][x2]
-
-                int y1 = _x;
-                int x1 = x;
-                int y2 = y-_x-1;
-                int x2 = x+_x+1;
-
-                       // << y2 << "," << x2 <<std::endl;
-
-
-
-                //for every combination of pnodes available:
-                for (size_t i=0; i<parsing_table.tab[y1][x1].size(); i++)
-                {
-                    PTable_entry p1 = parsing_table.tab[y1][x1][i];
-                    for (size_t j=0; j<parsing_table.tab[y2][x2].size(); j++)
-                    {
-                        PTable_entry p2 = parsing_table.tab[y2][x2][j];
-						
-
-                        if (parsing_grammar_adapter.has_rule(p1.tag, p2.tag))
-                        {
-                            std::vector<LHS_and_ID> heads = 
-								parsing_grammar_adapter.get_rule_head(p1.tag, p2.tag);
-                            for (size_t k=0; k<heads.size(); k++)
-                            {
-                                PTable_entry pnode;
-                                pnode.tag = heads[k].LHS;
-                                pnode.rule_id = heads[k].ID;
-								
-								PTable_reference child1;
-								child1.y = y1;
-								child1.x = x1;
-								child1.list_index = i;
-								
-								PTable_reference child2;
-								child2.y = y2;
-								child2.x = x2;
-								child2.list_index = j;
-								
-								
-                                pnode.children.push_back(child1);
-                                pnode.children.push_back(child2);
-
-                                parsing_table.tab[y][x].push_back(pnode);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-void Mod_parser::extract_trees_from_parsing_table(
-	PTable& parsing_table
-)
-{
-
-	const Non_terminals & added_nonterminals = 
-		chomskify.get_grammar().added_nonterminals;
-
-	//iterate the table top-to-bottom
-	for (size_t i=parsing_table.SIZE-1; i+1>0; i--) //stupid thing
-			//normally should be i>=0
-			// but i is of size_t 
-			// so it is ALWAYS > 0
-			// decrementing beyond 0 just switches it around
-			
-	{
-
-		for (size_t j=0; j<parsing_table.SIZE-i; j++)
-		{
-
-			//for each PTable_entry at given parsing_table index
-			for (size_t k=0; k<parsing_table.tab[i][j].size(); k++)
-			{
-
-				//nodes not included in any other tree are taken as roots of their own trees
-				if (parsing_table.tab[i][j][k].visited == false
-				//but only if they are a complete rule 
-				&& !added_nonterminals.contains(parsing_table.tab[i][j][k].tag)
-				)
-				{
-
-					PTable_reference address;
-					address.x = j;
-					address.y = i;
-					address.list_index = k;
-					PTree ptree;
-					ptree.root = ptable_entry_to_pnode(parsing_table, address);
-					parse_trees.push_back(ptree);
-				}
-			}
-		}
-	}
-}
-
-PNode Mod_parser::ptable_entry_to_pnode(
-	PTable& parsing_table,
-	const PTable_reference & address
-)
-{
-
-	//mark the node as visited, so it won't be the root of a tree
-	parsing_table.tab[address.y][address.x][address.list_index].visited = true;
-
-	//copy the tag
-	PTable_entry source = parsing_table.tab[address.y][address.x][address.list_index];
-	PNode res;
-	res.tag = source.tag;
-	res.rule_id = source.rule_id;
-
-	//extract children of the node
-	for (size_t i=0; i<source.children.size(); i++)
-	{
-
-		res.children.push_back(ptable_entry_to_pnode(parsing_table,source.children[i]));
-	}
-
-	return res;
-}
-
-
-Errors Mod_parser::get_errors() const
-{
-	return this->errors;
-}
-
 Mod_parser::Mod_parser(
 	const Grammar & grammar,
 	const Word & input
 ):
-	chomskify(grammar),
-	parsing_grammar_adapter(chomskify.get_grammar())
+	parsing_grammar_adapter(grammar),
+	states(input.size()+1),
+	leaves(input.size())
 {
-	this->errors = chomskify.get_errors();
-	if (this->errors.size() == 0)
+	//create leaf SPPF nodes
+	for (size_t i=0; i<input.size(); i++)
 	{
-		
-		PTable parsing_table(input);
-		propagate_parsing_table(parsing_table);
+		this->leaves[i].tag = input[i];
+	}
 
-		extract_trees_from_parsing_table(parsing_table);
-		
-		Dechomskify dechomskify(
-			parse_trees,
-			chomskify.get_grammar()
-		);
-		parse_trees = dechomskify.get_result_trees();
+	//add the first states
+	{ 
+		const std::vector<Symbols> RHSs = parsing_grammar_adapter.get_RHS(grammar.head);
+		this->states[0] = std::vector<State>(RHSs.size());
+		for (size_t j=0; j<RHSs.size(); j++)
+		{ 
+			this->states[0][j].rule.LHS = grammar.head;
+			this->states[0][j].rule.RHS = RHSs[j];
+			this->states[0][j].pos = 0;
+			this->states[0][j].origin= 0;
+			this->states[0][j].sppf.tag = grammar.head;
+		}
+	}
+
+	//main loop 
+	size_t i=0;
+	for (; i<input.size(); i++)
+	{
+		size_t j = 0;
+		while (j < this->states[i].size())
+		{
+			State& state = this->states[i][j];
+			if (state.pos != state.rule.RHS.size())
+			{
+				if (state.rule.RHS[state.pos] == input[i])
+				{
+					this->scan(state, i);
+				}
+				else
+				{
+					this->predict(state, i);
+				}
+			}
+			else
+			{
+				this->complete(state, i);
+			}
+
+			j++;
+		}
+
+	}
+
+	//process last set
+	{
+		size_t j = 0;
+		while (j < this->states[i].size())
+		{
+			State& state = this->states[i][j];
+			if (state.pos != state.rule.RHS.size())
+			{
+				this->predict(state, i);
+			}
+			else
+			{
+				this->complete(state, i);
+			}
+
+			j++;
+		} 
+	}
+	
+	//find the results
+	for (size_t j=0; j<this->states[i].size(); j++)
+	{
+		State & state = this->states[i][j];
+		if (state.origin == 0 && state.rule.LHS == grammar.head &&
+			state.pos == state.rule.RHS.size())
+		{
+			this->res.push_back(&state.sppf);
+		}
+	}
+
+}
+
+void Mod_parser::predict(const State & state, size_t i)
+{
+	const std::vector<Symbols> RHSs = 
+		parsing_grammar_adapter.get_RHS(state.rule.RHS[state.pos]);
+	for (size_t j=0; j<RHSs.size(); j++)
+	{
+		State _state;
+		_state.rule.LHS = state.rule.RHS[state.pos];
+		_state.rule.RHS = RHSs[j];
+		_state.pos = 0;
+		_state.origin = i;
+		_state.sppf.tag = _state.rule.LHS;
+		if (this->find_in_set(_state, i) == -1)
+		{
+			this->states[i].push_back(_state);
+		}
+	}
+
+}
+
+void Mod_parser::scan(const State & state, size_t i)
+{
+	State _state(state); //is this a deep copy of SPPF? is it necessary
+	_state.pos++;
+	if (this->find_in_set(_state, i+1) == -1)
+	{
+		if (_state.sppf.alts.size() == 0)
+		{
+			_state.sppf.alts.emplace_back();
+			_state.sppf.alts.back().push_back(&(this->leaves[i]));
+		}
+		else
+		{
+			for (size_t i=0; i<_state.sppf.alts.size(); i++)
+			{
+				_state.sppf.alts[i].push_back(&(this->leaves[i]));
+			}
+		}
+		this->states[i+1].push_back(_state);
 	}
 }
+
+void Mod_parser::complete(State & state, size_t i)
+{
+	for (size_t i=0; i<this->states[state.origin].size(); i++)
+	{
+		State & source = this->states[state.origin][i];
+
+		if (source.pos < source.rule.RHS.size() 
+			&& source.rule.RHS[source.pos] == state.rule.LHS)
+		{
+			State _state(source); //is this a deep copy of SPPF? is it necessary
+			_state.pos++;
+			if (_state.sppf.alts.size() == 0)
+			{
+				_state.sppf.alts.emplace_back();
+				_state.sppf.alts.back().push_back(&state.sppf);
+			}
+			else
+			{
+				for (size_t i=0; i<_state.sppf.alts.size(); i++)
+				{
+					_state.sppf.alts[i].push_back(&state.sppf);
+				}
+			}
+			
+			size_t pos = this->find_in_set(_state, i) ;
+			if (pos == -1)
+			{
+				this->states[i].push_back(_state);
+			}
+			else
+			{
+				this->states[i][pos].sppf.alts.insert(
+					this->states[i][pos].sppf.alts.end(),
+					_state.sppf.alts.begin(),
+					_state.sppf.alts.end()
+				);
+			}
+			
+		}
+	}
+}
+
+size_t Mod_parser::find_in_set(const State & state, size_t i)
+{
+	size_t res = -1;
+	for( size_t j = 0; j<this->states[i].size() && res == -1; j++)
+	{
+		if (
+			this->states[i][j].rule.LHS == state.rule.LHS &&
+			this->states[i][j].rule.RHS == state.rule.RHS &&
+			this->states[i][j].pos == state.pos &&
+			this->states[i][j].origin == state.origin 
+			)
+		{
+			res = j;
+		}
+	}
+	return res;
+}
+
 
 PTrees Mod_parser::get_parse_trees() const
 {

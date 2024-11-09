@@ -2,36 +2,47 @@
 #define _MOD_PARSER_H_
 
 #include "parsing_grammar_adapter.h"
-#include "ptable.h"
 #include "grammar.h"
 #include "error.h"
 #include "word.h"
 #include "ptree.h"
-#include "chomskify.h"
-#include "dechomskify.h"
 
+struct SPPF
+{
+	Symbol tag;
+	std::vector<std::vector<SPPF*> > alts;
+};
+
+struct State
+{
+	Rule rule;
+	size_t pos;
+	size_t origin;
+	SPPF sppf;
+};
 
 /** 
  * \brief parses words into parse trees
  */
 class Mod_parser
 {
-	Chomskify chomskify;
-	Errors errors;
 	
 	/// object for easier look up of rules
 	Parsing_grammar_adapter parsing_grammar_adapter;
 	/// result of the parsing module
 	PTrees parse_trees;
-	
-	void propagate_parsing_table(PTable& parsing_table);
-	void extract_trees_from_parsing_table(PTable& parsing_table);
-	
-	PNode ptable_entry_to_pnode(
-		PTable& PTable,
-		const PTable_reference & address
-	);
-	
+
+	std::vector<std::vector<State> > states;
+	std::vector<SPPF> leaves;
+
+	std::vector<SPPF*> res;
+
+	void predict(const State & state, size_t i);	
+	void scan(const State & state, size_t i);	
+	void complete(State & state, size_t i);	
+
+	size_t find_in_set(const State & state, size_t i);
+
     public:
 	
     Mod_parser(
@@ -41,7 +52,6 @@ class Mod_parser
 	
 	PTrees get_parse_trees() const;
 	
-	Errors get_errors() const;
 };
 
 #endif // _MOD_PARSER_H_
