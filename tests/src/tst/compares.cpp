@@ -67,9 +67,25 @@ COMPARE_VECTOR_TYPE(Rules);
 COMPARE_VECTOR_TYPE(PTrees);
 COMPARE_VECTOR_TYPE(Tokens);
 
-COMPARE_VECTOR_TYPE(PTable_entries);
-COMPARE_VECTOR_TYPE(PTable_references);
 COMPARE_VECTOR_TYPE(PNodes);
+
+COMPARE_VECTOR_TYPE(std::vector<State>);
+COMPARE_VECTOR_TYPE(std::vector<std::vector<State> >);
+
+bool compare(
+	const State& expected,
+	const State& real,
+	const std::string & message
+) 
+{ 
+	bool same = true;
+	COMPARE(rule);
+	COMPARE(pos);
+	COMPARE(origin);
+	END_COMPARE;
+	return same;
+}
+
 
 bool compare(
 	const Non_terminals & expected,
@@ -145,82 +161,6 @@ bool compare(
 	return same;
 }
 
-bool compare(
-	const Chomsky_grammar & expected,
-	const Chomsky_grammar & real,
-	const std::string & message
-)
-{
-	bool same = true;
-	COMPARE(nonterminals);
-	COMPARE(terminals);
-	COMPARE(added_nonterminals);
-	COMPARE(head);
-	COMPARE(rules);
-	END_COMPARE;
-	return same;
-}
-
-bool compare(
-	const PTable & expected,
-	const PTable & real,
-	const std::string & message
-)
-{
-	bool same = true;
-	if (expected.SIZE != real.SIZE)
-	{
-		same = false;
-		std::cout << "different PTable::SIZE: "
-			<< " expected: " << expected.SIZE 
-			<< " real: " << real.SIZE 
-			<< std::endl;
-	}
-	else
-	{
-		for (size_t i = 0; i < expected.SIZE; i++)
-		{
-			for (size_t j = 0; j < expected.SIZE - i; j++)
-			{
-				COMPARE(tab[i][j]);
-			}
-		}
-	}
-	
-	END_COMPARE;
-	return same;
-}
-
-bool compare(
-	const PTable_entry & expected,
-	const PTable_entry & real,
-	const std::string & message
-)
-{
-	bool same = true;
-	COMPARE(tag);
-	COMPARE(visited);
-	COMPARE(rule_id);
-	COMPARE(children);
-	END_COMPARE;
-	return same;
-		
-}
-
-bool compare(
-	const PTable_reference & expected,
-	const PTable_reference & real,
-	const std::string & message
-)
-{
-	bool same = true;
-	COMPARE(x);
-	COMPARE(y);
-	COMPARE(list_index);
-	END_COMPARE;
-	return same;
-		
-}
 
 
 bool compare(

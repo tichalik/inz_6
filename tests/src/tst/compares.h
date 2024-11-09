@@ -12,11 +12,7 @@
 #include "grammar.h"
 #include "ptree.h"
 
-#include "chomsky_grammar.h"
-#include "parsing_grammar_adapter.h"
-#include "ptable.h"
-#include "chomskify.h"
-#include "chomskify.h"
+#include "mod_parser.h"
 
 #define COMPARE_DECLARATION(TYPE)\
 	bool compare(\
@@ -44,17 +40,16 @@ COMPARE_DECLARATION(EN_TOKEN_TYPE);
 COMPARE_DECLARATION(Error);
 COMPARE_DECLARATION(Non_terminals);
 COMPARE_DECLARATION(Rule);
-COMPARE_DECLARATION(PTable);
-COMPARE_DECLARATION(PTable_entry);
-COMPARE_DECLARATION(PTable_reference);
-COMPARE_DECLARATION(PTable_references);
 COMPARE_DECLARATION(PTree);
 COMPARE_DECLARATION(PNode);
-COMPARE_DECLARATION(Chomsky_grammar);
 
 
-COMPARE_DECLARATION(PTable_entries);
 COMPARE_DECLARATION(PNodes);	
+
+
+COMPARE_DECLARATION(State);	
+COMPARE_DECLARATION(std::vector<State>);	
+COMPARE_DECLARATION(std::vector<std::vector<State>>);	
 
 #undef COMPARE_DECLARATION
 

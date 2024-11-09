@@ -12,10 +12,7 @@
 #include "grammar.h"
 #include "ptree.h"
 
-#include "chomsky_grammar.h"
-#include "parsing_grammar_adapter.h"
-#include "ptable.h"
-#include "chomskify.h"
+#include "mod_parser.h"
 
 #include "vnode.h"
 #include "token.h"
@@ -45,21 +42,18 @@ STR_DECLARATION(Tokens);
 STR_DECLARATION(Error);
 STR_DECLARATION(Non_terminals);
 STR_DECLARATION(Rule);
-STR_DECLARATION(PTable);
-STR_DECLARATION(PTable_entry);
-STR_DECLARATION(PTable_reference);
-STR_DECLARATION(PTable_references);
 STR_DECLARATION(PTree);
 STR_DECLARATION(PNode);
-STR_DECLARATION(Chomsky_grammar);
 
 
-STR_DECLARATION(PTable_entries);
 STR_DECLARATION(PNodes);
 
 STR_DECLARATION(VNodes);	
 STR_DECLARATION(VNode);	
 
+STR_DECLARATION(State);	
+STR_DECLARATION(std::vector<State>);	
+STR_DECLARATION(std::vector<std::vector<State> >);	
 #undef STR_DECLARATION
 
 #endif

@@ -27,9 +27,24 @@ VECTOR_STR(VNodes);
 VECTOR_STR(Tokens);
 
 
-VECTOR_STR(PTable_entries);
-VECTOR_STR(PTable_references);
 VECTOR_STR(PNodes);
+
+VECTOR_STR(std::vector<State>);
+VECTOR_STR(std::vector<std::vector<State> >);
+
+
+std::string str(
+	const State& i,
+	const std::string & tabs
+) 
+{
+	std::string res;
+	ADD_FIELD(rule);
+	ADD_FIELD(pos);
+	ADD_FIELD(origin);
+	return res;
+}
+
 
 
 std::string str(
@@ -50,7 +65,7 @@ std::string str(
 	const std::string & tabs
 
 )
-{
+{ 
 	std::string res;
 	ADD_FIELD(type);
 	ADD_FIELD(source);
@@ -96,69 +111,6 @@ std::string str(
 	ADD_FIELD(LHS);
 	ADD_FIELD(RHS);
 	return res;
-}
-
-std::string str(
-	const Chomsky_grammar & i,
-	const std::string & tabs
-
-)
-{
-	std::string res;
-	ADD_FIELD(nonterminals);
-	ADD_FIELD(terminals);
-	ADD_FIELD(added_nonterminals);
-	ADD_FIELD(head);
-	ADD_FIELD(rules);
-	return res;
-}
-
-std::string str(
-	const PTable & i,
-	const std::string & tabs
-
-)
-{
-	std::string res;
-	for (size_t k = 0; k < i.SIZE; k++)
-	{
-		for (size_t j = 0; j < i.SIZE - k; j++)
-		{
-			ADD_FIELD(tab[k][j]);
-		}
-	}
-
-	
-	return res;
-}
-
-std::string str(
-	const PTable_entry & i,
-	const std::string & tabs
-
-)
-{
-	std::string res;
-	ADD_FIELD(tag);
-	ADD_FIELD(visited);
-	ADD_FIELD(rule_id);
-	ADD_FIELD(children);
-	return res;
-		
-}
-
-std::string str(
-	const PTable_reference & i,
-	const std::string & tabs
-
-)
-{
-	std::string res;
-	ADD_FIELD(x);
-	ADD_FIELD(y);
-	ADD_FIELD(list_index);
-	return res;
-		
 }
 
 
