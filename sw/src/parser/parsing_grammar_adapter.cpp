@@ -10,5 +10,12 @@ Parsing_grammar_adapter::Parsing_grammar_adapter(const Grammar & _grammar)
 
 std::vector<Symbols> Parsing_grammar_adapter::get_RHS(const Symbol & LHS) const
 {
-	return rule_map.at(LHS);
+	if (rule_map.find(LHS) != rule_map.end())
+	{
+		return rule_map.at(LHS);
+	}
+	else 
+	{
+		return std::vector<Symbols>();
+	}
 }
