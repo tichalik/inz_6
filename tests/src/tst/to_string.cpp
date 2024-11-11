@@ -52,10 +52,16 @@ std::string str(
 	const std::string & tabs
 ) 
 {
-	std::string res;
-	ADD_FIELD(rule);
-	ADD_FIELD(pos);
-	ADD_FIELD(origin);
+	std::string res =  tabs + "\t" + i.rule.LHS + " -> ";
+	for (size_t j=0; j<i.rule.RHS.size(); j++)
+	{
+		if (j == i.pos)
+			res += ". ";
+		res += i.rule.RHS[j] + " ";
+	}
+	if (i.pos == i.rule.RHS.size())
+		res += " .";
+	res += " | " + str(i.origin, "");
 	return res;
 }
 
