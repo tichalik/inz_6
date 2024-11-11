@@ -17,14 +17,15 @@ Mod_parser::Mod_parser(
 	//add the first states
 	{ 
 		const std::vector<Symbols> RHSs = parsing_grammar_adapter.get_RHS(grammar.head);
-		this->states[0] = std::vector<State>(RHSs.size());
 		for (size_t j=0; j<RHSs.size(); j++)
 		{ 
-			this->states[0][j].rule.LHS = grammar.head;
-			this->states[0][j].rule.RHS = RHSs[j];
-			this->states[0][j].pos = 0;
-			this->states[0][j].origin= 0;
-			this->states[0][j].sppf.tag = grammar.head;
+			this->states[0].emplace_back();
+			State & back = this->states[0].back();
+			back.rule.LHS = grammar.head;
+			back.rule.RHS = RHSs[j];
+			back.pos = 0;
+			back.origin= 0;
+			back.sppf.tag = grammar.head;
 		}
 	}
 
@@ -32,58 +33,50 @@ Mod_parser::Mod_parser(
 	size_t i=0;
 	for (; i<input.size(); i++)
 	{
-		size_t j = 0;
-		while (j < this->states[i].size())
+		for (std::list<State>::iterator state = this->states[i].begin(); 
+			state != this->states[i].end(); state++)
 		{
-			State& state = this->states[i][j];
-			if (state.pos != state.rule.RHS.size())
+			if (state->pos != state->rule.RHS.size())
 			{
-				if (state.rule.RHS[state.pos] == input[i])
+				if (state->rule.RHS[state->pos] == input[i])
 				{
-					this->scan(state, i);
+					this->scan(*state, i);
 				}
 				else
 				{
-					this->predict(state, i);
+					this->predict(*state, i);
 				}
 			}
 			else
 			{
-				this->complete(state, i);
+				this->complete(*state, i);
 			}
-
-			j++;
 		}
 
 	}
 
 	//process last set
+	for (std::list<State>::iterator state = this->states[i].begin();
+		state != this->states[i].end(); state++)
 	{
-		size_t j = 0;
-		while (j < this->states[i].size())
+		if (state->pos != state->rule.RHS.size())
 		{
-			State& state = this->states[i][j];
-			if (state.pos != state.rule.RHS.size())
-			{
-				this->predict(state, i);
-			}
-			else
-			{
-				this->complete(state, i);
-			}
-
-			j++;
-		} 
-	}
+			this->predict(*state, i);
+		}
+		else
+		{
+			this->complete(*state, i);
+		}
+	} 
 	
 	//find the results
-	for (size_t j=0; j<this->states[i].size(); j++)
+	for (std::list<State>::iterator state = this->states[i].begin();
+		state != this->states[i].end(); state++)
 	{
-		State & state = this->states[i][j];
-		if (state.origin == 0 && state.rule.LHS == grammar.head &&
-			state.pos == state.rule.RHS.size())
+		if (state->origin == 0 && state->rule.LHS == grammar.head &&
+			state->pos == state->rule.RHS.size())
 		{
-			this->res.push_back(&state.sppf);
+			this->res.push_back(&(state->sppf));
 		}
 	}
 
@@ -101,7 +94,7 @@ void Mod_parser::predict(const State & state, size_t i)
 		_state.pos = 0;
 		_state.origin = i;
 		_state.sppf.tag = _state.rule.LHS;
-		if (this->find_in_set(_state, i) == -1)
+		if (this->find_in_set(_state, i) == this->states[i].end())
 		{
 			this->states[i].push_back(_state);
 		}
@@ -113,7 +106,7 @@ void Mod_parser::scan(const State & state, size_t i)
 {
 	State _state(state); //is this a deep copy of SPPF? is it necessary
 	_state.pos++;
-	if (this->find_in_set(_state, i+1) == -1)
+	if (this->find_in_set(_state, i+1) == this->states[i+1].end())
 	{
 		if (_state.sppf.alts.size() == 0)
 		{
@@ -133,14 +126,13 @@ void Mod_parser::scan(const State & state, size_t i)
 
 void Mod_parser::complete(State & state, size_t i)
 {
-	for (size_t j=0; j<this->states[state.origin].size(); j++)
-	{
-		State & source = this->states[state.origin][j];
-
-		if (source.pos < source.rule.RHS.size() 
-			&& source.rule.RHS[source.pos] == state.rule.LHS)
-		{
-			State _state(source); //is this a deep copy of SPPF? is it necessary
+	for (std::list<State>::iterator source = this->states[state.origin].begin();
+		source != this->states[state.origin].end(); source++)
+ 	{
+		if (source->pos < source->rule.RHS.size() 
+			&& source->rule.RHS[source->pos] == state.rule.LHS)
+ 		{
+			State _state(*source); //is this a deep copy of SPPF? is it necessary
 			_state.pos++;
 			if (_state.sppf.alts.size() == 0)
 			{
@@ -155,15 +147,15 @@ void Mod_parser::complete(State & state, size_t i)
 				}
 			}
 			
-			size_t pos = this->find_in_set(_state, i) ;
-			if (pos == -1)
+			std::list<State>::iterator pos = this->find_in_set(_state, i) ;
+			if (pos == this->states[i].end())
 			{
 				this->states[i].push_back(_state);
 			}
 			else
-			{
-				this->states[i][pos].sppf.alts.insert(
-					this->states[i][pos].sppf.alts.end(),
+			{ 
+				pos->sppf.alts.insert(
+					pos->sppf.alts.end(),
 					_state.sppf.alts.begin(),
 					_state.sppf.alts.end()
 				);
@@ -171,22 +163,22 @@ void Mod_parser::complete(State & state, size_t i)
 			
 		}
 	}
-}
+} 
 
-size_t Mod_parser::find_in_set(const State & state, size_t i) const
+std::list<State>::iterator Mod_parser::find_in_set(const State & state, size_t i) 
 {
-	size_t res = -1;
-	for( size_t j = 0; j<this->states[i].size() && res == -1; j++)
+	std::list<State>::iterator res = this->states[i].begin();
+	for(; res != this->states[i].end(); res++)
 	{
 		if (
-			this->states[i][j].rule.LHS == state.rule.LHS &&
-			this->states[i][j].rule.RHS == state.rule.RHS &&
-			this->states[i][j].pos == state.pos &&
-			this->states[i][j].origin == state.origin 
+			res->rule.LHS == state.rule.LHS &&
+			res->rule.RHS == state.rule.RHS &&
+			res->pos == state.pos &&
+			res->origin == state.origin 
 			)
 		{
-			res = j;
-		}
+			break;
+		} 
 	}
 	return res;
 }

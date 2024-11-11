@@ -10,7 +10,7 @@ void TST_mod_parser::_complete_parser_tests(
 {
 	Mod_parser parser(grammar, word);
 	
-	std::vector<std::vector<State> > states;
+	std::vector<std::list<State> > states;
 	bool ok = compare(states, parser.states, "parser's states");
 //	if (ok)
 //	{

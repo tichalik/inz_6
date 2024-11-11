@@ -48,8 +48,8 @@ COMPARE_DECLARATION(PNodes);
 
 
 COMPARE_DECLARATION(State);	
-COMPARE_DECLARATION(std::vector<State>);	
-COMPARE_DECLARATION(std::vector<std::vector<State>>);	
+COMPARE_DECLARATION(std::list<State>);	
+COMPARE_DECLARATION(std::vector<std::list<State>>);	
 
 #undef COMPARE_DECLARATION
 

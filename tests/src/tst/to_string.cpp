@@ -29,8 +29,22 @@ VECTOR_STR(Tokens);
 
 VECTOR_STR(PNodes);
 
-VECTOR_STR(std::vector<State>);
-VECTOR_STR(std::vector<std::vector<State> >);
+std::string str(
+	const std::list<State> & i,
+	const std::string & tabs
+)
+{
+	std::stringstream res;
+	size_t pos = 0;
+	for (std::list<State>::const_iterator j = i.cbegin(); j != i.cend(); j++)
+	{
+		res << tabs << (pos++)  <<".\n" << str(*j, tabs + "\t") << std::endl;
+	} 
+	return res.str();
+}
+	
+
+VECTOR_STR(std::vector<std::list<State>>);
 
 
 std::string str(

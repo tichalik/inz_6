@@ -6,6 +6,7 @@
 #include "error.h"
 #include "word.h"
 #include "ptree.h"
+#include <list>
 
 struct SPPF
 {
@@ -32,7 +33,7 @@ class Mod_parser
 	/// result of the parsing module
 	PTrees parse_trees;
 
-	std::vector<std::vector<State> > states;
+	std::vector<std::list<State> > states;
 	std::vector<SPPF> leaves;
 
 	std::vector<SPPF*> res;
@@ -41,7 +42,7 @@ class Mod_parser
 	void scan(const State & state, size_t i);	
 	void complete(State & state, size_t i);	
 
-	size_t find_in_set(const State & state, size_t i) const;
+	std::list<State>::iterator find_in_set(const State & state, size_t i) ;
 
     public:
 	

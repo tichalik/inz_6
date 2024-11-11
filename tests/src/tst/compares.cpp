@@ -52,7 +52,7 @@
 		\
 		END_COMPARE;\
 		return same;\
-	}
+	} 
 
 COMPARE_SIMPLE_TYPE(std::string);
 COMPARE_SIMPLE_TYPE(EN_ERROR_TYPE);
@@ -69,8 +69,33 @@ COMPARE_VECTOR_TYPE(Tokens);
 
 COMPARE_VECTOR_TYPE(PNodes);
 
-COMPARE_VECTOR_TYPE(std::vector<State>);
-COMPARE_VECTOR_TYPE(std::vector<std::vector<State> >);
+
+
+bool compare(
+	const  std::list<State>& expected,
+	const  std::list<State>& real,
+	const std::string & message
+) 
+{
+	bool same = true;
+	if (expected.size() != real.size())
+	{
+		same = false;
+	}
+	else 
+	{
+		std::list<State>::const_iterator i_real = real.begin();
+		for (std::list<State>::const_iterator i=expected.begin(); i != expected.end(); i++)
+		{
+			same &= compare(*i, *i_real, message + " ");
+			i_real++;
+		}
+	}
+	
+	END_COMPARE;
+	return same;
+} 
+COMPARE_VECTOR_TYPE(std::vector<std::list<State> >);
 
 bool compare(
 	const State& expected,

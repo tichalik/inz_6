@@ -52,8 +52,8 @@ STR_DECLARATION(VNodes);
 STR_DECLARATION(VNode);	
 
 STR_DECLARATION(State);	
-STR_DECLARATION(std::vector<State>);	
-STR_DECLARATION(std::vector<std::vector<State> >);	
+STR_DECLARATION(std::list<State>);	
+STR_DECLARATION(std::vector<std::list<State> >);	
 #undef STR_DECLARATION
 
 #endif
