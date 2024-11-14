@@ -184,11 +184,58 @@ std::string Mod_to_http::tree_to_http(const VNode & tree) const
 	return node_to_http(tree);
 }
 
-std::string Mod_to_http::sppf_to_http(SPPF & sppf)
+std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 {
-	return "TODO!!!!";
-}
+	std::string res;
+	std::list<SPPF_node*> parents;
+	std::list<int> used_children;
 
+	parents.push_back(sppf.roots[0]);
+	used_children.push_back(-1);
+	res += parents.back()->tag;
+
+	while (parents.size() != 0)
+	{
+		//if it is not a leaf
+		if (parents.back()->alts.size() != 0)
+		{
+			res += "[";
+			int last_child = used_children.back();
+			SPPF_node * last_p = parents.back();
+			int lps = last_p->alts[0].size();
+			bool cond = last_child < lps - 1;
+			// if there are still unprocessed children of that node
+//			if (used_children.back() < parents.back()->alts[0].size()-1)
+			if (cond)
+			{
+				used_children.back() ++;
+				parents.push_back(parents.back()->alts[0][used_children.back()]);
+				used_children.push_back(-1);
+				res += parents.back()->tag;
+			}
+			else
+			{
+				res += "]";
+				used_children.pop_back();
+				parents.pop_back();
+			}
+		}
+		else
+		{
+			used_children.pop_back();
+			parents.pop_back();
+		}
+
+	}
+
+	return res;
+}
+std::string Mod_to_http::string_tree_to_http(const std::string & string)
+{
+	std::string res;
+
+	return res;
+}
 Mod_to_http::Mod_to_http(
 	const Errors & errors, 
 	SPPF & sppf, 
@@ -216,7 +263,7 @@ Mod_to_http::Mod_to_http(
 		response.fill_response(RESP_FIELDS::VISUALIZATION, http_visualization);
 		
 		//fill results
-		std::string http_parse_trees = sppf_to_http(sppf);
+		std::string http_parse_trees = string_tree_to_http(sppf_to_string(sppf));
 		response.fill_response(RESP_FIELDS::RESULTS, http_parse_trees);
 		
 		//twice, the call only fills one field

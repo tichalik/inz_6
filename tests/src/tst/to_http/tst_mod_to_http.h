@@ -6,9 +6,14 @@
 
 class TST_mod_to_http
 {
+	void _test_sppf_to_string(
+		SPPF & sppf,
+		const std::string & expected
+	);
+
 public:
 
-	TST_mod_to_http();
+	void test_sppf_to_string();
 };
 
 #endif

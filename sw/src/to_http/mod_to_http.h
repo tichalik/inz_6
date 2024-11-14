@@ -24,7 +24,8 @@ class Mod_to_http
 	std::string node_to_http(const VNode & node) const;
 	std::string tree_to_http(const VNode & tree) const;
 
-	std::string sppf_to_http(SPPF & sppf);
+	std::string sppf_to_string(SPPF & sppf);
+	std::string string_tree_to_http(const std::string & string); 
 
 	/** 
 	 * \brief html to be sent as the responses
