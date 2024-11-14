@@ -45,16 +45,7 @@ Model::Model(
 				simple_visualization
 			);
 			
-			Mod_parser mod_parser(grammar, word); 
-std::cout << __FILE__ << "::" << __LINE__ << std::endl;
-std::cout << "remember to fix getting sppfs out of parser"  << std::endl;
-			
-//			ptrees = mod_parser.get_parse_trees();
-			Mod_postprocess_trees mod_postprocess_trees(
-				ptrees, 
-				grammar.head,
-				word
-			);
+			Mod_parser mod_parser(grammar, word, this->sppf); 
 		}
 	}
 	
@@ -65,11 +56,11 @@ Errors Model::get_errors() const
 	return errors;
 }
 
-PTrees Model::get_ptrees() const
-{
-	return ptrees;
-}
 
+SPPF & Model::get_sppf() 
+{
+	return this->sppf;
+}
 VNode Model::get_vnode() const
 {
 	return visualization;

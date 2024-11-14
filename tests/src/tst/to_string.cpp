@@ -22,12 +22,10 @@ VECTOR_STR(Symbols);
 VECTOR_STR(std::vector<Symbols>);
 VECTOR_STR(Errors);
 VECTOR_STR(Rules);
-VECTOR_STR(PTrees);
 VECTOR_STR(VNodes);
 VECTOR_STR(Tokens);
 
 
-VECTOR_STR(PNodes);
 
 std::string str(
 	const std::list<State> & i,
@@ -130,29 +128,6 @@ std::string str(
 	std::string res;
 	ADD_FIELD(LHS);
 	ADD_FIELD(RHS);
-	return res;
-}
-
-
-std::string str(
-	const PTree & i,
-	const std::string & tabs
-
-)
-{
-	std::string res;
-	ADD_FIELD(root);
-	return res;
-}
-std::string str(
-	const PNode & i,
-	const std::string & tabs
-
-)
-{
-	std::string res;
-	ADD_FIELD(tag);
-	ADD_FIELD(children);
 	return res;
 }
 

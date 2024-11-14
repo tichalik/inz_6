@@ -9,7 +9,7 @@ void TST_http_to_errors::_test_http_to_errors(
 )
 {
 	Errors errors;
-	PTrees parsing_trees;
+	SPPF sppf;
 	VNode vnode;
 	
 	//transform http into Grammar and Word
@@ -40,7 +40,7 @@ void TST_http_to_errors::_test_http_to_errors(
 	//transform Errors and Ptrees into http
 	Mod_to_http mod_to_http(
 		errors,
-		parsing_trees,
+		sppf,
 		vnode,
 		http_nonterminals,
 		http_terminals,

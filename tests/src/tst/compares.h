@@ -10,7 +10,6 @@
 #include "word.h"
 #include "error.h"
 #include "grammar.h"
-#include "ptree.h"
 
 #include "mod_parser.h"
 
@@ -30,7 +29,6 @@ COMPARE_DECLARATION(Symbols);
 COMPARE_DECLARATION(std::vector<Symbols>);
 COMPARE_DECLARATION(Errors);
 COMPARE_DECLARATION(Rules);
-COMPARE_DECLARATION(PTrees);
 
 COMPARE_DECLARATION(Token);
 COMPARE_DECLARATION(Tokens);
@@ -40,11 +38,6 @@ COMPARE_DECLARATION(EN_TOKEN_TYPE);
 COMPARE_DECLARATION(Error);
 COMPARE_DECLARATION(Non_terminals);
 COMPARE_DECLARATION(Rule);
-COMPARE_DECLARATION(PTree);
-COMPARE_DECLARATION(PNode);
-
-
-COMPARE_DECLARATION(PNodes);	
 
 
 COMPARE_DECLARATION(State);	

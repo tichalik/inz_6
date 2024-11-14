@@ -64,10 +64,7 @@ COMPARE_VECTOR_TYPE(Symbols);
 COMPARE_VECTOR_TYPE(std::vector<Symbols>);
 COMPARE_VECTOR_TYPE(Errors);
 COMPARE_VECTOR_TYPE(Rules);
-COMPARE_VECTOR_TYPE(PTrees);
 COMPARE_VECTOR_TYPE(Tokens);
-
-COMPARE_VECTOR_TYPE(PNodes);
 
 
 
@@ -187,30 +184,6 @@ bool compare(
 }
 
 
-
-bool compare(
-	const PTree & expected,
-	const PTree & real,
-	const std::string & message
-)
-{
-	bool same = true;
-	COMPARE(root);
-	END_COMPARE;
-	return same;
-}
-bool compare(
-	const PNode & expected,
-	const PNode & real,
-	const std::string & message
-)
-{
-	bool same = true;
-	COMPARE(tag);
-	COMPARE(children);
-	END_COMPARE;
-	return same;
-}
 
 #undef END_COMPARE
 #undef COMPARE

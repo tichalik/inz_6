@@ -27,7 +27,7 @@ class Mod_parser
 
 	std::vector<std::list<State> > states;
 
-	SPPF sppf;
+	SPPF& sppf;
 
 	void predict(const State & state, size_t i);	
 	void scan(const State & state, size_t i);	
@@ -40,11 +40,9 @@ class Mod_parser
 	
     Mod_parser(
 		const Grammar & grammar,
-		const Word & input
+		const Word & input,
+		SPPF & _sppf
 	);
-	
-	SPPF get_SPPF() const;
-	
 };
 
 #endif // _MOD_PARSER_H_

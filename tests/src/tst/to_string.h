@@ -10,7 +10,6 @@
 #include "word.h"
 #include "error.h"
 #include "grammar.h"
-#include "ptree.h"
 
 #include "mod_parser.h"
 
@@ -34,7 +33,6 @@ STR_DECLARATION(Symbols);
 STR_DECLARATION(std::vector<Symbols>);
 STR_DECLARATION(Errors);
 STR_DECLARATION(Rules);
-STR_DECLARATION(PTrees);
 
 STR_DECLARATION(Token);
 STR_DECLARATION(Tokens);
@@ -42,11 +40,6 @@ STR_DECLARATION(Tokens);
 STR_DECLARATION(Error);
 STR_DECLARATION(Non_terminals);
 STR_DECLARATION(Rule);
-STR_DECLARATION(PTree);
-STR_DECLARATION(PNode);
-
-
-STR_DECLARATION(PNodes);
 
 STR_DECLARATION(VNodes);	
 STR_DECLARATION(VNode);	

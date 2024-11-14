@@ -4,13 +4,12 @@
 #include "mod_from_http.h"
 #include "mod_check_errors.h"
 #include "mod_parser.h"
-#include "mod_postprocess_trees.h"
 #include "mod_visualize_grammar.h"
 
 class Model
 {	
 	Errors errors;
-	PTrees ptrees;
+	SPPF sppf;
 	VNode visualization;
 	
 public:
@@ -24,7 +23,7 @@ public:
 	);
 	
 	Errors get_errors() const;
-	PTrees get_ptrees() const;
+	SPPF & get_sppf() ;
 	VNode get_vnode() const;
 };
 

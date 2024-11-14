@@ -23,107 +23,6 @@ std::string Mod_to_http::str_to_http(const std::string & str) const
 }
 
 
-std::string Mod_to_http::node_to_string(const PNode & node) const
-{
-	if (node.children.size() == 0 )
-		return node.tag;
-	else
-		return node.tag + "[" 
-			+ node_to_string(node.children[0]) + " " 
-			+ node_to_string(node.children[1]) + "]";
-}
-
-std::string Mod_to_http::node_to_http(const PNode & node) const
-{
-	std::string res;
-	if (node.children.size()!= 0)
-	{
-		res += "<div class=\"node\">\n";
-		res += "  <div class=\"node-head\">\n";
-		res += "    <button class=\"expand\" type=\"button\" onclick=\"fold_expand(this)\"> - </button>\n";
-		
-		res += "    <span class=\"node-head-expanded\">"
-			+ str_to_http(node.tag) + "\n" + "</span>";
-		
-		res += "    <span class=\"node-folded\">"
-			+ str_to_http(node_to_string(node)) +  "</span>\n";
-
-		res += "  </div>\n";
-
-		res += "  <div class=\"node-body\">\n";
-		for (size_t i=0; i<node.children.size(); i++)
-		{
-			res += node_to_http(node.children[i]);
-		}
-		
-		res += "  </div>\n";
-		res += "</div>\n";
-	}
-	else
-	{
-		res += "<div class=\"leaf-node\">\n";
-		res += str_to_http(node.tag) + "\n";
-		res += "</div>\n";
-
-	}
-	return res;
-}
-
-std::string Mod_to_http::tree_to_string(const PTree & tree) const
-{
-	return node_to_string(tree.root);
-}
-
-std::string Mod_to_http::tree_to_http(const PTree & tree) const
-{
-	std::string info;
-	std::string parse_type;
-
-	if (tree.is_complete)
-	{
-		info += "complete ";
-		parse_type = "Parsing";
-	}
-	else
-	{
-		parse_type = "Incomplete parsing";
-	}
-
-	if (tree.is_head_ok)
-	{
-		info += "head_ok";
-	}
-	
-	return "<div class=\"tree " + info + "  \">" 
-		+ "<div class=\"tree-head\">" + parse_type + "</div>\n"
-		+ "<div class=\"tree-body\">" + node_to_http(tree.root) + "</div>\n"
-		+ "</div>";
-}
-
-
-std::string Mod_to_http::trees_to_string(const PTrees & trees) const
-{
-	std::string res;
-	for (size_t i=0; i<trees.size(); i++)
-	{
-		res += tree_to_string(trees[i]) + "\n";
-	}
-	res = res.substr(0, res.size()-1);
-	return res;
-}
-
-std::string Mod_to_http::trees_to_http(const PTrees & trees) const
-{
-	std::string res;
-	for (size_t i=0; i<trees.size(); i++)
-	{
-		res += tree_to_http(trees[i]) + "\n<BR>\n";
-	}
-	return res;
-}
-
-
-
 
 std::string Mod_to_http::EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const
 {
@@ -285,10 +184,14 @@ std::string Mod_to_http::tree_to_http(const VNode & tree) const
 	return node_to_http(tree);
 }
 
+std::string Mod_to_http::sppf_to_http(SPPF & sppf)
+{
+	return "TODO!!!!";
+}
 
 Mod_to_http::Mod_to_http(
 	const Errors & errors, 
-	const PTrees & trees, 
+	SPPF & sppf, 
 	const VNode & node,
 	const std::string & http_nonterminals,
 	const std::string & http_terminals,
@@ -313,7 +216,7 @@ Mod_to_http::Mod_to_http(
 		response.fill_response(RESP_FIELDS::VISUALIZATION, http_visualization);
 		
 		//fill results
-		std::string http_parse_trees = trees_to_http(trees);
+		std::string http_parse_trees = sppf_to_http(sppf);
 		response.fill_response(RESP_FIELDS::RESULTS, http_parse_trees);
 		
 		//twice, the call only fills one field

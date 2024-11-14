@@ -75,7 +75,7 @@ void Server::post_handler(const httplib::Request & req,
 	//transform Errors and Ptrees into http
 	Mod_to_http mod_to_http(
 		model.get_errors(),
-		model.get_ptrees(),
+		model.get_sppf(),
 		model.get_vnode(),
 		http_nonterminals,
 		http_terminals,

@@ -5,10 +5,10 @@
 #include <sstream>
 #include <vector>
 
-#include "ptree.h"
 #include "error.h"
 #include "html_response.h"
 #include "vnode.h"
+#include "sppf.h"
 
 #include "utils.h"
 
@@ -24,14 +24,8 @@ class Mod_to_http
 	std::string node_to_http(const VNode & node) const;
 	std::string tree_to_http(const VNode & tree) const;
 
-	std::string node_to_string(const PNode & node) const;
-	std::string node_to_http(const PNode & node) const;
-	std::string tree_to_string(const PTree & tree) const;
-	std::string tree_to_http(const PTree & tree) const;
-	std::string trees_to_string(const PTrees & trees) const;
-	std::string trees_to_http(const PTrees & trees) const;
-	
-	
+	std::string sppf_to_http(SPPF & sppf);
+
 	/** 
 	 * \brief html to be sent as the responses
 	 */
@@ -41,7 +35,7 @@ class Mod_to_http
 	
 	Mod_to_http(
 		const Errors & errors, 
-		const PTrees & trees, 
+		SPPF & sppf, 
 		const VNode & node,
 		const std::string & http_nonterminals,
 		const std::string & http_terminals,

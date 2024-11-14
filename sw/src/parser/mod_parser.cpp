@@ -2,10 +2,12 @@
 
 Mod_parser::Mod_parser(
 	const Grammar & grammar,
-	const Word & input
+	const Word & input,
+	SPPF & _sppf
 ):
 	parsing_grammar_adapter(grammar),
-	states(input.size()+1)
+	states(input.size()+1),
+	sppf(_sppf)
 {
 	//create leaf SPPF nodes
 	this->sppf.leaves.resize(input.size());
@@ -205,7 +207,3 @@ std::list<State>::iterator Mod_parser::find_in_set(const State & state, size_t i
 }
 
 
-SPPF Mod_parser::get_SPPF() const
-{
-	return this->sppf;
-}

@@ -3,12 +3,11 @@
 
 void TST_mod_parser::_complete_parser_tests(
 	const Grammar & grammar,
-	const Word & word,
-	const Errors & expected_errors,
-	const PTrees & expected_ptrees
+	const Word & word
 )
 {
-	Mod_parser parser(grammar, word);
+	SPPF sppf;
+	Mod_parser parser(grammar, word, sppf);
 	
 	std::vector<std::list<State> > states;
 	bool ok = compare(states, parser.states, "parser's states");
@@ -21,10 +20,10 @@ void TST_mod_parser::_complete_parser_tests(
 //		std::cout << __FILE__ << "\tFAIL" << std::endl;
 //	}
 
-}
+} 
 
 void TST_mod_parser::complete_parser_tests()
-{
+{ 
 	std::cout << "===============================================================" << std::endl;
 	std::cout << " grammar:  " << std::endl;
 	std::cout << " S-> SS | b " << std::endl;
@@ -54,16 +53,14 @@ void TST_mod_parser::complete_parser_tests()
 			grammar.rules.push_back(rule);
 		}
 
-		Errors errors;
-		PTrees ptrees;
+		
+		
 
 //		_complete_parser_tests(
 //			grammar,
 //			word, 
-//			errors, 
-//			ptrees
 //		);
-	} 
+ 	} 
 
 	std::cout << "===============================================================" << std::endl;
 	std::cout << " grammar:  " << std::endl;
@@ -130,14 +127,12 @@ void TST_mod_parser::complete_parser_tests()
 			rule.RHS.push_back("x");
 			grammar.rules.push_back(rule);
 		}
-		Errors errors;
-		PTrees ptrees;
+		
+		
 
 //		_complete_parser_tests(
 //			grammar,
 //			word, 
-//			errors, 
-//			ptrees
 //		);
 	}
 
@@ -171,14 +166,12 @@ void TST_mod_parser::complete_parser_tests()
 			rule.RHS.push_back("a");
 			grammar.rules.push_back(rule);
 		}
-		Errors errors;
-		PTrees ptrees;
+		
+		
 
 //		_complete_parser_tests(
 //			grammar,
 //			word, 
-//			errors, 
-//			ptrees
 //		);
 	}
 
@@ -212,14 +205,12 @@ void TST_mod_parser::complete_parser_tests()
 			rule.RHS.push_back("a");
 			grammar.rules.push_back(rule);
 		}
-		Errors errors;
-		PTrees ptrees;
+		
+		
 
 //		_complete_parser_tests(
 //			grammar,
 //			word, 
-//			errors, 
-//			ptrees
 //		);
 	}
 
@@ -267,14 +258,12 @@ void TST_mod_parser::complete_parser_tests()
 			rule.RHS.push_back("a");
 			grammar.rules.push_back(rule);
 		}
-		Errors errors;
-		PTrees ptrees;
+		
+		
 
 //		_complete_parser_tests(
 //			grammar,
 //			word, 
-//			errors, 
-//			ptrees
 //		);
 	}
 
@@ -324,14 +313,12 @@ void TST_mod_parser::complete_parser_tests()
 			rule.LHS = "B";
 			grammar.rules.push_back(rule);
 		}
-		Errors errors;
-		PTrees ptrees;
+		
+		
 
 //		_complete_parser_tests(
 //			grammar,
 //			word, 
-//			errors, 
-//			ptrees
 //		);
 	}
 
@@ -378,14 +365,12 @@ void TST_mod_parser::complete_parser_tests()
 			rule.RHS.push_back("a");
 			grammar.rules.push_back(rule);
 		}
-		Errors errors;
-		PTrees ptrees;
+		
+		
 
 		_complete_parser_tests(
 			grammar,
-			word, 
-			errors, 
-			ptrees
+			word 
 		);
 	}
 

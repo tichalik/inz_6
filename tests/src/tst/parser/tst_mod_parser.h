@@ -19,9 +19,7 @@ class TST_mod_parser: public Tester
 
 	void _complete_parser_tests(
 		const Grammar & grammar,
-		const Word & word,
-		const Errors & expected_errors,
-		const PTrees & expected_ptrees
+		const Word & word
 	);
 
 	

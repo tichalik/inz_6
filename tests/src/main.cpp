@@ -3,7 +3,6 @@
 #include "tst_mod_from_http.h"
 #include "tst_mod_to_http.h"
 #include "tst_mod_parser.h"
-#include "tst_mod_postprocess_trees.h"
 
 
 #include "tst_visualize_grammar.h"
@@ -53,7 +52,4 @@ int main()
 
 //	test_visualize();
 
-//	TST_mod_postprocess_trees mpt;
-//	mpt.test_get_leaf_size();
-//	mpt.test_postprocess_trees();
 }
