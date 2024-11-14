@@ -218,7 +218,7 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 		}
 		else
 		{
-			res += "]";
+			res.back() = ' ';
 			used_children.pop_back();
 			parents.pop_back();
 		}
