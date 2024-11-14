@@ -200,13 +200,8 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 		if (parents.back()->alts.size() != 0)
 		{
 			res += "[";
-			int last_child = used_children.back();
-			SPPF_node * last_p = parents.back();
-			int lps = last_p->alts[0].size();
-			bool cond = last_child < lps - 1;
 			// if there are still unprocessed children of that node
-//			if (used_children.back() < parents.back()->alts[0].size()-1)
-			if (cond)
+			if ((used_children.back() )< (int) (parents.back()->alts[0].size() -1) )
 			{
 				used_children.back() ++;
 				parents.push_back(parents.back()->alts[0][used_children.back()]);
