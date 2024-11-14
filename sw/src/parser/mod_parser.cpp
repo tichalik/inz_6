@@ -5,13 +5,13 @@ Mod_parser::Mod_parser(
 	const Word & input
 ):
 	parsing_grammar_adapter(grammar),
-	states(input.size()+1),
-	leaves(input.size())
+	states(input.size()+1)
 {
 	//create leaf SPPF nodes
+	this->sppf.leaves.resize(input.size());
 	for (size_t i=0; i<input.size(); i++)
 	{
-		this->leaves[i].tag = input[i];
+		this->sppf.leaves[i].tag = input[i];
 	}
 
 	//add the first states
@@ -25,7 +25,9 @@ Mod_parser::Mod_parser(
 			back.rule.RHS = RHSs[j];
 			back.pos = 0;
 			back.origin= 0;
-			back.sppf.tag = grammar.head;
+			this->sppf.nodes.emplace_back();
+			this->sppf.nodes.back().tag = grammar.head;
+			back.sppf_node = & this->sppf.nodes.back();
 		}
 	}
 
@@ -76,7 +78,7 @@ Mod_parser::Mod_parser(
 		if (state->origin == 0 && state->rule.LHS == grammar.head &&
 			state->pos == state->rule.RHS.size())
 		{
-			this->res.push_back(&(state->sppf));
+			this->sppf.roots.push_back(state->sppf_node);
 		}
 	}
 
@@ -93,9 +95,11 @@ void Mod_parser::predict(const State & state, size_t i)
 		_state.rule.RHS = RHSs[j];
 		_state.pos = 0;
 		_state.origin = i;
-		_state.sppf.tag = _state.rule.LHS;
 		if (this->find_in_set(_state, i) == this->states[i].end())
 		{
+			this->sppf.nodes.emplace_back();
+			this->sppf.nodes.back().tag = _state.rule.LHS;
+			_state.sppf_node = & this->sppf.nodes.back();
 			this->states[i].push_back(_state);
 		}
 	}
@@ -104,20 +108,27 @@ void Mod_parser::predict(const State & state, size_t i)
 
 void Mod_parser::scan(const State & state, size_t i)
 {
-	State _state(state); //is this a deep copy of SPPF? is it necessary
+	State _state(state); 
+	// is the deep copy here necessary?
+	// for the SPPF, probably no
+	// there is only one way to scan from one state to another
+	// (so also no need for checking if the state is already present?)
+	// anyway, making a deep copy of SPPF, to keep the 1 state = 1 sppf node relation
+	this->sppf.nodes.push_back(SPPF_node(*state.sppf_node));
+	_state.sppf_node = & this->sppf.nodes.back();
 	_state.pos++;
 	if (this->find_in_set(_state, i+1) == this->states[i+1].end())
 	{
-		if (_state.sppf.alts.size() == 0)
+		if (_state.sppf_node->alts.size() == 0)
 		{
-			_state.sppf.alts.emplace_back();
-			_state.sppf.alts.back().push_back(&(this->leaves[i]));
+			_state.sppf_node->alts.emplace_back();
+			_state.sppf_node->alts.back().push_back(&(this->sppf.leaves[i]));
 		}
 		else
 		{
-			for (size_t i=0; i<_state.sppf.alts.size(); i++)
+			for (size_t i=0; i<_state.sppf_node->alts.size(); i++)
 			{
-				_state.sppf.alts[i].push_back(&(this->leaves[i]));
+				_state.sppf_node->alts[i].push_back(&(this->sppf.leaves[i]));
 			}
 		}
 		this->states[i+1].push_back(_state);
@@ -132,18 +143,25 @@ void Mod_parser::complete(State & state, size_t i)
 		if (source->pos < source->rule.RHS.size() 
 			&& source->rule.RHS[source->pos] == state.rule.LHS)
  		{
-			State _state(*source); //is this a deep copy of SPPF? is it necessary
+			State _state(*source); 
+			// is the deep copy here necessary?
+			// for the SPPF, probably no
+			// there is only one way to scan from one state to another
+			// (so also no need for checking if the state is already present?)
+			// anyway, making a deep copy of SPPF, to keep the 1 state = 1 sppf node relation
+			this->sppf.nodes.push_back(SPPF_node(*source->sppf_node));
+			_state.sppf_node = & this->sppf.nodes.back();
 			_state.pos++;
-			if (_state.sppf.alts.size() == 0)
+			if (_state.sppf_node->alts.size() == 0)
 			{
-				_state.sppf.alts.emplace_back();
-				_state.sppf.alts.back().push_back(&state.sppf);
+				_state.sppf_node->alts.emplace_back();
+				_state.sppf_node->alts.back().push_back(state.sppf_node);
 			}
 			else
 			{
-				for (size_t k=0; k<_state.sppf.alts.size(); k++)
+				for (size_t k=0; k<_state.sppf_node->alts.size(); k++)
 				{
-					_state.sppf.alts[k].push_back(&state.sppf);
+					_state.sppf_node->alts[k].push_back(state.sppf_node);
 				}
 			}
 			
@@ -154,11 +172,14 @@ void Mod_parser::complete(State & state, size_t i)
 			}
 			else
 			{ 
-				pos->sppf.alts.insert(
-					pos->sppf.alts.end(),
-					_state.sppf.alts.begin(),
-					_state.sppf.alts.end()
+				pos->sppf_node->alts.insert(
+					pos->sppf_node->alts.end(),
+					_state.sppf_node->alts.begin(),
+					_state.sppf_node->alts.end()
 				);
+				// in the end the node is not used anywhere
+				// so we remove it
+				this->sppf.nodes.pop_back();
 			}
 			
 		}
@@ -184,7 +205,7 @@ std::list<State>::iterator Mod_parser::find_in_set(const State & state, size_t i
 }
 
 
-PTrees Mod_parser::get_parse_trees() const
+SPPF Mod_parser::get_SPPF() const
 {
-	return this->parse_trees;
+	return this->sppf;
 }

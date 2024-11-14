@@ -46,8 +46,10 @@ Model::Model(
 			);
 			
 			Mod_parser mod_parser(grammar, word); 
+std::cout << __FILE__ << "::" << __LINE__ << std::endl;
+std::cout << "remember to fix getting sppfs out of parser"  << std::endl;
 			
-			ptrees = mod_parser.get_parse_trees();
+//			ptrees = mod_parser.get_parse_trees();
 			Mod_postprocess_trees mod_postprocess_trees(
 				ptrees, 
 				grammar.head,

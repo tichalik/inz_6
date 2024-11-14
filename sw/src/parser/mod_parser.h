@@ -5,21 +5,15 @@
 #include "grammar.h"
 #include "error.h"
 #include "word.h"
-#include "ptree.h"
+#include "sppf.h"
 #include <list>
-
-struct SPPF
-{
-	Symbol tag;
-	std::vector<std::vector<SPPF*> > alts;
-};
 
 struct State
 {
 	Rule rule;
 	size_t pos;
 	size_t origin;
-	SPPF sppf;
+	SPPF_node* sppf_node = nullptr;
 };
 
 /** 
@@ -30,19 +24,17 @@ class Mod_parser
 	
 	/// object for easier look up of rules
 	Parsing_grammar_adapter parsing_grammar_adapter;
-	/// result of the parsing module
-	PTrees parse_trees;
 
 	std::vector<std::list<State> > states;
-	std::vector<SPPF> leaves;
 
-	std::vector<SPPF*> res;
+	SPPF sppf;
 
 	void predict(const State & state, size_t i);	
 	void scan(const State & state, size_t i);	
 	void complete(State & state, size_t i);	
 
 	std::list<State>::iterator find_in_set(const State & state, size_t i) ;
+
 
     public:
 	
@@ -51,7 +43,7 @@ class Mod_parser
 		const Word & input
 	);
 	
-	PTrees get_parse_trees() const;
+	SPPF get_SPPF() const;
 	
 };
 
