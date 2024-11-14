@@ -194,12 +194,12 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 	used_children.push_back(-1);
 	res += parents.back()->tag;
 
+			res += "[";
 	while (parents.size() != 0)
 	{
 		//if it is not a leaf
 		if (parents.back()->alts.size() != 0)
 		{
-			res += "[";
 			// if there are still unprocessed children of that node
 			if ((used_children.back() )< (int) (parents.back()->alts[0].size() -1) )
 			{
@@ -207,6 +207,7 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 				parents.push_back(parents.back()->alts[0][used_children.back()]);
 				used_children.push_back(-1);
 				res += parents.back()->tag;
+			res += "[";
 			}
 			else
 			{
@@ -217,6 +218,7 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 		}
 		else
 		{
+			res += "]";
 			used_children.pop_back();
 			parents.pop_back();
 		}

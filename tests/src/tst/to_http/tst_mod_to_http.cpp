@@ -66,7 +66,7 @@ void TST_mod_to_http::test_sppf_to_string()
 		);
 	
 	}
-	
+		
 	{
 		std::cout << "===============================================================" << std::endl;
 		std::cout << " A[B[D E] C]" << std::endl;
@@ -104,7 +104,82 @@ void TST_mod_to_http::test_sppf_to_string()
 		);
 	
 	}
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " A[B[D E C]]" << std::endl;
+		std::cout << "===============================================================" << std::endl;
+
+		SPPF sppf;
+
+		sppf.leaves.emplace_back();
+		sppf.leaves.back().tag = "D";
+		sppf.leaves.emplace_back();
+		sppf.leaves.back().tag = "E";
+		sppf.leaves.emplace_back();
+		sppf.leaves.back().tag = "C";
+		sppf.leaves.emplace_back();
+		
+		sppf.nodes.emplace_back();
+		SPPF_node * B = & sppf.nodes.back();
+		B->tag = "B";
+		B->alts.emplace_back();
+		B->alts.back().push_back(& sppf.leaves[0]);
+		B->alts.back().push_back(& sppf.leaves[1]);
+		B->alts.back().push_back(& sppf.leaves[2]);
+
+		sppf.nodes.emplace_back();
+		SPPF_node * A = & sppf.nodes.back();
+		A->tag = "A";
+		A->alts.emplace_back();
+		A->alts.back().push_back(B);
+
+		sppf.roots.push_back(A);
+
+		_test_sppf_to_string(
+			sppf,
+			""
+		);
 	
+	}
+	
+	
+	{
+		std::cout << "===============================================================" << std::endl;
+		std::cout << " A[B D E[C]]" << std::endl;
+		std::cout << "===============================================================" << std::endl;
+
+		SPPF sppf;
+
+		sppf.leaves.emplace_back();
+		sppf.leaves.back().tag = "B";
+		sppf.leaves.emplace_back();
+		sppf.leaves.back().tag = "D";
+		sppf.leaves.emplace_back();
+		sppf.leaves.back().tag = "C";
+		sppf.leaves.emplace_back();
+		
+		sppf.nodes.emplace_back();
+		SPPF_node * E = & sppf.nodes.back();
+		E->tag = "E";
+		E->alts.emplace_back();
+		E->alts.back().push_back(& sppf.leaves[2]);
+
+		sppf.nodes.emplace_back();
+		SPPF_node * A = & sppf.nodes.back();
+		A->tag = "A";
+		A->alts.emplace_back();
+		A->alts.back().push_back(&sppf.leaves[0]);
+		A->alts.back().push_back(&sppf.leaves[1]);
+		A->alts.back().push_back(E);
+
+		sppf.roots.push_back(A);
+
+		_test_sppf_to_string(
+			sppf,
+			""
+		);
+	
+	}
 }
 //
 //
