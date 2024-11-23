@@ -4,11 +4,13 @@
 #include <vector>
 #include <list>
 #include "rules.h"
+#include "pnode.h"
 
 struct SPPF_node
 { 
 	Symbol tag;
 	std::vector<std::vector<SPPF_node*> > alts;
+	PNodes pnodes;
 };
 
 struct SPPF

@@ -6,6 +6,7 @@
 #include "error.h"
 #include "word.h"
 #include "sppf.h"
+#include "pnode.h"
 #include <list>
 
 struct State
@@ -35,6 +36,16 @@ class Mod_parser
 
 	std::list<State>::iterator find_in_set(const State & state, size_t i) ;
 
+	void process_sppf();
+
+	std::vector<std::vector<PNode*>> combine2(
+		std::vector<std::vector<PNode*>> & list, 
+		SPPF_node* sppf_node
+	);
+
+	std::vector<std::vector<PNode*>> all_combinations(
+		const std::vector<SPPF_node *> & sppf_children
+	);
 
     public:
 	
