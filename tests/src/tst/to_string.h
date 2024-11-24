@@ -44,6 +44,11 @@ STR_DECLARATION(Rule);
 STR_DECLARATION(VNodes);	
 STR_DECLARATION(VNode);	
 
+std::string str(
+	const PNode * i,
+	const std::string & tabs
+);
+// STR_DECLARATION(PNode*);	//reference to a pointer is treated as a bool apparently
 STR_DECLARATION(State);	
 STR_DECLARATION(std::list<State>);	
 STR_DECLARATION(std::vector<std::list<State> >);	

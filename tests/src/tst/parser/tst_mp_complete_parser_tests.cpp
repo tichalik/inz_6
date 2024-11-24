@@ -3,14 +3,20 @@
 
 void TST_mod_parser::_complete_parser_tests(
 	const Grammar & grammar,
-	const Word & word
+	const Word & word,
+	const std::vector<std::list<State>> & expected_states,
+	const std::vector<PNode*> & expected_results
 )
 {
 	SPPF sppf;
 	Mod_parser parser(grammar, word, sppf);
 	
-	std::vector<std::list<State> > states;
-	bool ok = compare(states, parser.states, "parser's states");
+//	bool ok = compare(expected_states, parser.states, "parser's states");
+//	ok &= compare(expected_results, parser.results, "results");
+////	for (auto i: parser.results)
+//	{
+//		std::cout << (i) << std::endl;
+//	}
 //	if (ok)
 //	{
 //		std::cout << "OK" << std::endl;
@@ -24,354 +30,48 @@ void TST_mod_parser::_complete_parser_tests(
 
 void TST_mod_parser::complete_parser_tests()
 { 
-	std::cout << "===============================================================" << std::endl;
-	std::cout << " grammar:  " << std::endl;
-	std::cout << " S-> SS | b " << std::endl;
-	std::cout << " input :  b b b " << std::endl;
-	std::cout << "===============================================================" << std::endl;
-	{
-		Word word;
-		word.push_back("b");
-		word.push_back("b");
-		word.push_back("b");
+	PNodes result1_holder(5);
 
-		Grammar grammar;
-		grammar.terminals.insert("b");
-		grammar.nonterminals.insert("S");
-		grammar.head = "S";
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("S");
-			rule.RHS.push_back("S");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("b");
-			grammar.rules.push_back(rule);
-		}
+	std::vector<PNode*> result1s;
 
-		
-		
+	// a[b c[e] d]
 
-//		_complete_parser_tests(
-//			grammar,
-//			word, 
-//		);
- 	} 
+	result1_holder[0 + 0].tag = "a";
+	result1_holder[0 + 1].tag = "b";
+	result1_holder[0 + 2].tag = "c";
+	result1_holder[0 + 3].tag = "e";
+	result1_holder[0 + 4].tag = "d";
 
-	std::cout << "===============================================================" << std::endl;
-	std::cout << " grammar:  " << std::endl;
-	std::cout << " P -> S " << std::endl;
-	std::cout << " S -> S + M | M " << std::endl;
-	std::cout << " M -> M * T | T " << std::endl;
-	std::cout << " T -> x " << std::endl;
-	std::cout << " input :  x + x * x " << std::endl;
-	std::cout << "===============================================================" << std::endl;
-	{
-		Word word;
-		word.push_back("x");
-		word.push_back("+");
-		word.push_back("x");
-		word.push_back("*");
-		word.push_back("x");
+	result1_holder[0 + 0].children.push_back(&result1_holder[0 + 1]);
+	result1_holder[0 + 0].children.push_back(&result1_holder[0 + 2]);
+	result1_holder[0 + 2].children.push_back(&result1_holder[0 + 3]);
+	result1_holder[0 + 0].children.push_back(&result1_holder[0 + 4]);
 
-		Grammar grammar;
-		grammar.terminals.insert("x");
-		grammar.terminals.insert("+");
-		grammar.terminals.insert("*");
-		grammar.nonterminals.insert("P");
-		grammar.nonterminals.insert("S");
-		grammar.nonterminals.insert("M");
-		grammar.nonterminals.insert("T");
-		grammar.head = "P";
-		{
-			Rule rule;
-			rule.LHS = "P";
-			rule.RHS.push_back("S");
-			grammar.rules.push_back(rule);
-		} 
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("S");
-			rule.RHS.push_back("+");
-			rule.RHS.push_back("M");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("M");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "M";
-			rule.RHS.push_back("M");
-			rule.RHS.push_back("*");
-			rule.RHS.push_back("T");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "M";
-			rule.RHS.push_back("T");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "T";
-			rule.RHS.push_back("x");
-			grammar.rules.push_back(rule);
-		}
-		
-		
+	result1s.push_back(&result1_holder[0]);
+	
+	
+	
+	
+	
+	
+	PNodes result2_holder(5);
 
-//		_complete_parser_tests(
-//			grammar,
-//			word, 
-//		);
-	}
+	std::vector<PNode*> result2s;
 
+	// a[b c[e] d]
 
-	std::cout << "===============================================================" << std::endl;
-	std::cout << " grammar:  " << std::endl;
-	std::cout << " S -> a S | a " << std::endl;
-	std::cout << " input :  a a a a " << std::endl;
-	std::cout << "===============================================================" << std::endl;
-	{
-		Word word;
-		word.push_back("a");
-		word.push_back("a");
-		word.push_back("a");
-		word.push_back("a");
+	result2_holder[0 + 0].tag = "a";
+	result2_holder[0 + 1].tag = "b";
+	result2_holder[0 + 2].tag = "c";
+	result2_holder[0 + 3].tag = "e";
+	result2_holder[0 + 4].tag = "d";
 
-		Grammar grammar;
-		grammar.terminals.insert("a");
-		grammar.nonterminals.insert("S");
-		grammar.head = "S";
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("a");
-			rule.RHS.push_back("S");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("a");
-			grammar.rules.push_back(rule);
-		}
-		
-		
+	result2_holder[0 + 0].children.push_back(&result2_holder[0 + 1]);
+	result2_holder[0 + 0].children.push_back(&result2_holder[0 + 2]);
+	result2_holder[0 + 2].children.push_back(&result2_holder[0 + 3]);
+	result2_holder[0 + 2].children.push_back(&result2_holder[0 + 4]);
 
-//		_complete_parser_tests(
-//			grammar,
-//			word, 
-//		);
-	}
-
-
-	std::cout << "===============================================================" << std::endl;
-	std::cout << " grammar:  " << std::endl;
-	std::cout << " S -> S a | a " << std::endl;
-	std::cout << " input :  a a a a " << std::endl;
-	std::cout << "===============================================================" << std::endl;
-	{
-		Word word;
-		word.push_back("a");
-		word.push_back("a");
-		word.push_back("a");
-		word.push_back("a");
-
-		Grammar grammar;
-		grammar.terminals.insert("a");
-		grammar.nonterminals.insert("S");
-		grammar.head = "S";
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("S");
-			rule.RHS.push_back("a");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("a");
-			grammar.rules.push_back(rule);
-		}
-		
-		
-
-//		_complete_parser_tests(
-//			grammar,
-//			word, 
-//		);
-	}
-
-	std::cout << "===============================================================" << std::endl;
-	std::cout << " grammar:  " << std::endl;
-	std::cout << " S -> S A | A " << std::endl;
-	std::cout << " A -> a | a a " << std::endl;
-	std::cout << " input :  a a a a " << std::endl;
-	std::cout << "===============================================================" << std::endl;
-	{
-		Word word;
-		word.push_back("a");
-		word.push_back("a");
-		word.push_back("a");
-		word.push_back("a");
-
-		Grammar grammar;
-		grammar.terminals.insert("a");
-		grammar.nonterminals.insert("S");
-		grammar.nonterminals.insert("A");
-		grammar.head = "S";
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("S");
-			rule.RHS.push_back("A");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("A");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "A";
-			rule.RHS.push_back("a");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "A";
-			rule.RHS.push_back("a");
-			rule.RHS.push_back("a");
-			grammar.rules.push_back(rule);
-		}
-		
-		
-
-//		_complete_parser_tests(
-//			grammar,
-//			word, 
-//		);
-	}
-
-
-	std::cout << "===============================================================" << std::endl;
-	std::cout << " grammar:  " << std::endl;
-	std::cout << " S -> a S B B | a " << std::endl;
-	std::cout << " B -> b | " << std::endl;
-	std::cout << " input :  a a a b " << std::endl;
-	std::cout << "===============================================================" << std::endl;
-	{
-		Word word;
-		word.push_back("a");
-		word.push_back("a");
-		word.push_back("a");
-		word.push_back("b");
-
-		Grammar grammar;
-		grammar.terminals.insert("a");
-		grammar.terminals.insert("b");
-		grammar.nonterminals.insert("S");
-		grammar.nonterminals.insert("B");
-		grammar.head = "S";
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("a");
-			rule.RHS.push_back("S");
-			rule.RHS.push_back("B");
-			rule.RHS.push_back("B");
-			grammar.rules.push_back(rule);
-		}
-		{ 
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("a");
-			grammar.rules.push_back(rule);
-		}
-		{ 
-			Rule rule;
-			rule.LHS = "B";
-			rule.RHS.push_back("b");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "B";
-			grammar.rules.push_back(rule);
-		}
-		
-		
-
-//		_complete_parser_tests(
-//			grammar,
-//			word, 
-//		);
-	}
-
-
-	std::cout << "===============================================================" << std::endl;
-	std::cout << " grammar:  " << std::endl;
-	std::cout << " S -> A " << std::endl;
-	std::cout << " A -> B | " << std::endl;
-	std::cout << " B -> A | " << std::endl;
-	std::cout << " B -> a | " << std::endl;
-	std::cout << " input :  a  " << std::endl;
-	std::cout << "===============================================================" << std::endl;
-	{
-		Word word;
-		word.push_back("a");
-
-		Grammar grammar;
-		grammar.terminals.insert("a");
-		grammar.nonterminals.insert("S");
-		grammar.nonterminals.insert("A");
-		grammar.nonterminals.insert("B");
-		grammar.head = "S";
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("A");
-			grammar.rules.push_back(rule);
-		}
-		{ 
-			Rule rule;
-			rule.LHS = "A";
-			rule.RHS.push_back("B");
-			grammar.rules.push_back(rule);
-		}
-		{ 
-			Rule rule;
-			rule.LHS = "B";
-			rule.RHS.push_back("A");
-			grammar.rules.push_back(rule);
-		}
-		{ 
-			Rule rule;
-			rule.LHS = "B";
-			rule.RHS.push_back("a");
-			grammar.rules.push_back(rule);
-		}
-		
-		
-
-		_complete_parser_tests(
-			grammar,
-			word 
-		);
-	}
-
+	result2s.push_back(&result2_holder[0]);
+	
+	std::cout << compare(&result1_holder[0], &result2_holder[0], "whatever");
 }

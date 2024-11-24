@@ -40,6 +40,12 @@ COMPARE_DECLARATION(Non_terminals);
 COMPARE_DECLARATION(Rule);
 
 
+bool compare(
+	const  PNode* expected,
+	const  PNode* real,
+	const std::string & message
+);
+//COMPARE_DECLARATION(PNode*);	//declaring it like this causes it not to work 
 COMPARE_DECLARATION(State);	
 COMPARE_DECLARATION(std::list<State>);	
 COMPARE_DECLARATION(std::vector<std::list<State>>);	

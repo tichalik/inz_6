@@ -69,6 +69,34 @@ COMPARE_VECTOR_TYPE(Tokens);
 
 
 bool compare(
+	const  PNode* expected,
+	const  PNode* real,
+	const std::string & message
+) 
+{ 
+	bool same = true;
+	
+	same &= compare(expected->tag, real->tag, message + " tag");
+
+	if (expected->children.size() != real->children.size())
+	{
+		same = false;
+	}
+	else 
+	{
+		for (size_t i=0; i<expected->children.size(); i++)
+		{
+			same &= compare(expected->children[i], real->children[i], message + " ");
+		}
+	}
+	
+	END_COMPARE;
+	
+	return same;
+} 
+
+
+bool compare(
 	const  std::list<State>& expected,
 	const  std::list<State>& real,
 	const std::string & message

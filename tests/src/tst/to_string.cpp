@@ -28,6 +28,23 @@ VECTOR_STR(Tokens);
 
 
 std::string str(
+	const PNode * i,
+	const std::string & tabs
+)
+{ 
+	std::stringstream res;
+	res <<( tabs + "tag:\n" + str(i->tag, tabs+"\t") + "\n");
+	res << tabs << "children:\n";
+	for (size_t j=0; j<i->children.size(); j++)
+	{
+		res << tabs <<"\t"<< j <<".\n" << str(i->children[j], tabs + "\t\t") << std::endl;
+	}
+
+	return res.str();
+}
+	
+
+std::string str(
 	const std::list<State> & i,
 	const std::string & tabs
 )
