@@ -11,6 +11,7 @@ struct SPPF_node
 	Symbol tag;
 	std::vector<std::vector<SPPF_node*> > alts;
 	PNodes pnodes;
+	bool visited;
 };
 
 struct SPPF
@@ -18,6 +19,7 @@ struct SPPF
 	std::vector<SPPF_node> leaves;	
 	std::list<SPPF_node> nodes;	
 	std::vector<SPPF_node*> roots;	
+	std::vector<PNode*> res_pnodes;
 	
 	//if the class is copied, shit will ensure with pointers
 	//therefore deleting the copy constructors

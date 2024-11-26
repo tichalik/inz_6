@@ -62,6 +62,8 @@ COMPARE_SIMPLE_TYPE(size_t);
 
 COMPARE_VECTOR_TYPE(Symbols);
 COMPARE_VECTOR_TYPE(std::vector<Symbols>);
+COMPARE_VECTOR_TYPE(std::vector<std::vector<PNode*>>);
+COMPARE_VECTOR_TYPE(std::vector<PNode*>);
 COMPARE_VECTOR_TYPE(Errors);
 COMPARE_VECTOR_TYPE(Rules);
 COMPARE_VECTOR_TYPE(Tokens);

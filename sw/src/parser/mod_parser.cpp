@@ -261,7 +261,14 @@ void Mod_parser::process_sppf()
 	{
 		for (std::vector<SPPF_node*> & alt: (*i)->alts)
 		{
-			ordered_sppf.insert(ordered_sppf.end(), alt.begin(), alt.end());
+			for (SPPF_node * node: alt)
+			{
+				if (node->visited == false)
+				{
+					ordered_sppf.push_back(node);
+					node->visited = true;
+				}
+			}
 		}
 	}
 
@@ -284,5 +291,13 @@ void Mod_parser::process_sppf()
 			}
 		}
 	}
-
+	
+	//insert root's pnodes into sppf.res_pnodes
+	for (size_t i=0; i<sppf.roots.size(); i++)
+	{
+		for (size_t j=0; j<sppf.roots[i]->pnodes.size(); j++)
+		{
+			this->sppf.res_pnodes.push_back(&sppf.roots[i]->pnodes[j]);
+		}
+	}
 }

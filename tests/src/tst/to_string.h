@@ -51,6 +51,8 @@ std::string str(
 // STR_DECLARATION(PNode*);	//reference to a pointer is treated as a bool apparently
 STR_DECLARATION(State);	
 STR_DECLARATION(std::list<State>);	
+STR_DECLARATION(std::vector<std::vector<PNode*>>);
+STR_DECLARATION(std::vector<PNode*>);
 STR_DECLARATION(std::vector<std::list<State> >);	
 #undef STR_DECLARATION
 

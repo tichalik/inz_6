@@ -25,8 +25,15 @@ class TST_mod_parser: public Tester
 	);
 
 	
+	void _tst_combine2(
+		PNodes & input1,
+		PNodes & input2, 
+		std::vector<PNodes> & expected
+	);
+
 public:
 
+	void tst_combine2();
 	void test_parsing_grammar_adapter();
 	void test_extract_trees_from_parsing_table();
 	

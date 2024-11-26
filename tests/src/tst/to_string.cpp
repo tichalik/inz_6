@@ -20,6 +20,8 @@
 
 VECTOR_STR(Symbols);
 VECTOR_STR(std::vector<Symbols>);
+VECTOR_STR(std::vector<PNode*>);
+VECTOR_STR(std::vector<std::vector<PNode*>>);
 VECTOR_STR(Errors);
 VECTOR_STR(Rules);
 VECTOR_STR(VNodes);
