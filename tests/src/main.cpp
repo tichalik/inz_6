@@ -44,9 +44,9 @@ int main()
 	TST_mod_parser mp;
 	// mp.test_parsing_grammar_adapter();
 	// mp.test_extract_trees_from_parsing_table();
-//	mp.complete_parser_tests();
+	mp.complete_parser_tests();
 //	mp.tst_combine2();
-	mp.tst_combine_all();
+//	mp.tst_combine_all();
 	
 //	TST_mod_to_http m2h;
 //	m2h.test_sppf_to_string();
