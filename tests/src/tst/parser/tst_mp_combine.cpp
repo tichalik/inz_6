@@ -6,12 +6,8 @@ void TST_mod_parser::_tst_combine2(
 	std::vector<std::vector<PNode*>>& expected
 )
 {
-	Grammar grammar;
-	Word word;
-	SPPF sppf;
-	Mod_parser parser(grammar, word, sppf);
-	
-	std::vector<std::vector<PNode*>> real = parser.combine2(input1, input2);
+	Process_SPPF process_sppf;	
+	std::vector<std::vector<PNode*>> real = process_sppf.combine2(input1, input2);
 
 	bool ok = compare(expected, real, "combinations");
 
@@ -114,12 +110,8 @@ void TST_mod_parser::_tst_combine_all(
 	const std::vector<std::vector<PNode*>> & expected
 )
 {
-	Grammar grammar;
-	Word word;
-	SPPF sppf;
-	Mod_parser parser(grammar, word, sppf);
-	
-	std::vector<std::vector<PNode*>> real = parser.all_combinations(input);
+	Process_SPPF process_sppf;	
+	std::vector<std::vector<PNode*>> real = process_sppf.all_combinations(input);
 
 	bool ok = compare(expected, real, "combinations");
 
