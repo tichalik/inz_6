@@ -243,7 +243,7 @@ std::vector<std::vector<PNode*>> Mod_parser::all_combinations(
 
 	for (size_t i=1; i<sppf_children.size(); i++)
 	{
-		this->combine2(result, sppf_children[i]);
+		result = this->combine2(result, sppf_children[i]);
 	}
 
 	return result;

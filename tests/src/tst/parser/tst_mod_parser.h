@@ -30,10 +30,16 @@ class TST_mod_parser: public Tester
 		SPPF_node* input2, 
 		std::vector<std::vector<PNode*>>& expected
 	);
+	
+	void _tst_combine_all(
+		const std::vector<SPPF_node *> & input,
+		const std::vector<std::vector<PNode*>> & expected
+	);
 
 public:
 
 	void tst_combine2();
+	void tst_combine_all();
 	void test_parsing_grammar_adapter();
 	void test_extract_trees_from_parsing_table();
 	
