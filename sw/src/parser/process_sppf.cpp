@@ -74,16 +74,24 @@ void Process_SPPF::process_sppf(
 	for ( std::list<SPPF_node*>::reverse_iterator i = ordered_sppf.rbegin();
 		i != ordered_sppf.rend(); i++)
 	{
-		for (const std::vector<SPPF_node*> & alt: (*i)->alts)
+		if ((*i)->alts.size() == 0)
 		{
-			std::vector<std::vector<PNode*>> children_combinations = 
-				all_combinations(alt);
-			
-			for (size_t j=0; j<children_combinations.size(); j++)
+			(*i)->pnodes.emplace_back();
+			(*i)->pnodes.back().tag = (*i)->tag;
+		}
+		else
+		{
+			for (const std::vector<SPPF_node*> & alt: (*i)->alts)
 			{
-				(*i)->pnodes.emplace_back();
-				(*i)->pnodes.back().tag = (*i)->tag;
-				(*i)->pnodes.back().children = children_combinations[j];
+				std::vector<std::vector<PNode*>> children_combinations = 
+					all_combinations(alt);
+				
+				for (size_t j=0; j<children_combinations.size(); j++)
+				{
+					(*i)->pnodes.emplace_back();
+					(*i)->pnodes.back().tag = (*i)->tag;
+					(*i)->pnodes.back().children = children_combinations[j];
+				}
 			}
 		}
 	}

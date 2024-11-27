@@ -121,22 +121,19 @@ void Mod_parser::scan(const State & state, size_t i)
 	this->sppf.nodes.push_back(SPPF_node(*state.sppf_node));
 	_state.sppf_node = & this->sppf.nodes.back();
 	_state.pos++;
-	if (this->find_in_set(_state, i+1) == this->states[i+1].end())
+	if (_state.sppf_node->alts.size() == 0)
 	{
-		if (_state.sppf_node->alts.size() == 0)
-		{
-			_state.sppf_node->alts.emplace_back();
-			_state.sppf_node->alts.back().push_back(&(this->sppf.leaves[i]));
-		}
-		else
-		{
-			for (size_t i=0; i<_state.sppf_node->alts.size(); i++)
-			{
-				_state.sppf_node->alts[i].push_back(&(this->sppf.leaves[i]));
-			}
-		}
-		this->states[i+1].push_back(_state);
+		_state.sppf_node->alts.emplace_back();
+		_state.sppf_node->alts.back().push_back(&(this->sppf.leaves[i]));
 	}
+	else
+	{
+		for (size_t i=0; i<_state.sppf_node->alts.size(); i++)
+		{
+			_state.sppf_node->alts[i].push_back(&(this->sppf.leaves[i]));
+		}
+	}
+	this->states[i+1].push_back(_state);
 }
 
 void Mod_parser::complete(State & state, size_t i)

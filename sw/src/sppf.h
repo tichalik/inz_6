@@ -11,7 +11,7 @@ struct SPPF_node
 	Symbol tag;
 	std::vector<std::vector<SPPF_node*> > alts;
 	PNodes pnodes;
-	bool visited;
+	bool visited = false;
 };
 
 struct SPPF
