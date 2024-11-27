@@ -1,31 +1,19 @@
 #include "tst_mod_parser.h"
 
 void TST_mod_parser::_tst_combine2(
-	PNodes & input1,
-	PNodes & input2, 
-	std::vector<PNodes> & expected
+	std::vector<std::vector<PNode*>>& input1,
+	SPPF_node* input2, 
+	std::vector<std::vector<PNode*>>& expected
 )
 {
-	std::vector<PNode*> p_input1;
-	std::vector<std::vector<PNode*>> p_expected, p_real;
-	for (size_t i=0; i<input1.size(); i++)
-		p_input1.push_back(&input1[i]);
-	for (size_t i=0; i<expected.size(); i++)
-	{
-		p_expected.emplace_back();
-		for (size_t j=0; j<expected[i].size(); j++)
-			p_expected.back().push_back(&expected[i][j]);
-	}
-
-	SPPF_node sppf_node;
-	sppf_node.pnodes = input1;
-
 	Grammar grammar;
 	Word word;
 	SPPF sppf;
 	Mod_parser parser(grammar, word, sppf);
 	
-	bool ok = compare(p_expected, p_real, "combinations");
+	std::vector<std::vector<PNode*>> real = parser.combine2(input1, input2);
+
+	bool ok = compare(expected, real, "combinations");
 
 	if (ok)
 	{
@@ -37,9 +25,113 @@ void TST_mod_parser::_tst_combine2(
 	}
 
 
-}
+} 
 
 void TST_mod_parser::tst_combine2()
 {
+	std::cout  << "=============================================================" << std::endl;
+	std::cout  << " [] x [] " << std::endl;
+	std::cout  << "=============================================================" << std::endl;
+	{
+		std::vector<std::vector<PNode*>> in1;
+		SPPF_node sppf_node;
 
+		std::vector<std::vector<PNode*>> expected;
+
+		_tst_combine2(in1, &sppf_node, expected);
+	}
+	
+	std::cout  << "=============================================================" << std::endl;
+	std::cout  << " [ [a1], [b1, b2], [c1, c2, c3]] x [x1] " << std::endl;
+	std::cout  << "=============================================================" << std::endl;
+	{
+		PNode a1 = {"a1", {}};
+		PNode b1 = {"b1", {}};
+		PNode b2 = {"b2", {}};
+		PNode c1 = {"c1", {}};
+		PNode c2 = {"c2", {}};
+		PNode c3 = {"c3", {}};
+		
+		std::vector<std::vector<PNode*>> in1;
+		
+		in1.push_back({&a1});
+		in1.push_back({&b1, &b2});
+		in1.push_back({&c1, &c2, &c3});
+
+		SPPF_node sppf_node;
+		sppf_node.pnodes.push_back({"x1",{}});
+
+		std::vector<std::vector<PNode*>> expected;
+		expected.push_back({&a1, &sppf_node.pnodes[0]});
+		expected.push_back({&b1, &b2, &sppf_node.pnodes[0]});
+		expected.push_back({&c1, &c2, &c3, &sppf_node.pnodes[0]});
+
+		_tst_combine2(in1, &sppf_node, expected);
+	}
+	std::cout  << "=============================================================" << std::endl;
+	std::cout  << " [ [], [a1], [b1, b2], [c1, c2, c3]] x [x1, x2, x3] " << std::endl;
+	std::cout  << "=============================================================" << std::endl;
+	{
+		PNode a1 = {"a1", {}};
+		PNode b1 = {"b1", {}};
+		PNode b2 = {"b2", {}};
+		PNode c1 = {"c1", {}};
+		PNode c2 = {"c2", {}};
+		PNode c3 = {"c3", {}};
+		
+		std::vector<std::vector<PNode*>> in1;
+		
+		in1.push_back({});
+		in1.push_back({&a1});
+		in1.push_back({&b1, &b2});
+		in1.push_back({&c1, &c2, &c3});
+
+		SPPF_node sppf_node;
+		sppf_node.pnodes.push_back({"x1",{}});
+		sppf_node.pnodes.push_back({"x2",{}});
+		sppf_node.pnodes.push_back({"x3",{}});
+
+		std::vector<std::vector<PNode*>> expected;
+		expected.push_back({&sppf_node.pnodes[0]});
+		expected.push_back({&sppf_node.pnodes[1]});
+		expected.push_back({&sppf_node.pnodes[2]});
+		expected.push_back({&a1, &sppf_node.pnodes[0]});
+		expected.push_back({&a1, &sppf_node.pnodes[1]});
+		expected.push_back({&a1, &sppf_node.pnodes[2]});
+		expected.push_back({&b1, &b2, &sppf_node.pnodes[0]});
+		expected.push_back({&b1, &b2, &sppf_node.pnodes[1]});
+		expected.push_back({&b1, &b2, &sppf_node.pnodes[2]});
+		expected.push_back({&c1, &c2, &c3, &sppf_node.pnodes[0]});
+		expected.push_back({&c1, &c2, &c3, &sppf_node.pnodes[1]});
+		expected.push_back({&c1, &c2, &c3, &sppf_node.pnodes[2]});
+
+		_tst_combine2(in1, &sppf_node, expected);
+	}
+	std::cout  << "=============================================================" << std::endl;
+	std::cout  << " [ [a1], [b1, b2], [c1, c2, c3]] x [x1] " << std::endl;
+	std::cout  << "=============================================================" << std::endl;
+	{
+		PNode a1 = {"a1", {}};
+		PNode b1 = {"b1", {}};
+		PNode b2 = {"b2", {}};
+		PNode c1 = {"c1", {}};
+		PNode c2 = {"c2", {}};
+		PNode c3 = {"c3", {}};
+		
+		std::vector<std::vector<PNode*>> in1;
+		
+		in1.push_back({&a1});
+		in1.push_back({&b1, &b2});
+		in1.push_back({&c1, &c2, &c3});
+
+		SPPF_node sppf_node;
+		sppf_node.pnodes.push_back({"x1",{}});
+
+		std::vector<std::vector<PNode*>> expected;
+		expected.push_back({&a1, &sppf_node.pnodes[0]});
+		expected.push_back({&b1, &b2, &sppf_node.pnodes[0]});
+		expected.push_back({&c1, &c2, &c3, &sppf_node.pnodes[0]});
+
+		_tst_combine2(in1, &sppf_node, expected);
+	}
 }

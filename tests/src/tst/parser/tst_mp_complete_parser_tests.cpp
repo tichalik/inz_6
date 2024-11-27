@@ -12,20 +12,7 @@ void TST_mod_parser::_complete_parser_tests(
 	Mod_parser parser(grammar, word, sppf);
 	
 	bool ok = compare(expected_states, parser.states, "parser's states");
-
-	if (expected_results.size() != sppf.res_pnodes.size())
-	{
-		ok &= false;
-		std::cout << "real " << sppf.res_pnodes.size() << ", expected " << expected_results.size() << std::endl;
-	}
-	else 
-	{
-		for (size_t i=0; i<expected_results.size(); i++)
-		{
-			ok &= compare(expected_results[i], sppf.res_pnodes[i], "result["+str(i,"")+"]");
-		}
-	}
-	
+	ok &= compare(expected_results, sppf.res_pnodes,  "results");
 
 	if (ok)
 	{

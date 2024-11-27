@@ -26,9 +26,9 @@ class TST_mod_parser: public Tester
 
 	
 	void _tst_combine2(
-		PNodes & input1,
-		PNodes & input2, 
-		std::vector<PNodes> & expected
+		std::vector<std::vector<PNode*>>& input1,
+		SPPF_node* input2, 
+		std::vector<std::vector<PNode*>>& expected
 	);
 
 public:
