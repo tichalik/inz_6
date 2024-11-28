@@ -9,6 +9,7 @@ struct PNode
 {
 	std::string tag;
 	std::vector<PNode*> children;
+	bool visited = false;
 };
 
 

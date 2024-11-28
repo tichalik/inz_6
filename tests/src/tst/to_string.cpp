@@ -30,16 +30,21 @@ VECTOR_STR(Tokens);
 
 
 std::string str(
-	const PNode * i,
+	 PNode * i,
 	const std::string & tabs
 )
 { 
+	i->visited = true;
+
 	std::stringstream res;
 	res <<( tabs + "tag:\n" + str(i->tag, tabs+"\t") + "\n");
 	res << tabs << "children:\n";
 	for (size_t j=0; j<i->children.size(); j++)
 	{
-		res << tabs <<"\t"<< j <<".\n" << str(i->children[j], tabs + "\t\t") << std::endl;
+		if (i->children[j]->visited == false)
+		{
+			res << tabs <<"\t"<< j <<".\n" << str(i->children[j], tabs + "\t\t") << std::endl;
+		}
 	}
 
 	return res.str();

@@ -41,8 +41,8 @@ COMPARE_DECLARATION(Rule);
 
 
 bool compare(
-	const  PNode* expected,
-	const  PNode* real,
+	PNode* expected,
+	PNode* real,
 	const std::string & message
 );
 //COMPARE_DECLARATION(PNode*);	//declaring it like this causes it not to work 

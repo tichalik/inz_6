@@ -54,7 +54,7 @@ void Process_SPPF::process_sppf(
 	
 	for ( std::list<SPPF_node*>::iterator i = ordered_sppf.begin();
 		i != ordered_sppf.end(); i++)
-	{
+	{ 
 		for (std::vector<SPPF_node*> & alt: (*i)->alts)
 		{
 			for (SPPF_node * node: alt)
@@ -98,7 +98,7 @@ void Process_SPPF::process_sppf(
 	
 	//insert root's pnodes into sppf.res_pnodes
 	for (size_t i=0; i<sppf.roots.size(); i++)
-	{
+	{ 
 		for (size_t j=0; j<sppf.roots[i]->pnodes.size(); j++)
 		{
 			sppf.res_pnodes.push_back(&sppf.roots[i]->pnodes[j]);
