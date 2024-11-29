@@ -47,6 +47,8 @@ std::string str(
 		}
 	}
 
+	i->visited = false;
+
 	return res.str();
 }
 	

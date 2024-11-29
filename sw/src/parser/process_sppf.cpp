@@ -50,7 +50,11 @@ void Process_SPPF::process_sppf(
 	//order sppf nodes -- breadth first search 
 	std::list<SPPF_node*> ordered_sppf;
     
-	ordered_sppf.insert(ordered_sppf.begin(), sppf.roots.begin(), sppf.roots.end());
+	for (size_t i=0; i<sppf.roots.size(); i++)
+	{
+		sppf.roots[i]->visited = true;
+		ordered_sppf.push_back(sppf.roots[i]);
+	}
 	
 	for ( std::list<SPPF_node*>::iterator i = ordered_sppf.begin();
 		i != ordered_sppf.end(); i++)
@@ -67,6 +71,10 @@ void Process_SPPF::process_sppf(
 			}
 		}
 	}
+	//debuggin 
+	std::vector<std::string> tmp;
+	for (auto i = ordered_sppf.begin(); i!= ordered_sppf.end(); i++)
+		tmp.push_back((*i)->tag);
 
 	//starting from the leaves, create pnodes for each sppf node
 

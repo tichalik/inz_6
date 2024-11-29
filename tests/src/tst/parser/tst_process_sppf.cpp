@@ -52,7 +52,7 @@ void TST_mod_parser::tst_process_sppf()
 		SPPF_node* J = &sppf.nodes.back();
 
 		A->alts = { {C,B}, {D,E,B} };
-		C->alts = { {J}, {A} };
+		C->alts = { {J,A} };
 		D->alts = { {F,G}, {F,H} };
 		I->alts = { {H} };
 
