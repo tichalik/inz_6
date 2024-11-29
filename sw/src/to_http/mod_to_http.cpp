@@ -187,52 +187,40 @@ std::string Mod_to_http::tree_to_http(const VNode & tree) const
 std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 {
 	std::string res;
-	std::list<SPPF_node*> parents;
-	std::list<int> used_children;
 
-	parents.push_back(sppf.roots[0]);
-	used_children.push_back(-1);
-	res += parents.back()->tag;
-
-			res += "[";
-	while (parents.size() != 0)
+	sppf.start_iteration();
+	if (sppf.current_node() != nullptr)
 	{
-		//if it is not a leaf
-		if (parents.back()->alts.size() != 0)
-		{
-			// if there are still unprocessed children of that node
-			if ((used_children.back() )< (int) (parents.back()->alts[0].size() -1) )
-			{
-				used_children.back() ++;
-				parents.push_back(parents.back()->alts[0][used_children.back()]);
-				used_children.push_back(-1);
-				res += parents.back()->tag;
-			res += "[";
-			}
-			else
-			{
-				res += "]";
-				used_children.pop_back();
-				parents.pop_back();
-			}
-		}
-		else
-		{
-			res.back() = ' ';
-			used_children.pop_back();
-			parents.pop_back();
-		}
-
+		res += sppf.current_node()->tag;
 	}
 
-	return res;
-}
-std::string Mod_to_http::string_tree_to_http(const std::string & string)
-{
-	std::string res;
+	SPPF::EN_ITERATION_MOVE move = sppf.next_node();
+	while (move != SPPF::EN_ITERATION_MOVE::END)
+	{
+		if (! sppf.is_leaf(sppf.current_node()))
+		{
+			if (move == SPPF::EN_ITERATION_MOVE::DOWN)
+			{
+				res += "[";
+				res += sppf.current_node()->tag;
+ 			}
+			else
+ 			{
+				res += "]";
+			}
+ 		}
+		else
+		{
+			res += sppf.current_node()->tag;
+		}
+		move = sppf.next_node();
+	
+ 	}
 
 	return res;
 }
+
+
 Mod_to_http::Mod_to_http(
 	const Errors & errors, 
 	SPPF & sppf, 
@@ -260,7 +248,7 @@ Mod_to_http::Mod_to_http(
 		response.fill_response(RESP_FIELDS::VISUALIZATION, http_visualization);
 		
 		//fill results
-		std::string http_parse_trees = string_tree_to_http(sppf_to_string(sppf));
+		std::string http_parse_trees = sppf_to_string(sppf);
 		response.fill_response(RESP_FIELDS::RESULTS, http_parse_trees);
 		
 		//twice, the call only fills one field

@@ -3,22 +3,28 @@
 
 void TST_mod_parser::_complete_parser_tests(
 	const Grammar & grammar,
-	const Word & word
+	const Word & word,
+	const std::vector<std::list<State>> & expected_states,
+	const std::vector<std::string> & expected_results
 )
 {
 	SPPF sppf;
 	Mod_parser parser(grammar, word, sppf);
 	
-	std::vector<std::list<State> > states;
-	bool ok = compare(states, parser.states, "parser's states");
-//	if (ok)
+	bool ok = compare(expected_states, parser.states, "parser's states");
+//	ok &= compare(expected_results, parser.results, "results");
+//	for (auto i: parser.results)
 //	{
-//		std::cout << "OK" << std::endl;
+//		std::cout << (i) << std::endl;
 //	}
-//	else
-//	{
-//		std::cout << __FILE__ << "\tFAIL" << std::endl;
-//	}
+	if (ok)
+	{
+		std::cout << "OK" << std::endl;
+	}
+	else
+	{
+		std::cout << __FILE__ << "\tFAIL" << std::endl;
+	}
 
 } 
 
@@ -54,12 +60,243 @@ void TST_mod_parser::complete_parser_tests()
 		}
 
 		
-		
+		std::vector<std::list<State>> states( 4 );
+		//states[ 0 ]
+		{
+			//S -> . S S | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("S");
+				state.pos = 0;
+				state.origin = 0;
 
-//		_complete_parser_tests(
-//			grammar,
-//			word, 
-//		);
+				states[0].push_back(state);
+			}
+			//S -> . b | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("b");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+		}
+		//states[ 1 ]
+		{
+			//S -> b . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("b");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//S -> S . S | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("S");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//S -> . S S | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("S");
+				state.pos = 0;
+				state.origin = 1;
+
+				states[1].push_back(state);
+			}
+			//S -> . b | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("b");
+				state.pos = 0;
+				state.origin = 1;
+
+				states[1].push_back(state);
+			}
+		}
+		//states[ 2 ]
+		{
+			//S -> b . | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("b");
+				state.pos = 1;
+				state.origin = 1;
+
+				states[2].push_back(state);
+			}
+			//S -> S S . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("S");
+				state.pos = 2;
+				state.origin = 0;
+
+				states[2].push_back(state);
+			}
+			//S -> S . S | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("S");
+				state.pos = 1;
+				state.origin = 1;
+
+				states[2].push_back(state);
+			}
+			//S -> S . S | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("S");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[2].push_back(state);
+			}
+			//S -> . S S | 2
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("S");
+				state.pos = 0;
+				state.origin = 2;
+
+				states[2].push_back(state);
+			}
+			//S -> . b | 2
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("b");
+				state.pos = 0;
+				state.origin = 2;
+
+				states[2].push_back(state);
+			}
+		}
+		//states[ 3 ]
+		{
+			//S -> b . | 2
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("b");
+				state.pos = 1;
+				state.origin = 2;
+
+				states[3].push_back(state);
+			}
+			//S -> S S . | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("S");
+				state.pos = 2;
+				state.origin = 1;
+
+				states[3].push_back(state);
+			}
+			//S -> S S . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("S");
+				state.pos = 2;
+				state.origin = 0;
+
+				states[3].push_back(state);
+			}
+			//S -> S . S | 2
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("S");
+				state.pos = 1;
+				state.origin = 2;
+
+				states[3].push_back(state);
+			}
+			//S -> S . S | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("S");
+				state.pos = 1;
+				state.origin = 1;
+
+				states[3].push_back(state);
+			}
+			//S -> S . S | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("S");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[3].push_back(state);
+			}
+			//S -> . S S | 3
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("S");
+				state.pos = 0;
+				state.origin = 3;
+
+				states[3].push_back(state);
+			}
+			//S -> . b | 3
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("b");
+				state.pos = 0;
+				state.origin = 3;
+
+				states[3].push_back(state);
+			}
+		}
+		
+		std::vector<std::string> results;
+		results.push_back("S[ S[ S[ b] S[ b]] S[ b]]");
+		results.push_back("S[ S[ b] S[ S[ b] S[ b]]]");
+
+		_complete_parser_tests(
+			grammar,
+			word,
+			states,
+			results
+		);
  	} 
 
 	std::cout << "===============================================================" << std::endl;
@@ -128,12 +365,364 @@ void TST_mod_parser::complete_parser_tests()
 			grammar.rules.push_back(rule);
 		}
 		
-		
+		std::vector<std::list<State>> states( 6 );
+		//states[ 0 ]
+		{
+			//P -> . S | 0
+			{
+				State state;
+				state.rule.LHS = "P";
+				state.rule.RHS.push_back("S");
+				state.pos = 0;
+				state.origin = 0;
 
-//		_complete_parser_tests(
-//			grammar,
-//			word, 
-//		);
+				states[0].push_back(state);
+			}
+			//S -> . S + M | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("+");
+				state.rule.RHS.push_back("M");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+			//S -> . M | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("M");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+			//M -> . M * T | 0
+			{
+				State state;
+				state.rule.LHS = "M";
+				state.rule.RHS.push_back("M");
+				state.rule.RHS.push_back("*");
+				state.rule.RHS.push_back("T");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+			//M -> . T | 0
+			{
+				State state;
+				state.rule.LHS = "M";
+				state.rule.RHS.push_back("T");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+			//T -> . x | 0
+			{
+				State state;
+				state.rule.LHS = "T";
+				state.rule.RHS.push_back("x");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+		}
+		//states[ 1 ]
+		{
+			//T -> x . | 0
+			{
+				State state;
+				state.rule.LHS = "T";
+				state.rule.RHS.push_back("x");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//M -> T . | 0
+			{
+				State state;
+				state.rule.LHS = "M";
+				state.rule.RHS.push_back("T");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//S -> M . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("M");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//M -> M . * T | 0
+			{
+				State state;
+				state.rule.LHS = "M";
+				state.rule.RHS.push_back("M");
+				state.rule.RHS.push_back("*");
+				state.rule.RHS.push_back("T");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//P -> S . | 0
+			{
+				State state;
+				state.rule.LHS = "P";
+				state.rule.RHS.push_back("S");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//S -> S . + M | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("+");
+				state.rule.RHS.push_back("M");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+		}
+		//states[ 2 ]
+		{
+			//S -> S + . M | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("+");
+				state.rule.RHS.push_back("M");
+				state.pos = 2;
+				state.origin = 0;
+
+				states[2].push_back(state);
+			}
+			//M -> . M * T | 2
+			{
+				State state;
+				state.rule.LHS = "M";
+				state.rule.RHS.push_back("M");
+				state.rule.RHS.push_back("*");
+				state.rule.RHS.push_back("T");
+				state.pos = 0;
+				state.origin = 2;
+
+				states[2].push_back(state);
+			}
+			//M -> . T | 2
+			{
+				State state;
+				state.rule.LHS = "M";
+				state.rule.RHS.push_back("T");
+				state.pos = 0;
+				state.origin = 2;
+
+				states[2].push_back(state);
+			}
+			//T -> . x | 2
+			{
+				State state;
+				state.rule.LHS = "T";
+				state.rule.RHS.push_back("x");
+				state.pos = 0;
+				state.origin = 2;
+
+				states[2].push_back(state);
+			}
+		}
+		//states[ 3 ]
+		{
+			//T -> x . | 2
+			{
+				State state;
+				state.rule.LHS = "T";
+				state.rule.RHS.push_back("x");
+				state.pos = 1;
+				state.origin = 2;
+
+				states[3].push_back(state);
+			}
+			//M -> T . | 2
+			{
+				State state;
+				state.rule.LHS = "M";
+				state.rule.RHS.push_back("T");
+				state.pos = 1;
+				state.origin = 2;
+
+				states[3].push_back(state);
+			}
+			//S -> S + M . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("+");
+				state.rule.RHS.push_back("M");
+				state.pos = 3;
+				state.origin = 0;
+
+				states[3].push_back(state);
+			}
+			//M -> M . * T | 2
+			{
+				State state;
+				state.rule.LHS = "M";
+				state.rule.RHS.push_back("M");
+				state.rule.RHS.push_back("*");
+				state.rule.RHS.push_back("T");
+				state.pos = 1;
+				state.origin = 2;
+
+				states[3].push_back(state);
+			}
+			//P -> S . | 0
+			{
+				State state;
+				state.rule.LHS = "P";
+				state.rule.RHS.push_back("S");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[3].push_back(state);
+			}
+			//S -> S . + M | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("+");
+				state.rule.RHS.push_back("M");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[3].push_back(state);
+			}
+		}
+		//states[ 4 ]
+		{
+			//M -> M * . T | 2
+			{
+				State state;
+				state.rule.LHS = "M";
+				state.rule.RHS.push_back("M");
+				state.rule.RHS.push_back("*");
+				state.rule.RHS.push_back("T");
+				state.pos = 2;
+				state.origin = 2;
+
+				states[4].push_back(state);
+			}
+			//T -> . x | 4
+			{
+				State state;
+				state.rule.LHS = "T";
+				state.rule.RHS.push_back("x");
+				state.pos = 0;
+				state.origin = 4;
+
+				states[4].push_back(state);
+			}
+		}
+		//states[ 5 ]
+		{
+			//T -> x . | 4
+			{
+				State state;
+				state.rule.LHS = "T";
+				state.rule.RHS.push_back("x");
+				state.pos = 1;
+				state.origin = 4;
+
+				states[5].push_back(state);
+			}
+			//M -> M * T . | 2
+			{
+				State state;
+				state.rule.LHS = "M";
+				state.rule.RHS.push_back("M");
+				state.rule.RHS.push_back("*");
+				state.rule.RHS.push_back("T");
+				state.pos = 3;
+				state.origin = 2;
+
+				states[5].push_back(state);
+			}
+			//S -> S + M . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("+");
+				state.rule.RHS.push_back("M");
+				state.pos = 3;
+				state.origin = 0;
+
+				states[5].push_back(state);
+			}
+			//M -> M . * T | 2
+			{
+				State state;
+				state.rule.LHS = "M";
+				state.rule.RHS.push_back("M");
+				state.rule.RHS.push_back("*");
+				state.rule.RHS.push_back("T");
+				state.pos = 1;
+				state.origin = 2;
+
+				states[5].push_back(state);
+			}
+			//P -> S . | 0
+			{
+				State state;
+				state.rule.LHS = "P";
+				state.rule.RHS.push_back("S");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[5].push_back(state);
+			}
+			//S -> S . + M | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("+");
+				state.rule.RHS.push_back("M");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[5].push_back(state);
+			}
+		}
+
+
+		std::vector<std::string> results;
+		results.push_back("P[ S[ S[ M[ T[ x]]] + M[ M[ T[ x]] * T[ x]]]]");
+
+		_complete_parser_tests(
+			grammar,
+			word,
+			states ,
+			results
+		);
 	}
 
 
@@ -167,12 +756,287 @@ void TST_mod_parser::complete_parser_tests()
 			grammar.rules.push_back(rule);
 		}
 		
-		
+		std::vector<std::list<State>> states( 5 );
+		//states[ 0 ]
+		{
+			//S -> . a S | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.pos = 0;
+				state.origin = 0;
 
-//		_complete_parser_tests(
-//			grammar,
-//			word, 
-//		);
+				states[0].push_back(state);
+			}
+			//S -> . a | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+		}
+		//states[ 1 ]
+		{
+			//S -> a . S | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//S -> a . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//S -> . a S | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.pos = 0;
+				state.origin = 1;
+
+				states[1].push_back(state);
+			}
+			//S -> . a | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 1;
+
+				states[1].push_back(state);
+			}
+		}
+		//states[ 2 ]
+		{
+			//S -> a . S | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.pos = 1;
+				state.origin = 1;
+
+				states[2].push_back(state);
+			}
+			//S -> a . | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 1;
+
+				states[2].push_back(state);
+			}
+			//S -> . a S | 2
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.pos = 0;
+				state.origin = 2;
+
+				states[2].push_back(state);
+			}
+			//S -> . a | 2
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 2;
+
+				states[2].push_back(state);
+			}
+			//S -> a S . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.pos = 2;
+				state.origin = 0;
+
+				states[2].push_back(state);
+			}
+		}
+		//states[ 3 ]
+		{
+			//S -> a . S | 2
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.pos = 1;
+				state.origin = 2;
+
+				states[3].push_back(state);
+			}
+			//S -> a . | 2
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 2;
+
+				states[3].push_back(state);
+			}
+			//S -> . a S | 3
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.pos = 0;
+				state.origin = 3;
+
+				states[3].push_back(state);
+			}
+			//S -> . a | 3
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 3;
+
+				states[3].push_back(state);
+			}
+			//S -> a S . | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.pos = 2;
+				state.origin = 1;
+
+				states[3].push_back(state);
+			}
+			//S -> a S . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.pos = 2;
+				state.origin = 0;
+
+				states[3].push_back(state);
+			}
+		}
+		//states[ 4 ]
+		{
+			//S -> a . S | 3
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.pos = 1;
+				state.origin = 3;
+
+				states[4].push_back(state);
+			}
+			//S -> a . | 3
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 3;
+
+				states[4].push_back(state);
+			}
+			//S -> . a S | 4
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.pos = 0;
+				state.origin = 4;
+
+				states[4].push_back(state);
+			}
+			//S -> . a | 4
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 4;
+
+				states[4].push_back(state);
+			}
+			//S -> a S . | 2
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.pos = 2;
+				state.origin = 2;
+
+				states[4].push_back(state);
+			}
+			//S -> a S . | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.pos = 2;
+				state.origin = 1;
+
+				states[4].push_back(state);
+			}
+			//S -> a S . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.pos = 2;
+				state.origin = 0;
+
+				states[4].push_back(state);
+			}
+		}
+
+		std::vector<std::string> results;
+		results.push_back("S[ a S[ a S[ a S[ a]]]]");
+
+		_complete_parser_tests(
+			grammar,
+			word,
+			states ,
+			results
+		);
 	}
 
 
@@ -206,12 +1070,140 @@ void TST_mod_parser::complete_parser_tests()
 			grammar.rules.push_back(rule);
 		}
 		
-		
+		std::vector<std::list<State>> states( 5 );
+		//states[ 0 ]
+		{
+			//S -> . S a | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 0;
 
-//		_complete_parser_tests(
-//			grammar,
-//			word, 
-//		);
+				states[0].push_back(state);
+			}
+			//S -> . a | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+		}
+		//states[ 1 ]
+		{
+			//S -> a . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//S -> S . a | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+		}
+		//states[ 2 ]
+		{
+			//S -> S a . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("a");
+				state.pos = 2;
+				state.origin = 0;
+
+				states[2].push_back(state);
+			}
+			//S -> S . a | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[2].push_back(state);
+			}
+		}
+		//states[ 3 ]
+		{
+			//S -> S a . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("a");
+				state.pos = 2;
+				state.origin = 0;
+
+				states[3].push_back(state);
+			}
+			//S -> S . a | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[3].push_back(state);
+			}
+		}
+		//states[ 4 ]
+		{
+			//S -> S a . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("a");
+				state.pos = 2;
+				state.origin = 0;
+
+				states[4].push_back(state);
+			}
+			//S -> S . a | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[4].push_back(state);
+			}
+		}
+
+		std::vector<std::string> results;
+		results.push_back("S[ S[ S[ S[ a] a] a] a]");
+
+		_complete_parser_tests(
+			grammar,
+			word,
+			states ,
+			results
+		);
 	}
 
 	std::cout << "===============================================================" << std::endl;
@@ -259,12 +1251,376 @@ void TST_mod_parser::complete_parser_tests()
 			grammar.rules.push_back(rule);
 		}
 		
-		
+		std::vector<std::list<State>> states( 5 );
+		//states[ 0 ]
+		{
+			//S -> . S A | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("A");
+				state.pos = 0;
+				state.origin = 0;
 
-//		_complete_parser_tests(
-//			grammar,
-//			word, 
-//		);
+				states[0].push_back(state);
+			}
+			//S -> . A | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("A");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+			//A -> . a | 0
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+			//A -> . a a | 0
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+		}
+		//states[ 1 ]
+		{
+			//A -> a . | 0
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//A -> a . a | 0
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//S -> A . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("A");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//S -> S . A | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("A");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//A -> . a | 1
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 1;
+
+				states[1].push_back(state);
+			}
+			//A -> . a a | 1
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 1;
+
+				states[1].push_back(state);
+			}
+		}
+		//states[ 2 ]
+		{
+			//A -> a a . | 0
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("a");
+				state.pos = 2;
+				state.origin = 0;
+
+				states[2].push_back(state);
+			}
+			//A -> a . | 1
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 1;
+
+				states[2].push_back(state);
+			}
+			//A -> a . a | 1
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 1;
+
+				states[2].push_back(state);
+			}
+			//S -> A . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("A");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[2].push_back(state);
+			}
+			//S -> S A . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("A");
+				state.pos = 2;
+				state.origin = 0;
+
+				states[2].push_back(state);
+			}
+			//S -> S . A | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("A");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[2].push_back(state);
+			}
+			//A -> . a | 2
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 2;
+
+				states[2].push_back(state);
+			}
+			//A -> . a a | 2
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 2;
+
+				states[2].push_back(state);
+			}
+		}
+		//states[ 3 ]
+		{
+			//A -> a a . | 1
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("a");
+				state.pos = 2;
+				state.origin = 1;
+
+				states[3].push_back(state);
+			}
+			//A -> a . | 2
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 2;
+
+				states[3].push_back(state);
+			}
+			//A -> a . a | 2
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 2;
+
+				states[3].push_back(state);
+			}
+			//S -> S A . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("A");
+				state.pos = 2;
+				state.origin = 0;
+
+				states[3].push_back(state);
+			}
+			//S -> S . A | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("A");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[3].push_back(state);
+			}
+			//A -> . a | 3
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 3;
+
+				states[3].push_back(state);
+			}
+			//A -> . a a | 3
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 3;
+
+				states[3].push_back(state);
+			}
+		}
+		//states[ 4 ]
+		{
+			//A -> a a . | 2
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("a");
+				state.pos = 2;
+				state.origin = 2;
+
+				states[4].push_back(state);
+			}
+			//A -> a . | 3
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 3;
+
+				states[4].push_back(state);
+			}
+			//A -> a . a | 3
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 3;
+
+				states[4].push_back(state);
+			}
+			//S -> S A . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("A");
+				state.pos = 2;
+				state.origin = 0;
+
+				states[4].push_back(state);
+			}
+			//S -> S . A | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("A");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[4].push_back(state);
+			}
+			//A -> . a | 4
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 4;
+
+				states[4].push_back(state);
+			}
+			//A -> . a a | 4
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 4;
+
+				states[4].push_back(state);
+			}
+		}
+
+		std::vector<std::string> results;
+		results.push_back("S[ S[ A[ a a]] A[ a a]]");
+		results.push_back("S[ S[ S[ A[ a]] A[ a]] A[ a a]]");
+		results.push_back("S[ S[ S[ A[ a]] A[ a a]] A[ a]]");
+		results.push_back("S[ S[ S[ A[ a a]] A[ a]] A[ a]]");
+		results.push_back("S[ S[ S[ S[ A[ a]] A[ a]] A[ a]] A[ a]]");
+
+		_complete_parser_tests(
+			grammar,
+			word,
+			states ,
+			results
+		);
 	}
 
 
@@ -314,12 +1670,416 @@ void TST_mod_parser::complete_parser_tests()
 			grammar.rules.push_back(rule);
 		}
 		
-		
+		std::vector<std::list<State>> states( 5 );
+		//states[ 0 ]
+		{
+			//S -> . a S B B | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 0;
+				state.origin = 0;
 
-//		_complete_parser_tests(
-//			grammar,
-//			word, 
-//		);
+				states[0].push_back(state);
+			}
+			//S -> . a | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+		}
+		//states[ 1 ]
+		{
+			//S -> a . S B B | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//S -> a . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//S -> . a S B B | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 0;
+				state.origin = 1;
+
+				states[1].push_back(state);
+			}
+			//S -> . a | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 1;
+
+				states[1].push_back(state);
+			}
+		}
+		//states[ 2 ]
+		{
+			//S -> a . S B B | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 1;
+				state.origin = 1;
+
+				states[2].push_back(state);
+			}
+			//S -> a . | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 1;
+
+				states[2].push_back(state);
+			}
+			//S -> . a S B B | 2
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 0;
+				state.origin = 2;
+
+				states[2].push_back(state);
+			}
+			//S -> . a | 2
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 2;
+
+				states[2].push_back(state);
+			}
+			//S -> a S . B B | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 2;
+				state.origin = 0;
+
+				states[2].push_back(state);
+			}
+			//B -> . b | 2
+			{
+				State state;
+				state.rule.LHS = "B";
+				state.rule.RHS.push_back("b");
+				state.pos = 0;
+				state.origin = 2;
+
+				states[2].push_back(state);
+			}
+			//B -> . | 2
+			{
+				State state;
+				state.rule.LHS = "B";
+				state.pos = 0;
+				state.origin = 2;
+
+				states[2].push_back(state);
+			}
+			//S -> a S B . B | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 3;
+				state.origin = 0;
+
+				states[2].push_back(state);
+			}
+			//S -> a S B B . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 4;
+				state.origin = 0;
+
+				states[2].push_back(state);
+			}
+		}
+		//states[ 3 ]
+		{
+			//S -> a . S B B | 2
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 1;
+				state.origin = 2;
+
+				states[3].push_back(state);
+			}
+			//S -> a . | 2
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 2;
+
+				states[3].push_back(state);
+			}
+			//S -> . a S B B | 3
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 0;
+				state.origin = 3;
+
+				states[3].push_back(state);
+			}
+			//S -> . a | 3
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 3;
+
+				states[3].push_back(state);
+			}
+			//S -> a S . B B | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 2;
+				state.origin = 1;
+
+				states[3].push_back(state);
+			}
+			//B -> . b | 3
+			{
+				State state;
+				state.rule.LHS = "B";
+				state.rule.RHS.push_back("b");
+				state.pos = 0;
+				state.origin = 3;
+
+				states[3].push_back(state);
+			}
+			//B -> . | 3
+			{
+				State state;
+				state.rule.LHS = "B";
+				state.pos = 0;
+				state.origin = 3;
+
+				states[3].push_back(state);
+			}
+			//S -> a S B . B | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 3;
+				state.origin = 1;
+
+				states[3].push_back(state);
+			}
+			//S -> a S B B . | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 4;
+				state.origin = 1;
+
+				states[3].push_back(state);
+			}
+			//S -> a S . B B | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 2;
+				state.origin = 0;
+
+				states[3].push_back(state);
+			}
+		}
+		//states[ 4 ]
+		{
+			//B -> b . | 3
+			{
+				State state;
+				state.rule.LHS = "B";
+				state.rule.RHS.push_back("b");
+				state.pos = 1;
+				state.origin = 3;
+
+				states[4].push_back(state);
+			}
+			//S -> a S B . B | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 3;
+				state.origin = 1;
+
+				states[4].push_back(state);
+			}
+			//S -> a S B B . | 1
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 4;
+				state.origin = 1;
+
+				states[4].push_back(state);
+			}
+			//S -> a S B . B | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 3;
+				state.origin = 0;
+
+				states[4].push_back(state);
+			}
+			//B -> . b | 4
+			{
+				State state;
+				state.rule.LHS = "B";
+				state.rule.RHS.push_back("b");
+				state.pos = 0;
+				state.origin = 4;
+
+				states[4].push_back(state);
+			}
+			//B -> . | 4
+			{
+				State state;
+				state.rule.LHS = "B";
+				state.pos = 0;
+				state.origin = 4;
+
+				states[4].push_back(state);
+			}
+			//S -> a S . B B | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 2;
+				state.origin = 0;
+
+				states[4].push_back(state);
+			}
+			//S -> a S B B . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("a");
+				state.rule.RHS.push_back("S");
+				state.rule.RHS.push_back("B");
+				state.rule.RHS.push_back("B");
+				state.pos = 4;
+				state.origin = 0;
+
+				states[4].push_back(state);
+			}
+		}
+
+		std::vector<std::string> results;
+		results.push_back("S[ a S[ a S[ a] B[] B[]] B[ b] B[]]");
+
+		_complete_parser_tests(
+			grammar,
+			word,
+			states ,
+			results
+		);
 	}
 
 
@@ -366,11 +2126,102 @@ void TST_mod_parser::complete_parser_tests()
 			grammar.rules.push_back(rule);
 		}
 		
-		
+		std::vector<std::list<State>> states( 2 );
+		//states[ 0 ]
+		{
+			//S -> . A | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("A");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+			//A -> . B | 0
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("B");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+			//B -> . A | 0
+			{
+				State state;
+				state.rule.LHS = "B";
+				state.rule.RHS.push_back("A");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+			//B -> . a | 0
+			{
+				State state;
+				state.rule.LHS = "B";
+				state.rule.RHS.push_back("a");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+		}
+		//states[ 1 ]
+		{
+			//B -> a . | 0
+			{
+				State state;
+				state.rule.LHS = "B";
+				state.rule.RHS.push_back("a");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//A -> B . | 0
+			{
+				State state;
+				state.rule.LHS = "A";
+				state.rule.RHS.push_back("B");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//S -> A . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("A");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//B -> A . | 0
+			{
+				State state;
+				state.rule.LHS = "B";
+				state.rule.RHS.push_back("A");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+		}
+
+
+		std::vector<std::string> results;
 
 		_complete_parser_tests(
 			grammar,
-			word 
+			word,
+			states,
+			results
 		);
 	}
 

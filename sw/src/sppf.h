@@ -11,8 +11,12 @@ struct SPPF_node
 	std::vector<std::vector<SPPF_node*> > alts;
 };
 
-struct SPPF
+class SPPF
 {
+	
+	std::list<SPPF_node*> parents;
+	std::list<int> used_children;
+public:
 	std::vector<SPPF_node> leaves;	
 	std::list<SPPF_node> nodes;	
 	std::vector<SPPF_node*> roots;	
@@ -24,6 +28,19 @@ struct SPPF
 
 	//apparently default constuctor still needs to be defined
 	SPPF() = default;
+
+	enum class EN_ITERATION_MOVE
+	{
+		END,
+		UP,
+		DOWN
+	};
+
+	SPPF_node* current_node();
+	EN_ITERATION_MOVE next_node();
+	bool next_tree();
+	bool is_leaf(SPPF_node* node);
+	void start_iteration();	
 };
 
 #endif
