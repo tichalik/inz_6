@@ -186,7 +186,7 @@ std::string Mod_to_http::tree_to_http(const VNode & tree) const
 
 std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 {
-	std::string res;
+	std::string res = " ";
 
 	sppf.start_iteration();
 	if (sppf.current_node() != nullptr)
@@ -194,29 +194,40 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 		res += sppf.current_node()->tag;
 	}
 
+	bool prev_up = false;
+	
 	SPPF::EN_ITERATION_MOVE move = sppf.next_node();
 	while (move != SPPF::EN_ITERATION_MOVE::END)
 	{
-		if (! sppf.is_leaf(sppf.current_node()))
+		if (move == SPPF::EN_ITERATION_MOVE::DOWN)
 		{
-			if (move == SPPF::EN_ITERATION_MOVE::DOWN)
+			if (!prev_up)
 			{
 				res += "[";
-				res += sppf.current_node()->tag;
- 			}
-			else
- 			{
-				res += "]";
 			}
- 		}
+			else
+			{
+				res += " ";
+			}
+			res += sppf.current_node()->tag;
+			prev_up = false;
+		}
 		else
 		{
-			res += sppf.current_node()->tag;
+			if (prev_up)
+			{
+				res += "]";
+			}
+			prev_up = true;
 		}
 		move = sppf.next_node();
 	
  	}
 
+	if (prev_up)
+	{
+		res += "]";
+	}
 	return res;
 }
 

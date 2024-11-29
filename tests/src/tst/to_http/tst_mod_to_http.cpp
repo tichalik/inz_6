@@ -104,6 +104,7 @@ void TST_mod_to_http::test_sppf_to_string()
 		);
 	
 	}
+
 	std::cout << "===============================================================" << std::endl;
 	std::cout << " A[B[D E C]]" << std::endl;
 	std::cout << "===============================================================" << std::endl;
@@ -142,7 +143,6 @@ void TST_mod_to_http::test_sppf_to_string()
 	
 	}
 	
-	
 	std::cout << "===============================================================" << std::endl;
 	std::cout << " A[B D E[C]]" << std::endl;
 	std::cout << "===============================================================" << std::endl;
@@ -171,6 +171,46 @@ void TST_mod_to_http::test_sppf_to_string()
 		A->alts.back().push_back(&sppf.leaves[0]);
 		A->alts.back().push_back(&sppf.leaves[1]);
 		A->alts.back().push_back(E);
+
+		sppf.roots.push_back(A);
+
+		_test_sppf_to_string(
+			sppf,
+			""
+		);
+	
+	}
+	
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " A[B[C[D[E]]]]" << std::endl;
+	std::cout << "===============================================================" << std::endl;
+	{
+
+		SPPF sppf;
+
+		sppf.leaves.emplace_back();
+		sppf.leaves.back().tag = "E";
+		SPPF_node * E = & sppf.leaves.back();
+		
+		sppf.nodes.emplace_back();
+		SPPF_node * D = & sppf.nodes.back();
+		D->tag = "D";
+		D->alts = {{E}};
+
+		sppf.nodes.emplace_back();
+		SPPF_node * C = & sppf.nodes.back();
+		C->tag = "C";
+		C->alts = {{D}};
+
+		sppf.nodes.emplace_back();
+		SPPF_node * B = & sppf.nodes.back();
+		B->tag = "B";
+		B->alts = {{C}};
+
+		sppf.nodes.emplace_back();
+		SPPF_node * A = & sppf.nodes.back();
+		A->tag = "A";
+		A->alts = {{B}};
 
 		sppf.roots.push_back(A);
 
