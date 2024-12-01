@@ -17,9 +17,25 @@ void TST_mod_to_http::_test_sppf_to_string(
 		vnode,
 		"","","","",""
 	);
+
+	Html_response response;	
+
+	std::string http_parse_trees = mod_to_http.sppf_to_string(sppf);
+	response.fill_response(RESP_FIELDS::RESULTS, http_parse_trees);
 	
-	std::string res = mod_to_http.sppf_to_string(sppf);
-	std::cout << res << std::endl;
+	//twice, the call only fills one field
+	response.fill_response(RESP_FIELDS::VISUALIZATION_AND_RESULTS_DISPLAY, "block");
+	response.fill_response(RESP_FIELDS::VISUALIZATION_AND_RESULTS_DISPLAY, "block");
+	response.fill_response(RESP_FIELDS::ERRORS_DISPLAY, "none");
+
+	static int count = 0;
+
+	std::stringstream filename;
+	filename << "./debug/tc" << count++ << ".html";
+	std::ofstream file;
+	file.open(filename.str());
+	file << response.get_response();
+	file.close();
 }
 void TST_mod_to_http::test_sppf_to_string()
 {

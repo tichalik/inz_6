@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="styles.css">
+	<script src="scripts.js"></script>
+	<title> ContextFreeParsing </title>
+</head>
+
+<body>
+	<!-- action is the url that is put in the http message-box
+		 method is what kind of message it is -- by default GET-->
+		 
+		 
+	<form action="/done" method="post" id="mf"></form>
+	
+	<div id="main">
+		<div id="title"> 
+			<span id="title-context">
+				Context
+			</span>
+			<span id="title-free">
+				Free
+			</span>
+			<span id="title-parsing">
+				Parsing
+			</span>
+			<span id="title-101">
+				(101)
+			</span>
+			
+		</div> 
+
+		<div id="header">
+			<a href="help"> <div id="help"> Help </div> </a>
+			<a href="grammars"> <div id="about-grammars"> About grammars </div> </a>
+			<a href="/"> <div id="load-examples"> Load examples </div></a>
+			<a href="credits"> <div id="credits"> Credits </div> </a>
+		</div><!-- header -->
+		
+	<div id="grammars-div">
+
+	<h2> Quick intro </h2>
+
+	<div> An <emp> alphabet </emp> is a finite set of symbols. </div>
+	<div> A <emp> word </emp> is a finite sequence of symbols from given alphabet. </div>
+	<div> A <emp> language </emp> is a set of words. It can be finite or infinite </div>
+
+	<h2> What are formal grammars? </h2>
+
+	<div> Formal grammars are a way to describe languages. Basically, a language L over the alphabet A can be constructed by starting from a symbol S (S is not a member of A) and then applying a series of transformations (called productions), which change S and the subsequent sequences of symbols into different sequences of symbols (it is just like the find-replace functionality available in most text editors). The process stops once we reach a sequence of symbols which is a member of L. Applying different transformations can produce every word of L. </div>
+
+	<h2> Formal definition of a formal grammar </h2>
+
+	<div> A formal grammar is an ordered quadruple (it has 4 elements and we know which is which)</div>
+	<div class="math"> G = (T, N, S, P), T ∩ N = ∅, S ∈ N </div>
+	<div> where
+	<ul>
+		<li> T is the set of terminals (symbols that make up the target alphabet). </li>
+		<li> N is the set of nonterminals (symbols that do not appear in the final word, but are present during its creation). </li>
+		<li> S is the head of the grammar (the nonterminal that starts all word generation). </li>
+		<li> P is the set of productions. Productions have the form of LHS -&gt; RHS, where LHS is a sequence of nonterminals and RHS is a sequence of nonterminals and terminals. </li>
+	</ul>
+	</div>
+	
+	<div> A grammar is said to be <emp> context free </emp> if (and only if) every production contains a single nonterminal as its LHS. </div>
+	
+	<h2> The Backus-Naur Form </h2>
+	<div> The Backus-Naur From is a standardized way to write the production rules. All nonterminals are wrapped in diamond braces. LHS and RHS of a production are separated by ::= . The alternative operator, | , introduces an alternative RHS to the given LHS. </div>
+
+	</div> <!--grammars-div-->
+	</div> <!--main-->
+
+</body>
+</html>
