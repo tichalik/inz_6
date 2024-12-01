@@ -186,12 +186,13 @@ std::string Mod_to_http::tree_to_http(const VNode & tree) const
 
 std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 {
-	std::string res = " ";
+	std::string str_res = " ";
+	std::vector<size_t> str_res_beginnings;
 
 	sppf.start_iteration();
 	if (sppf.current_node() != nullptr)
 	{
-		res += sppf.current_node()->tag;
+		str_res += sppf.current_node()->tag;
 	}
 
 	bool prev_up = false;
@@ -203,21 +204,26 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 		{
 			if (!prev_up)
 			{
-				res += "[";
+				str_res += "[";
 			}
 			else
 			{
-				res += " ";
+				str_res += " ";
 			}
-			res += sppf.current_node()->tag;
+			str_res_beginnings.push_back(str_res.size());
+			str_res += sppf.current_node()->tag;
 			prev_up = false;
 		}
 		else
 		{
 			if (prev_up)
 			{
-				res += "]";
+				str_res += "]";
+			std::string cache = str_res.substr(str_res_beginnings.back());
+std::cout << "current node: " << sppf.current_node()->tag << std::endl;
+std::cout << "cache: " <<  cache << std::endl;
 			}
+			str_res_beginnings.pop_back();
 			prev_up = true;
 		}
 		move = sppf.next_node();
@@ -226,9 +232,11 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 
 	if (prev_up)
 	{
-		res += "]";
+		str_res += "]";
 	}
-	return res;
+	//here the cache is entire str_res
+
+	return str_res;
 }
 
 
