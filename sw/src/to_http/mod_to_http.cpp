@@ -184,51 +184,51 @@ std::string Mod_to_http::tree_to_http(const VNode & tree) const
 	return node_to_http(tree);
 }
 
-std::string Mod_to_http::sppf_to_string(SPPF & sppf)
-{
-	std::string str_res = " ";
-	std::vector<size_t> str_res_beginnings;
-	std::vector<size_t> html_res_beginnings;
-
-
-	const std::string html_tree_beg = 
+const std::string html_tree_beg = 
 "<div class=\"tree\">    \n"
 " <div class=\"tree-head\">   \n "
 "   Parsing   \n "
 " </div>  <!-- tree-head --> \n "
 " <div class=\"tree-body\">   \n ";
 
-	const std::string html_tree_end = 
+const std::string html_tree_end = 
 " </div>  <!-- tree-body --> \n "
 "</div>  <!-- tree --> \n ";
 
 
-	const std::string html_node_beg1 = 
+const std::string html_node_beg1 = 
 "     <div class=\"node\">   \n "
 "      <div class=\"node-head\">   \n "
 "       <button class=\"expand\" onclick=\"fold_expand(this)\" type=\"button\">   \n "
 "        -   \n "
 "       </button>   \n "
 "       <span class=\"node-head-expanded\" style=\"display: inline;\">   \n ";
-	
-	const std::string html_node_beg2 = 
-		//here goes the tag
+
+const std::string html_node_beg2 = 
+	//here goes the tag
 "       </span> <!-- node-head-expanded-->  \n "
 "       <span class=\"node-folded\" style=\"display: none;\">   \n ";
-	const std::string html_node_beg3 = 
+const std::string html_node_beg3 = 
 "       </span>  <!-- node-folded --> \n "
 "      </div>  <!-- node-head --> \n "
 "      <div class=\"node-body\" style=\"display: block;\">   \n ";
 
-	const std::string html_node_end = 
+const std::string html_node_end = 
 "      </div>  <!-- node-body--> \n "
 "     </div>   <!-- node -->\n ";
 
-	const std::string html_leaf_beg = 
+const std::string html_leaf_beg = 
 "       <div class=\"leaf-node\">   \n "; //here goes the tag
-	
-	const std::string html_leaf_end = 
+
+const std::string html_leaf_end = 
 "       </div> <!-- leaf-node -->  \n ";
+
+
+std::string Mod_to_http::sppf_to_string(SPPF & sppf)
+{
+	std::string str_res = " ";
+	std::vector<size_t> str_res_beginnings;
+	std::vector<size_t> html_res_beginnings;
 
  
 	std::string html_res = html_tree_beg;
