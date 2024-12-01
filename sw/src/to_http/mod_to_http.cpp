@@ -189,10 +189,62 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 	std::string str_res = " ";
 	std::vector<size_t> str_res_beginnings;
 
+
+	const std::string html_tree_beg = 
+"<div class=\"tree\">    \n"
+" <div class=\"tree-head\">   \n "
+"   Parsing   \n "
+" </div>  <!-- tree-head --> \n "
+" <div class=\"tree-body\">   \n ";
+
+	const std::string html_tree_end = 
+" </div>  <!-- tree-body --> \n "
+"</div>  <!-- tree --> \n ";
+
+
+	const std::string html_node_beg1 = 
+"     <div class=\"node\">   \n "
+"      <div class=\"node-head\">   \n "
+"       <button class=\"expand\" onclick=\"fold_expand(this)\" type=\"button\">   \n "
+"        -   \n "
+"       </button>   \n "
+"       <span class=\"node-head-expanded\" style=\"display: inline;\">   \n ";
+	
+	const std::string html_node_beg2 = 
+		//here goes the tag
+"       </span> <!-- node-head-expanded-->  \n "
+"       <span class=\"node-folded\" style=\"display: none;\">   \n "
+"        FOLDED GOES HERE   \n "
+"       </span>  <!-- node-folded --> \n "
+"      </div>  <!-- node-head --> \n "
+"      <div class=\"node-body\" style=\"display: block;\">   \n ";
+
+	const std::string html_node_end = 
+"      </div>  <!-- node-body--> \n "
+"     </div>   <!-- node -->\n ";
+
+	const std::string html_leaf_beg = 
+"       <div class=\"leaf-node\">   \n "; //here goes the tag
+	
+	const std::string html_leaf_end = 
+"       </div> <!-- leaf-node -->  \n ";
+
+ 
+	std::string html_res = html_tree_beg;
+
 	sppf.start_iteration();
 	if (sppf.current_node() != nullptr)
 	{
 		str_res += sppf.current_node()->tag;
+
+		if (sppf.is_leaf(sppf.current_node()))
+		{
+			html_res += html_leaf_beg + sppf.current_node()->tag;
+		}
+		else
+		{
+			html_res += html_node_beg1 + sppf.current_node()->tag + html_node_beg2;
+		}
 	}
 
 	bool prev_up = false;
@@ -202,26 +254,41 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 	{
 		if (move == SPPF::EN_ITERATION_MOVE::DOWN)
 		{
+			//descenced to new level
 			if (!prev_up)
 			{
 				str_res += "[";
 			}
-			else
+			else //moved up then down -- went to a sibling
 			{
 				str_res += " ";
 			}
 			str_res_beginnings.push_back(str_res.size());
 			str_res += sppf.current_node()->tag;
 			prev_up = false;
+
+
+			if (sppf.is_leaf(sppf.current_node()))
+			{
+				html_res += html_leaf_beg + sppf.current_node()->tag;
+			}
+			else
+			{
+				html_res += html_node_beg1 + sppf.current_node()->tag + html_node_beg2;
+			}
 		}
-		else
+		else //moved up tree
 		{
-			if (prev_up)
+			if (prev_up) //moved up then up -- finished a node
 			{
 				str_res += "]";
-			std::string cache = str_res.substr(str_res_beginnings.back());
-std::cout << "current node: " << sppf.current_node()->tag << std::endl;
-std::cout << "cache: " <<  cache << std::endl;
+				std::string cache = str_res.substr(str_res_beginnings.back());
+
+				html_res += html_node_end;
+			}
+			else //moved down then up -- was a leaf
+			{
+				html_res += html_leaf_end;
 			}
 			str_res_beginnings.pop_back();
 			prev_up = true;
@@ -230,13 +297,23 @@ std::cout << "cache: " <<  cache << std::endl;
 	
  	}
 
+	//this means the tree is something more than just a leaf
 	if (prev_up)
 	{
 		str_res += "]";
+		html_res += html_node_end;
 	}
+	else //the only node was a leaf  
+	{
+		html_res += html_leaf_end;
+	}
+
 	//here the cache is entire str_res
 
-	return str_res;
+	html_res += html_tree_end;
+
+
+	return html_res;
 }
 
 
