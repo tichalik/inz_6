@@ -188,6 +188,7 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 {
 	std::string str_res = " ";
 	std::vector<size_t> str_res_beginnings;
+	std::vector<size_t> html_res_beginnings;
 
 
 	const std::string html_tree_beg = 
@@ -213,8 +214,8 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 	const std::string html_node_beg2 = 
 		//here goes the tag
 "       </span> <!-- node-head-expanded-->  \n "
-"       <span class=\"node-folded\" style=\"display: none;\">   \n "
-"        FOLDED GOES HERE   \n "
+"       <span class=\"node-folded\" style=\"display: none;\">   \n ";
+	const std::string html_node_beg3 = 
 "       </span>  <!-- node-folded --> \n "
 "      </div>  <!-- node-head --> \n "
 "      <div class=\"node-body\" style=\"display: block;\">   \n ";
@@ -244,6 +245,8 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 		else
 		{
 			html_res += html_node_beg1 + sppf.current_node()->tag + html_node_beg2;
+			html_res_beginnings.push_back(html_res.size());
+			html_res += html_node_beg3;
 		}
 	}
 
@@ -275,15 +278,19 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 			else
 			{
 				html_res += html_node_beg1 + sppf.current_node()->tag + html_node_beg2;
+				html_res_beginnings.push_back(html_res.size());
+				html_res += html_node_beg3;
 			}
 		}
 		else //moved up tree
 		{
-			if (prev_up) //moved up then up -- finished a node
+			if (prev_up) //moved up then up -- finished a (non leaf) node
 			{
 				str_res += "]";
 				std::string cache = str_res.substr(str_res_beginnings.back());
 
+				html_res.insert(html_res_beginnings.back(), cache);
+				html_res_beginnings.pop_back();
 				html_res += html_node_end;
 			}
 			else //moved down then up -- was a leaf
@@ -301,14 +308,13 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 	if (prev_up)
 	{
 		str_res += "]";
+		html_res.insert(html_res_beginnings.back(), str_res);
 		html_res += html_node_end;
 	}
 	else //the only node was a leaf  
 	{
 		html_res += html_leaf_end;
 	}
-
-	//here the cache is entire str_res
 
 	html_res += html_tree_end;
 
