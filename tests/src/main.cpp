@@ -48,7 +48,7 @@ int main()
 	
 	TST_mod_to_http m2h;
 	m2h.test_sppf_to_string();
-//	m2h.test_iterate_sppf();
+	m2h.test_iterate_sppf();
 
 //	test_visualize();
 

@@ -9,13 +9,16 @@ struct SPPF_node
 { 
 	Symbol tag;
 	std::vector<std::vector<SPPF_node*> > alts;
+	int last_alt = 0;
 };
 
 class SPPF
 {
 	
 	std::list<SPPF_node*> parents;
+	std::list<SPPF_node*> path;
 	std::list<int> used_children;
+
 public:
 	std::vector<SPPF_node> leaves;	
 	std::list<SPPF_node> nodes;	

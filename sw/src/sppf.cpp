@@ -24,15 +24,22 @@ SPPF::EN_ITERATION_MOVE SPPF::next_node()
 
 	if (parents.size() != 0)
 	{
+
+		path.push_back(parents.back());
+
 		if (
 			//if the node is not a leaf 
 			!is_leaf(parents.back()) &&
 			// and there are still unprocessed children of that node
-			(used_children.back() )< (int) (parents.back()->alts[0].size() -1) 
+			(used_children.back() ) < 
+				(int) (parents.back()->alts[parents.back()->last_alt].size() -1) 
 		)
 		{ 
 			used_children.back() ++;
-			parents.push_back(parents.back()->alts[0][used_children.back()]);
+
+			parents.push_back(parents.back()
+				->alts[parents.back()->last_alt][used_children.back()]);
+			
 			used_children.push_back(-1);
 			
 			res = EN_ITERATION_MOVE::DOWN;
@@ -44,6 +51,7 @@ SPPF::EN_ITERATION_MOVE SPPF::next_node()
 			
 			res = EN_ITERATION_MOVE::UP;
 		}
+
  	}
 
 	if (parents.size() == 0)
