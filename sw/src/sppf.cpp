@@ -1,7 +1,24 @@
 #include "sppf.h"
 bool SPPF::next_tree()
 {
-	return true;	
+	bool updated = false;
+	while(path.size() != 0 && !updated)
+	{
+		if (path.back()->last_alt < path.back()->alts.size())
+		{
+			path.back()->last_alt++;
+			updated = true;
+		}
+		else
+		{
+			path.back()->last_alt = 0;
+			path.pop_back();
+		}
+	}
+
+	path.clear();
+
+	return updated;
 }
 
 bool SPPF::is_leaf(SPPF_node* node)
@@ -25,8 +42,6 @@ SPPF::EN_ITERATION_MOVE SPPF::next_node()
 	if (parents.size() != 0)
 	{
 
-		path.push_back(parents.back());
-
 		if (
 			//if the node is not a leaf 
 			!is_leaf(parents.back()) &&
@@ -35,6 +50,8 @@ SPPF::EN_ITERATION_MOVE SPPF::next_node()
 				(int) (parents.back()->alts[parents.back()->last_alt].size() -1) 
 		)
 		{ 
+			path.push_back(parents.back());
+
 			used_children.back() ++;
 
 			parents.push_back(parents.back()

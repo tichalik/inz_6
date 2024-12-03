@@ -13,14 +13,18 @@ void TST_mod_to_http::_test_iterate_sppf(
 		res += sppf.current_node()->tag + " ";
 	}
 
-	SPPF::EN_ITERATION_MOVE move = sppf.next_node();
-	while (move != SPPF::EN_ITERATION_MOVE::END)
+	do
 	{
-		res += sppf.current_node()->tag + " ";
-		move = sppf.next_node();
- 	}
+		SPPF::EN_ITERATION_MOVE move = sppf.next_node();
+		while (move != SPPF::EN_ITERATION_MOVE::END)
+		{
+			res += sppf.current_node()->tag + " ";
+			move = sppf.next_node();
+		}
+		
+	} while (sppf.next_tree());
 
-
+//	std::cout << res <<std::endl;
 	bool ok = compare(expected, res, "iteration");
 	if (ok)
 	{
