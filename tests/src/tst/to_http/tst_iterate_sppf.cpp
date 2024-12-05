@@ -8,21 +8,25 @@ void TST_mod_to_http::_test_iterate_sppf(
 	std::string res;
 
 	sppf.start_iteration();
-	if (sppf.current_node() != nullptr)
-	{
-		res += sppf.current_node()->tag + " ";
-	}
 
 	do
 	{
+		if (sppf.current_node() != nullptr)
+		{
+			res += sppf.current_node()->tag + " ";
+		}
+		
 		SPPF::EN_ITERATION_MOVE move = sppf.next_node();
+
 		while (move != SPPF::EN_ITERATION_MOVE::END)
 		{
 			res += sppf.current_node()->tag + " ";
 			move = sppf.next_node();
 		}
-		
+		res += "\n";
 	} while (sppf.next_tree());
+
+	res.pop_back();
 
 //	std::cout << res <<std::endl;
 	bool ok = compare(expected, res, "iteration");
@@ -121,6 +125,7 @@ void TST_mod_to_http::test_iterate_sppf()
 		);
 	
 	}
+	
 	std::cout << "===============================================================" << std::endl;
 	std::cout << " A[B[D E C]]" << std::endl;
 	std::cout << "===============================================================" << std::endl;
@@ -193,6 +198,174 @@ void TST_mod_to_http::test_iterate_sppf()
 		_test_iterate_sppf(
 			sppf,
 			"A B A D A E C E A "
+		);
+	
+	}
+	
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " A[B[C D[F]]]" << std::endl;
+	std::cout << " A[B[C E[F]]]" << std::endl;
+	std::cout << "===============================================================" << std::endl;
+	{
+
+		SPPF sppf;
+
+		sppf.leaves.reserve(2);
+
+		sppf.leaves.push_back({"C"});
+		SPPF_node * C = &sppf.leaves.back();
+		sppf.leaves.push_back({"F"});
+		SPPF_node * F = &sppf.leaves.back();
+
+		sppf.nodes.push_back({"A"});
+		SPPF_node * A = &sppf.nodes.back();
+		sppf.nodes.push_back({"B"});
+		SPPF_node * B = &sppf.nodes.back();
+		sppf.nodes.push_back({"D"});
+		SPPF_node * D = &sppf.nodes.back();
+		sppf.nodes.push_back({"E"});
+		SPPF_node * E = &sppf.nodes.back();
+
+		A -> alts = { {B} }; 
+		B -> alts = { {C, D}, {C, E} }; 
+		D -> alts = { {F} }; 
+		E -> alts = { {F} }; 
+	
+		sppf.roots.push_back(A);
+
+		_test_iterate_sppf(
+			sppf,
+			"A B C B D F D B A \n"
+			"A B C B E F E B A "
+		);
+	
+	}
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " A[B[D[F]] C]" << std::endl;
+	std::cout << " A[B[E[F]] C]" << std::endl;
+	std::cout << "===============================================================" << std::endl;
+	{
+
+		SPPF sppf;
+
+		sppf.leaves.reserve(2);
+
+		sppf.leaves.push_back({"C"});
+		SPPF_node * C = &sppf.leaves.back();
+		sppf.leaves.push_back({"F"});
+		SPPF_node * F = &sppf.leaves.back();
+
+		sppf.nodes.push_back({"A"});
+		SPPF_node * A = &sppf.nodes.back();
+		sppf.nodes.push_back({"B"});
+		SPPF_node * B = &sppf.nodes.back();
+		sppf.nodes.push_back({"D"});
+		SPPF_node * D = &sppf.nodes.back();
+		sppf.nodes.push_back({"E"});
+		SPPF_node * E = &sppf.nodes.back();
+
+		A -> alts = { {B} }; 
+		B -> alts = { {D, C}, {E, C} }; 
+		D -> alts = { {F} }; 
+		E -> alts = { {F} }; 
+	
+		sppf.roots.push_back(A);
+
+		_test_iterate_sppf(
+			sppf,
+			"A B D F D B C B A \n"
+			"A B E F E B C B A "
+		);
+	
+	}
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " A[B[C D[F] G[H]]]" << std::endl;
+	std::cout << " A[B[C E[F] G[H]]]" << std::endl;
+	std::cout << "===============================================================" << std::endl;
+	{
+
+		SPPF sppf;
+
+		sppf.leaves.reserve(3);
+
+		sppf.leaves.push_back({"C"});
+		SPPF_node * C = &sppf.leaves.back();
+		sppf.leaves.push_back({"F"});
+		SPPF_node * F = &sppf.leaves.back();
+		sppf.leaves.push_back({"H"});
+		SPPF_node * H = &sppf.leaves.back();
+
+		sppf.nodes.push_back({"A"});
+		SPPF_node * A = &sppf.nodes.back();
+		sppf.nodes.push_back({"B"});
+		SPPF_node * B = &sppf.nodes.back();
+		sppf.nodes.push_back({"D"});
+		SPPF_node * D = &sppf.nodes.back();
+		sppf.nodes.push_back({"E"});
+		SPPF_node * E = &sppf.nodes.back();
+		sppf.nodes.push_back({"G"});
+		SPPF_node * G = &sppf.nodes.back();
+
+		A -> alts = { {B} }; 
+		B -> alts = { {C, D, G}, {C, E, G} }; 
+		D -> alts = { {F} }; 
+		E -> alts = { {F} }; 
+		G -> alts = { {H} };
+	
+		sppf.roots.push_back(A);
+
+		_test_iterate_sppf(
+			sppf,
+			"A B C B D F D B G H G B A \n"
+			"A B C B E F E B G H G B A "
+		);
+	
+	}
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " A[B[C[F] H J]" << std::endl;
+	std::cout << " A[B[D[F] G[H J]]]" << std::endl;
+	std::cout << " A[B[E[F] G[H J]]]" << std::endl;
+	std::cout << "===============================================================" << std::endl;
+	{
+
+		SPPF sppf;
+
+		sppf.leaves.reserve(3);
+
+		sppf.leaves.push_back({"J"});
+		SPPF_node * J = &sppf.leaves.back();
+		sppf.leaves.push_back({"F"});
+		SPPF_node * F = &sppf.leaves.back();
+		sppf.leaves.push_back({"H"});
+		SPPF_node * H = &sppf.leaves.back();
+
+		sppf.nodes.push_back({"A"});
+		SPPF_node * A = &sppf.nodes.back();
+		sppf.nodes.push_back({"B"});
+		SPPF_node * B = &sppf.nodes.back();
+		sppf.nodes.push_back({"D"});
+		SPPF_node * D = &sppf.nodes.back();
+		sppf.nodes.push_back({"E"});
+		SPPF_node * E = &sppf.nodes.back();
+		sppf.nodes.push_back({"C"});
+		SPPF_node * C = &sppf.nodes.back();
+		sppf.nodes.push_back({"G"});
+		SPPF_node * G = &sppf.nodes.back();
+
+		A -> alts = { {B} }; 
+		B -> alts = { {C, H, J}, {D, G}, {E, G} }; 
+		C -> alts = { {F} }; 
+		D -> alts = { {F} }; 
+		E -> alts = { {F} }; 
+		G -> alts = { {H, J} };
+	
+		sppf.roots.push_back(A);
+
+		_test_iterate_sppf(
+			sppf,
+			"A B C F C B H B J B A \n"
+			"A B D F D B G H G J G B A \n"
+			"A B E F E B G H G J G B A "
 		);
 	
 	}

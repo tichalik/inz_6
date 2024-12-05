@@ -1,10 +1,16 @@
 #include "sppf.h"
+void SPPF::start_tree()
+{
+	parents.push_back(this->roots[0]);
+	used_children.push_back(-1);
+	was_up = false;
+}
 bool SPPF::next_tree()
 {
 	bool updated = false;
 	while(path.size() != 0 && !updated)
 	{
-		if (path.back()->last_alt < path.back()->alts.size())
+		if (path.back()->last_alt + 1 < path.back()->alts.size())
 		{
 			path.back()->last_alt++;
 			updated = true;
@@ -17,6 +23,11 @@ bool SPPF::next_tree()
 	}
 
 	path.clear();
+	
+	if (updated)
+	{
+		start_tree();
+	}
 
 	return updated;
 }
@@ -30,8 +41,7 @@ void SPPF::start_iteration()
 {
 	if (this->roots.size()!=0)
 	{
-		parents.push_back(this->roots[0]);
-		used_children.push_back(-1);
+		start_tree();
 	}
 }
 
@@ -50,8 +60,11 @@ SPPF::EN_ITERATION_MOVE SPPF::next_node()
 				(int) (parents.back()->alts[parents.back()->last_alt].size() -1) 
 		)
 		{ 
-			path.push_back(parents.back());
-
+			//if this is a new node
+			if (!was_up)
+			{
+				path.push_back(parents.back());
+			}
 			used_children.back() ++;
 
 			parents.push_back(parents.back()
@@ -60,6 +73,7 @@ SPPF::EN_ITERATION_MOVE SPPF::next_node()
 			used_children.push_back(-1);
 			
 			res = EN_ITERATION_MOVE::DOWN;
+			was_up = false;
 		}
 		else
 		{
@@ -67,6 +81,7 @@ SPPF::EN_ITERATION_MOVE SPPF::next_node()
 			parents.pop_back();
 			
 			res = EN_ITERATION_MOVE::UP;
+			was_up = true;
 		}
 
  	}

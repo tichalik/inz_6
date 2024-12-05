@@ -19,6 +19,9 @@ class SPPF
 	std::list<SPPF_node*> path;
 	std::list<int> used_children;
 
+	bool was_up;
+
+	void start_tree();
 public:
 	std::vector<SPPF_node> leaves;	
 	std::list<SPPF_node> nodes;	
