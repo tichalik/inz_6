@@ -13,6 +13,7 @@ void TST_mod_to_http::_test_iterate_sppf(
 	{
 		if (sppf.current_node() != nullptr)
 		{
+//			std::cout <<  sppf.current_node()->tag + " "<< std::flush;
 			res += sppf.current_node()->tag + " ";
 		}
 		
@@ -20,10 +21,12 @@ void TST_mod_to_http::_test_iterate_sppf(
 
 		while (move != SPPF::EN_ITERATION_MOVE::END)
 		{
+//			std::cout <<  sppf.current_node()->tag + " " << std::flush;
 			res += sppf.current_node()->tag + " ";
 			move = sppf.next_node();
 		}
 		res += "\n";
+//		std::cout << "\n";
 	} while (sppf.next_tree());
 
 	res.pop_back();

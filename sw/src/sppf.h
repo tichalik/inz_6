@@ -10,6 +10,7 @@ struct SPPF_node
 	Symbol tag;
 	std::vector<std::vector<SPPF_node*> > alts;
 	int last_alt = 0;
+	bool visited = false;
 };
 
 class SPPF
@@ -20,6 +21,7 @@ class SPPF
 	std::list<int> used_children;
 
 	bool was_up;
+	bool was_loop;
 	size_t current_root = 0;
 
 	void start_tree();
@@ -40,7 +42,8 @@ public:
 	{
 		END,
 		UP,
-		DOWN
+		DOWN,
+		DOWN_AND_LOOP
 	};
 
 	SPPF_node* current_node();
