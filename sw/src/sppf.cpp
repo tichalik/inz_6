@@ -1,7 +1,7 @@
 #include "sppf.h"
 void SPPF::start_tree()
 {
-	parents.push_back(this->roots[0]);
+	parents.push_back(this->roots[current_root]);
 	used_children.push_back(-1);
 	was_up = false;
 }
@@ -27,6 +27,15 @@ bool SPPF::next_tree()
 	if (updated)
 	{
 		start_tree();
+	}
+	else
+	{
+		if (current_root + 1 < roots.size())
+		{
+			current_root++;
+			start_tree();
+			updated = true;
+		}
 	}
 
 	return updated;

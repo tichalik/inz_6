@@ -20,6 +20,7 @@ class SPPF
 	std::list<int> used_children;
 
 	bool was_up;
+	size_t current_root = 0;
 
 	void start_tree();
 public:
