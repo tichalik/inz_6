@@ -32,6 +32,90 @@ void TST_mod_parser::complete_parser_tests()
 { 
 	std::cout << "===============================================================" << std::endl;
 	std::cout << " grammar:  " << std::endl;
+	std::cout << " S-> S | b " << std::endl;
+	std::cout << " input :  b " << std::endl;
+	std::cout << "===============================================================" << std::endl;
+	{
+		Word word;
+		word.push_back("b");
+
+		Grammar grammar;
+		grammar.terminals.insert("b");
+		grammar.nonterminals.insert("S");
+		grammar.head = "S";
+		{
+			Rule rule;
+			rule.LHS = "S";
+			rule.RHS.push_back("S");
+			grammar.rules.push_back(rule);
+		}
+		{
+			Rule rule;
+			rule.LHS = "S";
+			rule.RHS.push_back("b");
+			grammar.rules.push_back(rule);
+		}
+
+		
+		std::vector<std::list<State>> states( 2 );
+		//states[ 0 ]
+		{
+			//S -> . S | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+			//S -> . b | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("b");
+				state.pos = 0;
+				state.origin = 0;
+
+				states[0].push_back(state);
+			}
+		}
+		//states[ 1 ]
+		{
+			//S -> b . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("b");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+			//S -> S . | 0
+			{
+				State state;
+				state.rule.LHS = "S";
+				state.rule.RHS.push_back("S");
+				state.pos = 1;
+				state.origin = 0;
+
+				states[1].push_back(state);
+			}
+		}
+
+		std::vector<std::string> results;
+
+		_complete_parser_tests(
+			grammar,
+			word,
+			states,
+			results
+		);
+ 	} 
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " grammar:  " << std::endl;
 	std::cout << " S-> SS | b " << std::endl;
 	std::cout << " input :  b b b " << std::endl;
 	std::cout << "===============================================================" << std::endl;

@@ -919,6 +919,40 @@ void TST_mod_to_http::test_iterate_sppf()
 			);
 		
 		}
+		std::cout << " looping " << std::endl;
+		std::cout << " rules: " << std::endl;
+		std::cout << "     A ::= A | F " << std::endl;
+		std::cout << "=========================================================" << std::endl;
+		{    
+
+			SPPF sppf;
+			sppf.leaves.reserve(1);
+
+			sppf.leaves.push_back({"F"});
+			SPPF_node * F = &sppf.leaves.back();
+
+			sppf.nodes.push_back({"A"});
+			SPPF_node * A = &sppf.nodes.back();
+			sppf.nodes.push_back({"A"});
+			SPPF_node * Ap = &sppf.nodes.back();
+			sppf.nodes.push_back({"C"});
+			SPPF_node * C = &sppf.nodes.back();
+
+			A->alts = {{F}}; 
+			Ap->alts = {{Ap},{C}}; 
+			C->alts = {{F},{C}}; 
+
+			sppf.roots.push_back(A);
+
+			_test_iterate_sppf(
+				sppf,
+				"A F A \n"
+				"A *A A \n"
+				"A C F C A \n"
+				"A C *C C A "
+			);
+		
+		}
 	}
 }
 
