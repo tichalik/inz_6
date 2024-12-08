@@ -810,7 +810,7 @@ void TST_mod_parser::complete_parser_tests()
 			grammar,
 			word,
 			states ,
-			"P S S M T x T M S S + S M M T x T M M + M T x T M S P "	
+			"P S S M T x T M S S + S M M T x T M M * M T x T M S P "	
 		);
 	}
 //

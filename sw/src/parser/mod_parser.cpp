@@ -128,9 +128,9 @@ void Mod_parser::scan(const State & state, size_t i)
 		}
 		else
 		{
-			for (size_t i=0; i<_state.sppf_node->alts.size(); i++)
+			for (size_t alt_id=0; alt_id<_state.sppf_node->alts.size(); alt_id++)
 			{
-				_state.sppf_node->alts[i].push_back(&(this->sppf.leaves[i]));
+				_state.sppf_node->alts[alt_id].push_back(&(this->sppf.leaves[i]));
 			}
 		}
 		this->states[i+1].push_back(_state);
