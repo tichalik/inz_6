@@ -943,6 +943,7 @@ void TST_mod_to_http::test_iterate_sppf()
 			C->alts = {{F},{C}}; 
 
 			sppf.roots.push_back(A);
+			sppf.roots.push_back(Ap);
 
 			_test_iterate_sppf(
 				sppf,
