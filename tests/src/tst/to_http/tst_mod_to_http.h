@@ -4,7 +4,7 @@
 #include "mod_to_http.h"
 #include "tester.h"
 
-class TST_mod_to_http
+class TST_mod_to_http: public Tester
 {
 	void _test_sppf_to_string(
 		SPPF & sppf,

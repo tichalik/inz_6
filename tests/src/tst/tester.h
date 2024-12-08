@@ -8,6 +8,7 @@
 #include "word.h"
 #include "error.h"
 #include "grammar.h"
+#include "sppf.h"
 
 #include "compares.h"
 
@@ -21,6 +22,6 @@ class Tester
 	std::string rule2str(const Rule & rule) const;
 	
 public:
-	
+	std::string iterate_sppf(SPPF& sppf);	
 };
 #endif
