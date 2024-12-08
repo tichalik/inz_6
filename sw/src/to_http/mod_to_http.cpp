@@ -223,8 +223,17 @@ const std::string html_leaf_beg =
 const std::string html_leaf_end = 
 "       </div> <!-- leaf-node -->  \n ";
 
+const std::string html_loop_node_beg = 
+"       <div class=\"loop-node\">   \n "; //here goes the tag
 
-std::string Mod_to_http::sppf_to_string(SPPF & sppf)
+const std::string html_loop_node_end = 
+"        <div class=\"loop-node-info\"> \n"
+"         Infinite derrivation: this node represents a loop back into higher parts of the tree. This derrivation can be extended infinitely; see other trees for finite derrivations.\n"
+"        </div> <!-- loop-node-info --> \n"
+"       </div> <!-- loop-node -->  \n ";
+
+
+std::string Mod_to_http::sppf_tree_to_string(SPPF & sppf)
 {
 	std::string str_res = " ";
 	std::vector<size_t> str_res_beginnings;
@@ -233,17 +242,16 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
  
 	std::string html_res = html_tree_beg;
 
-	sppf.start_iteration();
 	if (sppf.current_node() != nullptr)
-	{
+ 	{
 		str_res += sppf.current_node()->tag;
 
 		if (sppf.is_leaf(sppf.current_node()))
 		{
 			html_res += html_leaf_beg + sppf.current_node()->tag;
-		}
+ 		}
 		else
-		{
+ 		{
 			html_res += html_node_beg1 + sppf.current_node()->tag + html_node_beg2;
 			html_res_beginnings.push_back(html_res.size());
 			html_res += html_node_beg3;
@@ -255,7 +263,8 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 	SPPF::EN_ITERATION_MOVE move = sppf.next_node();
 	while (move != SPPF::EN_ITERATION_MOVE::END)
 	{
-		if (move == SPPF::EN_ITERATION_MOVE::DOWN)
+		if (move == SPPF::EN_ITERATION_MOVE::DOWN
+			|| move == SPPF::EN_ITERATION_MOVE::DOWN_AND_LOOP)
 		{
 			//descenced to new level
 			if (!prev_up)
@@ -266,6 +275,12 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 			{
 				str_res += " ";
 			}
+			
+			if (move == SPPF::EN_ITERATION_MOVE::DOWN_AND_LOOP)
+			{
+				str_res += "*";
+			}
+			
 			str_res_beginnings.push_back(str_res.size());
 			str_res += sppf.current_node()->tag;
 			prev_up = false;
@@ -320,8 +335,18 @@ std::string Mod_to_http::sppf_to_string(SPPF & sppf)
 
 
 	return html_res;
-}
+} 
 
+std::string Mod_to_http::sppf_to_string(SPPF & sppf)
+{
+	std::string res;
+	sppf.start_iteration();
+	do 
+	{
+		res += sppf_tree_to_string(sppf);
+	} while (sppf.next_tree() == true);
+	return res;
+}
 
 Mod_to_http::Mod_to_http(
 	const Errors & errors, 

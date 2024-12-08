@@ -200,7 +200,7 @@ void TST_mod_to_http::test_sppf_to_string()
 	std::cout << "===============================================================" << std::endl;
 	std::cout << " A[B[C[D[E]]]]" << std::endl;
 	std::cout << "===============================================================" << std::endl;
-	{
+	 {
 
 		SPPF sppf;
 
@@ -236,4 +236,136 @@ void TST_mod_to_http::test_sppf_to_string()
 		);
 	
 	}
+	
+	std::cout << "=========================================================" << std::endl;
+	std::cout << " A[B[C[F] H J]" << std::endl;
+	std::cout << " A[B[D[F] G[H J]]]" << std::endl;
+	std::cout << " A[B[E[F] G[H J]]]" << std::endl;
+	std::cout << "=========================================================" << std::endl;
+	{
+
+		SPPF sppf;
+
+		sppf.leaves.reserve(3);
+
+		sppf.leaves.push_back({"J"});
+		SPPF_node * J = &sppf.leaves.back();
+		sppf.leaves.push_back({"F"});
+		SPPF_node * F = &sppf.leaves.back();
+		sppf.leaves.push_back({"H"});
+		SPPF_node * H = &sppf.leaves.back();
+
+		sppf.nodes.push_back({"A"});
+		SPPF_node * A = &sppf.nodes.back();
+		sppf.nodes.push_back({"B"});
+		SPPF_node * B = &sppf.nodes.back();
+		sppf.nodes.push_back({"D"});
+		SPPF_node * D = &sppf.nodes.back();
+		sppf.nodes.push_back({"E"});
+		SPPF_node * E = &sppf.nodes.back();
+		sppf.nodes.push_back({"C"});
+		SPPF_node * C = &sppf.nodes.back();
+		sppf.nodes.push_back({"G"});
+		SPPF_node * G = &sppf.nodes.back();
+
+		A -> alts = { {B} }; 
+		B -> alts = { {C, H, J}, {D, G}, {E, G} }; 
+		C -> alts = { {F} }; 
+		D -> alts = { {F} }; 
+		E -> alts = { {F} }; 
+		G -> alts = { {H, J} };
+	
+		sppf.roots.push_back(A);
+
+		_test_sppf_to_string(
+			sppf,
+			""
+		);
+	
+	}
+	std::cout << "=========================================================" << std::endl;
+	std::cout << " looping " << std::endl;
+	std::cout << " rules: " << std::endl;
+	std::cout << "     A ::= B " << std::endl;
+	std::cout << "     B ::= C " << std::endl;
+	std::cout << "     C ::= D " << std::endl;
+	std::cout << "     D ::= E | C | B" << std::endl;
+	std::cout << "     E ::= F " << std::endl;
+	std::cout << "=========================================================" << std::endl;
+	{   
+
+		SPPF sppf;
+		sppf.leaves.reserve(1);
+
+		sppf.leaves.push_back({"F"});
+		SPPF_node * F = &sppf.leaves.back();
+
+		sppf.nodes.push_back({"A"});
+		SPPF_node * A = &sppf.nodes.back();
+		sppf.nodes.push_back({"B"});
+		SPPF_node * B = &sppf.nodes.back();
+		sppf.nodes.push_back({"C"});
+		SPPF_node * C = &sppf.nodes.back();
+		sppf.nodes.push_back({"D"});
+		SPPF_node * D = &sppf.nodes.back();
+		sppf.nodes.push_back({"E"});
+		SPPF_node * E = &sppf.nodes.back();
+
+		A->alts = {{B}}; 
+		B->alts = {{C}}; 
+		C->alts = {{D}}; 
+		D->alts = {{E},{C},{B}}; 
+		E->alts = {{F}}; 
+
+		sppf.roots.push_back(A);
+
+		_test_sppf_to_string(
+			sppf,
+			""
+		);
+	
+	}
+	std::cout << "=========================================================" << std::endl;
+	std::cout << " looping " << std::endl;
+	std::cout << " rules: " << std::endl;
+	std::cout << "     A ::= B " << std::endl;
+	std::cout << "     B ::= C " << std::endl;
+	std::cout << "     C ::= D " << std::endl;
+	std::cout << "     D ::= E | B" << std::endl;
+	std::cout << "     E ::= F | C" << std::endl;
+	std::cout << "=========================================================" << std::endl;
+	{   
+
+		SPPF sppf;
+		sppf.leaves.reserve(1);
+
+		sppf.leaves.push_back({"F"});
+		SPPF_node * F = &sppf.leaves.back();
+
+		sppf.nodes.push_back({"A"});
+		SPPF_node * A = &sppf.nodes.back();
+		sppf.nodes.push_back({"B"});
+		SPPF_node * B = &sppf.nodes.back();
+		sppf.nodes.push_back({"C"});
+		SPPF_node * C = &sppf.nodes.back();
+		sppf.nodes.push_back({"D"});
+		SPPF_node * D = &sppf.nodes.back();
+		sppf.nodes.push_back({"E"});
+		SPPF_node * E = &sppf.nodes.back();
+
+		A->alts = {{B}}; 
+		B->alts = {{C}}; 
+		C->alts = {{D}}; 
+		D->alts = {{E},{B}}; 
+		E->alts = {{F},{C}	}; 
+
+		sppf.roots.push_back(A);
+
+		_test_sppf_to_string(
+			sppf,
+			""
+		);
+	
+	}
+
 }
