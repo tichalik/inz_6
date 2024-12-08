@@ -21,7 +21,7 @@ class TST_mod_parser: public Tester
 		const Grammar & grammar,
 		const Word & word,
 		const std::vector<std::list<State>> & expected_states,
-		const std::vector<std::string> & expected_results
+		const std::string & expected_results
 	);
 
 	
