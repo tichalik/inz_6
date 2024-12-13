@@ -110,6 +110,9 @@
 	border: solid 3px green;
 }
 
+.tree {
+	margin-top: 30px;
+}
  
 .node-body{
 	padding: 20px;
@@ -129,7 +132,7 @@
 	margin-top: 20px;
 	background-color: lightyellow;
 }
-
+.loop .node-head,
 .error{
 	background-color: tomato;
 }
@@ -201,6 +204,8 @@ h2, h3{
 	color: green;
 	background-color: lightyellow
 }
+
+
 
 
 

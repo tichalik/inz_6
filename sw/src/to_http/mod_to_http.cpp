@@ -224,13 +224,18 @@ const std::string html_leaf_end =
 "       </div> <!-- leaf-node -->  \n ";
 
 const std::string html_loop_node_beg = 
-"       <div class=\"loop-node\">   \n "; //here goes the tag
+"     <div class=\"node loop\">   \n "
+"       <div class=\"node-head\">   \n "
+"         <span class=\"node-head-expanded\" style=\"display: inline;\">   \n ";
 
 const std::string html_loop_node_end = 
-"        <div class=\"loop-node-info\"> \n"
+	//here goes the tag
+"           </span> <!-- node-head-expanded-->  \n "
+"         </div>  <!-- node-head --> \n "
+"       <div class=\"node-body\" style=\"display: block;\">   \n "
 "         Infinite derrivation: this node represents a loop back into higher parts of the tree. This derrivation can be extended infinitely; see other trees for finite derrivations.\n"
-"        </div> <!-- loop-node-info --> \n"
-"       </div> <!-- loop-node -->  \n ";
+"       </div>  <!-- node-body--> \n "
+"     </div>   <!-- node loop-->\n ";
 
 
 std::string Mod_to_http::sppf_tree_to_string(SPPF & sppf)
@@ -244,21 +249,22 @@ std::string Mod_to_http::sppf_tree_to_string(SPPF & sppf)
 
 	if (sppf.current_node() != nullptr)
  	{
-		str_res += sppf.current_node()->tag;
+		str_res += str_to_http(sppf.current_node()->tag);
 
 		if (sppf.is_leaf(sppf.current_node()))
 		{
-			html_res += html_leaf_beg + sppf.current_node()->tag;
+			html_res += html_leaf_beg + str_to_http(sppf.current_node()->tag);
  		}
 		else
  		{
-			html_res += html_node_beg1 + sppf.current_node()->tag + html_node_beg2;
+			html_res += html_node_beg1 + str_to_http(sppf.current_node()->tag) + html_node_beg2;
 			html_res_beginnings.push_back(html_res.size());
 			html_res += html_node_beg3;
 		}
 	}
 
 	bool prev_up = false;
+	bool prev_loop = false;
 	
 	SPPF::EN_ITERATION_MOVE move = sppf.next_node();
 	while (move != SPPF::EN_ITERATION_MOVE::END)
@@ -279,20 +285,29 @@ std::string Mod_to_http::sppf_tree_to_string(SPPF & sppf)
 			if (move == SPPF::EN_ITERATION_MOVE::DOWN_AND_LOOP)
 			{
 				str_res += "*";
+				prev_loop = true;
+			}
+			else
+			{
+				prev_loop = false;
 			}
 			
 			str_res_beginnings.push_back(str_res.size());
-			str_res += sppf.current_node()->tag;
+			str_res += str_to_http(sppf.current_node()->tag);
 			prev_up = false;
 
 
 			if (sppf.is_leaf(sppf.current_node()))
 			{
-				html_res += html_leaf_beg + sppf.current_node()->tag;
+				html_res += html_leaf_beg + str_to_http(sppf.current_node()->tag);
+			}
+			else if (move == SPPF::EN_ITERATION_MOVE::DOWN_AND_LOOP)
+			{
+				html_res += html_loop_node_beg + str_to_http(sppf.current_node()->tag);
 			}
 			else
 			{
-				html_res += html_node_beg1 + sppf.current_node()->tag + html_node_beg2;
+				html_res += html_node_beg1 + str_to_http(sppf.current_node()->tag) + html_node_beg2;
 				html_res_beginnings.push_back(html_res.size());
 				html_res += html_node_beg3;
 			}
@@ -308,9 +323,16 @@ std::string Mod_to_http::sppf_tree_to_string(SPPF & sppf)
 				html_res_beginnings.pop_back();
 				html_res += html_node_end;
 			}
-			else //moved down then up -- was a leaf
+			else //moved down then up -- was a leaf or a loop
 			{
-				html_res += html_leaf_end;
+				if (prev_loop)
+				{
+					html_res += html_loop_node_end;
+				}
+				else
+				{
+					html_res += html_leaf_end;
+				}
 			}
 			str_res_beginnings.pop_back();
 			prev_up = true;

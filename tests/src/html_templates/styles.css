@@ -129,7 +129,7 @@
 	margin-top: 20px;
 	background-color: lightyellow;
 }
-
+.loop .node-head,
 .error{
 	background-color: tomato;
 }
