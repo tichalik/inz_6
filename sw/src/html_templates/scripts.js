@@ -52,12 +52,12 @@ example_tab = {
 		"nonterminals": "<a> <b> <c> <abc>",
 		"head": "<abc>",
 		"rules": 
-			"<a> ::= a a\n"
+			"<a> ::= a \n"
 			+"<a> ::= <a> a\n"
-			+"<b> ::= b b\n"
+			+"<b> ::= b \n"
 			+"<b> ::= <b> b\n"
 			+"<c> ::= <c> c\n"
-			+"<c> ::= c c\n"
+			+"<c> ::= c \n"
 			+"<abc> ::= <a> <b> <c>\n"
 	},
 		
@@ -67,7 +67,7 @@ example_tab = {
 		"nonterminals": "<a>  <ab> <abc>",
 		"head": "<abc>",
 		"rules": 
-			"<a> ::= a a \n"
+			"<a> ::= a  \n"
 			+"<a> ::= <a> a\n"
 			+"<ab> ::= <a> b\n"
 			+"<ab> ::= <ab> b\n"
@@ -81,7 +81,7 @@ example_tab = {
 		"nonterminals": "<c> <bc> <abc>",
 		"head": "<abc>",
 		"rules": 
-			"<c> ::= c c \n"
+			"<c> ::= c \n"
 			+"<c> ::= c <c>\n"
 			+"<bc> ::= b <c>\n"
 			+"<bc> ::= b <bc>\n"
@@ -97,9 +97,10 @@ example_tab = {
 		"head": "<a>",
 		"rules": 
 			"<a> ::= a <a> \n"
-			+"<a> ::= a a\n"
+			+"<a> ::= a \n"
+			+"<a> ::= <b> \n"
 			+"<b> ::= <b> a\n"
-			+"<b> ::= a a\n"
+			+"<b> ::= a \n"
 	},
 		
 }
