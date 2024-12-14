@@ -7,16 +7,6 @@
 class TST_mod_parser: public Tester
 {	
 
-//	void _test_parsing_grammar_adapter(
-//		const Grammar& grammar
-//	);
-//	
-//	void _test_extract_trees_from_parsing_table(
-//		PTable & parsing_table,
-//		const PTrees & expected_ptrees
-//	);
-	
-
 	void _complete_parser_tests(
 		const Grammar & grammar,
 		const Word & word,

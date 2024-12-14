@@ -63,7 +63,6 @@ COMPARE_SIMPLE_TYPE(size_t);
 COMPARE_VECTOR_TYPE(Symbols);
 COMPARE_VECTOR_TYPE(std::vector<Symbols>);
 COMPARE_VECTOR_TYPE(Errors);
-COMPARE_VECTOR_TYPE(Rules);
 COMPARE_VECTOR_TYPE(Tokens);
 
 
@@ -101,7 +100,8 @@ bool compare(
 ) 
 { 
 	bool same = true;
-	COMPARE(rule);
+	COMPARE(LHS);
+	COMPARE(RHS);
 	COMPARE(pos);
 	COMPARE(origin);
 	END_COMPARE;
@@ -142,6 +142,43 @@ bool compare(
 
 
 bool compare(
+	const Rules & expected,
+	const Rules & real,
+	const std::string & message
+)
+{
+	bool same = true;
+	if (expected.size() != real.size())
+	{
+		same = false;
+		std::cout << "DIFFERENT Rules::size: expected: " 
+			<< expected.size() << ", real: " 
+			<< real.size() << std::endl;		
+	}
+	else 
+	{
+		for (auto i=expected.cbegin(); i!=expected.cend(); i++)
+		{
+			auto j = real.find(i->first); 
+			if ( j == real.end())
+			{
+				same = false;
+				std::cout << "DIFFERENT Non_terminals: missing LHS "  
+					<<  i->first  << std::endl;
+			}
+			else
+			{
+				compare(i->second, j->second, message + " rule with LHS " + i->first + ": ");
+			}
+		}
+	}
+	END_COMPARE;
+	
+	return same;
+}
+
+
+bool compare(
 	const Error & expected,
 	const Error & real,
 	const std::string & message
@@ -169,19 +206,6 @@ bool compare(
 	return same;
 }
 
-
-bool compare(
-	const Rule & expected,
-	const Rule & real,
-	const std::string & message
-)
-{
-	bool same = true;
-	COMPARE(LHS);
-	COMPARE(RHS);
-	END_COMPARE;
-	return same;
-}
 
 
 

@@ -50,19 +50,7 @@ void TST_mod_parser::complete_parser_tests()
 		grammar.terminals.insert("b");
 		grammar.nonterminals.insert("S");
 		grammar.head = "S";
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("S");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("b");
-			grammar.rules.push_back(rule);
-		}
-
+		grammar.rules ["S"] = {{"S"},{"b"}};
 		
 		std::vector<std::list<State>> states( 2 );
 		//states[ 0 ]
@@ -70,8 +58,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . S | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("S");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -80,8 +68,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . b | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("b");
+				state.LHS = "S";
+				state.RHS.push_back("b");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -93,8 +81,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> b . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("b");
+				state.LHS = "S";
+				state.RHS.push_back("b");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -103,8 +91,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("S");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -137,20 +125,7 @@ void TST_mod_parser::complete_parser_tests()
 		grammar.terminals.insert("b");
 		grammar.nonterminals.insert("S");
 		grammar.head = "S";
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("S");
-			rule.RHS.push_back("S");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("b");
-			grammar.rules.push_back(rule);
-		}
-
+		grammar.rules ["S"] = {{"S","S"},{"b"}};
 		
 		std::vector<std::list<State>> states( 4 );
 		//states[ 0 ]
@@ -158,9 +133,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . S S | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("S");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -169,8 +144,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . b | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("b");
+				state.LHS = "S";
+				state.RHS.push_back("b");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -182,8 +157,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> b . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("b");
+				state.LHS = "S";
+				state.RHS.push_back("b");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -192,9 +167,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . S | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("S");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -203,9 +178,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . S S | 1
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("S");
 				state.pos = 0;
 				state.origin = 1;
 
@@ -214,8 +189,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . b | 1
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("b");
+				state.LHS = "S";
+				state.RHS.push_back("b");
 				state.pos = 0;
 				state.origin = 1;
 
@@ -227,8 +202,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> b . | 1
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("b");
+				state.LHS = "S";
+				state.RHS.push_back("b");
 				state.pos = 1;
 				state.origin = 1;
 
@@ -237,9 +212,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S S . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("S");
 				state.pos = 2;
 				state.origin = 0;
 
@@ -248,9 +223,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . S | 1
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("S");
 				state.pos = 1;
 				state.origin = 1;
 
@@ -259,9 +234,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . S | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("S");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -270,9 +245,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . S S | 2
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("S");
 				state.pos = 0;
 				state.origin = 2;
 
@@ -281,8 +256,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . b | 2
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("b");
+				state.LHS = "S";
+				state.RHS.push_back("b");
 				state.pos = 0;
 				state.origin = 2;
 
@@ -294,8 +269,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> b . | 2
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("b");
+				state.LHS = "S";
+				state.RHS.push_back("b");
 				state.pos = 1;
 				state.origin = 2;
 
@@ -304,9 +279,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S S . | 1
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("S");
 				state.pos = 2;
 				state.origin = 1;
 
@@ -315,9 +290,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S S . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("S");
 				state.pos = 2;
 				state.origin = 0;
 
@@ -326,9 +301,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . S | 2
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("S");
 				state.pos = 1;
 				state.origin = 2;
 
@@ -337,9 +312,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . S | 1
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("S");
 				state.pos = 1;
 				state.origin = 1;
 
@@ -348,9 +323,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . S | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("S");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -359,9 +334,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . S S | 3
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("S");
 				state.pos = 0;
 				state.origin = 3;
 
@@ -370,8 +345,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . b | 3
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("b");
+				state.LHS = "S";
+				state.RHS.push_back("b");
 				state.pos = 0;
 				state.origin = 3;
 
@@ -413,46 +388,10 @@ void TST_mod_parser::complete_parser_tests()
 		grammar.nonterminals.insert("M");
 		grammar.nonterminals.insert("T");
 		grammar.head = "P";
-		{
-			Rule rule;
-			rule.LHS = "P";
-			rule.RHS.push_back("S");
-			grammar.rules.push_back(rule);
-		} 
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("S");
-			rule.RHS.push_back("+");
-			rule.RHS.push_back("M");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("M");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "M";
-			rule.RHS.push_back("M");
-			rule.RHS.push_back("*");
-			rule.RHS.push_back("T");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "M";
-			rule.RHS.push_back("T");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "T";
-			rule.RHS.push_back("x");
-			grammar.rules.push_back(rule);
-		}
+		grammar.rules ["P"] = {{"S"}};
+		grammar.rules ["S"] = {{"S","+","M"}, {"M"}};
+		grammar.rules ["M"] = {{"M","*","T"}, {"T"}};
+		grammar.rules ["T"] = {{"x"}};
 		
 		std::vector<std::list<State>> states( 6 );
 		//states[ 0 ]
@@ -460,8 +399,8 @@ void TST_mod_parser::complete_parser_tests()
 			//P -> . S | 0
 			{
 				State state;
-				state.rule.LHS = "P";
-				state.rule.RHS.push_back("S");
+				state.LHS = "P";
+				state.RHS.push_back("S");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -470,10 +409,10 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . S + M | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("+");
-				state.rule.RHS.push_back("M");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("+");
+				state.RHS.push_back("M");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -482,8 +421,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . M | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("M");
+				state.LHS = "S";
+				state.RHS.push_back("M");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -492,10 +431,10 @@ void TST_mod_parser::complete_parser_tests()
 			//M -> . M * T | 0
 			{
 				State state;
-				state.rule.LHS = "M";
-				state.rule.RHS.push_back("M");
-				state.rule.RHS.push_back("*");
-				state.rule.RHS.push_back("T");
+				state.LHS = "M";
+				state.RHS.push_back("M");
+				state.RHS.push_back("*");
+				state.RHS.push_back("T");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -504,8 +443,8 @@ void TST_mod_parser::complete_parser_tests()
 			//M -> . T | 0
 			{
 				State state;
-				state.rule.LHS = "M";
-				state.rule.RHS.push_back("T");
+				state.LHS = "M";
+				state.RHS.push_back("T");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -514,8 +453,8 @@ void TST_mod_parser::complete_parser_tests()
 			//T -> . x | 0
 			{
 				State state;
-				state.rule.LHS = "T";
-				state.rule.RHS.push_back("x");
+				state.LHS = "T";
+				state.RHS.push_back("x");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -527,8 +466,8 @@ void TST_mod_parser::complete_parser_tests()
 			//T -> x . | 0
 			{
 				State state;
-				state.rule.LHS = "T";
-				state.rule.RHS.push_back("x");
+				state.LHS = "T";
+				state.RHS.push_back("x");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -537,8 +476,8 @@ void TST_mod_parser::complete_parser_tests()
 			//M -> T . | 0
 			{
 				State state;
-				state.rule.LHS = "M";
-				state.rule.RHS.push_back("T");
+				state.LHS = "M";
+				state.RHS.push_back("T");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -547,8 +486,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> M . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("M");
+				state.LHS = "S";
+				state.RHS.push_back("M");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -557,10 +496,10 @@ void TST_mod_parser::complete_parser_tests()
 			//M -> M . * T | 0
 			{
 				State state;
-				state.rule.LHS = "M";
-				state.rule.RHS.push_back("M");
-				state.rule.RHS.push_back("*");
-				state.rule.RHS.push_back("T");
+				state.LHS = "M";
+				state.RHS.push_back("M");
+				state.RHS.push_back("*");
+				state.RHS.push_back("T");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -569,8 +508,8 @@ void TST_mod_parser::complete_parser_tests()
 			//P -> S . | 0
 			{
 				State state;
-				state.rule.LHS = "P";
-				state.rule.RHS.push_back("S");
+				state.LHS = "P";
+				state.RHS.push_back("S");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -579,10 +518,10 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . + M | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("+");
-				state.rule.RHS.push_back("M");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("+");
+				state.RHS.push_back("M");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -594,10 +533,10 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S + . M | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("+");
-				state.rule.RHS.push_back("M");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("+");
+				state.RHS.push_back("M");
 				state.pos = 2;
 				state.origin = 0;
 
@@ -606,10 +545,10 @@ void TST_mod_parser::complete_parser_tests()
 			//M -> . M * T | 2
 			{
 				State state;
-				state.rule.LHS = "M";
-				state.rule.RHS.push_back("M");
-				state.rule.RHS.push_back("*");
-				state.rule.RHS.push_back("T");
+				state.LHS = "M";
+				state.RHS.push_back("M");
+				state.RHS.push_back("*");
+				state.RHS.push_back("T");
 				state.pos = 0;
 				state.origin = 2;
 
@@ -618,8 +557,8 @@ void TST_mod_parser::complete_parser_tests()
 			//M -> . T | 2
 			{
 				State state;
-				state.rule.LHS = "M";
-				state.rule.RHS.push_back("T");
+				state.LHS = "M";
+				state.RHS.push_back("T");
 				state.pos = 0;
 				state.origin = 2;
 
@@ -628,8 +567,8 @@ void TST_mod_parser::complete_parser_tests()
 			//T -> . x | 2
 			{
 				State state;
-				state.rule.LHS = "T";
-				state.rule.RHS.push_back("x");
+				state.LHS = "T";
+				state.RHS.push_back("x");
 				state.pos = 0;
 				state.origin = 2;
 
@@ -641,8 +580,8 @@ void TST_mod_parser::complete_parser_tests()
 			//T -> x . | 2
 			{
 				State state;
-				state.rule.LHS = "T";
-				state.rule.RHS.push_back("x");
+				state.LHS = "T";
+				state.RHS.push_back("x");
 				state.pos = 1;
 				state.origin = 2;
 
@@ -651,8 +590,8 @@ void TST_mod_parser::complete_parser_tests()
 			//M -> T . | 2
 			{
 				State state;
-				state.rule.LHS = "M";
-				state.rule.RHS.push_back("T");
+				state.LHS = "M";
+				state.RHS.push_back("T");
 				state.pos = 1;
 				state.origin = 2;
 
@@ -661,10 +600,10 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S + M . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("+");
-				state.rule.RHS.push_back("M");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("+");
+				state.RHS.push_back("M");
 				state.pos = 3;
 				state.origin = 0;
 
@@ -673,10 +612,10 @@ void TST_mod_parser::complete_parser_tests()
 			//M -> M . * T | 2
 			{
 				State state;
-				state.rule.LHS = "M";
-				state.rule.RHS.push_back("M");
-				state.rule.RHS.push_back("*");
-				state.rule.RHS.push_back("T");
+				state.LHS = "M";
+				state.RHS.push_back("M");
+				state.RHS.push_back("*");
+				state.RHS.push_back("T");
 				state.pos = 1;
 				state.origin = 2;
 
@@ -685,8 +624,8 @@ void TST_mod_parser::complete_parser_tests()
 			//P -> S . | 0
 			{
 				State state;
-				state.rule.LHS = "P";
-				state.rule.RHS.push_back("S");
+				state.LHS = "P";
+				state.RHS.push_back("S");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -695,10 +634,10 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . + M | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("+");
-				state.rule.RHS.push_back("M");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("+");
+				state.RHS.push_back("M");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -710,10 +649,10 @@ void TST_mod_parser::complete_parser_tests()
 			//M -> M * . T | 2
 			{
 				State state;
-				state.rule.LHS = "M";
-				state.rule.RHS.push_back("M");
-				state.rule.RHS.push_back("*");
-				state.rule.RHS.push_back("T");
+				state.LHS = "M";
+				state.RHS.push_back("M");
+				state.RHS.push_back("*");
+				state.RHS.push_back("T");
 				state.pos = 2;
 				state.origin = 2;
 
@@ -722,8 +661,8 @@ void TST_mod_parser::complete_parser_tests()
 			//T -> . x | 4
 			{
 				State state;
-				state.rule.LHS = "T";
-				state.rule.RHS.push_back("x");
+				state.LHS = "T";
+				state.RHS.push_back("x");
 				state.pos = 0;
 				state.origin = 4;
 
@@ -735,8 +674,8 @@ void TST_mod_parser::complete_parser_tests()
 			//T -> x . | 4
 			{
 				State state;
-				state.rule.LHS = "T";
-				state.rule.RHS.push_back("x");
+				state.LHS = "T";
+				state.RHS.push_back("x");
 				state.pos = 1;
 				state.origin = 4;
 
@@ -745,10 +684,10 @@ void TST_mod_parser::complete_parser_tests()
 			//M -> M * T . | 2
 			{
 				State state;
-				state.rule.LHS = "M";
-				state.rule.RHS.push_back("M");
-				state.rule.RHS.push_back("*");
-				state.rule.RHS.push_back("T");
+				state.LHS = "M";
+				state.RHS.push_back("M");
+				state.RHS.push_back("*");
+				state.RHS.push_back("T");
 				state.pos = 3;
 				state.origin = 2;
 
@@ -757,10 +696,10 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S + M . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("+");
-				state.rule.RHS.push_back("M");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("+");
+				state.RHS.push_back("M");
 				state.pos = 3;
 				state.origin = 0;
 
@@ -769,10 +708,10 @@ void TST_mod_parser::complete_parser_tests()
 			//M -> M . * T | 2
 			{
 				State state;
-				state.rule.LHS = "M";
-				state.rule.RHS.push_back("M");
-				state.rule.RHS.push_back("*");
-				state.rule.RHS.push_back("T");
+				state.LHS = "M";
+				state.RHS.push_back("M");
+				state.RHS.push_back("*");
+				state.RHS.push_back("T");
 				state.pos = 1;
 				state.origin = 2;
 
@@ -781,8 +720,8 @@ void TST_mod_parser::complete_parser_tests()
 			//P -> S . | 0
 			{
 				State state;
-				state.rule.LHS = "P";
-				state.rule.RHS.push_back("S");
+				state.LHS = "P";
+				state.RHS.push_back("S");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -791,10 +730,10 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . + M | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("+");
-				state.rule.RHS.push_back("M");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("+");
+				state.RHS.push_back("M");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -831,19 +770,7 @@ void TST_mod_parser::complete_parser_tests()
 		grammar.terminals.insert("a");
 		grammar.nonterminals.insert("S");
 		grammar.head = "S";
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("a");
-			rule.RHS.push_back("S");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("a");
-			grammar.rules.push_back(rule);
-		}
+		grammar.rules ["S"] = {{"a","S"},{"a"}};
 		
 		std::vector<std::list<State>> states( 5 );
 		//states[ 0 ]
@@ -851,9 +778,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . a S | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("a");
+				state.RHS.push_back("S");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -862,8 +789,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . a | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -875,9 +802,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> a . S | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("a");
+				state.RHS.push_back("S");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -886,8 +813,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> a . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -896,9 +823,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . a S | 1
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("a");
+				state.RHS.push_back("S");
 				state.pos = 0;
 				state.origin = 1;
 
@@ -907,8 +834,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . a | 1
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 1;
 
@@ -920,9 +847,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> a . S | 1
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("a");
+				state.RHS.push_back("S");
 				state.pos = 1;
 				state.origin = 1;
 
@@ -931,8 +858,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> a . | 1
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 1;
 
@@ -941,9 +868,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . a S | 2
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("a");
+				state.RHS.push_back("S");
 				state.pos = 0;
 				state.origin = 2;
 
@@ -952,8 +879,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . a | 2
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 2;
 
@@ -962,9 +889,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> a S . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("a");
+				state.RHS.push_back("S");
 				state.pos = 2;
 				state.origin = 0;
 
@@ -976,9 +903,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> a . S | 2
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("a");
+				state.RHS.push_back("S");
 				state.pos = 1;
 				state.origin = 2;
 
@@ -987,8 +914,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> a . | 2
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 2;
 
@@ -997,9 +924,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . a S | 3
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("a");
+				state.RHS.push_back("S");
 				state.pos = 0;
 				state.origin = 3;
 
@@ -1008,8 +935,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . a | 3
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 3;
 
@@ -1018,9 +945,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> a S . | 1
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("a");
+				state.RHS.push_back("S");
 				state.pos = 2;
 				state.origin = 1;
 
@@ -1029,9 +956,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> a S . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("a");
+				state.RHS.push_back("S");
 				state.pos = 2;
 				state.origin = 0;
 
@@ -1043,9 +970,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> a . S | 3
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("a");
+				state.RHS.push_back("S");
 				state.pos = 1;
 				state.origin = 3;
 
@@ -1054,8 +981,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> a . | 3
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 3;
 
@@ -1064,9 +991,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . a S | 4
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("a");
+				state.RHS.push_back("S");
 				state.pos = 0;
 				state.origin = 4;
 
@@ -1075,8 +1002,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . a | 4
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 4;
 
@@ -1085,9 +1012,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> a S . | 2
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("a");
+				state.RHS.push_back("S");
 				state.pos = 2;
 				state.origin = 2;
 
@@ -1096,9 +1023,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> a S . | 1
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("a");
+				state.RHS.push_back("S");
 				state.pos = 2;
 				state.origin = 1;
 
@@ -1107,9 +1034,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> a S . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("S");
+				state.LHS = "S";
+				state.RHS.push_back("a");
+				state.RHS.push_back("S");
 				state.pos = 2;
 				state.origin = 0;
 
@@ -1143,19 +1070,7 @@ void TST_mod_parser::complete_parser_tests()
 		grammar.terminals.insert("a");
 		grammar.nonterminals.insert("S");
 		grammar.head = "S";
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("S");
-			rule.RHS.push_back("a");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("a");
-			grammar.rules.push_back(rule);
-		}
+		grammar.rules ["S"] = {{"S","a"},{"a"}};
 		
 		std::vector<std::list<State>> states( 5 );
 		//states[ 0 ]
@@ -1163,9 +1078,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . S a | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -1174,8 +1089,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . a | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -1187,8 +1102,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> a . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -1197,9 +1112,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . a | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -1211,9 +1126,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S a . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("a");
 				state.pos = 2;
 				state.origin = 0;
 
@@ -1222,9 +1137,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . a | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -1236,9 +1151,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S a . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("a");
 				state.pos = 2;
 				state.origin = 0;
 
@@ -1247,9 +1162,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . a | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -1261,9 +1176,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S a . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("a");
 				state.pos = 2;
 				state.origin = 0;
 
@@ -1272,9 +1187,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . a | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("a");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -1308,32 +1223,8 @@ void TST_mod_parser::complete_parser_tests()
 		grammar.nonterminals.insert("S");
 		grammar.nonterminals.insert("A");
 		grammar.head = "S";
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("S");
-			rule.RHS.push_back("A");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "S";
-			rule.RHS.push_back("A");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "A";
-			rule.RHS.push_back("a");
-			grammar.rules.push_back(rule);
-		}
-		{
-			Rule rule;
-			rule.LHS = "A";
-			rule.RHS.push_back("a");
-			rule.RHS.push_back("a");
-			grammar.rules.push_back(rule);
-		}
+		grammar.rules ["S"] = {{"S","A"},{"a"}};
+		grammar.rules ["A"] = {{"a"},{"a","a"}};
 		
 		std::vector<std::list<State>> states( 5 );
 		//states[ 0 ]
@@ -1341,9 +1232,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . S A | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("A");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("A");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -1352,8 +1243,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> . A | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("A");
+				state.LHS = "S";
+				state.RHS.push_back("A");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -1362,8 +1253,8 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> . a | 0
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -1372,9 +1263,9 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> . a a | 0
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 0;
 
@@ -1386,8 +1277,8 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> a . | 0
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -1396,9 +1287,9 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> a . a | 0
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -1407,8 +1298,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> A . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("A");
+				state.LHS = "S";
+				state.RHS.push_back("A");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -1417,9 +1308,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . A | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("A");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("A");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -1428,8 +1319,8 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> . a | 1
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 1;
 
@@ -1438,9 +1329,9 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> . a a | 1
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 1;
 
@@ -1452,9 +1343,9 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> a a . | 0
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
+				state.RHS.push_back("a");
 				state.pos = 2;
 				state.origin = 0;
 
@@ -1463,8 +1354,8 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> a . | 1
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 1;
 
@@ -1473,9 +1364,9 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> a . a | 1
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 1;
 
@@ -1484,8 +1375,8 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> A . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("A");
+				state.LHS = "S";
+				state.RHS.push_back("A");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -1494,9 +1385,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S A . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("A");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("A");
 				state.pos = 2;
 				state.origin = 0;
 
@@ -1505,9 +1396,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . A | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("A");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("A");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -1516,8 +1407,8 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> . a | 2
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 2;
 
@@ -1526,9 +1417,9 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> . a a | 2
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 2;
 
@@ -1540,9 +1431,9 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> a a . | 1
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
+				state.RHS.push_back("a");
 				state.pos = 2;
 				state.origin = 1;
 
@@ -1551,8 +1442,8 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> a . | 2
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 2;
 
@@ -1561,9 +1452,9 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> a . a | 2
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 2;
 
@@ -1572,9 +1463,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S A . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("A");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("A");
 				state.pos = 2;
 				state.origin = 0;
 
@@ -1583,9 +1474,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . A | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("A");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("A");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -1594,8 +1485,8 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> . a | 3
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 3;
 
@@ -1604,9 +1495,9 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> . a a | 3
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 3;
 
@@ -1618,9 +1509,9 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> a a . | 2
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
+				state.RHS.push_back("a");
 				state.pos = 2;
 				state.origin = 2;
 
@@ -1629,8 +1520,8 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> a . | 3
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 3;
 
@@ -1639,9 +1530,9 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> a . a | 3
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
+				state.RHS.push_back("a");
 				state.pos = 1;
 				state.origin = 3;
 
@@ -1650,9 +1541,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S A . | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("A");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("A");
 				state.pos = 2;
 				state.origin = 0;
 
@@ -1661,9 +1552,9 @@ void TST_mod_parser::complete_parser_tests()
 			//S -> S . A | 0
 			{
 				State state;
-				state.rule.LHS = "S";
-				state.rule.RHS.push_back("S");
-				state.rule.RHS.push_back("A");
+				state.LHS = "S";
+				state.RHS.push_back("S");
+				state.RHS.push_back("A");
 				state.pos = 1;
 				state.origin = 0;
 
@@ -1672,8 +1563,8 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> . a | 4
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 4;
 
@@ -1682,9 +1573,9 @@ void TST_mod_parser::complete_parser_tests()
 			//A -> . a a | 4
 			{
 				State state;
-				state.rule.LHS = "A";
-				state.rule.RHS.push_back("a");
-				state.rule.RHS.push_back("a");
+				state.LHS = "A";
+				state.RHS.push_back("a");
+				state.RHS.push_back("a");
 				state.pos = 0;
 				state.origin = 4;
 

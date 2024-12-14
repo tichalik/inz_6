@@ -23,71 +23,10 @@ void test_visualize()
 		minut_19_p_1.terminals.insert("c");
 		
 		minut_19_p_1.head = "ABC";
-		
-		{
-			Rule r;
-			r.LHS = "A";
-			r.RHS.push_back("a");
-			
-			minut_19_p_1.rules.push_back(r);
-		}
-		
-		{
-			Rule r;
-			r.LHS = "A";
-			r.RHS.push_back("A");
-			r.RHS.push_back("a");
-			
-			minut_19_p_1.rules.push_back(r);
-		}
-		
-		{
-			Rule r;
-			r.LHS = "B";
-			r.RHS.push_back("b");
-			
-			minut_19_p_1.rules.push_back(r);
-		}
-		
-		{
-			Rule r;
-			r.LHS = "B";
-			r.RHS.push_back("B");
-			r.RHS.push_back("b");
-			
-			minut_19_p_1.rules.push_back(r);
-		}
-		
-		{
-			Rule r;
-			r.LHS = "C";
-			r.RHS.push_back("c");
-			
-			minut_19_p_1.rules.push_back(r);
-		}
-		
-		{
-			Rule r;
-			r.LHS = "C";
-			r.RHS.push_back("C");
-			r.RHS.push_back("c");
-			
-			minut_19_p_1.rules.push_back(r);
-		}
-		
-		
-		
-		{
-			Rule r;
-			r.LHS = "ABC";
-			r.RHS.push_back("A");
-			r.RHS.push_back("B");
-			r.RHS.push_back("C");
-			
-			minut_19_p_1.rules.push_back(r);
-		}
-		
-		
+		minut_19_p_1.rules["A"] = {{"a"},{"A","a"}};
+		minut_19_p_1.rules["B"] = {{"b"},{"B","b"}};
+		minut_19_p_1.rules["C"] = {{"c"},{"C","c"}};
+		minut_19_p_1.rules["ABC"] = {{"A","B","C"}};
 		
 	}
 	
@@ -104,64 +43,9 @@ void test_visualize()
 		
 		minut_19_p_2.head = "ABC";
 		
-		
-		{
-			Rule r;
-			r.LHS = "A";
-			r.RHS.push_back("a");
-			
-			minut_19_p_2.rules.push_back(r);
-		}
-		
-		{
-			Rule r;
-			r.LHS = "A";
-			r.RHS.push_back("A");
-			r.RHS.push_back("a");
-			
-			minut_19_p_2.rules.push_back(r);
-		}
-		
-		
-		{
-			Rule r;
-			r.LHS = "AB";
-			r.RHS.push_back("A");
-			r.RHS.push_back("b");
-			
-			minut_19_p_2.rules.push_back(r);
-		}
-		
-		{
-			Rule r;
-			r.LHS = "AB";
-			r.RHS.push_back("AB");
-			r.RHS.push_back("b");
-			
-			minut_19_p_2.rules.push_back(r);
-		}
-		
-		
-		
-		{
-			Rule r;
-			r.LHS = "ABC";
-			r.RHS.push_back("AB");
-			r.RHS.push_back("c");
-			
-			minut_19_p_2.rules.push_back(r);
-		}
-		
-		{
-			Rule r;
-			r.LHS = "ABC";
-			r.RHS.push_back("ABC");
-			r.RHS.push_back("c");
-			
-			minut_19_p_2.rules.push_back(r);
-		}
-		
-		
+		minut_19_p_1.rules["A"] = {{"a"},{"A","a"}};
+		minut_19_p_1.rules["AB"] = {{"A","b"},{"AB","b"}};
+		minut_19_p_1.rules["ABC"] = {{"AB","c"},{"ABC","c"}};
 	}
 		
 	Grammar minut_19_p_3;
@@ -178,63 +62,9 @@ void test_visualize()
 		minut_19_p_3.head = "ABC";
 		
 		
-		{
-			Rule r;
-			r.LHS = "C";
-			r.RHS.push_back("c");
-			
-			minut_19_p_3.rules.push_back(r);
-		}
-		
-		{
-			Rule r;
-			r.LHS = "C";
-			r.RHS.push_back("C");
-			r.RHS.push_back("c");
-			
-			minut_19_p_3.rules.push_back(r);
-		}
-		
-		
-		{
-			Rule r;
-			r.LHS = "BC";
-			r.RHS.push_back("b");
-			r.RHS.push_back("C");
-			
-			minut_19_p_3.rules.push_back(r);
-		}
-		
-		{
-			Rule r;
-			r.LHS = "BC";
-			r.RHS.push_back("b");
-			r.RHS.push_back("BC");
-			
-			minut_19_p_3.rules.push_back(r);
-		}
-		
-		
-		
-		{
-			Rule r;
-			r.LHS = "ABC";
-			r.RHS.push_back("a");
-			r.RHS.push_back("BC");
-			
-			minut_19_p_3.rules.push_back(r);
-		}
-		
-		{
-			Rule r;
-			r.LHS = "ABC";
-			r.RHS.push_back("a");
-			r.RHS.push_back("ABC");
-			
-			minut_19_p_3.rules.push_back(r);
-		}
-		
-		
+		minut_19_p_1.rules["C"] = {{"c"},{"C","c"}};
+		minut_19_p_1.rules["BC"] = {{"b","C"},{"b","BC"}};
+		minut_19_p_1.rules["ABC"] = {{"a","BC"},{"a","ABC"}};
 	}
 				
 	std::cout << "===============================================================" << std::endl;

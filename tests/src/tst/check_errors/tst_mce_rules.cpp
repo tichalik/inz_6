@@ -2,7 +2,7 @@
 
 
 void TST_mod_check_errors::_test_rules_errors(
-	const Rule & rule,
+	const Rules & rules,
 	const Non_terminals& terminals,
 	const Non_terminals& nonterminals,
 	const Errors & expected_errors
@@ -18,9 +18,9 @@ void TST_mod_check_errors::_test_rules_errors(
 	mod_check_errors.errors.clear();
 	
 	//perform error checking
-	mod_check_errors.rule_check_errors(
+	mod_check_errors.rules_check_errors(
 		"", //skipping source
-		rule, 
+		rules, 
 		terminals, 
 		nonterminals
 	);
@@ -51,91 +51,81 @@ void TST_mod_check_errors::test_rules_errors()
 	nonterminals.insert("B");
 	nonterminals.insert("C");
 	
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " normal rule -- all nonterminals" << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " normal rule -- all nonterminals" << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
-		Rule rule;
-		rule.LHS = "A";
-		rule.RHS.push_back("B");
-		rule.RHS.push_back("C");
+		Rules rules;
+		rules["A"] = {{"B","C"}};
 		
 		Errors expected_errors;
 		
 		_test_rules_errors(
-			rule, 
+			rules, 
 			terminals,
 			nonterminals,
 			expected_errors
 		);
 	}
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " normal rule -- RHS all terminals" << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " normal rule -- RHS all terminals" << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
-		Rule rule;
-		rule.LHS = "A";
-		rule.RHS.push_back("b");
-		rule.RHS.push_back("c");
+		Rules rules;
+		rules["A"] = {{"b","c"}};
 		
 		Errors expected_errors;
 		
 		_test_rules_errors(
-			rule, 
+			rules, 
 			terminals,
 			nonterminals,
 			expected_errors
 		);
 	}
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " normal rule -- RHS1 as terminal" << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " normal rule -- RHS1 as terminal" << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
-		Rule rule;
-		rule.LHS = "A";
-		rule.RHS.push_back("b");
-		rule.RHS.push_back("C");
+		Rules rules;
+		rules["A"] = {{"b","C"}};
 		
 		Errors expected_errors;
 		
 		_test_rules_errors(
-			rule, 
+			rules, 
 			terminals,
 			nonterminals,
 			expected_errors
 		);
 	}
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " normal rule -- RHS2 as terminal" << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " normal rule -- RHS2 as terminal" << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
-		Rule rule;
-		rule.LHS = "A";
-		rule.RHS.push_back("B");
-		rule.RHS.push_back("c");
+		Rules rules;
+		rules["A"] = {{"B","c"}};
 		
 		Errors expected_errors;
 		
 		_test_rules_errors(
-			rule, 
+			rules, 
 			terminals,
 			nonterminals,
 			expected_errors
 		);
 	}
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " LSH in terminals " << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " LSH in terminals " << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
-		Rule rule;
-		rule.LHS = "a";
-		rule.RHS.push_back("b");
-		rule.RHS.push_back("c");
+		Rules rules;
+		rules["a"] = {{"b","c"}};
 		
 		Errors expected_errors;
 		
@@ -146,45 +136,19 @@ void TST_mod_check_errors::test_rules_errors()
 		
 		
 		_test_rules_errors(
-			rule, 
+			rules, 
 			terminals,
 			nonterminals,
 			expected_errors
 		);
 	}
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " unknown symbols " << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " single RHS" << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
-		Rule rule;
-		rule.LHS = "A";
-		rule.RHS.push_back("b");
-		
-		Errors expected_errors;
-		
-		Error error1;
-		error1.type = SINGLE_RHS;
-		error1.source = " rule <A -> b >: symbol <b>:";
-		expected_errors.push_back(error1);
-		
-		
-		_test_rules_errors(
-			rule, 
-			terminals,
-			nonterminals,
-			expected_errors
-		);
-	}
-	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " unknown symbols " << std::endl;
-		std::cout << "===============================================================" << std::endl;
-		
-		Rule rule;
-		rule.LHS = "x";
-		rule.RHS.push_back("y");
-		rule.RHS.push_back("z");
+		Rules rules;
+		rules["x"] = {{"y","z"}};
 		
 		Errors expected_errors;
 		
@@ -205,7 +169,7 @@ void TST_mod_check_errors::test_rules_errors()
 		
 		
 		_test_rules_errors(
-			rule, 
+			rules, 
 			terminals,
 			nonterminals,
 			expected_errors
@@ -213,15 +177,13 @@ void TST_mod_check_errors::test_rules_errors()
 	}
 	
 	
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " unknown symbols -- many char symbols " << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " unknown symbols -- many char symbols " << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
-		Rule rule;
-		rule.LHS = "xxx";
-		rule.RHS.push_back("yyy");
-		rule.RHS.push_back("zzz");
+		Rules rules;
+		rules["xxx"] = {{"yyy","zzz"}};
 		
 		Errors expected_errors;
 		
@@ -242,7 +204,7 @@ void TST_mod_check_errors::test_rules_errors()
 		
 		
 		_test_rules_errors(
-			rule, 
+			rules, 
 			terminals,
 			nonterminals,
 			expected_errors

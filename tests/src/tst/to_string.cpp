@@ -21,7 +21,6 @@
 VECTOR_STR(Symbols);
 VECTOR_STR(std::vector<Symbols>);
 VECTOR_STR(Errors);
-VECTOR_STR(Rules);
 VECTOR_STR(VNodes);
 VECTOR_STR(Tokens);
 
@@ -50,14 +49,14 @@ std::string str(
 	const std::string & tabs
 ) 
 {
-	std::string res =  tabs + "\t" + i.rule.LHS + " -> ";
-	for (size_t j=0; j<i.rule.RHS.size(); j++)
+	std::string res =  tabs + "\t" + i.LHS + " -> ";
+	for (size_t j=0; j<i.RHS.size(); j++)
 	{
 		if (j == i.pos)
 			res += ". ";
-		res += i.rule.RHS[j] + " ";
+		res += i.RHS[j] + " ";
 	}
-	if (i.pos == i.rule.RHS.size())
+	if (i.pos == i.RHS.size())
 		res += " .";
 	res += " | " + str(i.origin, "");
 	return res;
@@ -120,14 +119,31 @@ std::string str(
 
 
 std::string str(
-	const Rule & i,
+	const Symbol & LHS,
+	const std::vector<Symbols> & RHS,
 	const std::string & tabs
 
 )
-{
+{ 
 	std::string res;
-	ADD_FIELD(LHS);
-	ADD_FIELD(RHS);
+	res += tabs + "rule \n" + str(LHS, tabs+"\t") + "\n";
+	res += tabs + "\t" + str(RHS, tabs+"\t") + "\n";
+	return res;
+}
+
+
+
+std::string str(
+	const Rules& i,
+	const std::string & tabs
+
+)
+{ 
+	std::string res;
+	for (Rules::const_iterator j=i.cbegin(); j!=i.cend(); j++)
+	{
+		res += str(j->first, j->second, tabs+"\t");
+	}
 	return res;
 }
 
