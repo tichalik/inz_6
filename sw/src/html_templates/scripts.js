@@ -29,22 +29,6 @@ function fold_expand(button){
 
 }
 
-function filter_trees(){
-	complete_only = document.getElementById("complete_only").checked;
-	head_ok_only = document.getElementById("head_ok_only").checked;
-	for (tree of document.getElementById("results").querySelectorAll(".tree")){
-		if(
-		complete_only && !tree.classList.contains("complete")
-		|| head_ok_only && !tree.classList.contains("head_ok")
-		){
-			tree.style.display = "none";
-		}
-		else {
-			tree.style.display = "block";
-		}
-	}
-}
-
 example_tab = {  
 	"ex-abc-1":{
 		"input": "a a b b b c c",
