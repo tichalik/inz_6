@@ -150,10 +150,10 @@ void TST_mod_from_http::test_rules_from_http()
 		rule4.RHS.push_back("<i>");
 	}
 
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " normal rules, no initial LB, no final LB" << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " normal rules, no initial LB, no final LB" << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
 		Errors errors;
 
@@ -171,10 +171,10 @@ void TST_mod_from_http::test_rules_from_http()
 		);
 		
 	}
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " normal rules, initial LB, final LB" << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " normal rules, initial LB, final LB" << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
 		Errors errors;
 
@@ -193,10 +193,10 @@ void TST_mod_from_http::test_rules_from_http()
 		
 	}
 
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " TERMINAL_AS_LHS" << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " TERMINAL_AS_LHS" << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
 		Errors errors;
 	

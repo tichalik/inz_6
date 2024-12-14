@@ -1,39 +1,26 @@
 #ifndef RULES_H
 #define RULES_H
 
-#include <vector>
-
+#include <map>
 
 #include "utils.h"
 #include "symbol.h"
-#include "non_terminals.h"
 
-/** 
- * \brief representation of grammatical rule in form 
- *	left -> right1 right 2
- */
-struct Rule
+
+struct Rules: public std::map<Symbol, std::vector<Symbols> > 
 {
-    Symbol LHS;
-    Symbols RHS;
-	
-	std::string to_string() const
+	std::vector<Symbols> get_rules(const Symbol& LHS) const
 	{
-		std::string res = LHS + " -> ";
-		for (size_t i=0; i<RHS.size(); i++)
+		auto it = this->find(LHS);
+		if (it!= this->end())
 		{
-			res += RHS[i] + " ";
+			return (it->second);
 		}
-		return res;
+		else 
+		{
+			return {};
+		}
 	}
-	
 };
-
-struct Rules: public std::vector<Rule>
-{
-	
-	
-};
-
 
 #endif // RULES_H

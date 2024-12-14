@@ -3,15 +3,15 @@
 void Mod_visualize_grammar::simple_append_children(
 	VNode & root,
 	const Rules & rules,
-	std::vector<bool> & was_used
+	std::map<Symbol, std::vector<bool>> & was_used
 )
 {
 	for (size_t i=0; i<root.tag.size(); i++)
 	{
-		for (size_t j=0; j<rules.size(); j++)
+		const std::vector<Symbols> & RHS = rules.at(root.tag[i]);
+		for (size_t j=0; j<RHS.size(); j++)
 		{
-			if (was_used[j] == false &&
-				root.tag[i] == rules[j].LHS)
+			if (was_used[root.tag[i]][j] == false ) 
 			{
 				
 				root.children.emplace_back();
@@ -27,8 +27,8 @@ void Mod_visualize_grammar::simple_append_children(
 				//copy RHS of the matched rule
 				child.tag.insert(
 					child.tag.end(),
-					rules[j].RHS.begin(), 
-					rules[j].RHS.end()
+					RHS[j].cbegin(), 
+					RHS[j].cend()
 				);
 
 				//copy rest of parent's tag
@@ -40,7 +40,7 @@ void Mod_visualize_grammar::simple_append_children(
 
 				child.parent_symbol_pos = i;
 
-				was_used[j] = true;
+				was_used[root.tag[i]][j] = true;
 
 				simple_append_children(
 					child,
@@ -56,15 +56,15 @@ void Mod_visualize_grammar::simple_append_children(
 void Mod_visualize_grammar::append_children(
 	VNode & root,
 	const Rules & rules,
-	const std::vector<bool> & was_used
+	const std::map<Symbol, std::vector<bool>> & was_used
 )
 {
 	for (size_t i=0; i<root.tag.size(); i++)
 	{
-		for (size_t j=0; j<rules.size(); j++)
+		const std::vector<Symbols> & RHS = rules.at(root.tag[i]);
+		for (size_t j=0; j<RHS.size(); j++)
 		{
-			if (was_used[j] == false &&
-				root.tag[i] == rules[j].LHS)
+			if (was_used.at(root.tag[i])[j] == false ) 
 			{
 				
 				root.children.emplace_back();
@@ -80,8 +80,8 @@ void Mod_visualize_grammar::append_children(
 				//copy RHS of the matched rule
 				child.tag.insert(
 					child.tag.end(),
-					rules[j].RHS.begin(), 
-					rules[j].RHS.end()
+					RHS[j].cbegin(), 
+					RHS[j].cend()
 				);
 
 				//copy rest of parent's tag
@@ -93,8 +93,8 @@ void Mod_visualize_grammar::append_children(
 
 				child.parent_symbol_pos = i;
 
-				std::vector<bool> was_used_copy(was_used);
-				was_used_copy[j] = true;
+				std::map<Symbol, std::vector<bool>> was_used_copy(was_used);
+				was_used_copy[root.tag[i]][j] = true;
 
 				append_children(
 					child,
@@ -114,7 +114,12 @@ VNode Mod_visualize_grammar::visualize_grammar(
 	VNode res;
 	res.tag.push_back(grammar.head);
 
-	std::vector was_used(grammar.rules.size(), false);
+	std::map<Symbol, std::vector<bool>> was_used;
+	for (auto i=grammar.rules.cbegin(); i != grammar.rules.cend(); i++)
+	{
+		was_used[i->first] = std::vector<bool>(i->second.size(), false);
+	}
+
 	if (simple)
 	{
 		simple_append_children(

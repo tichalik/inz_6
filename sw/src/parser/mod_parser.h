@@ -1,7 +1,6 @@
 #ifndef _MOD_PARSER_H_
 #define _MOD_PARSER_H_
 
-#include "parsing_grammar_adapter.h"
 #include "grammar.h"
 #include "error.h"
 #include "word.h"
@@ -10,7 +9,8 @@
 
 struct State
 {
-	Rule rule;
+	Symbol LHS;
+	Symbols RHS;
 	size_t pos;
 	size_t origin;
 	SPPF_node* sppf_node = nullptr;
@@ -22,12 +22,10 @@ struct State
 class Mod_parser
 {
 	
-	/// object for easier look up of rules
-	Parsing_grammar_adapter parsing_grammar_adapter;
-
 	std::vector<std::list<State> > states;
 
 	SPPF& sppf;
+	const Grammar& grammar;
 
 	void predict(const State & state, size_t i);	
 	void scan(const State & state, size_t i);	

@@ -24,7 +24,8 @@ class TST_mod_from_http: public Tester
 	void _test_rule_from_http(
 		const std::string & str_input,
 		const bool expected_ok,
-		const Rule & expected,
+		const Symbol& LHS,
+		const Symbols& RHS,
 		const Errors & expected_errors
 	);
 	void _test_rules_from_http(

@@ -27,11 +27,11 @@ int main()
  {
 	// test_compares();
 	
-//    TST_mod_from_http mfh;
+    TST_mod_from_http mfh;
 	// mfh.test_nonterminals_from_http();
 	// mfh.test_terminals_from_http();
 	// mfh.test_head_from_http();
-//	mfh.test_rules_from_http();
+	mfh.test_rules_from_http();
 	// mfh.test_word_from_http();
 	// mfh.test_tokenize();
 	
@@ -47,7 +47,7 @@ int main()
 //	mp.complete_parser_tests();
 	
 	TST_mod_to_http m2h;
-	m2h.test_sppf_to_string();
+//	m2h.test_sppf_to_string();
 //	m2h.test_iterate_sppf();
 
 //	test_visualize();

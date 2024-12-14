@@ -10,13 +10,13 @@ class Mod_visualize_grammar
 	void simple_append_children(
 		VNode & root,
 		const Rules & rules,
-		std::vector<bool> & was_used
+		std::map<Symbol, std::vector<bool>> & was_used
 	);
 	
 	void append_children(
 		VNode & root,
 		const Rules & rules,
-		const std::vector<bool> & was_used
+		const std::map<Symbol, std::vector<bool>> & was_used
 	);
 	
 public:

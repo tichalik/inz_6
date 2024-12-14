@@ -19,8 +19,6 @@ class Tester
 	void show_word(const Word &w) const ;
 	void show_non_terminals(const Non_terminals & nt) const;
 	
-	std::string rule2str(const Rule & rule) const;
-	
 public:
 	std::string iterate_sppf(SPPF& sppf);	
 };

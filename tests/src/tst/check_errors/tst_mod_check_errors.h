@@ -14,7 +14,8 @@ class TST_mod_check_errors: public Tester
 	);
 
 	void _test_rules_errors(
-		const Rule & rule,
+		const Symbol& LHS,
+		const Symbols& RHS,
 		const Non_terminals& terminals,
 		const Non_terminals& nonterminals,
 		const Errors & expected_errors

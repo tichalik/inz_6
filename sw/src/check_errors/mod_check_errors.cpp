@@ -77,30 +77,22 @@ void Mod_check_errors::head_check_errors(
 	}
 }
 
-
-void Mod_check_errors::rule_check_errors(
-	const std::string & parent_source,
-	const Rule &input,
-	const Non_terminals& terminals,
-	const Non_terminals& nonterminals
+std::string Mod_check_errors::rule_to_error_source(
+	const std::string& parent_source,
+	const Symbol& LHS,
+	const Symbols& RHS
 )
 {
-	std::string source = parent_source + " rule <" + input.to_string() + ">:";
-	
-	check_symbol_errors(source,
-		input.LHS, terminals, nonterminals);
-			
-	if(input.RHS.size() == 1)
+	std::string res = parent_source + " rule \"" + LHS + " ::= ";
+
+	for (size_t i=0; i<RHS.size(); i++)
 	{
-		add_error(SINGLE_RHS, source+ " symbol <" + input.RHS[0] + ">:");	
+		res +=  RHS[i] + " ";
 	}
-		
-	for (size_t i=0; i<input.RHS.size(); i++)
-	{
-		check_symbol_errors(source, input.RHS[i], terminals, nonterminals);
-	}
-	
+
+	return res + "\": ";
 }
+
 
 void Mod_check_errors::rules_check_errors(
 	const std::string & parent_source,
@@ -109,10 +101,30 @@ void Mod_check_errors::rules_check_errors(
 	const Non_terminals & nonterminals
 )
 {
-	for (size_t i=0; i<input.size(); i++)
+	for (Rules::const_iterator i = input.cbegin(); i!= input.cend(); i++)
 	{
-		rule_check_errors(parent_source, 
-			input[i], terminals, nonterminals);
+		const Symbol& LHS = i->first;
+
+		check_symbol_errors(
+			parent_source + " rule with LHS \"" + LHS + "\": ",
+			LHS,
+			terminals,
+			nonterminals
+		);
+		
+		for (size_t j=0; j<i->second.size(); j++)
+		{
+			const Symbols& RHS = i->second[j];
+			for (size_t k=0; k<RHS.size(); k++)
+			{
+				check_symbol_errors(
+					rule_to_error_source(parent_source, LHS, RHS),
+					RHS[k],
+					terminals,
+					nonterminals
+				);
+			}
+		}
 	}
 }
 

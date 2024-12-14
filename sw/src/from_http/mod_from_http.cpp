@@ -166,6 +166,8 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 		ok = false;\
 		break;
 
+	Symbol LHS;
+
 	for (size_t i=0; i<tokens.size() && ok; i++)
 	{
 		switch(tokens[i].type)
@@ -210,10 +212,7 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 					case SYMBOL_FOUND:
 					{
 						state = ALT_STARTED;
-						//an alternative -- efectively create a new rule
-						rules.emplace_back();
-						//the rule has the same LHS as the previous rule
-						rules.back().LHS = rules[rules.size()-2].LHS;
+						rules[LHS].emplace_back();
 						break;
 					}
 				}
@@ -234,8 +233,8 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 						{
 							state = HEAD_FOUND;
 							//a new rule started
-							rules.emplace_back();
-							rules.back().LHS = tokens[i].str; 
+							LHS = tokens[i].str; 
+							rules[LHS].emplace_back();
 						}
 						break;
 					}
@@ -249,7 +248,7 @@ Rules Mod_from_http::rules_from_http(const std::string & param)
 					{
 						state = SYMBOL_FOUND;
 						//a member of a rule's RHS 
-						rules.back().RHS.push_back(tokens[i].str);
+						rules[LHS].back().push_back(tokens[i].str);
 						break;
 					}
 				}

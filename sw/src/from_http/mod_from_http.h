@@ -55,14 +55,6 @@ class Mod_from_http
 	 * assume the string is already processed (htpp entities are translated to 
 	 * normal string)
 	 */
-	Rule rule_from_http(const std::string & param, bool & ok);
-	
-    /** 
-	 * \brief extract grammar information from a string obtained from http request
-	 *
-	 * assume the string is already processed (htpp entities are translated to 
-	 * normal string)
-	 */
 	Rules rules_from_http(const std::string & param);
 	
 	

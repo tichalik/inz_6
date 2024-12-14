@@ -36,11 +36,10 @@ class Mod_check_errors
 		const Grammar &input
 	);
 
-	void rule_check_errors(
-		const std::string & parent_source,
-		const Rule &input,
-		const Non_terminals& terminals,
-		const Non_terminals& nonterminals
+	std::string rule_to_error_source(
+		const std::string& parent_source,
+		const Symbol& LHS,
+		const Symbols& RHS
 	);
 
 	void rules_check_errors(
