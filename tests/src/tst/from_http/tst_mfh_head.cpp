@@ -67,10 +67,10 @@ void TST_mod_from_http::test_head_from_http()
 	multiple_head_errors.push_back(error3);
 	
 	
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " normal head -- no whitespaces" << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " normal head -- no whitespaces" << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
 		_test_head_from_http(
 			"head",
@@ -78,10 +78,10 @@ void TST_mod_from_http::test_head_from_http()
 			empty_errors
 		);
 	}
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " normal head -- leading whitespaces" << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " normal head -- leading whitespaces" << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
 		_test_head_from_http(
 			"             \n\n \t   head",
@@ -89,10 +89,10 @@ void TST_mod_from_http::test_head_from_http()
 			empty_errors
 		);
 	}
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " normal head -- trailing whitespaces" << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " normal head -- trailing whitespaces" << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
 		_test_head_from_http(
 			"head\n\n         \t\n",
@@ -101,10 +101,10 @@ void TST_mod_from_http::test_head_from_http()
 		);
 	}
 	
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " empty head -- empty string" << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " empty head -- empty string" << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
 		_test_head_from_http(
 			"",
@@ -113,10 +113,10 @@ void TST_mod_from_http::test_head_from_http()
 		);
 	}
 	
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " empty head -- whitespaces" << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " empty head -- whitespaces" << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
 		_test_head_from_http(
 			"\n\n\t            \n\n",
@@ -125,10 +125,10 @@ void TST_mod_from_http::test_head_from_http()
 		);
 	}
 	
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " multiple heads" << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " multiple heads" << std::endl;
-		std::cout << "===============================================================" << std::endl;
 				
 		_test_head_from_http(
 			"head\n\n         \t\nevil_head\n\nevil_head2\n\n",

@@ -88,7 +88,8 @@ Mod_parser::Mod_parser(
 
 void Mod_parser::predict(const State & state, size_t i)
 {
-	const std::vector<Symbols> RHSs = grammar.rules.get_rules(grammar.head);
+	const std::vector<Symbols> RHSs = 
+		grammar.rules.get_rules(state.RHS[state.pos]);
 	for (size_t j=0; j<RHSs.size(); j++)
 	{
 		State _state;

@@ -1,12 +1,24 @@
 #include "tst_visualize_grammar.h"
+#include "mod_to_http.h"
 
 void _test_visualize(
 	const Grammar & grammar
 )
 {
 	Mod_visualize_grammar mvg;
-	
-	std::cout << str(mvg.visualize_grammar(grammar, true), "") << std::endl;
+	VNode vnode = mvg.visualize_grammar(grammar, true);
+	SPPF sppf;	
+	Mod_to_http mth({},sppf, vnode, "","","","","");
+
+	static int count = 0;
+
+	std::stringstream filename;
+	filename << "./debug/tc_visualize_" << count++ << ".html";
+	std::ofstream file;
+	file.open(filename.str());
+	file << mth.get_http();
+	file.close();
+
 }
 
 void test_visualize()

@@ -1223,7 +1223,7 @@ void TST_mod_parser::complete_parser_tests()
 		grammar.nonterminals.insert("S");
 		grammar.nonterminals.insert("A");
 		grammar.head = "S";
-		grammar.rules ["S"] = {{"S","A"},{"a"}};
+		grammar.rules ["S"] = {{"S","A"},{"A"}};
 		grammar.rules ["A"] = {{"a"},{"a","a"}};
 		
 		std::vector<std::list<State>> states( 5 );

@@ -120,29 +120,6 @@ void TST_mod_check_errors::test_rules_errors()
 		);
 	}
 	std::cout << "===============================================================" << std::endl;
-	std::cout << " LSH in terminals " << std::endl;
-	std::cout << "===============================================================" << std::endl;
-	{
-		
-		Rules rules;
-		rules["a"] = {{"b","c"}};
-		
-		Errors expected_errors;
-		
-		Error error1;
-		error1.type = TERMINAL_AS_LHS;
-		error1.source = " rule <a -> b c >: symbol <a>:";
-		expected_errors.push_back(error1);
-		
-		
-		_test_rules_errors(
-			rules, 
-			terminals,
-			nonterminals,
-			expected_errors
-		);
-	}
-	std::cout << "===============================================================" << std::endl;
 	std::cout << " unknown symbols " << std::endl;
 	std::cout << "===============================================================" << std::endl;
 	{
@@ -154,17 +131,17 @@ void TST_mod_check_errors::test_rules_errors()
 		
 		Error error1;
 		error1.type = UNKNOWN_SYMBOL;
-		error1.source = " rule <x -> y z >: symbol <x>:";
+		error1.source = " rule \"x ::= y z \": symbol \"x\":";
 		expected_errors.push_back(error1);
 		
 		Error error2;
 		error2.type = UNKNOWN_SYMBOL;
-		error2.source = " rule <x -> y z >: symbol <y>:";
+		error2.source = " rule \"x ::= y z \": symbol \"y\":";
 		expected_errors.push_back(error2);
 		
 		Error error3;
 		error3.type = UNKNOWN_SYMBOL;
-		error3.source = " rule <x -> y z >: symbol <z>:";
+		error3.source = " rule \"x ::= y z \": symbol \"z\":";
 		expected_errors.push_back(error3);
 		
 		
@@ -189,17 +166,17 @@ void TST_mod_check_errors::test_rules_errors()
 		
 		Error error1;
 		error1.type = UNKNOWN_SYMBOL;
-		error1.source = " rule <xxx -> yyy zzz >: symbol <xxx>:";
+		error1.source = " rule \"xxx ::= yyy zzz \": symbol \"xxx\":";
 		expected_errors.push_back(error1);
 		
 		Error error2;
 		error2.type = UNKNOWN_SYMBOL;
-		error2.source = " rule <xxx -> yyy zzz >: symbol <yyy>:";
+		error2.source = " rule \"xxx ::= yyy zzz \": symbol \"yyy\":";
 		expected_errors.push_back(error2);
 		
 		Error error3;
 		error3.type = UNKNOWN_SYMBOL;
-		error3.source = " rule <xxx -> yyy zzz >: symbol <zzz>:";
+		error3.source = " rule \"xxx ::= yyy zzz \": symbol \"zzz\":";
 		expected_errors.push_back(error3);
 		
 		

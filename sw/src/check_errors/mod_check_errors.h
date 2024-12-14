@@ -39,7 +39,7 @@ class Mod_check_errors
 	std::string rule_to_error_source(
 		const std::string& parent_source,
 		const Symbol& LHS,
-		const Symbols& RHS
+		const std::vector<Symbols>& RHSs
 	);
 
 	void rules_check_errors(
@@ -47,12 +47,6 @@ class Mod_check_errors
 		const Rules &input,
 		const Non_terminals & terminals,
 		const Non_terminals & nonterminals
-	);
-	
-	void non_terminals_check_errors(
-		const std::string & parent_source,
-		const Non_terminals& input,
-		const Non_terminals & other
 	);
 	
 	void head_check_errors(

@@ -257,7 +257,7 @@ void TST_mod_from_http::test_rules_from_http()
 
 		Rules rules;
 		rules["<a>"] = {{"b"},{"c","d","e"}};
-		rules["<e>"] = {};
+		rules["<e>"] = {{}};
 		
 		_test_rules_from_http(
 			" <a> ::= b | c d e\n"
@@ -285,7 +285,7 @@ void TST_mod_from_http::test_rules_from_http()
 
 		Rules rules;
 		rules["<a>"] = {{"b"},{"c","d","e"}};
-		rules["<e>"] = {};
+		rules["<e>"] = {{}};
 		
 		_test_rules_from_http(
 			" <a> ::= b | c d e\n"
@@ -313,7 +313,7 @@ void TST_mod_from_http::test_rules_from_http()
 
 		Rules rules;
 		rules["<a>"] = {{"b"},{"c","d","e"}};
-		rules["<e>"] = {};
+		rules["<e>"] = {{}};
 		
 		_test_rules_from_http(
 			" <a> ::= b | c d e\n"
@@ -342,7 +342,7 @@ void TST_mod_from_http::test_rules_from_http()
 
 		Rules rules;
 		rules["<a>"] = {{"b"},{"c","d","e"}};
-		rules["<e>"] = {};
+		rules["<e>"] = {{}};
 		
 		_test_rules_from_http(
 			" <a> ::= b | c d e\n"
@@ -370,7 +370,7 @@ void TST_mod_from_http::test_rules_from_http()
 
 		Rules rules;
 		rules["<a>"] = {{"b"},{"c","d","e"}};
-		rules["<e>"] = {};
+		rules["<e>"] = {{}};
 		
 		_test_rules_from_http(
 			" <a> ::= b | c d e\n"
@@ -398,7 +398,7 @@ void TST_mod_from_http::test_rules_from_http()
 
 		Rules rules;
 		rules["<a>"] = {{"b"},{"c","d","e"}};
-		rules["<e>"] = {};
+		rules["<e>"] = {{}};
 		
 		_test_rules_from_http(
 			" <a> ::= b | c d e\n"
@@ -427,7 +427,7 @@ void TST_mod_from_http::test_rules_from_http()
 
 		Rules rules;
 		rules["<a>"] = {{"b"},{"c","d","e"}};
-		rules["<e>"] = {};
+		rules["<e>"] = {{}};
 		
 		_test_rules_from_http(
 			" <a> ::= b | c d e\n"

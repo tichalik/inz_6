@@ -52,10 +52,10 @@ void TST_mod_check_errors::test_word_errors()
 	nonterminals.insert("C");
 	
 	
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " reference -- all ok" << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " reference -- all ok" << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
 		Word word;
 		word.push_back("a");
@@ -73,10 +73,10 @@ void TST_mod_check_errors::test_word_errors()
 			expected_errors
 		);
 	}
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " unknown symbols " << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " unknown symbols " << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
 		Word word;
 		word.push_back("a");
@@ -89,12 +89,12 @@ void TST_mod_check_errors::test_word_errors()
 		
 		Error error1;
 		error1.type = UNKNOWN_SYMBOL;
-		error1.source = " symbol <z>:";
+		error1.source = " symbol \"z\":";
 		expected_errors.push_back(error1);
 		
 		Error error2;
 		error2.type = UNKNOWN_SYMBOL;
-		error2.source = " symbol <q>:";
+		error2.source = " symbol \"q\":";
 		expected_errors.push_back(error2);
 		
 		_test_word_errors( 
@@ -104,10 +104,10 @@ void TST_mod_check_errors::test_word_errors()
 			expected_errors
 		);
 	}
+	std::cout << "===============================================================" << std::endl;
+	std::cout << " nonterminals  " << std::endl;
+	std::cout << "===============================================================" << std::endl;
 	{
-		std::cout << "===============================================================" << std::endl;
-		std::cout << " nonterminals  " << std::endl;
-		std::cout << "===============================================================" << std::endl;
 		
 		Word word;
 		word.push_back("a");
@@ -120,12 +120,12 @@ void TST_mod_check_errors::test_word_errors()
 		
 		Error error1;
 		error1.type = SYMBOL_IN_NONTERMINALS;
-		error1.source = " symbol <A>:";
+		error1.source = " symbol \"A\":";
 		expected_errors.push_back(error1);
 		
 		Error error2;
 		error2.type = SYMBOL_IN_NONTERMINALS;
-		error2.source = " symbol <B>:";
+		error2.source = " symbol \"B\":";
 		expected_errors.push_back(error2);
 		
 		_test_word_errors( 
