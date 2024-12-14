@@ -61,7 +61,7 @@ void Mod_visualize_grammar::append_children(
 {
 	for (size_t i=0; i<root.tag.size(); i++)
 	{
-		const std::vector<Symbols> & RHS = rules.at(root.tag[i]);
+		const std::vector<Symbols> & RHS = rules.get_rules(root.tag[i]);
 		for (size_t j=0; j<RHS.size(); j++)
 		{
 			if (was_used.at(root.tag[i])[j] == false ) 
