@@ -27,13 +27,13 @@ VECTOR_STR(Tokens);
 
 
 std::string str(
-	const std::list<State> & i,
+	const State_set & i,
 	const std::string & tabs
 )
 {
 	std::stringstream res;
 	size_t pos = 0;
-	for (std::list<State>::const_iterator j = i.cbegin(); j != i.cend(); j++)
+	for (State_set::const_iterator j = i.cbegin(); j != i.cend(); j++)
 	{
 		res << tabs << (pos++)  <<".\n" << str(*j, tabs + "\t") << std::endl;
 	} 
@@ -41,7 +41,7 @@ std::string str(
 }
 	
 
-VECTOR_STR(std::vector<std::list<State>>);
+VECTOR_STR(std::vector<State_set>);
 
 
 std::string str(

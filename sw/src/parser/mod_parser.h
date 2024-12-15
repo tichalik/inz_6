@@ -5,7 +5,7 @@
 #include "error.h"
 #include "word.h"
 #include "sppf.h"
-#include <list>
+#include <set>
 
 struct State
 {
@@ -14,7 +14,16 @@ struct State
 	size_t pos;
 	size_t origin;
 	SPPF_node* sppf_node = nullptr;
+	size_t pos_in_set = -1;
 };
+
+bool state_compare(
+	const State& s1,
+	const State& s2
+);
+
+typedef bool(*State_compare)(const State&, const State&);
+typedef std::set<State, State_compare> State_set;
 
 /** 
  * \brief parses words into parse trees
@@ -22,14 +31,14 @@ struct State
 class Mod_parser
 {
 	
-	std::vector<std::list<State> > states;
+	std::vector<State_set > states;
 
 	SPPF& sppf;
 	const Grammar& grammar;
 
 	void predict(const State & state, size_t i);	
 	void scan(const State & state, size_t i);	
-	void complete(State & state, size_t i);	
+	void complete(const State & state, size_t i);	
 
 	std::list<State>::iterator find_in_set(const State & state, size_t i) ;
 

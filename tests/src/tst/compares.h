@@ -40,8 +40,8 @@ COMPARE_DECLARATION(Non_terminals);
 
 
 COMPARE_DECLARATION(State);	
-COMPARE_DECLARATION(std::list<State>);	
-COMPARE_DECLARATION(std::vector<std::list<State>>);	
+COMPARE_DECLARATION(State_set);	
+COMPARE_DECLARATION(std::vector<State_set>);	
 
 #undef COMPARE_DECLARATION
 

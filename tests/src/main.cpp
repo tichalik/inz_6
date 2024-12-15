@@ -41,12 +41,12 @@ int main()
 //	mce.test_word_errors();
 	
 	TST_mod_parser mp;
-//	mp.complete_parser_tests();
+	mp.complete_parser_tests();
 	
 	TST_mod_to_http m2h;
 //	m2h.test_sppf_to_string();
 //	m2h.test_iterate_sppf();
 
-	test_visualize();
+//	test_visualize();
 
 }

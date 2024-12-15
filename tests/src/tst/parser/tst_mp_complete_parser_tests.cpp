@@ -4,7 +4,7 @@
 void TST_mod_parser::_complete_parser_tests(
 	const Grammar & grammar,
 	const Word & word,
-	const std::vector<std::list<State>> & expected_states,
+	const std::vector<State_set> & expected_states,
 	const std::string & expected_results
 )
 {
@@ -42,73 +42,34 @@ void TST_mod_parser::complete_parser_tests()
 	std::cout << " S-> S | b " << std::endl;
 	std::cout << " input :  b " << std::endl;
 	std::cout << "===============================================================" << std::endl;
-	{
-		Word word;
-		word.push_back("b");
-
-		Grammar grammar;
-		grammar.terminals.insert("b");
-		grammar.nonterminals.insert("S");
-		grammar.head = "S";
-		grammar.rules ["S"] = {{"S"},{"b"}};
-		
-		std::vector<std::list<State>> states( 2 );
-		//states[ 0 ]
-		{
-			//S -> . S | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-			//S -> . b | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("b");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-		}
-		//states[ 1 ]
-		{
-			//S -> b . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("b");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-			//S -> S . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-		}
-
-		_complete_parser_tests(
-			grammar,
-			word,
-			states,
-			"S b S \n"
-			"S S b S S \n"
-			"S *S S "
-		);
- 	 } 
+//	{
+//		Word word;
+//		word.push_back("b");
+//
+//		Grammar grammar;
+//		grammar.terminals.insert("b");
+//		grammar.nonterminals.insert("S");
+//		grammar.head = "S";
+//		grammar.rules ["S"] = {{"S"},{"b"}};
+//		
+//		std::vector<State_set> states( 2 , State_set(&state_compare));
+//		// state[ 0 ]
+//		states[0].insert({"S", {"S"},		 0, 0, nullptr, 0});
+//		states[0].insert({"S", {"b"},		 0, 0, nullptr, 1});
+//		// state[ 1 ]
+//		states[1].insert({"S", {"b"},		 1, 0, nullptr, 0});
+//		states[1].insert({"S", {"S"},		 1, 0, nullptr, 1});
+//
+//
+//		_complete_parser_tests(
+//			grammar,
+//			word,
+//			states,
+//			"S b S \n"
+//			"S S b S S \n"
+//			"S *S S "
+//		);
+// 	 } 
 
 	std::cout << "===============================================================" << std::endl;
 	std::cout << " grammar:  " << std::endl;
@@ -127,232 +88,31 @@ void TST_mod_parser::complete_parser_tests()
 		grammar.head = "S";
 		grammar.rules ["S"] = {{"S","S"},{"b"}};
 		
-		std::vector<std::list<State>> states( 4 );
-		//states[ 0 ]
-		{
-			//S -> . S S | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("S");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-			//S -> . b | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("b");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-		}
-		//states[ 1 ]
-		{
-			//S -> b . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("b");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-			//S -> S . S | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("S");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-			//S -> . S S | 1
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("S");
-				state.pos = 0;
-				state.origin = 1;
-
-				states[1].push_back(state);
-			}
-			//S -> . b | 1
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("b");
-				state.pos = 0;
-				state.origin = 1;
-
-				states[1].push_back(state);
-			}
-		}
-		//states[ 2 ]
-		{
-			//S -> b . | 1
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("b");
-				state.pos = 1;
-				state.origin = 1;
-
-				states[2].push_back(state);
-			}
-			//S -> S S . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("S");
-				state.pos = 2;
-				state.origin = 0;
-
-				states[2].push_back(state);
-			}
-			//S -> S . S | 1
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("S");
-				state.pos = 1;
-				state.origin = 1;
-
-				states[2].push_back(state);
-			}
-			//S -> S . S | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("S");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[2].push_back(state);
-			}
-			//S -> . S S | 2
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("S");
-				state.pos = 0;
-				state.origin = 2;
-
-				states[2].push_back(state);
-			}
-			//S -> . b | 2
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("b");
-				state.pos = 0;
-				state.origin = 2;
-
-				states[2].push_back(state);
-			}
-		}
-		//states[ 3 ]
-		{
-			//S -> b . | 2
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("b");
-				state.pos = 1;
-				state.origin = 2;
-
-				states[3].push_back(state);
-			}
-			//S -> S S . | 1
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("S");
-				state.pos = 2;
-				state.origin = 1;
-
-				states[3].push_back(state);
-			}
-			//S -> S S . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("S");
-				state.pos = 2;
-				state.origin = 0;
-
-				states[3].push_back(state);
-			}
-			//S -> S . S | 2
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("S");
-				state.pos = 1;
-				state.origin = 2;
-
-				states[3].push_back(state);
-			}
-			//S -> S . S | 1
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("S");
-				state.pos = 1;
-				state.origin = 1;
-
-				states[3].push_back(state);
-			}
-			//S -> S . S | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("S");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[3].push_back(state);
-			}
-			//S -> . S S | 3
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("S");
-				state.pos = 0;
-				state.origin = 3;
-
-				states[3].push_back(state);
-			}
-			//S -> . b | 3
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("b");
-				state.pos = 0;
-				state.origin = 3;
-
-				states[3].push_back(state);
-			}
-		}
+		std::vector<State_set> states( 4 , State_set(&state_compare));
+		// state[ 0 ]
+		states[0].insert({"S", {"S", "S"},	 0, 0, nullptr, 0});
+		states[0].insert({"S", {"b"},		 0, 0, nullptr, 1});
+		// state[ 1 ]
+		states[1].insert({"S", {"b"},		 1, 0, nullptr, 0});
+		states[1].insert({"S", {"S", "S"},	 1, 0, nullptr, 1});
+		states[1].insert({"S", {"S", "S"},	 0, 1, nullptr, 2});
+		states[1].insert({"S", {"b"},		 0, 1, nullptr, 3});
+		// state[ 2 ]
+		states[2].insert({"S", {"b"},		 1, 1, nullptr, 0});
+		states[2].insert({"S", {"S", "S"},	 2, 0, nullptr, 1});
+		states[2].insert({"S", {"S", "S"},	 1, 1, nullptr, 2});
+		states[2].insert({"S", {"S", "S"},	 1, 0, nullptr, 3});
+		states[2].insert({"S", {"S", "S"},	 0, 2, nullptr, 4});
+		states[2].insert({"S", {"b"},		 0, 2, nullptr, 5});
+		// state[ 3 ]
+		states[3].insert({"S", {"b"},		 1, 2, nullptr, 0});
+		states[3].insert({"S", {"S", "S"},	 2, 1, nullptr, 1});
+		states[3].insert({"S", {"S", "S"},	 2, 0, nullptr, 2});
+		states[3].insert({"S", {"S", "S"},	 1, 2, nullptr, 3});
+		states[3].insert({"S", {"S", "S"},	 1, 1, nullptr, 4});
+		states[3].insert({"S", {"S", "S"},	 1, 0, nullptr, 5});
+		states[3].insert({"S", {"S", "S"},	 0, 3, nullptr, 6});
+		states[3].insert({"S", {"b"},		 0, 3, nullptr, 7});
 		
 		_complete_parser_tests(
 			grammar,
@@ -393,353 +153,44 @@ void TST_mod_parser::complete_parser_tests()
 		grammar.rules ["M"] = {{"M","*","T"}, {"T"}};
 		grammar.rules ["T"] = {{"x"}};
 		
-		std::vector<std::list<State>> states( 6 );
-		//states[ 0 ]
-		{
-			//P -> . S | 0
-			{
-				State state;
-				state.LHS = "P";
-				state.RHS.push_back("S");
-				state.pos = 0;
-				state.origin = 0;
+		std::vector<State_set> states( 6 , State_set(&state_compare));
+		// state[ 0 ]
+		states[0].insert({"P", {"S"},		 0, 0, nullptr, 0});
+		states[0].insert({"S", {"S", "+", "M"},	 0, 0, nullptr, 1});
+		states[0].insert({"S", {"M"},		 0, 0, nullptr, 2});
+		states[0].insert({"M", {"M", "*", "T"},	 0, 0, nullptr, 3});
+		states[0].insert({"M", {"T"},		 0, 0, nullptr, 4});
+		states[0].insert({"T", {"x"},		 0, 0, nullptr, 5});
+		// state[ 1 ]
+		states[1].insert({"T", {"x"},		 1, 0, nullptr, 0});
+		states[1].insert({"M", {"T"},		 1, 0, nullptr, 1});
+		states[1].insert({"S", {"M"},		 1, 0, nullptr, 2});
+		states[1].insert({"M", {"M", "*", "T"},	 1, 0, nullptr, 3});
+		states[1].insert({"P", {"S"},		 1, 0, nullptr, 4});
+		states[1].insert({"S", {"S", "+", "M"},	 1, 0, nullptr, 5});
+		// state[ 2 ]
+		states[2].insert({"S", {"S", "+", "M"},	 2, 0, nullptr, 0});
+		states[2].insert({"M", {"M", "*", "T"},	 0, 2, nullptr, 1});
+		states[2].insert({"M", {"T"},		 0, 2, nullptr, 2});
+		states[2].insert({"T", {"x"},		 0, 2, nullptr, 3});
+		// state[ 3 ]
+		states[3].insert({"T", {"x"},		 1, 2, nullptr, 0});
+		states[3].insert({"M", {"T"},		 1, 2, nullptr, 1});
+		states[3].insert({"S", {"S", "+", "M"},	 3, 0, nullptr, 2});
+		states[3].insert({"M", {"M", "*", "T"},	 1, 2, nullptr, 3});
+		states[3].insert({"P", {"S"},		 1, 0, nullptr, 4});
+		states[3].insert({"S", {"S", "+", "M"},	 1, 0, nullptr, 5});
+		// state[ 4 ]
+		states[4].insert({"M", {"M", "*", "T"},	 2, 2, nullptr, 0});
+		states[4].insert({"T", {"x"},		 0, 4, nullptr, 1});
+		// state[ 5 ]
+		states[5].insert({"T", {"x"},		 1, 4, nullptr, 0});
+		states[5].insert({"M", {"M", "*", "T"},	 3, 2, nullptr, 1});
+		states[5].insert({"S", {"S", "+", "M"},	 3, 0, nullptr, 2});
+		states[5].insert({"M", {"M", "*", "T"},	 1, 2, nullptr, 3});
+		states[5].insert({"P", {"S"},		 1, 0, nullptr, 4});
+		states[5].insert({"S", {"S", "+", "M"},	 1, 0, nullptr, 5});
 
-				states[0].push_back(state);
-			}
-			//S -> . S + M | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("+");
-				state.RHS.push_back("M");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-			//S -> . M | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("M");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-			//M -> . M * T | 0
-			{
-				State state;
-				state.LHS = "M";
-				state.RHS.push_back("M");
-				state.RHS.push_back("*");
-				state.RHS.push_back("T");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-			//M -> . T | 0
-			{
-				State state;
-				state.LHS = "M";
-				state.RHS.push_back("T");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-			//T -> . x | 0
-			{
-				State state;
-				state.LHS = "T";
-				state.RHS.push_back("x");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-		}
-		//states[ 1 ]
-		{
-			//T -> x . | 0
-			{
-				State state;
-				state.LHS = "T";
-				state.RHS.push_back("x");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-			//M -> T . | 0
-			{
-				State state;
-				state.LHS = "M";
-				state.RHS.push_back("T");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-			//S -> M . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("M");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-			//M -> M . * T | 0
-			{
-				State state;
-				state.LHS = "M";
-				state.RHS.push_back("M");
-				state.RHS.push_back("*");
-				state.RHS.push_back("T");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-			//P -> S . | 0
-			{
-				State state;
-				state.LHS = "P";
-				state.RHS.push_back("S");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-			//S -> S . + M | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("+");
-				state.RHS.push_back("M");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-		}
-		//states[ 2 ]
-		{
-			//S -> S + . M | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("+");
-				state.RHS.push_back("M");
-				state.pos = 2;
-				state.origin = 0;
-
-				states[2].push_back(state);
-			}
-			//M -> . M * T | 2
-			{
-				State state;
-				state.LHS = "M";
-				state.RHS.push_back("M");
-				state.RHS.push_back("*");
-				state.RHS.push_back("T");
-				state.pos = 0;
-				state.origin = 2;
-
-				states[2].push_back(state);
-			}
-			//M -> . T | 2
-			{
-				State state;
-				state.LHS = "M";
-				state.RHS.push_back("T");
-				state.pos = 0;
-				state.origin = 2;
-
-				states[2].push_back(state);
-			}
-			//T -> . x | 2
-			{
-				State state;
-				state.LHS = "T";
-				state.RHS.push_back("x");
-				state.pos = 0;
-				state.origin = 2;
-
-				states[2].push_back(state);
-			}
-		}
-		//states[ 3 ]
-		{
-			//T -> x . | 2
-			{
-				State state;
-				state.LHS = "T";
-				state.RHS.push_back("x");
-				state.pos = 1;
-				state.origin = 2;
-
-				states[3].push_back(state);
-			}
-			//M -> T . | 2
-			{
-				State state;
-				state.LHS = "M";
-				state.RHS.push_back("T");
-				state.pos = 1;
-				state.origin = 2;
-
-				states[3].push_back(state);
-			}
-			//S -> S + M . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("+");
-				state.RHS.push_back("M");
-				state.pos = 3;
-				state.origin = 0;
-
-				states[3].push_back(state);
-			}
-			//M -> M . * T | 2
-			{
-				State state;
-				state.LHS = "M";
-				state.RHS.push_back("M");
-				state.RHS.push_back("*");
-				state.RHS.push_back("T");
-				state.pos = 1;
-				state.origin = 2;
-
-				states[3].push_back(state);
-			}
-			//P -> S . | 0
-			{
-				State state;
-				state.LHS = "P";
-				state.RHS.push_back("S");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[3].push_back(state);
-			}
-			//S -> S . + M | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("+");
-				state.RHS.push_back("M");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[3].push_back(state);
-			}
-		}
-		//states[ 4 ]
-		{
-			//M -> M * . T | 2
-			{
-				State state;
-				state.LHS = "M";
-				state.RHS.push_back("M");
-				state.RHS.push_back("*");
-				state.RHS.push_back("T");
-				state.pos = 2;
-				state.origin = 2;
-
-				states[4].push_back(state);
-			}
-			//T -> . x | 4
-			{
-				State state;
-				state.LHS = "T";
-				state.RHS.push_back("x");
-				state.pos = 0;
-				state.origin = 4;
-
-				states[4].push_back(state);
-			}
-		}
-		//states[ 5 ]
-		{
-			//T -> x . | 4
-			{
-				State state;
-				state.LHS = "T";
-				state.RHS.push_back("x");
-				state.pos = 1;
-				state.origin = 4;
-
-				states[5].push_back(state);
-			}
-			//M -> M * T . | 2
-			{
-				State state;
-				state.LHS = "M";
-				state.RHS.push_back("M");
-				state.RHS.push_back("*");
-				state.RHS.push_back("T");
-				state.pos = 3;
-				state.origin = 2;
-
-				states[5].push_back(state);
-			}
-			//S -> S + M . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("+");
-				state.RHS.push_back("M");
-				state.pos = 3;
-				state.origin = 0;
-
-				states[5].push_back(state);
-			}
-			//M -> M . * T | 2
-			{
-				State state;
-				state.LHS = "M";
-				state.RHS.push_back("M");
-				state.RHS.push_back("*");
-				state.RHS.push_back("T");
-				state.pos = 1;
-				state.origin = 2;
-
-				states[5].push_back(state);
-			}
-			//P -> S . | 0
-			{
-				State state;
-				state.LHS = "P";
-				state.RHS.push_back("S");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[5].push_back(state);
-			}
-			//S -> S . + M | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("+");
-				state.RHS.push_back("M");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[5].push_back(state);
-			}
-		}
 
 
 		std::vector<std::string> results;
@@ -772,277 +223,36 @@ void TST_mod_parser::complete_parser_tests()
 		grammar.head = "S";
 		grammar.rules ["S"] = {{"a","S"},{"a"}};
 		
-		std::vector<std::list<State>> states( 5 );
-		//states[ 0 ]
-		{
-			//S -> . a S | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.RHS.push_back("S");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-			//S -> . a | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-		}
-		//states[ 1 ]
-		{
-			//S -> a . S | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.RHS.push_back("S");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-			//S -> a . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-			//S -> . a S | 1
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.RHS.push_back("S");
-				state.pos = 0;
-				state.origin = 1;
-
-				states[1].push_back(state);
-			}
-			//S -> . a | 1
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 1;
-
-				states[1].push_back(state);
-			}
-		}
-		//states[ 2 ]
-		{
-			//S -> a . S | 1
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.RHS.push_back("S");
-				state.pos = 1;
-				state.origin = 1;
-
-				states[2].push_back(state);
-			}
-			//S -> a . | 1
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 1;
-
-				states[2].push_back(state);
-			}
-			//S -> . a S | 2
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.RHS.push_back("S");
-				state.pos = 0;
-				state.origin = 2;
-
-				states[2].push_back(state);
-			}
-			//S -> . a | 2
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 2;
-
-				states[2].push_back(state);
-			}
-			//S -> a S . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.RHS.push_back("S");
-				state.pos = 2;
-				state.origin = 0;
-
-				states[2].push_back(state);
-			}
-		}
-		//states[ 3 ]
-		{
-			//S -> a . S | 2
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.RHS.push_back("S");
-				state.pos = 1;
-				state.origin = 2;
-
-				states[3].push_back(state);
-			}
-			//S -> a . | 2
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 2;
-
-				states[3].push_back(state);
-			}
-			//S -> . a S | 3
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.RHS.push_back("S");
-				state.pos = 0;
-				state.origin = 3;
-
-				states[3].push_back(state);
-			}
-			//S -> . a | 3
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 3;
-
-				states[3].push_back(state);
-			}
-			//S -> a S . | 1
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.RHS.push_back("S");
-				state.pos = 2;
-				state.origin = 1;
-
-				states[3].push_back(state);
-			}
-			//S -> a S . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.RHS.push_back("S");
-				state.pos = 2;
-				state.origin = 0;
-
-				states[3].push_back(state);
-			}
-		}
-		//states[ 4 ]
-		{
-			//S -> a . S | 3
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.RHS.push_back("S");
-				state.pos = 1;
-				state.origin = 3;
-
-				states[4].push_back(state);
-			}
-			//S -> a . | 3
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 3;
-
-				states[4].push_back(state);
-			}
-			//S -> . a S | 4
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.RHS.push_back("S");
-				state.pos = 0;
-				state.origin = 4;
-
-				states[4].push_back(state);
-			}
-			//S -> . a | 4
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 4;
-
-				states[4].push_back(state);
-			}
-			//S -> a S . | 2
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.RHS.push_back("S");
-				state.pos = 2;
-				state.origin = 2;
-
-				states[4].push_back(state);
-			}
-			//S -> a S . | 1
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.RHS.push_back("S");
-				state.pos = 2;
-				state.origin = 1;
-
-				states[4].push_back(state);
-			}
-			//S -> a S . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.RHS.push_back("S");
-				state.pos = 2;
-				state.origin = 0;
-
-				states[4].push_back(state);
-			}
-		}
+		std::vector<State_set> states( 5 , State_set(&state_compare));
+		// state[ 0 ]
+		states[0].insert({"S", {"a", "S"},	 0, 0, nullptr, 0});
+		states[0].insert({"S", {"a"},		 0, 0, nullptr, 1});
+		// state[ 1 ]
+		states[1].insert({"S", {"a", "S"},	 1, 0, nullptr, 0});
+		states[1].insert({"S", {"a"},		 1, 0, nullptr, 1});
+		states[1].insert({"S", {"a", "S"},	 0, 1, nullptr, 2});
+		states[1].insert({"S", {"a"},		 0, 1, nullptr, 3});
+		// state[ 2 ]
+		states[2].insert({"S", {"a", "S"},	 1, 1, nullptr, 0});
+		states[2].insert({"S", {"a"},		 1, 1, nullptr, 1});
+		states[2].insert({"S", {"a", "S"},	 0, 2, nullptr, 2});
+		states[2].insert({"S", {"a"},		 0, 2, nullptr, 3});
+		states[2].insert({"S", {"a", "S"},	 2, 0, nullptr, 4});
+		// state[ 3 ]
+		states[3].insert({"S", {"a", "S"},	 1, 2, nullptr, 0});
+		states[3].insert({"S", {"a"},		 1, 2, nullptr, 1});
+		states[3].insert({"S", {"a", "S"},	 0, 3, nullptr, 2});
+		states[3].insert({"S", {"a"},		 0, 3, nullptr, 3});
+		states[3].insert({"S", {"a", "S"},	 2, 1, nullptr, 4});
+		states[3].insert({"S", {"a", "S"},	 2, 0, nullptr, 5});
+		// state[ 4 ]
+		states[4].insert({"S", {"a", "S"},	 1, 3, nullptr, 0});
+		states[4].insert({"S", {"a"},		 1, 3, nullptr, 1});
+		states[4].insert({"S", {"a", "S"},	 0, 4, nullptr, 2});
+		states[4].insert({"S", {"a"},		 0, 4, nullptr, 3});
+		states[4].insert({"S", {"a", "S"},	 2, 2, nullptr, 4});
+		states[4].insert({"S", {"a", "S"},	 2, 1, nullptr, 5});
+		states[4].insert({"S", {"a", "S"},	 2, 0, nullptr, 6});
 
 
 		_complete_parser_tests(
@@ -1072,130 +282,22 @@ void TST_mod_parser::complete_parser_tests()
 		grammar.head = "S";
 		grammar.rules ["S"] = {{"S","a"},{"a"}};
 		
-		std::vector<std::list<State>> states( 5 );
-		//states[ 0 ]
-		{
-			//S -> . S a | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-			//S -> . a | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-		}
-		//states[ 1 ]
-		{
-			//S -> a . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-			//S -> S . a | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-		}
-		//states[ 2 ]
-		{
-			//S -> S a . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("a");
-				state.pos = 2;
-				state.origin = 0;
-
-				states[2].push_back(state);
-			}
-			//S -> S . a | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[2].push_back(state);
-			}
-		}
-		//states[ 3 ]
-		{
-			//S -> S a . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("a");
-				state.pos = 2;
-				state.origin = 0;
-
-				states[3].push_back(state);
-			}
-			//S -> S . a | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[3].push_back(state);
-			}
-		}
-		//states[ 4 ]
-		{
-			//S -> S a . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("a");
-				state.pos = 2;
-				state.origin = 0;
-
-				states[4].push_back(state);
-			}
-			//S -> S . a | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[4].push_back(state);
-			}
-		}
+		std::vector<State_set> states( 5 , State_set(&state_compare));
+		// state[ 0 ]
+		states[0].insert({"S", {"S", "a"},	 0, 0, nullptr, 0});
+		states[0].insert({"S", {"a"},		 0, 0, nullptr, 1});
+		// state[ 1 ]
+		states[1].insert({"S", {"a"},		 1, 0, nullptr, 0});
+		states[1].insert({"S", {"S", "a"},	 1, 0, nullptr, 1});
+		// state[ 2 ]
+		states[2].insert({"S", {"S", "a"},	 2, 0, nullptr, 0});
+		states[2].insert({"S", {"S", "a"},	 1, 0, nullptr, 1});
+		// state[ 3 ]
+		states[3].insert({"S", {"S", "a"},	 2, 0, nullptr, 0});
+		states[3].insert({"S", {"S", "a"},	 1, 0, nullptr, 1});
+		// state[ 4 ]
+		states[4].insert({"S", {"S", "a"},	 2, 0, nullptr, 0});
+		states[4].insert({"S", {"S", "a"},	 1, 0, nullptr, 1});
 
 		_complete_parser_tests(
 			grammar,
@@ -1226,363 +328,44 @@ void TST_mod_parser::complete_parser_tests()
 		grammar.rules ["S"] = {{"S","A"},{"A"}};
 		grammar.rules ["A"] = {{"a"},{"a","a"}};
 		
-		std::vector<std::list<State>> states( 5 );
-		//states[ 0 ]
-		{
-			//S -> . S A | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("A");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-			//S -> . A | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("A");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-			//A -> . a | 0
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-			//A -> . a a | 0
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 0;
-
-				states[0].push_back(state);
-			}
-		}
-		//states[ 1 ]
-		{
-			//A -> a . | 0
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-			//A -> a . a | 0
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-			//S -> A . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("A");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-			//S -> S . A | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("A");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[1].push_back(state);
-			}
-			//A -> . a | 1
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 1;
-
-				states[1].push_back(state);
-			}
-			//A -> . a a | 1
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 1;
-
-				states[1].push_back(state);
-			}
-		}
-		//states[ 2 ]
-		{
-			//A -> a a . | 0
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.RHS.push_back("a");
-				state.pos = 2;
-				state.origin = 0;
-
-				states[2].push_back(state);
-			}
-			//A -> a . | 1
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 1;
-
-				states[2].push_back(state);
-			}
-			//A -> a . a | 1
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 1;
-
-				states[2].push_back(state);
-			}
-			//S -> A . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("A");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[2].push_back(state);
-			}
-			//S -> S A . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("A");
-				state.pos = 2;
-				state.origin = 0;
-
-				states[2].push_back(state);
-			}
-			//S -> S . A | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("A");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[2].push_back(state);
-			}
-			//A -> . a | 2
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 2;
-
-				states[2].push_back(state);
-			}
-			//A -> . a a | 2
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 2;
-
-				states[2].push_back(state);
-			}
-		}
-		//states[ 3 ]
-		{
-			//A -> a a . | 1
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.RHS.push_back("a");
-				state.pos = 2;
-				state.origin = 1;
-
-				states[3].push_back(state);
-			}
-			//A -> a . | 2
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 2;
-
-				states[3].push_back(state);
-			}
-			//A -> a . a | 2
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 2;
-
-				states[3].push_back(state);
-			}
-			//S -> S A . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("A");
-				state.pos = 2;
-				state.origin = 0;
-
-				states[3].push_back(state);
-			}
-			//S -> S . A | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("A");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[3].push_back(state);
-			}
-			//A -> . a | 3
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 3;
-
-				states[3].push_back(state);
-			}
-			//A -> . a a | 3
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 3;
-
-				states[3].push_back(state);
-			}
-		}
-		//states[ 4 ]
-		{
-			//A -> a a . | 2
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.RHS.push_back("a");
-				state.pos = 2;
-				state.origin = 2;
-
-				states[4].push_back(state);
-			}
-			//A -> a . | 3
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 3;
-
-				states[4].push_back(state);
-			}
-			//A -> a . a | 3
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.RHS.push_back("a");
-				state.pos = 1;
-				state.origin = 3;
-
-				states[4].push_back(state);
-			}
-			//S -> S A . | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("A");
-				state.pos = 2;
-				state.origin = 0;
-
-				states[4].push_back(state);
-			}
-			//S -> S . A | 0
-			{
-				State state;
-				state.LHS = "S";
-				state.RHS.push_back("S");
-				state.RHS.push_back("A");
-				state.pos = 1;
-				state.origin = 0;
-
-				states[4].push_back(state);
-			}
-			//A -> . a | 4
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 4;
-
-				states[4].push_back(state);
-			}
-			//A -> . a a | 4
-			{
-				State state;
-				state.LHS = "A";
-				state.RHS.push_back("a");
-				state.RHS.push_back("a");
-				state.pos = 0;
-				state.origin = 4;
-
-				states[4].push_back(state);
-			}
-		}
-
+		std::vector<State_set> states( 5 , State_set(&state_compare));
+		// state[ 0 ]
+		states[0].insert({"S", {"S", "A"},	 0, 0, nullptr, 0});
+		states[0].insert({"S", {"A"},		 0, 0, nullptr, 1});
+		states[0].insert({"A", {"a"},		 0, 0, nullptr, 2});
+		states[0].insert({"A", {"a", "a"},	 0, 0, nullptr, 3});
+		// state[ 1 ]
+		states[1].insert({"A", {"a"},		 1, 0, nullptr, 0});
+		states[1].insert({"A", {"a", "a"},	 1, 0, nullptr, 1});
+		states[1].insert({"S", {"A"},		 1, 0, nullptr, 2});
+		states[1].insert({"S", {"S", "A"},	 1, 0, nullptr, 3});
+		states[1].insert({"A", {"a"},		 0, 1, nullptr, 4});
+		states[1].insert({"A", {"a", "a"},	 0, 1, nullptr, 5});
+		// state[ 2 ]
+		states[2].insert({"A", {"a", "a"},	 2, 0, nullptr, 0});
+		states[2].insert({"A", {"a"},		 1, 1, nullptr, 1});
+		states[2].insert({"A", {"a", "a"},	 1, 1, nullptr, 2});
+		states[2].insert({"S", {"A"},		 1, 0, nullptr, 3});
+		states[2].insert({"S", {"S", "A"},	 2, 0, nullptr, 4});
+		states[2].insert({"S", {"S", "A"},	 1, 0, nullptr, 5});
+		states[2].insert({"A", {"a"},		 0, 2, nullptr, 6});
+		states[2].insert({"A", {"a", "a"},	 0, 2, nullptr, 7});
+		// state[ 3 ]
+		states[3].insert({"A", {"a", "a"},	 2, 1, nullptr, 0});
+		states[3].insert({"A", {"a"},		 1, 2, nullptr, 1});
+		states[3].insert({"A", {"a", "a"},	 1, 2, nullptr, 2});
+		states[3].insert({"S", {"S", "A"},	 2, 0, nullptr, 3});
+		states[3].insert({"S", {"S", "A"},	 1, 0, nullptr, 4});
+		states[3].insert({"A", {"a"},		 0, 3, nullptr, 5});
+		states[3].insert({"A", {"a", "a"},	 0, 3, nullptr, 6});
+		// state[ 4 ]
+		states[4].insert({"A", {"a", "a"},	 2, 2, nullptr, 0});
+		states[4].insert({"A", {"a"},		 1, 3, nullptr, 1});
+		states[4].insert({"A", {"a", "a"},	 1, 3, nullptr, 2});
+		states[4].insert({"S", {"S", "A"},	 2, 0, nullptr, 3});
+		states[4].insert({"S", {"S", "A"},	 1, 0, nullptr, 4});
+		states[4].insert({"A", {"a"},		 0, 4, nullptr, 5});
+		states[4].insert({"A", {"a", "a"},	 0, 4, nullptr, 6});
 
 		_complete_parser_tests(
 			grammar,

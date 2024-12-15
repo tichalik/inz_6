@@ -10,7 +10,7 @@ class TST_mod_parser: public Tester
 	void _complete_parser_tests(
 		const Grammar & grammar,
 		const Word & word,
-		const std::vector<std::list<State>> & expected_states,
+		const std::vector<State_set> & expected_states,
 		const std::string & expected_results
 	);
 

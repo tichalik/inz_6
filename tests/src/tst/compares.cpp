@@ -68,8 +68,8 @@ COMPARE_VECTOR_TYPE(Tokens);
 
 
 bool compare(
-	const  std::list<State>& expected,
-	const  std::list<State>& real,
+	const  State_set& expected,
+	const  State_set& real,
 	const std::string & message
 ) 
 {
@@ -77,12 +77,13 @@ bool compare(
 	if (expected.size() != real.size())
 	{
 		same = false;
-	}
+ 	}
 	else 
-	{
-		std::list<State>::const_iterator i_real = real.begin();
-		for (std::list<State>::const_iterator i=expected.begin(); i != expected.end(); i++)
-		{
+ 	{
+		State_set::const_iterator i_real = real.begin();
+		for (State_set::const_iterator i=expected.begin();
+			i != expected.end(); i++)
+		{ 
 			same &= compare(*i, *i_real, message + " ");
 			i_real++;
 		}
@@ -90,8 +91,8 @@ bool compare(
 	
 	END_COMPARE;
 	return same;
-} 
-COMPARE_VECTOR_TYPE(std::vector<std::list<State> >);
+}  
+COMPARE_VECTOR_TYPE(std::vector<State_set>);
 
 bool compare(
 	const State& expected,
