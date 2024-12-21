@@ -36,9 +36,9 @@ int main()
 //	mfh.test_tokenize();
 	
 	TST_mod_check_errors mce;
-//	mce.test_head_errors();
-//	mce.test_rules_errors();
-//	mce.test_word_errors();
+	mce.test_head_errors();
+	mce.test_rules_errors();
+	mce.test_word_errors();
 	
 	TST_mod_parser mp;
 //	mp.complete_parser_tests();
@@ -47,6 +47,6 @@ int main()
 //	m2h.test_sppf_to_string();
 //	m2h.test_iterate_sppf();
 
-	test_visualize();
+//	test_visualize();
 
 }

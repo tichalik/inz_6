@@ -9,7 +9,8 @@ void Mod_check_errors::check_symbol_errors(
 	const Non_terminals & nonterminals
 )
 {
-	if (!terminals.contains(s) && !nonterminals.contains(s) && s != "")
+	if (terminals.find(s) == terminals.end() 
+		&& nonterminals.find(s) == nonterminals.end() && s != "")
 	{
 		add_error(UNKNOWN_SYMBOL, parent_source + " symbol \"" + s+ "\":");
 	}
@@ -26,13 +27,14 @@ void Mod_check_errors::word_check_errors(
 	{
 		Symbol s = input[i];
 		
-		if (!terminals.contains(s) && !nonterminals.contains(s))
+		if (terminals.find(s) == terminals.end()
+			&& nonterminals.find(s) == nonterminals.end())
 		{
 			add_error(UNKNOWN_SYMBOL, 
 				parent_source + " symbol \"" + s+ "\":");			
 		}
 		
-		if (nonterminals.contains(s))
+		if (nonterminals.find(s) != nonterminals.end())
 		{
 			add_error(SYMBOL_IN_NONTERMINALS, 
 				 parent_source + " symbol \"" + s+ "\":");			
@@ -62,11 +64,11 @@ void Mod_check_errors::head_check_errors(
 )
 {
 
-	if (!nonterminals.contains(input))
+	if (nonterminals.find(input) == nonterminals.end())
 	{
 		add_error(HEAD_NOT_IN_NONTERMINALS, parent_source);
 
-		if (!terminals.contains(input))
+		if (terminals.find(input) == terminals.end())
 		{
 			add_error(UNKNOWN_SYMBOL, parent_source);
 		}

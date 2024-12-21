@@ -43,7 +43,7 @@ for root, dirs, files in os.walk(path):
             os.system( "rm " + TMP )
             
             head = dest +"src/"+ head 
-            body = "\tg++ -std=c++20 [[SOURCE]] -o [[DESTINATION]] [[INCLUDES]] -c $(FLAGS) "\
+            body = "\tg++ [[SOURCE]] -o [[DESTINATION]] [[INCLUDES]] -c $(FLAGS) "\
                 .replace("[[SOURCE]]", dependency)\
                 .replace("[[INCLUDES]]", includes)\
                 .replace("[[DESTINATION]]", target)
