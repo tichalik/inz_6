@@ -6,7 +6,7 @@ void _test_visualize(
 )
 {
 	Mod_visualize_grammar mvg;
-	VNode vnode = mvg.visualize_grammar(grammar, true);
+	VNode vnode = mvg.visualize_grammar(grammar, "simple");
 	SPPF sppf;	
 	Mod_to_http mth({},sppf, vnode, "","","","","");
 

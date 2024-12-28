@@ -6,7 +6,7 @@ Model::Model(
 	const std::string & str_head ,
 	const std::string & str_rules ,
 	const std::string & str_word ,
-	const bool simple_visualization
+	const std::string & vis_mode
 )
 {
 	
@@ -42,7 +42,7 @@ Model::Model(
 			Mod_visualize_grammar mod_visualize;
 			visualization = mod_visualize.visualize_grammar(
 				grammar,
-				simple_visualization
+				vis_mode	
 			);
 			
 			Mod_parser mod_parser(grammar, word, this->sppf); 

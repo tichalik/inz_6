@@ -108,7 +108,7 @@ void Mod_visualize_grammar::append_children(
 
 VNode Mod_visualize_grammar::visualize_grammar(
 	const Grammar & grammar,
-	const bool simple
+	const std::string & mode 
 )
 {
 	VNode res;
@@ -120,7 +120,7 @@ VNode Mod_visualize_grammar::visualize_grammar(
 		was_used[i->first] = std::vector<bool>(i->second.size(), false);
 	}
 
-	if (simple)
+	if (mode == "simple")
 	{
 		simple_append_children(
 			res,
@@ -128,7 +128,7 @@ VNode Mod_visualize_grammar::visualize_grammar(
 			was_used
 		);
 	}
-	else
+	else if (mode == "complex")
 	{
 		append_children(
 			res,

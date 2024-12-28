@@ -19,7 +19,7 @@ public:
 		const std::string & http_head ,
 		const std::string & http_rules ,
 		const std::string & http_word,
-		const bool simple_visualization
+		const std::string & vis_mode
 	);
 	
 	Errors get_errors() const;

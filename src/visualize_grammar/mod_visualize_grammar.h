@@ -23,7 +23,7 @@ public:
 
 	VNode visualize_grammar(
 		const Grammar & grammar,
-		const bool simple
+		const std::string & mode 
 	);
 
 };

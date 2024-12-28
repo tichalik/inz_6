@@ -61,7 +61,7 @@ void Server::post_handler(const httplib::Request & req,
 	const std::string http_head = req.get_param_value("head");
 	const std::string http_rules = req.get_param_value("rules");
 	const std::string http_word = req.get_param_value("input");
-	const bool simple_visualization = req.get_param_value("visualization") == "simple";
+	const std::string vis_mode = req.get_param_value("visualization");
 	
 	Model model(
 		 http_terminals ,
@@ -69,7 +69,7 @@ void Server::post_handler(const httplib::Request & req,
 		 http_head ,
 		 http_rules ,
 		 http_word ,
-		 simple_visualization
+		 vis_mode
 	);
 	
 	//transform Errors and Ptrees into http
