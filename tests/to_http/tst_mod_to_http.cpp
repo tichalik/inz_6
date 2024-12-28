@@ -31,7 +31,7 @@ void TST_mod_to_http::_test_sppf_to_string(
 	static int count = 0;
 
 	std::stringstream filename;
-	filename << "./debug/tc" << count++ << ".html";
+	filename << "./build/tc" << count++ << ".html";
 	std::ofstream file;
 	file.open(filename.str());
 	file << response.get_response();

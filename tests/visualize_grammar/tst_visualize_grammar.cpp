@@ -13,7 +13,7 @@ void _test_visualize(
 	static int count = 0;
 
 	std::stringstream filename;
-	filename << "./debug/tc_visualize_" << count++ << ".html";
+	filename << "./build/tc_visualize_" << count++ << ".html";
 	std::ofstream file;
 	file.open(filename.str());
 	file << mth.get_http();

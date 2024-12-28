@@ -2,7 +2,7 @@
 **/obj/**
 **/debug/**
 **/doc/**
-tests/src/sw/**
+build
 **/html_resp_tests/**
 **.swp
 **.swo
