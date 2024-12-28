@@ -36,7 +36,7 @@ def get_rules(path, includes, prefix, flags):
                     .replace("[[FILENAME]]", dependency)\
                     .replace("[[INCLUDES]]", includes)
 
-                head = "./build/.o/"+prefix+run_command(cmd)
+                head = "./build/.o/"+prefix+run_command(cmd)[:-1] + " ./build/.o\n"
                 target = head.split(":")[0]
 
                 body = "\tg++ [[DEPENDENCY]] -o [[TARGET]] [[INCLUDES]] [[FLAGS]] -c $(FLAGS) "\
@@ -85,10 +85,16 @@ tests: ./build/tests
 
 [[TESTS_RULES]]
 
-clean:
+clean: ./build ./build/.o
     rm ./build -r
     mkdir build
     mkdir build/.o
+    
+./build/.o: ./build
+    mkdir -p ./build/.o
+
+./build:
+    mkdir -p ./build
     
 """.replace("    ", "\t")\
     .replace("[[APP_RULE]]", APP_RULE )\
