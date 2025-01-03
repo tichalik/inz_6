@@ -1,5 +1,5 @@
 import os 
-
+from tqdm import tqdm
 def save_flle(filename, txt):
     f = open(filename, "w")
     f.write(txt)
@@ -27,7 +27,8 @@ def get_rules(path, includes, prefix, flags):
     res = ""
     links = ""
     for root, dirs, files in os.walk(path):
-        for f in files:
+        print ("processing ", root)
+        for f in tqdm(files):
             if f.endswith(".cpp"):
 
                 dependency = root+"/"+f
@@ -36,7 +37,7 @@ def get_rules(path, includes, prefix, flags):
                     .replace("[[FILENAME]]", dependency)\
                     .replace("[[INCLUDES]]", includes)
 
-                head = "./build/obj/"+prefix+run_command(cmd)[:-1] + " ./build/obj\n"
+                head = "build/obj/"+prefix+run_command(cmd)[:-1] + "\n"
                 target = head.split(":")[0]
 
                 body = "\tg++ [[DEPENDENCY]] -o [[TARGET]] [[INCLUDES]] [[FLAGS]] -c $(FLAGS) "\
@@ -51,20 +52,21 @@ def get_rules(path, includes, prefix, flags):
     return (res, links)
 
 def get_link_rule(target, links):
-    return """./build/[[TARGET]] : [[LINKS]]
-\tg++ [[LINKS]] -o ./build/[[TARGET]]"""\
+    return """build/[[TARGET]] : [[LINKS]]
+\tg++ [[LINKS]] -o build/[[TARGET]]"""\
         .replace("[[TARGET]]", target)\
         .replace("[[LINKS]]", links)
 
-sw_includes = get_includes("./src")
-tst_includes = sw_includes + get_includes("./tests")
+sw_includes = get_includes("src")
+tst_includes = sw_includes + get_includes("tests")
 
-SW_RULES, sw_links = get_rules("./src", sw_includes, "sw_", "")
-tst_tst_rules, tst_tst_links = get_rules("./tests", tst_includes, "tst_", " -fno-access-control ")
-tst_sw_rules, tst_sw_links = get_rules("./src", tst_includes, "tst_", " -fno-access-control ")
+SW_RULES, sw_links = get_rules("src", sw_includes, "sw_", "")
+tst_tst_rules, tst_tst_links = get_rules("tests", tst_includes, "tst_", " -fno-access-control ")
+tst_sw_rules = SW_RULES.replace("/sw_", "/tst_").replace("-c ", "-c -fno-access-control ")
+tst_sw_links = sw_links.replace("/sw_", "/tst_").replace("-c ", "-c -fno-access-control ")
 
 TESTS_RULES = tst_tst_rules + "\n" + tst_sw_rules
-tst_links = tst_tst_links + " " + tst_sw_links.replace("./build/obj/tst_main.o", "")
+tst_links = tst_tst_links + " " + tst_sw_links.replace("build/obj/tst_main.o", "")
 
 APP_RULE = get_link_rule("app", sw_links)
 TESTS_RULE = get_link_rule("tests", tst_links)
@@ -78,23 +80,23 @@ FLAGS =
 [[TESTS_RULE]]
     
 
-tests: ./build/tests
-    ./build/tests > ./build/test_results.txt
+tests: build/tests
+    build/tests > build/test_results.txt
 
 [[SW_RULES]]
 
 [[TESTS_RULES]]
 
-clean: ./build ./build/obj
-    rm ./build -r
+clean: 
+    rm build -r
     mkdir build
     mkdir build/obj
     
-./build/obj: ./build
-    mkdir -p ./build/obj
+build/obj: build
+    mkdir -p build/obj
 
-./build:
-    mkdir -p ./build
+build:
+    mkdir -p build
     
 """.replace("    ", "\t")\
     .replace("[[APP_RULE]]", APP_RULE )\

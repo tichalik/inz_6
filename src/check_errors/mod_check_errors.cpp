@@ -134,7 +134,7 @@ void Mod_check_errors::rules_check_errors(
 	}
 }
 
-
+ 
 Mod_check_errors::Mod_check_errors(
 	const Grammar & grammar, 
 	const Word & word
