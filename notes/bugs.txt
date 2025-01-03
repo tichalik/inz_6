@@ -1,2 +1,0 @@
--> clicking on a bottom border of a node messes up the css
--> see terminals_bug.htm -> there should be a bug for a symbol being both in terminals and nonterminals
