@@ -10,58 +10,47 @@
 #include "error.h"
 #include "token.h"
 
+/// breaks provided string into tokens
 Tokens tokenize(const std::string & str);
 
+/// construct structures from http input
+/// all inputs are what the user sees when entering the input
 class Mod_from_http
 {
-	
+	/// constructed grammar
 	Grammar grammar;
+	/// constructed word
 	Word word;
+	/// errors preventing construction of grammar/word
 	Errors errors;
 	
-	
+	/// constructs an error and adds it to errors
 	void add_error(
 		const EN_ERROR_TYPE & type,
 		const std::string & source = ""
 	);
 	
-    /** 
-	 * \brief extract grammar information from a string obtained from http request
-	 *
-	 * \param is_nonterminals if param is empty and this is true raise nonterminals error
-	 * else if param is empty and this is false raise terminals error
-	 *
-	 * assume the string is already processed (htpp entities are translated to 
-	 * normal string)
-	 */
+	/// try constructing nonterminals from given string
 	Non_terminals nonterminals_from_http(
 		const std::string & param
 	);
+	/// try constructing terminals from given string
 	Non_terminals terminals_from_http(
 		const std::string & param
 	);
 	
-    /** 
-	 * \brief extract grammar information from a string obtained from http request
-	 *
-	 * assume the string is already processed (htpp entities are translated to 
-	 * normal string)
-	 */
+	/// try constructing head from given string
 	Head head_from_http(const std::string & param);
 	
-    /** 
-	 * \brief extract grammar information from a string obtained from http request
-	 *
-	 * assume the string is already processed (htpp entities are translated to 
-	 * normal string)
-	 */
+	/// try constructing rules from given string
 	Rules rules_from_http(const std::string & param);
 	
-	
+	/// try constructing word from given string
 	Word word_from_http(const std::string & param);
 	
 	public:
-	
+
+	/// constructor -- provide all necessary data
 	Mod_from_http(
 		const std::string & http_terminals,
 		const std::string & http_nonterminals,

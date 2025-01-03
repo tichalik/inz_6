@@ -36,7 +36,7 @@ def get_rules(path, includes, prefix, flags):
                     .replace("[[FILENAME]]", dependency)\
                     .replace("[[INCLUDES]]", includes)
 
-                head = "./build/.o/"+prefix+run_command(cmd)[:-1] + " ./build/.o\n"
+                head = "./build/obj/"+prefix+run_command(cmd)[:-1] + " ./build/obj\n"
                 target = head.split(":")[0]
 
                 body = "\tg++ [[DEPENDENCY]] -o [[TARGET]] [[INCLUDES]] [[FLAGS]] -c $(FLAGS) "\
@@ -64,7 +64,7 @@ tst_tst_rules, tst_tst_links = get_rules("./tests", tst_includes, "tst_", " -fno
 tst_sw_rules, tst_sw_links = get_rules("./src", tst_includes, "tst_", " -fno-access-control ")
 
 TESTS_RULES = tst_tst_rules + "\n" + tst_sw_rules
-tst_links = tst_tst_links + " " + tst_sw_links.replace("./build/.o/tst_main.o", "")
+tst_links = tst_tst_links + " " + tst_sw_links.replace("./build/obj/tst_main.o", "")
 
 APP_RULE = get_link_rule("app", sw_links)
 TESTS_RULE = get_link_rule("tests", tst_links)
@@ -85,13 +85,13 @@ tests: ./build/tests
 
 [[TESTS_RULES]]
 
-clean: ./build ./build/.o
+clean: ./build ./build/obj
     rm ./build -r
     mkdir build
-    mkdir build/.o
+    mkdir build/obj
     
-./build/.o: ./build
-    mkdir -p ./build/.o
+./build/obj: ./build
+    mkdir -p ./build/obj
 
 ./build:
     mkdir -p ./build

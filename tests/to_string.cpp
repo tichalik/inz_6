@@ -225,9 +225,6 @@ std::string str(
 		case MISSING_RHS:
 			res = "MISSING_RHS";
 			break;
-		case SINGLE_RHS:
-			res = "SINGLE_RHS";
-			break;
 		case TOO_MANY_LHS:
 			res = "TOO_MANY_LHS";
 			break;

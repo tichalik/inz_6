@@ -71,9 +71,6 @@ std::string Mod_to_http::EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const
 		case MISSING_RHS:
 			res="no RHS in the rule";
 			break;
-		case SINGLE_RHS:
-			res="sorry, single RHS rules not supported yet";
-			break;
 		case TOO_MANY_LHS:
 			res="only single symbol on LHS is permitted (for context free parsing)";
 			break;
@@ -88,10 +85,6 @@ std::string Mod_to_http::EN_ERROR_TYPE2str(const EN_ERROR_TYPE &error) const
 			break;
 		case SYMBOL_IN_NONTERMINALS:
 			res="input must consist of terminals only";
-			break;
-		case UNREMOVABLE_CHAIN:
-			res="symbol is a head of chain of rules of nonterminals "
-				"turning into single nonterminals without ever turning into a terminal";
 			break;
 		default:
 			res = "UNKNOWN ERROR";

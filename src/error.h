@@ -6,48 +6,60 @@
 
 enum EN_ERROR_TYPE
 {
-	//http errors
+	/// the nonterminals field not filled in form
 	EMPTY_NONTERMINALS,
+	/// the terminals field not filled in form
 	EMPTY_TERMINALS,
+	/// the head field not filled in form
 	EMPTY_HEAD,
+	/// the rules field not filled in form
 	EMPTY_RULES,
+	/// the word field not filled in form
 	EMPTY_WORD,
 	
-	//general errors
+	/// symbol neither in terminals nor in nonterminals
 	UNKNOWN_SYMBOL,
 	
-	//non/terminals related errors
+	/// symbol repeating within a set
 	REPEATING_SYMBOL,
+	/// terminal-like symbol in nonterminals
 	TERM_IN_NTERMS,
+	/// nonterminal-like symbol in terminals
 	NTERM_IN_TERMS,
 
-	//rule related errors
-		//parsing related
+	/// unexpected | in a rule
 	STRAY_OR,
+	/// unexpected ::= in a rule
 	STRAY_SEP,
+	/// unexpected line break in a rule
 	STRAY_LB,
 
+	/// rule does not habe a LHS
 	MISSING_LHS,
+	/// rule does not habe a RHS
 	MISSING_RHS,
-	SINGLE_RHS,
+	/// too many symbols on LHS
 	TOO_MANY_LHS,
-		//semantic related
+	/// terminal cannot be turned into anything
 	TERMINAL_AS_LHS,
 	
-	//head related errors
+	/// head is in terminals
 	HEAD_NOT_IN_NONTERMINALS,
+	/// multiple symbols in the form's head field
 	MULTIPLE_HEADS,
 	
-	//input (word) related errors
+	/// word's symbol cannot be a nonterminal 
 	SYMBOL_IN_NONTERMINALS,
-	
-	//chomskification
-	UNREMOVABLE_CHAIN
 };
 
+/**
+ *	\brief structure representing error in submitted grammar/word
+ */
 struct Error
 {
+	/// type of the error (eg. EMPTY_NONTERMINALS)
 	EN_ERROR_TYPE type;
+	/// string describing the element that generated the error
 	std::string source;
 };
 

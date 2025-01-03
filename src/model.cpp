@@ -9,7 +9,7 @@ Model::Model(
 	const std::string & vis_mode
 )
 {
-	
+	/// convert http inputs into objects
 	Mod_from_http mod_from_http(
 		str_terminals,
 		str_nonterminals,
@@ -17,17 +17,18 @@ Model::Model(
 		str_rules,
 		str_word
 	);
-		
+	
+	/// check for errors that made the conversion impossible
 	const Errors str_errors = mod_from_http.get_errors();
 	errors.insert(errors.end(), str_errors.begin(), str_errors.end());
 	
-	//if there are no http errors, proceed
+	/// if there are no http errors, proceed
 	if (str_errors.size() == 0 )
 	{
 		const Grammar grammar = mod_from_http.get_grammar();
 		const Word word = mod_from_http.get_word();
 		
-		//check errors
+		/// check for formal errors
 		Mod_check_errors mod_check_errors(
 			grammar, 
 			word
@@ -36,15 +37,17 @@ Model::Model(
 		const Errors semantic_errors = mod_check_errors.get_errors();
 		errors.insert(errors.end(), semantic_errors.begin(), semantic_errors.end());
 
-		//parse if there are no errors
+		/// if there are no errors
 		if (semantic_errors.size() == 0)
 		{
+			/// produce visualization
 			Mod_visualize_grammar mod_visualize;
 			visualization = mod_visualize.visualize_grammar(
 				grammar,
 				vis_mode	
 			);
 			
+			/// produce parsing
 			Mod_parser mod_parser(grammar, word, this->sppf); 
 		}
 	}

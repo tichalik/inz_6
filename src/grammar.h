@@ -13,23 +13,20 @@
 #include "rules.h"
 
 /** 
- * \brief grammar in Chomsky's normal form
+ * \brief formal grammar, analogous to its formal description
+ *
+ * Grammar may contain errors.
  */
 struct Grammar
 {
-	
+	/// set of nonterminals
 	Non_terminals nonterminals;
+	/// set of terminals
 	Non_terminals terminals;
+	/// head of the grammar
 	Head head;
+	/// rules of the grammar
 	Rules rules;
-
-	
-	Grammar() {}
-	
-	/** 
-	 * \brief get grammar's printf friendly description
-	 */
-	std::string to_string() const;
 };
 
 
