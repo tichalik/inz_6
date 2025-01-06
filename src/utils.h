@@ -36,9 +36,6 @@ class Utils
 	 * \returns true if successful, false otherwise
 	 */
 	static bool read_file(const std::string & filename, std::string & res);
-
-
-	static std::string int_to_string(const int & i);
 };
 
 #endif // _UTILS_H_

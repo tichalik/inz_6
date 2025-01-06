@@ -91,12 +91,10 @@ clean:
     rm build -r
     mkdir build
     mkdir build/obj
-    
-build/obj: build
-    mkdir -p build/obj
 
 build:
-    mkdir -p build
+    mkdir build
+    mkdir build/obj
     
 """.replace("    ", "\t")\
     .replace("[[APP_RULE]]", APP_RULE )\

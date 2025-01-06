@@ -13,7 +13,7 @@
 /// breaks provided string into tokens
 Tokens tokenize(const std::string & str);
 
-/// construct structures from http input
+/// \brief construct structures from http input
 /// all inputs are what the user sees when entering the input
 class Mod_from_http
 {
@@ -59,8 +59,11 @@ class Mod_from_http
 		const std::string & http_word
 	);
 	
+	/// get constructed grammar
 	Grammar get_grammar() const;
+	/// get constructed word
 	Word get_word() const;
+	/// get errors preventing costruction of grammar/word
 	Errors get_errors() const;
 	
 };

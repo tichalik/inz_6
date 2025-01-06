@@ -117,23 +117,6 @@ std::string Mod_to_http::errors_to_http(const Errors & _errors) const
 
 
 
-std::string Mod_to_http::node_to_string(const VNode & node) const
-{
-	std::string tag = str_to_http(Utils::vector2str(node.tag, " "));
-	if (node.children.size() == 0 )
-		return tag;
-	else
-	{
-		std::string body;
-		for (size_t i=0; i<node.children.size(); i++)
-		{
-			body += node_to_string(node.children[i]) + " ";
-		}
-		return tag + "[" + body +"]";
-	}
-}
-
-
 std::string Mod_to_http::node_to_http(const VNode & node) const
 {
 	std::string res;

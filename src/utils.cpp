@@ -54,10 +54,3 @@ bool Utils::read_file(const std::string & filename,
 	return status;
 
 }
-
-std::string Utils::int_to_string(const int &i)
-{
-	std::stringstream ss;
-	ss << i;
-	return ss.str();
-}

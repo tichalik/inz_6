@@ -5,7 +5,7 @@
 #include "word.h"
 #include "error.h"
 
-/// class for checking formal errors in grammar
+/// \brief class for checking formal errors in grammar
 class Mod_check_errors
 {
 	/// container for errors generated during checking

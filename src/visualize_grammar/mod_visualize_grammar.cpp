@@ -38,8 +38,6 @@ void Mod_visualize_grammar::simple_append_children(
 					root.tag.end()
 				);
 
-				child.parent_symbol_pos = i;
-
 				was_used[root.tag[i]][j] = true;
 
 				simple_append_children(
@@ -90,8 +88,6 @@ void Mod_visualize_grammar::append_children(
 					root.tag.begin() + i + 1,
 					root.tag.end()
 				);
-
-				child.parent_symbol_pos = i;
 
 				std::map<Symbol, std::vector<bool>> was_used_copy(was_used);
 				was_used_copy[root.tag[i]][j] = true;

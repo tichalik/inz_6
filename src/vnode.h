@@ -12,7 +12,6 @@ struct VNode
 {
 	/// the symbol
 	Symbols tag;
-	size_t parent_symbol_pos;
 	/// what the symbol transforms into 
 	VNodes children;
 };
