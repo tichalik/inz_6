@@ -112,7 +112,6 @@ std::string str(
 {
 	std::string res;
 	ADD_FIELD(tag);
-	ADD_FIELD(parent_symbol_pos);
 	ADD_FIELD(children);
 	return res;
 }
