@@ -12,7 +12,7 @@ you in your context-free parsing needs. It is a served based app.
  * include incomplete parsings of the word -- those that do not belong to a parse tree spanning the whole word and having grammar head as its root
  
 ## limitations
- * all rules must have 2 or more symbols on LHS
+ * rules with empty symbol $$\epsilon$$ are not supported
 
 # Project overview
 
@@ -21,15 +21,14 @@ The `tests` directory contains unit tests for the software.
  
 # How to use 
 
-To compile the software run `make` in the `sw` directory:
+To compile the software run `make`:
 
-	cd sw
-	make
+	make build
+ 	make
 	
-To run the sofware call `debug/main` from the `sw` directory. The server opens on port `8413`.
+To run the sofware call `build/main` from the root directory. The server opens on port `8413`.
 
-	cd sw
-	./debug/main
+	./build/main
 
 # notice
 The HTTP server in file `httplib.cpp` comes from here https://github.com/yhirose/cpp-httplib and is licensed by MIT license.
